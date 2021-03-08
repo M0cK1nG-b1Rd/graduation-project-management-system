@@ -1,0 +1,157 @@
+<template>
+  <!--  登陆界面最外层容器-->
+  <div class="login_container">
+    <!--    半透明盒子，达到背景透明-->
+    <div class="login_container_alpha">
+      <!--    登录表框-->
+      <div class="login_box">
+        <!--      登陆表框头像Logo区域-->
+        <div class="avatar_box">
+          <img src="../assets/imgs/login_logo.jpg" alt="">
+        </div>
+        <!--      登陆表单区域-->
+        <el-form label-width="0px" class="login_form"
+                 ref="loginFormRef"
+                 :model="loginForm" :rules="loginFormRules">
+          <!--          用户名-->
+          <el-form-item prop="username">
+            <el-input
+              v-model="loginForm.username"
+              placeholder="请输入账号"
+              prefix-icon="iconfont icon-user">
+            </el-input>
+          </el-form-item>
+          <!--          密码-->
+          <el-form-item prop="password">
+            <el-input
+              v-model="loginForm.password"
+              show-password
+              placeholder="请输入密码"
+              prefix-icon="iconfont icon-3702mima">
+            </el-input>
+          </el-form-item>
+          <!--          按钮-->
+          <el-form-item class="btns">
+            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="info" @click="restLoginForm">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Login',
+  data () {
+    return {
+      // 登陆表单的数据绑定对象
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      // 登陆表单验证规则
+      loginFormRules: {
+        username: [
+          { required: true, message: '请输入您的账号', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入您的密码', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    // 重置表单内容
+    restLoginForm () {
+      this.$refs.loginFormRef.resetFields()
+    },
+    // 点击登陆按钮时触发
+    login() {
+      this.$refs.loginFormRef.validate(async (valid) => {
+        if (!valid) return // 如果表单验证未通过，则直接返回
+        // TODO 下面这一段在后端写好之后应该取消注释， 现在为了能够成功跳转到/home所以注释了
+        // // TODO 此处需要修改为后端的API接口
+        // const { data: res } = await this.$http.post('', this.loginForm)
+        // if (res.meta.status !== 200) return this.$message.error('登录失败, 请重试！')
+        // this.$message.success('欢迎登录“快乐毕设系统“ 祝您顺利毕业！')
+        // // 1. 将登录成功之后的token保存到客户端的sessionStorage中
+        // //    1.1 项目中除了登录之外的其他API接口，必须在登录成功之后才能访问
+        // //    1.2 token只应该在当前网站打开期间生效，所以需要将token存到sessionStorage而不是localStorage中
+        // window.sessionStorage.setItem('token', res.data.token)
+        // // 2. 通过编程式导航跳转到后台主页， 路由地址是 /home
+        await this.$router.push('/home')
+      })
+    }
+  }
+}
+</script>
+
+<style Lang="less" scoped>
+.login_container {
+  /* 设置背景图片，并铺满整个页面*/
+  /* 参看网址： https://www.php.cn/css-tutorial-410405.html*/
+  background-image: url("../assets/imgs/login_background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+  height: 100%;
+}
+
+/* 在背景图片上加一层半透明盒子，达到背景图片透明*/
+/* 参看网址： https://www.php.cn/css-tutorial-410405.html*/
+.login_container_alpha {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.login_box {
+  width: 450px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 3px;
+  position: absolute;
+  border-radius: 5px;
+  box-shadow: 0 0 20px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.avatar_box {
+  height: 110px;
+  width: 110px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 10px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/*底部按钮，右侧对齐*/
+.btns {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login_form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+</style>
