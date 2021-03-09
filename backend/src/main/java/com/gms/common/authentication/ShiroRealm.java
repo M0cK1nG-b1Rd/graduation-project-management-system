@@ -54,8 +54,13 @@ public class ShiroRealm extends AuthorizingRealm {
         Set<String> roleSet = userManager.getUserRoles(username);
         simpleAuthorizationInfo.setRoles(roleSet);
 
-        // 获取用户权限集
-        Set<String> permissionSet = userManager.getUserPermissions(username);
+//        // 获取用户权限集
+//        Set<String> permissionSet = userManager.getUserPermissions(username);
+//        simpleAuthorizationInfo.setStringPermissions(permissionSet);
+//        return simpleAuthorizationInfo;
+
+        // 获取用户当前阶段权限集
+        Set<String> permissionSet = userManager.getUserPermissionsWithStage(username);
         simpleAuthorizationInfo.setStringPermissions(permissionSet);
         return simpleAuthorizationInfo;
     }

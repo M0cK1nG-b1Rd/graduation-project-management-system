@@ -8,8 +8,6 @@ import com.gms.common.exception.GmsException;
 import com.gms.common.utils.AesEncryptUtil;
 import com.gms.common.utils.MD5Util;
 import com.gms.system.domain.User;
-import com.gms.system.domain.UserConfig;
-import com.gms.system.service.UserConfigService;
 import com.gms.system.service.UserService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
@@ -36,8 +34,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserConfigService userConfigService;
 //    @Autowired
 //    private RoleService roleService;
 
@@ -58,33 +54,33 @@ public class UserController extends BaseController {
         return getDataTable(userService.findUserDetail(user, queryRequest));
     }
 
-    @Log("新增用户")
-    @PostMapping
-    @RequiresPermissions("user:add")
-    public GmsResponse addUser(@RequestBody @Valid User user) throws GmsException {
-        try {
-            this.userService.createUser(user);
-            return new GmsResponse().code("200").message("新增用户成功").status("success");
-        } catch (Exception e) {
-            message = "新增用户失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @Log("新增用户")
+//    @PostMapping
+//    @RequiresPermissions("user:add")
+//    public GmsResponse addUser(@RequestBody @Valid User user) throws GmsException {
+//        try {
+//            this.userService.createUser(user);
+//            return new GmsResponse().code("200").message("新增用户成功").status("success");
+//        } catch (Exception e) {
+//            message = "新增用户失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
-    @Log("修改用户")
-    @PutMapping
-    @RequiresPermissions("user:update")
-    public GmsResponse updateUser(@RequestBody @Valid User user) throws GmsException {
-        try {
-            this.userService.updateUser(user);
-            return new GmsResponse().code("200").message("修改用户成功").status("success");
-        } catch (Exception e) {
-            message = "修改用户失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @Log("修改用户")
+//    @PutMapping
+//    @RequiresPermissions("user:update")
+//    public GmsResponse updateUser(@RequestBody @Valid User user) throws GmsException {
+//        try {
+//            this.userService.updateUser(user);
+//            return new GmsResponse().code("200").message("修改用户成功").status("success");
+//        } catch (Exception e) {
+//            message = "修改用户失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
     @Log("删除用户")
     @DeleteMapping("/{userIds}")
@@ -101,43 +97,6 @@ public class UserController extends BaseController {
         }
     }
 
-    @PutMapping("profile")
-    public GmsResponse updateProfile(@RequestBody @Valid User user) throws GmsException {
-        try {
-            this.userService.updateProfile(user);
-            return new GmsResponse().code("200").message("修改个人信息成功").status("success");
-        } catch (Exception e) {
-            message = "修改个人信息失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
-
-    @PutMapping("avatar")
-    public GmsResponse updateAvatar(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String avatar) throws GmsException {
-        try {
-            this.userService.updateAvatar(username, avatar);
-            return new GmsResponse().code("200").message("修改头像成功").status("success");
-        } catch (Exception e) {
-            message = "修改头像失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
-
-    @PutMapping("userconfig")
-    public GmsResponse updateUserConfig(@RequestBody @Valid UserConfig userConfig) throws GmsException {
-        try {
-            this.userConfigService.update(userConfig);
-            return new GmsResponse().code("200").message("修改个性化配置成功").status("success");
-        } catch (Exception e) {
-            message = "修改个性化配置失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
 
     @GetMapping("password/check")
     public boolean checkPassword(

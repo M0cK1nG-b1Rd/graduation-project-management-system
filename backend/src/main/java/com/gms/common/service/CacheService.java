@@ -3,7 +3,6 @@ package com.gms.common.service;
 import com.gms.system.domain.Menu;
 import com.gms.system.domain.Role;
 import com.gms.system.domain.User;
-import com.gms.system.domain.UserConfig;
 
 import java.util.List;
 
@@ -31,20 +30,22 @@ public interface CacheService {
     List<Role> getRoles(String username) throws Exception;
 
     /**
-     * 从缓存中获取用户权限
+     * 从缓存中获取当前阶段用户权限
+     *
+     * @param username 用户名
+     * @return 权限集
+     */
+    List<Menu> getPermissionsWithStage(String username) throws Exception;
+
+
+    /**
+     * 从缓存中获取全部用户权限
      *
      * @param username 用户名
      * @return 权限集
      */
     List<Menu> getPermissions(String username) throws Exception;
 
-    /**
-     * 从缓存中获取用户个性化配置
-     *
-     * @param userId 用户 ID
-     * @return 个性化配置
-     */
-    UserConfig getUserConfig(String userId) throws Exception;
 
     /**
      * 缓存用户信息，只有当用户信息是查询出来的，完整的，才应该调用这个方法
@@ -76,13 +77,6 @@ public interface CacheService {
     void savePermissions(String username) throws Exception;
 
     /**
-     * 缓存用户个性化配置
-     *
-     * @param userId 用户 ID
-     */
-    void saveUserConfigs(String userId) throws Exception;
-
-    /**
      * 删除用户信息
      *
      * @param username 用户名
@@ -109,23 +103,4 @@ public interface CacheService {
      * @param userId 用户 ID
      */
     void deleteUserConfigs(String userId) throws Exception;
-    /**
-     * 获取某个部门下的用户
-     *
-     * @param deptId 部门 ID
-     */
-    String getUserSubordinates(Long deptId) throws Exception;
-    /**
-     * 保持某个部门下的用户
-     *
-     * @param deptId 部门 ID
-     * @param permissions 用户 ID
-     */
-    String saveUserSubordinates(Long deptId,String permissions) throws Exception;
-    /**
-     * 删除某个部门下的用户缓存
-     *
-     * @param deptId 部门 ID
-     */
-    void deleteUserSubordinates(Long deptId) throws Exception;
 }

@@ -14,7 +14,6 @@ import com.gms.common.utils.*;
 import com.gms.system.dao.LoginLogMapper;
 import com.gms.system.domain.LoginLog;
 import com.gms.system.domain.User;
-import com.gms.system.domain.UserConfig;
 import com.gms.system.manager.UserManager;
 import com.gms.system.service.LoginLogService;
 import com.gms.system.service.UserService;
@@ -76,12 +75,6 @@ public class LoginController {
         if (!StringUtils.equals(user.getPassword(), password)){
             throw new GmsException(errorMessage);
         }
-        if (User.STATUS_LOCK.equals(user.getStatus())){
-            throw new GmsException("账号已被锁定,请联系管理员！");
-        }
-
-        // 更新用户登录时间
-        this.userService.updateLoginTime(username);
         // 保存登录记录
         LoginLog loginLog = new LoginLog();
         loginLog.setUsername(username);
@@ -178,7 +171,7 @@ public class LoginController {
     public void regist(
             @NotBlank(message = "{required}") String username,
             @NotBlank(message = "{required}") String password) throws Exception {
-        this.userService.regist(username, password);
+        this.userService.register(username, password);
     }
 
     private String saveTokenToRedis(User user, JWTToken token, HttpServletRequest request) throws Exception {
@@ -214,16 +207,13 @@ public class LoginController {
         String username = user.getUsername();
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("token", token.getToken());
-        userInfo.put("exipreTime", token.getExipreAt());
+        userInfo.put("expireTime", token.getExipreAt());
 
         Set<String> roles = this.userManager.getUserRoles(username);
         userInfo.put("roles", roles);
 
-        Set<String> permissions = this.userManager.getUserPermissions(username);
+        Set<String> permissions = this.userManager.getUserPermissionsWithStage(username);
         userInfo.put("permissions", permissions);
-
-        UserConfig userConfig = this.userManager.getUserConfig(String.valueOf(user.getUserId()));
-        userInfo.put("config", userConfig);
 
         user.setPassword("it's a secret");
         userInfo.put("user", user);

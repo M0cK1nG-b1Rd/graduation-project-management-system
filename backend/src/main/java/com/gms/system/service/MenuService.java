@@ -8,9 +8,11 @@ import java.util.Map;
 
 public interface MenuService extends IService<Menu> {
 
-    List<Menu> findUserPermissions(String username);
+    List<Menu> findUserPermissions(String realName);
 
-    List<Menu> findUserMenus(String username);
+    List<Menu> findUserPermissionsWithStage(String realName);
+
+    List<Menu> findUserMenus(String realName);
 
     Map<String, Object> findMenus(Menu menu);
 
@@ -18,13 +20,13 @@ public interface MenuService extends IService<Menu> {
 
     void createMenu(Menu menu);
 
-    void updateMenu(Menu menu) throws Exception;
+//    void updateMenu(Menu menu) throws Exception;
 
     /**
      * 递归删除菜单/按钮
      *
      * @param menuIds menuIds
      */
-    void deleteMeuns(String[] menuIds) throws Exception;
+//    void deleteMenus(String[] menuIds) throws Exception;
 
 }

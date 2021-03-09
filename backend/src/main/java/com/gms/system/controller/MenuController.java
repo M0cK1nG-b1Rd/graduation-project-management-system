@@ -61,34 +61,34 @@ public class MenuController extends BaseController {
         }
     }
 
-    @Log("删除菜单/按钮")
-    @DeleteMapping("/{menuIds}")
-    @RequiresPermissions("menu:delete")
-    public GmsResponse deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) throws GmsException {
-        try {
-            String[] ids = menuIds.split(StringPool.COMMA);
-            this.menuService.deleteMeuns(ids);
-            return new GmsResponse().code("200").message("删除菜单/按钮成功").status("success");
-        } catch (Exception e) {
-            message = "删除菜单/按钮失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @Log("删除菜单/按钮")
+//    @DeleteMapping("/{menuIds}")
+//    @RequiresPermissions("menu:delete")
+//    public GmsResponse deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) throws GmsException {
+//        try {
+//            String[] ids = menuIds.split(StringPool.COMMA);
+//            this.menuService.deleteMenus(ids);
+//            return new GmsResponse().code("200").message("删除菜单/按钮成功").status("success");
+//        } catch (Exception e) {
+//            message = "删除菜单/按钮失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
-    @Log("修改菜单/按钮")
-    @PutMapping
-    @RequiresPermissions("menu:update")
-    public GmsResponse updateMenu(@RequestBody @Valid Menu menu) throws GmsException {
-        try {
-            this.menuService.updateMenu(menu);
-            return new GmsResponse().code("200").message("修改菜单/按钮成功").status("success");
-        } catch (Exception e) {
-            message = "修改菜单/按钮失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @Log("修改菜单/按钮")
+//    @PutMapping
+//    @RequiresPermissions("menu:update")
+//    public GmsResponse updateMenu(@RequestBody @Valid Menu menu) throws GmsException {
+//        try {
+//            this.menuService.updateMenu(menu);
+//            return new GmsResponse().code("200").message("修改菜单/按钮成功").status("success");
+//        } catch (Exception e) {
+//            message = "修改菜单/按钮失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
     @PostMapping("excel")
     @RequiresPermissions("menu:export")

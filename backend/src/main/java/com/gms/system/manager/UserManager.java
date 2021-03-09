@@ -8,10 +8,8 @@ import com.gms.common.utils.TreeUtil;
 import com.gms.system.domain.Menu;
 import com.gms.system.domain.Role;
 import com.gms.system.domain.User;
-import com.gms.system.domain.UserConfig;
 import com.gms.system.service.MenuService;
 import com.gms.system.service.RoleService;
-import com.gms.system.service.UserConfigService;
 import com.gms.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +33,6 @@ public class UserManager {
     private MenuService menuService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserConfigService userConfigService;
 
 
     /**
@@ -65,7 +61,22 @@ public class UserManager {
     }
 
     /**
-     * 通过用户名获取用户权限集合
+     * 通过用户名获取用户当前阶段权限集合
+     *
+     * @param username 用户名
+     * @return 权限集合
+     */
+    public Set<String> getUserPermissionsWithStage(String username) {
+        List<Menu> permissionList = GmsUtil.selectCacheByTemplate(
+                () -> this.cacheService.getPermissionsWithStage(username),
+                () -> this.menuService.findUserPermissionsWithStage(username));
+        return permissionList.stream().map(Menu::getPerms).collect(Collectors.toSet());
+    }
+
+
+
+    /**
+     * 通过用户名获取用户全部权限集合
      *
      * @param username 用户名
      * @return 权限集合
@@ -77,6 +88,7 @@ public class UserManager {
         return permissionList.stream().map(Menu::getPerms).collect(Collectors.toSet());
     }
 
+    //todo 老板叫修改
     /**
      * 通过用户名构建 Vue路由
      *
@@ -90,7 +102,6 @@ public class UserManager {
             VueRouter<Menu> route = new VueRouter<>();
             route.setId(menu.getMenuId().toString());
             route.setParentId(menu.getParentId().toString());
-            route.setIcon(menu.getIcon());
             route.setPath(menu.getPath());
             route.setComponent(menu.getComponent());
             route.setName(menu.getMenuName());
@@ -106,11 +117,6 @@ public class UserManager {
      * @param userId 用户 ID
      * @return 前端系统个性化配置
      */
-    public UserConfig getUserConfig(String userId) {
-        return GmsUtil.selectCacheByTemplate(
-                () -> this.cacheService.getUserConfig(userId),
-                () -> this.userConfigService.findByUserId(userId));
-    }
 
     /**
      * 将用户相关信息添加到 Redis缓存中
@@ -125,8 +131,6 @@ public class UserManager {
         cacheService.saveRoles(user.getUsername());
         // 缓存用户权限
         cacheService.savePermissions(user.getUsername());
-        // 缓存用户个性化配置
-        cacheService.saveUserConfigs(String.valueOf(user.getUserId()));
     }
 
     /**
@@ -156,13 +160,9 @@ public class UserManager {
                 cacheService.deleteUser(user.getUsername());
                 cacheService.deleteRoles(user.getUsername());
                 cacheService.deletePermissions(user.getUsername());
-                cacheService.deleteUserSubordinates(user.getDeptId());
             }
             cacheService.deleteUserConfigs(userId);
         }
     }
 
-    public String findSubordinates(Long deptId) throws Exception{
-        return userService.findSubordinates(deptId);
-    }
 }

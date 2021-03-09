@@ -18,34 +18,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@TableName("t_role")
+@TableName("role")
 @Excel("角色信息表")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = -1714476694755654924L;
 
     @TableId(value = "ROLE_ID", type = IdType.AUTO)
-    private Long roleId;
+    private Integer roleId;
 
     @NotBlank(message = "{required}")
     @Size(max = 10, message = "{noMoreThan}")
     @ExcelField(value = "角色名称")
     private String roleName;
 
-    @Size(max = 50, message = "{noMoreThan}")
-    @ExcelField(value = "角色描述")
-    private String remark;
-
-    @ExcelField(value = "创建时间", writeConverter = TimeConverter.class)
-    private Date createTime;
-
-    @ExcelField(value = "修改时间", writeConverter = TimeConverter.class)
-    private Date modifyTime;
-
-    private transient String createTimeFrom;
-    private transient String createTimeTo;
     private transient String menuId;
-    @NotNull(message = "{required}")
-    @ExcelField(value = "数据范围", writeConverter = DataScopeWriteConverter.class,readConverter = DataScopeReadConverter.class,options = DataScopeOptions.class )
-    private Integer dataScope;
 }

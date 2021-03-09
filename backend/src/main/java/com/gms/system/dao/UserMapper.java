@@ -19,6 +19,5 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 用户信息
      */
     User findDetail(String username);
-    String findSubordinates(@Param("deptId")Long deptId);
 
 }

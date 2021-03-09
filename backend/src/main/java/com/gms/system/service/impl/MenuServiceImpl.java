@@ -33,10 +33,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public List<Menu> findUserMenus(String username) {
-        return this.baseMapper.findUserMenus(username);
+    public List<Menu> findUserPermissionsWithStage(String username) {
+        return this.baseMapper.findUserPermissionsWithStage(username);
     }
 
+    @Override
+    public List<Menu> findUserMenus(String realName) {
+        return this.baseMapper.findUserMenus(realName);
+    }
+
+    // todo 修改函数
     @Override
     public Map<String, Object> findMenus(Menu menu) {
         Map<String, Object> result = new HashMap<>();
@@ -78,35 +84,33 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     @Transactional
     public void createMenu(Menu menu) {
-        menu.setCreateTime(new Date());
         setMenu(menu);
         this.save(menu);
     }
 
-    @Override
-    @Transactional
-    public void updateMenu(Menu menu) throws Exception {
-        menu.setModifyTime(new Date());
-        setMenu(menu);
-        baseMapper.updateById(menu);
+//    @Override
+//    @Transactional
+//    public void updateMenu(Menu menu) throws Exception {
+//        setMenu(menu);
+//        baseMapper.updateById(menu);
+//
+//        // 查找与这些菜单/按钮关联的用户
+//        List<String> userIds = this.baseMapper.findUserIdsByMenuId(String.valueOf(menu.getMenuId()));
+//        // 重新将这些用户的角色和权限缓存到 Redis中
+//        this.userManager.loadUserPermissionRoleRedisCache(userIds);
+//    }
 
-        // 查找与这些菜单/按钮关联的用户
-        List<String> userIds = this.baseMapper.findUserIdsByMenuId(String.valueOf(menu.getMenuId()));
-        // 重新将这些用户的角色和权限缓存到 Redis中
-        this.userManager.loadUserPermissionRoleRedisCache(userIds);
-    }
-
-    @Override
-    @Transactional
-    public void deleteMeuns(String[] menuIds) throws Exception {
-        this.delete(Arrays.asList(menuIds));
-        for (String menuId : menuIds) {
-            // 查找与这些菜单/按钮关联的用户
-            List<String> userIds = this.baseMapper.findUserIdsByMenuId(String.valueOf(menuId));
-            // 重新将这些用户的角色和权限缓存到 Redis中
-            this.userManager.loadUserPermissionRoleRedisCache(userIds);
-        }
-    }
+//    @Override
+//    @Transactional
+//    public void deleteMenus(String[] menuIds) throws Exception {
+//        this.delete(Arrays.asList(menuIds));
+//        for (String menuId : menuIds) {
+//            // 查找与这些菜单/按钮关联的用户
+//            List<String> userIds = this.baseMapper.findUserIdsByMenuId(String.valueOf(menuId));
+//            // 重新将这些用户的角色和权限缓存到 Redis中
+//            this.userManager.loadUserPermissionRoleRedisCache(userIds);
+//        }
+//    }
 
     private void buildTrees(List<Tree<Menu>> trees, List<Menu> menus, List<String> ids) {
         menus.forEach(menu -> {
@@ -117,13 +121,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             tree.setParentId(menu.getParentId().toString());
             tree.setText(menu.getMenuName());
             tree.setTitle(tree.getText());
-            tree.setIcon(menu.getIcon());
             tree.setComponent(menu.getComponent());
-            tree.setCreateTime(menu.getCreateTime());
-            tree.setModifyTime(menu.getModifyTime());
             tree.setPath(menu.getPath());
             tree.setOrder(menu.getOrderNum());
-            tree.setPermission(menu.getPerms());
             tree.setType(menu.getType());
             trees.add(tree);
         });
@@ -131,10 +131,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     private void setMenu(Menu menu) {
         if (menu.getParentId() == null)
-            menu.setParentId(0L);
+            menu.setParentId(0);
         if (Menu.TYPE_BUTTON.equals(menu.getType())) {
             menu.setPath(null);
-            menu.setIcon(null);
             menu.setComponent(null);
         }
     }
@@ -145,11 +144,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         if (StringUtils.isNotBlank(menu.getType())) {
             queryWrapper.eq(Menu::getType, menu.getType());
-        }
-        if (StringUtils.isNotBlank(menu.getCreateTimeFrom()) && StringUtils.isNotBlank(menu.getCreateTimeTo())) {
-            queryWrapper
-                    .ge(Menu::getCreateTime, menu.getCreateTimeFrom())
-                    .le(Menu::getCreateTime, menu.getCreateTimeTo());
         }
     }
 

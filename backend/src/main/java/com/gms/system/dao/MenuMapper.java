@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<Menu> findUserPermissions(String userName);
+    List<Menu> findUserPermissionsWithStage(String realName);
 
-    List<Menu> findUserMenus(String userName);
+    List<Menu> findUserMenus(String realName);
+
+    List<Menu> findUserPermissions(String username);
 
     /**
      * 查找当前菜单/按钮关联的用户 ID
@@ -17,5 +19,5 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param menuId menuId
      * @return 用户 ID集合
      */
-    List<String> findUserIdsByMenuId(String menuId);
+//    List<String> findUserIdsByMenuId(String menuId);
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-@TableName("t_login_log")
+@TableName("login_log")
 @Data
 public class LoginLog {
     /**

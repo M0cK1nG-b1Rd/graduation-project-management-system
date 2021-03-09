@@ -63,31 +63,6 @@ public class GmsUtil {
         return selectCacheByTemplate(() -> cacheService.getUser(username), () -> userService.findByName(username));
     }
 
-    public static String getUserSubordinates(Long deptId){
-        UserService userService = SpringContextUtil.getBean(UserService.class);
-        CacheService cacheService = SpringContextUtil.getBean(CacheService.class);
-        try {
-            log.debug("query data from redis ······");
-            // 先查 Redis缓存
-           String cacheSubordinates= cacheService.getUserSubordinates(deptId);
-            if (StringUtils.isBlank(cacheSubordinates)) {
-                // 没有记录再查询数据库
-                return userService.findSubordinates(deptId);
-            } else {
-                return cacheSubordinates;
-            }
-        } catch (Exception e) {
-            // 缓存查询出错，则去数据库查询
-            log.error("redis error：", e);
-            log.debug("query data from database ······");
-            try {
-                return userService.findSubordinates(deptId);
-            } catch (Exception e1) {
-                log.error("database error：", e);
-            }
-        }
-        return null;
-    }
     /**
      * token 加密
      *

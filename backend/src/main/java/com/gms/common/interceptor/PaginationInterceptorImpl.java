@@ -225,62 +225,6 @@ public class PaginationInterceptorImpl extends PaginationInterceptor {
         }
 
         String originalSql = boundSql.getSql();
-        //数据范围过滤
-        if(dataFilter){
-            User me= GmsUtil.getCurrentUser();
-            String fieldId = anno.filterFieldId(),filterType = anno.filterType().getType(),joinSql=anno.joinSql();
-            if(filterType.equals(FilterType.FIELD.getType())){
-                List<Role> roles= GmsUtil.getUserRoles();
-                boolean allData=false,deptData=false,selfData=false;
-                for(Role role:roles){
-                    if(GmsConstant.DATA_FILTER_ALL ==role.getDataScope())allData=true;
-                    if(GmsConstant.DATA_FILTER_DEPT==role.getDataScope())deptData=true;
-                    if(GmsConstant.DATA_FILTER_OWN==role.getDataScope())selfData=true;
-                }
-                String subordinates=GmsUtil.getUserSubordinates(me.getDeptId());
-                if(deptData){
-                    if(StringUtils.isNotEmpty(subordinates)){
-                        if(!StringUtils.containsIgnoreCase(originalSql,"where")){
-                            originalSql=originalSql+" where "+fieldId+" in ("+subordinates+")";
-                        }else if (originalSql.contains("where")){
-                            String[] sqlParts=originalSql.split("where");
-                            Assert.isTrue(sqlParts.length==2);
-                            originalSql=sqlParts[0]+"where "+fieldId+" in ("+subordinates+") and "+sqlParts[1];
-                        }else if (originalSql.contains("WHERE")){
-                            String[] sqlParts=originalSql.split("WHERE");
-                            Assert.isTrue(sqlParts.length==2);
-                            originalSql=sqlParts[0]+"WHERE "+fieldId+" in ("+subordinates+") and "+sqlParts[1];
-                        }
-                    }
-                }else if(selfData){
-                    if(!StringUtils.containsIgnoreCase(originalSql,"where")){
-                        originalSql=originalSql+" where "+fieldId+" in ("+me.getUserId()+")";
-                    }else if (originalSql.contains("where")){
-                        String[] sqlParts=originalSql.split("where");
-                        Assert.isTrue(sqlParts.length==2);
-                        originalSql=sqlParts[0]+"where "+fieldId+" in ("+me.getUserId()+") and "+sqlParts[1];
-                    }else if (originalSql.contains("WHERE")){
-                        String[] sqlParts=originalSql.split("WHERE");
-                        Assert.isTrue(sqlParts.length==2);
-                        originalSql=sqlParts[0]+"WHERE "+fieldId+" in ("+me.getUserId()+") and "+sqlParts[1];
-                    }
-                }else if (allData){}
-            }else if(filterType.equals(FilterType.JOIN.getType())){
-                if(StringUtils.isNotEmpty(joinSql)){
-                    if(!StringUtils.containsIgnoreCase(originalSql,"where")){
-                        originalSql=originalSql+" "+joinSql+ " where "+ fieldId+"="+me.getUserId();
-                    }else if (originalSql.contains("where")){
-                        String[] sqlParts=originalSql.split("WHERE");
-                        Assert.isTrue(sqlParts.length==2);
-                        originalSql=sqlParts[0]+joinSql+" where "+fieldId+"="+me.getUserId()+" and "+sqlParts[1];
-                    }else if (originalSql.contains("WHERE")){
-                        String[] sqlParts=originalSql.split("WHERE");
-                        Assert.isTrue(sqlParts.length==2);
-                        originalSql=sqlParts[0]+joinSql+" WHERE "+fieldId+"="+me.getUserId()+" and "+sqlParts[1];
-                    }
-                }
-            }
-        }
         Connection connection = (Connection) invocation.getArgs()[0];
         DbType dbType = StringUtils.isNotEmpty(dialectType) ? DbType.getDbType(dialectType)
                 : JdbcUtils.getDbType(connection.getMetaData().getURL());

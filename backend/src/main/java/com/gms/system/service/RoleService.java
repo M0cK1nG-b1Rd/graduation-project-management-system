@@ -11,13 +11,8 @@ public interface RoleService extends IService<Role> {
 
     IPage<Role> findRoles(Role role, QueryRequest request);
 
-    List<Role> findUserRole(String userName);
+    List<Role> findUserRole(String username);
 
     Role findByName(String roleName);
 
-    void createRole(Role role);
-
-    void deleteRoles(String[] roleIds) throws Exception;
-
-    void updateRole(Role role) throws Exception;
 }

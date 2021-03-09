@@ -5,14 +5,14 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@TableName("t_user_role")
+@TableName("user_role")
 @Data
 public class UserRole implements Serializable{
 	
 	private static final long serialVersionUID = -3166012934498268403L;
 
-	private Long userId;
+	private Integer userId;
 
-	private Long roleId;
+	private Integer roleId;
 
 }

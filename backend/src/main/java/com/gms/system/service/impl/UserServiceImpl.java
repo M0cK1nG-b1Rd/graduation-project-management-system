@@ -11,7 +11,6 @@ import com.gms.system.dao.UserRoleMapper;
 import com.gms.system.domain.User;
 import com.gms.system.domain.UserRole;
 import com.gms.system.manager.UserManager;
-import com.gms.system.service.UserConfigService;
 import com.gms.system.service.UserRoleService;
 import com.gms.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -36,8 +35,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserRoleMapper userRoleMapper;
-    @Autowired
-    private UserConfigService userConfigService;
     @Autowired
     private CacheService cacheService;
     @Autowired
@@ -64,61 +61,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
-    @Override
-    @Transactional
-    public void updateLoginTime(String username) throws Exception {
-        User user = new User();
-        user.setLastLoginTime(new Date());
 
-        this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
 
-        // 重新将用户信息加载到 redis中
-        cacheService.saveUser(username);
-    }
-
-    @Override
-    @Transactional
-    public void createUser(User user) throws Exception {
-        // 创建用户
-        user.setCreateTime(new Date());
-        user.setAvatar(User.DEFAULT_AVATAR);
-        user.setPassword(MD5Util.encrypt(user.getUsername(), User.DEFAULT_PASSWORD));
-        save(user);
-
-        // 保存用户角色
-        String[] roles = user.getRoleId().split(StringPool.COMMA);
-        setUserRoles(user, roles);
-        //查询用户角色
-
-        // 创建用户默认的个性化配置
-        userConfigService.initDefaultUserConfig(String.valueOf(user.getUserId()));
-
-        // 将用户相关信息保存到 Redis中
-        userManager.loadUserRedisCache(user);
-        //更新用户所在部门缓存
-        cacheService.saveUserSubordinates(user.getDeptId(),findSubordinates(user.getDeptId()));
-    }
-
-    @Override
-    @Transactional
-    public void updateUser(User user) throws Exception {
-        // 更新用户
-        user.setPassword(null);
-        user.setModifyTime(new Date());
-        updateById(user);
-
-        userRoleMapper.delete(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
-
-        String[] roles = user.getRoleId().split(StringPool.COMMA);
-        setUserRoles(user, roles);
-
-        // 重新将用户信息，用户角色信息，用户权限信息 加载到 redis中
-        cacheService.saveUser(user.getUsername());
-        cacheService.saveRoles(user.getUsername());
-        cacheService.savePermissions(user.getUsername());
-        //更新用户所在部门缓存
-        cacheService.saveUserSubordinates(user.getDeptId(),findSubordinates(user.getDeptId()));
-    }
 
     @Override
     @Transactional
@@ -132,30 +76,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         // 删除用户角色
         this.userRoleService.deleteUserRolesByUserId(userIds);
-        // 删除用户个性化配置
-        this.userConfigService.deleteByUserId(userIds);
     }
 
-    @Override
-    @Transactional
-    public void updateProfile(User user) throws Exception {
-        updateById(user);
-        // 重新缓存用户信息
-        cacheService.saveUser(user.getUsername());
-        //更新用户所在部门缓存
-        cacheService.saveUserSubordinates(user.getDeptId(),findSubordinates(user.getDeptId()));
-    }
-
-    @Override
-    @Transactional
-    public void updateAvatar(String username, String avatar) throws Exception {
-        User user = new User();
-        user.setAvatar(avatar);
-
-        this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUsername, username));
-        // 重新缓存用户信息
-        cacheService.saveUser(username);
-    }
 
     @Override
     @Transactional
@@ -170,29 +92,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional
-    public void regist(String username, String password) throws Exception {
+    public void register(String username, String password) throws Exception {
         User user = new User();
         user.setPassword(MD5Util.encrypt(username, AesEncryptUtil.desEncrypt(password)));
         user.setUsername(username);
-        user.setCreateTime(new Date());
-        user.setStatus(User.STATUS_LOCK);
-        user.setSsex(User.SEX_UNKNOW);
-        user.setAvatar(User.DEFAULT_AVATAR);
-        user.setDescription("注册用户");
         this.save(user);
 
         UserRole ur = new UserRole();
         ur.setUserId(user.getUserId());
-        ur.setRoleId(2L); // 注册用户角色 ID
+        ur.setRoleId(2); // 注册用户角色 ID
         this.userRoleMapper.insert(ur);
-
-        // 创建用户默认的个性化配置
-        userConfigService.initDefaultUserConfig(String.valueOf(user.getUserId()));
         //获取用户部门员工
         // 将用户相关信息保存到 Redis中
         userManager.loadUserRedisCache(user);
-        //更新用户所在部门缓存
-        cacheService.saveUserSubordinates(user.getDeptId(),findSubordinates(user.getDeptId()));
     }
 
     @Override
@@ -214,12 +126,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Arrays.stream(roles).forEach(roleId -> {
             UserRole ur = new UserRole();
             ur.setUserId(user.getUserId());
-            ur.setRoleId(Long.valueOf(roleId));
+            ur.setRoleId(Integer.valueOf(roleId));
             this.userRoleMapper.insert(ur);
         });
     }
-    @Override
-    public String findSubordinates(Long deptId){
-        return baseMapper.findSubordinates(deptId);
-    }
+
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RoleMapper extends BaseMapper<Role> {
 	
-	List<Role> findUserRole(String userName);
+	List<Role> findUserRole(String username);
 	
 }

@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@TableName("t_log")
+@TableName("sys_log")
 @Excel("系统日志表")
 public class SysLog implements Serializable {
 
