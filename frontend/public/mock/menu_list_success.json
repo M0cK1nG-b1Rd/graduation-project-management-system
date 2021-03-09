@@ -10,6 +10,16 @@
       "component": "",
       "children": [
         {
+          "name": "组件测试页面",
+          "id": 2222,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-loading",
+          "path": "/test",
+          "component": "",
+          "children": []
+        },
+        {
           "name": "用户管理",
           "id": 2,
           "disable": false,

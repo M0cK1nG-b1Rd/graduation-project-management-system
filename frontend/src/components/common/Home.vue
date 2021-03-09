@@ -166,7 +166,7 @@ i {
   position: sticky;
   top: 0;
   z-index: 99;
-  border-bottom: 1px solid #CCCCCC;
-  box-shadow: 0px 1px 100px #393e46;
+  /*border-bottom: 1px solid #CCCCCC;*/
+  /*box-shadow: 0px 1px 100px #393e46;*/
 }
 </style>

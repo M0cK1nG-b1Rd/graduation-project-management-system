@@ -4,6 +4,7 @@ import Login from '../components/login/Login'
 import Home from '../components/common/Home'
 import Welcome from '../components/common/Welcome'
 import Users from '@/components/system/Users'
+import Test from '@/components/system/Test'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes = [
       {
         path: '/sys/user',
         component: Users
+      },
+      // 系统管理-测试组件
+      {
+        path: '/test',
+        component: Test
       }
     ]
   }
