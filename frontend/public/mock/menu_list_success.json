@@ -1,0 +1,323 @@
+{
+  "data": [
+    {
+      "name": "系统管理",
+      "id": 1,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-setting",
+      "path": "/sys",
+      "component": "",
+      "children": [
+        {
+          "name": "用户管理",
+          "id": 2,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-user",
+          "path": "/sys/user",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "角色管理",
+          "id": 3,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-user-solid",
+          "path": "/sys/role",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "权限管理",
+          "id": 4,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-key",
+          "path": "/sys/perm",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "菜单管理",
+          "id": 5,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/sys/menu",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "阶段控制",
+          "id": 6,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-data-line",
+          "path": "/sys/stage",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "公告管理",
+      "id": 7,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-chat-line-square",
+      "path": "/notice",
+      "component": "",
+      "children": [
+        {
+          "name": "管理公告",
+          "id": 8,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-check",
+          "path": "/notice/manage",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "查看公告",
+          "id": 9,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-view",
+          "path": "/notice/view",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "校外毕设",
+      "id": 10,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-school",
+      "path": "/offschool",
+      "component": "",
+      "children": [
+        {
+          "name": "提交申请",
+          "id": 11,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-document",
+          "path": "/offschool/request",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教师初审核",
+          "id": 121,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-check",
+          "path": "/offschool/judge/teacher",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教研室终审",
+          "id": 13,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-circle-check",
+          "path": "/offschool/judge/final",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "审核结果",
+          "id": 131,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-postcard",
+          "path": "/offschool/result",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "过程监督",
+      "id": 28,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-data-line",
+      "path": "/process",
+      "component": "",
+      "children": []
+    },
+    {
+      "name": "出题管理",
+      "id": 14,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-s-management",
+      "path": "/subject/apply",
+      "component": "",
+      "children": [
+        {
+          "name": "教师出题",
+          "id": 15,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-custom",
+          "path": "/subject/apply/teacher",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "自拟课题",
+          "id": 16,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-user",
+          "path": "/subject/apply/stu",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教师审题",
+          "id": 17,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-check",
+          "path": "/subject/judge/teacher",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教研室审题",
+          "id": 18,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-circle-check",
+          "path": "/subject/judge/final",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "审核状态",
+          "id": 181,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-wallet",
+          "path": "/subject/apply/result",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "选题管理",
+      "id": 19,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-thumb",
+      "path": "/subject/select",
+      "component": "",
+      "children": [
+        {
+          "name": "查看所有课题",
+          "id": 20,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-menu",
+          "path": "/subject/all",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "学生选题申请",
+          "id": 21,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-edit-outline",
+          "path": "/subject/select/apply",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教师审核",
+          "id": 22,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-check",
+          "path": "/subject/select/judge/teacher",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "教研室审核",
+          "id": 23,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-circle-check",
+          "path": "/subject/select/judge/final",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "查看互选信息",
+          "id": 24,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-view",
+          "path": "/subject/select/result",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "开题管理",
+      "id": 25,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-video-play",
+      "path": "/initial",
+      "component": "",
+      "children": []
+    },
+    {
+      "name": "中期管理",
+      "id": 26,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-time",
+      "path": "/middle",
+      "component": "",
+      "children": []
+    },
+    {
+      "name": "结题管理",
+      "id": 27,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-timer",
+      "path": "/conclusion",
+      "component": "",
+      "children": []
+    },
+    {
+      "name": "统计报表",
+      "id": 218,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-data-line",
+      "path": "/statics",
+      "component": "el-icon-data-analysis",
+      "children": []
+    }
+  ],
+  "meta": {
+    "msg": "成功获取菜单列表！",
+    "status": 200
+  }
+}

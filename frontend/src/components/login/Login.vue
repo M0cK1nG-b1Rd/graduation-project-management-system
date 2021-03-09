@@ -7,7 +7,11 @@
       <div class="login_box">
         <!--      登陆表框头像Logo区域-->
         <div class="avatar_box">
-          <img src="../assets/imgs/login_logo.jpg" alt="">
+          <img src="../../assets/imgs/login_logo.jpg" alt="">
+        </div>
+        <!--        登陆表单系统名称-->
+        <div class="login_title">
+          快乐毕设管理系统
         </div>
         <!--      登陆表单区域-->
         <el-form label-width="0px" class="login_form"
@@ -92,7 +96,7 @@ export default {
 .login_container {
   /* 设置背景图片，并铺满整个页面*/
   /* 参看网址： https://www.php.cn/css-tutorial-410405.html*/
-  background-image: url("../assets/imgs/login_background.jpg");
+  background-image: url("../../assets/imgs/login_backgrond_01.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
@@ -119,6 +123,8 @@ export default {
   box-shadow: 0 0 20px;
   left: 50%;
   top: 50%;
+  /*实现登录框半透明*/
+  background-color: rgba(255, 255, 255, 0.5);
   transform: translate(-50%, -50%);
 }
 
@@ -140,11 +146,15 @@ img {
   height: 100%;
   border-radius: 50%;
 }
-
-/*底部按钮，右侧对齐*/
-.btns {
-  display: flex;
-  justify-content: flex-end;
+/*登录表单上方系统名称*/
+.login_title{
+  position: absolute;
+  left: 25%;
+  top: 22%;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: Microsoft YaHei;
+  text-shadow: 1px 1px 0 #E4FFFF;
 }
 
 .login_form {
@@ -153,5 +163,10 @@ img {
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
+}
+/*底部按钮，右侧对齐*/
+.btns {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
