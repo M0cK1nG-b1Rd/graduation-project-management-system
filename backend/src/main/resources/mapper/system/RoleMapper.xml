@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.system.dao.RoleMapper">
+    <resultMap id="roleMap" type="com.gms.system.domain.Role">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
+    </resultMap>
+
+    <select id="findUserRole" resultMap="roleMap">
+        SELECT role.*
+        FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID)
+                  LEFT JOIN user on (user.USER_ID = user_role.USER_ID)
+        where user.USERNAME = #{username}
+    </select>
+
+</mapper>
