@@ -3,6 +3,7 @@ package com.gms.system.controller;
 import com.gms.common.annotation.Log;
 import com.gms.common.controller.BaseController;
 import com.gms.common.domain.GmsResponse;
+import com.gms.common.domain.Meta;
 import com.gms.common.domain.QueryRequest;
 import com.gms.common.exception.GmsException;
 import com.gms.common.utils.AesEncryptUtil;
@@ -23,6 +24,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
+
+import static com.gms.common.exception.code.Code.C200;
 
 @Slf4j
 @Validated
@@ -89,7 +92,7 @@ public class UserController extends BaseController {
         try {
             String[] ids = userIds.split(StringPool.COMMA);
             this.userService.deleteUsers(ids);
-            return new GmsResponse().code("200").message("删除用户成功").status("success");
+            return new GmsResponse().addCodeMessage(new Meta(C200.getCode(),C200.getDesc(),"删除用户成功"));
         } catch (Exception e) {
             message = "删除用户失败";
             log.error(message, e);
@@ -116,7 +119,7 @@ public class UserController extends BaseController {
             @NotBlank(message = "{required}") String password) throws GmsException {
         try {
             userService.updatePassword(username, AesEncryptUtil.desEncrypt(password));
-            return new GmsResponse().code("200").message("修改密码成功").status("success");
+            return new GmsResponse().addCodeMessage(new Meta(C200.getCode(),C200.getDesc(),"修改密码成功"));
         } catch (Exception e) {
             message = "修改密码失败";
             log.error(message, e);
@@ -130,7 +133,7 @@ public class UserController extends BaseController {
         try {
             String[] usernameArr = usernames.split(StringPool.COMMA);
             this.userService.resetPassword(usernameArr);
-            return new GmsResponse().code("200").message("重置用户密码成功").status("success");
+            return new GmsResponse().addCodeMessage(new Meta(C200.getCode(),C200.getDesc(),"重置用户密码成功"));
         } catch (Exception e) {
             message = "重置用户密码失败";
             log.error(message, e);

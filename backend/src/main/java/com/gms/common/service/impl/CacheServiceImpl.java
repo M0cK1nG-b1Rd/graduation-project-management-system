@@ -63,10 +63,9 @@ public class CacheServiceImpl implements CacheService {
             return this.mapper.readValue(roleListString, type);
         }
     }
-    //todo 更正redis
     @Override
     public List<Menu> getPermissions(String username) throws Exception {
-        String permissionListString = this.redisService.get(GmsConstant.USER_PERMISSION_CACHE_PREFIX + username);
+        String permissionListString = this.redisService.get(GmsConstant.USER_ALL_PERMISSION_CACHE_PREFIX + username);
         if (StringUtils.isBlank(permissionListString)) {
             throw new Exception();
         } else {
@@ -77,7 +76,7 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public List<Menu> getPermissionsWithStage(String username) throws Exception {
-        String permissionListString = this.redisService.get(GmsConstant.USER_PERMISSION_CACHE_PREFIX + username);
+        String permissionListString = this.redisService.get(GmsConstant.USER_CURR_PERMISSION_CACHE_PREFIX + username);
         if (StringUtils.isBlank(permissionListString)) {
             throw new Exception();
         } else {
@@ -113,10 +112,19 @@ public class CacheServiceImpl implements CacheService {
 
     @Override
     public void savePermissions(String username) throws Exception {
+        List<Menu> permissionList = this.menuService.findUserPermissions(username);
+        if (!permissionList.isEmpty()) {
+            this.deletePermissions(username);
+            redisService.set(GmsConstant.USER_ALL_PERMISSION_CACHE_PREFIX + username, mapper.writeValueAsString(permissionList));
+        }
+    }
+
+    @Override
+    public void savePermissionsWithStage(String username) throws Exception {
         List<Menu> permissionList = this.menuService.findUserPermissionsWithStage(username);
         if (!permissionList.isEmpty()) {
             this.deletePermissions(username);
-            redisService.set(GmsConstant.USER_PERMISSION_CACHE_PREFIX + username, mapper.writeValueAsString(permissionList));
+            redisService.set(GmsConstant.USER_CURR_PERMISSION_CACHE_PREFIX + username, mapper.writeValueAsString(permissionList));
         }
     }
 
@@ -135,7 +143,13 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void deletePermissions(String username) throws Exception {
         username = username.toLowerCase();
-        redisService.del(GmsConstant.USER_PERMISSION_CACHE_PREFIX + username);
+        redisService.del(GmsConstant.USER_ALL_PERMISSION_CACHE_PREFIX + username);
+    }
+
+    @Override
+    public void deletePermissionsWithStage(String username) throws Exception {
+        username = username.toLowerCase();
+        redisService.del(GmsConstant.USER_CURR_PERMISSION_CACHE_PREFIX + username);
     }
 
     @Override

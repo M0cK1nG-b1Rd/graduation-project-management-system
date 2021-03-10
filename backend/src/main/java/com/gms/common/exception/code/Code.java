@@ -26,7 +26,7 @@ public enum Code {
     /*
     Not Modified：客户端使用缓存数据
      */
-    C301(304, "Not Modified"),
+    C301(301, "Not Modified"),
     /*
     INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。
      */

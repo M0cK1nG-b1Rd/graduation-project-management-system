@@ -42,13 +42,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return this.baseMapper.findUserMenus(realName);
     }
 
-    // todo 修改函数
+    @Override
+    public List<Menu> findUserMenusWithStage(String realName) {
+        return this.baseMapper.findUserMenusWithStage(realName);
+    }
+
     @Override
     public Map<String, Object> findMenus(Menu menu) {
         Map<String, Object> result = new HashMap<>();
         try {
             LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-            findMenuCondition(queryWrapper, menu);
             List<Menu> menus = baseMapper.selectList(queryWrapper);
 
             List<Tree<Menu>> trees = new ArrayList<>();
@@ -76,7 +79,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<Menu> findMenuList(Menu menu) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-        findMenuCondition(queryWrapper, menu);
         queryWrapper.orderByAsc(Menu::getMenuId);
         return this.baseMapper.selectList(queryWrapper);
     }
@@ -117,10 +119,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             ids.add(menu.getMenuId().toString());
             Tree<Menu> tree = new Tree<>();
             tree.setId(menu.getMenuId().toString());
-            tree.setKey(tree.getId());
             tree.setParentId(menu.getParentId().toString());
             tree.setText(menu.getMenuName());
-            tree.setTitle(tree.getText());
             tree.setComponent(menu.getComponent());
             tree.setPath(menu.getPath());
             tree.setOrder(menu.getOrderNum());
@@ -135,15 +135,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (Menu.TYPE_BUTTON.equals(menu.getType())) {
             menu.setPath(null);
             menu.setComponent(null);
-        }
-    }
-
-    private void findMenuCondition(LambdaQueryWrapper<Menu> queryWrapper, Menu menu) {
-        if (StringUtils.isNotBlank(menu.getMenuName())) {
-            queryWrapper.eq(Menu::getMenuName, menu.getMenuName());
-        }
-        if (StringUtils.isNotBlank(menu.getType())) {
-            queryWrapper.eq(Menu::getType, menu.getType());
         }
     }
 

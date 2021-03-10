@@ -15,30 +15,35 @@
     </resultMap>
 
     <select id="findUserPermissionsWithStage" resultMap="menu">
-        SELECT DISTINCT PERMS FROM role_stage_perms
-                JOIN user_role ON(role_stage_perms.ROLE_ID=user_role.ROLE_ID)
-                JOIN user_stage ON(role_stage_perms.STAGE= user_stage.STAGE
-                                       OR role_stage_perms.STAGE=(SELECT CURR_STAGE FROM system_stage))
-                JOIN user ON(user.USER_ID=user_stage.USER_ID)
-        WHERE USERNAME=#{username}
+        SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp
+                        JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID)
+                        JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage))
+                        JOIN user u ON(u.USER_ID=ur.USER_ID)
+        WHERE u.USERNAME=#{username}
     </select>
 
     <select id="findUserPermissions" resultType="com.gms.system.domain.Menu">
-        SELECT DISTINCT PERMS FROM role_stage_perms
-                                       JOIN user_role ON(role_stage_perms.ROLE_ID=user_role.ROLE_ID)
-                                       JOIN user ON(user.USER_ID=user_role.USER_ID)
-        WHERE USERNAME=#{username}
-
+        SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp
+                        JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID)
+                        JOIN user u ON(u.USER_ID=ur.USER_ID)
+        WHERE u.USERNAME=#{username}
     </select>
 
 
     <select id="findUserMenus" resultMap="menu">
-        SELECT DISTINCT menu.* FROM role_stage_perms
-                                        JOIN user_role ON(role_stage_perms.ROLE_ID=user_role.ROLE_ID)
-                                        JOIN user_stage ON(role_stage_perms.STAGE= user_stage.STAGE
-            OR role_stage_perms.STAGE=(SELECT CURR_STAGE FROM system_stage))
-                                        JOIN user ON(user.USER_ID=user_stage.USER_ID)
-                                        JOIN menu ON(menu.PERMS=role_stage_perms.PERMS)
+        SELECT DISTINCT m.* FROM role_stage_perms rsp
+                        JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID)
+                        JOIN user u ON(u.USER_ID=ur.USER_ID)
+                        JOIN menu m ON(rsp.PERMS=m.PERMS)
+        WHERE USERNAME=#{username}
+    </select>
+
+    <select id="findUserMenusWithStage" resultMap="menu">
+        SELECT DISTINCT m.* FROM role_stage_perms rsp
+                        JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID)
+                        JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage))
+                        JOIN user u ON(u.USER_ID=ur.USER_ID)
+                        JOIN menu m ON(rsp.PERMS=m.PERMS)
         WHERE USERNAME=#{username}
     </select>
 

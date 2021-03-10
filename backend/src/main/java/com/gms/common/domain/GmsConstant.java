@@ -9,8 +9,10 @@ public class GmsConstant {
     public static final String USER_CACHE_PREFIX = "gms.cache.user.";
     // user角色缓存前缀
     public static final String USER_ROLE_CACHE_PREFIX = "gms.cache.user.role.";
-    // user权限缓存前缀
-    public static final String USER_PERMISSION_CACHE_PREFIX = "gms.cache.user.permission.";
+    // user当前权限缓存前缀
+    public static final String USER_CURR_PERMISSION_CACHE_PREFIX = "gms.cache.user.permission.curr.";
+    // user全部权限缓存前缀
+    public static final String USER_ALL_PERMISSION_CACHE_PREFIX = "gms.cache.user.permission.all.";
     // user部门数据权限缓存前缀
     public static final String USER_PERMISSION_DEPT_DATA_CACHE_PREFIX = "gms.cache.user.dept.data.permission.";
     // user个性化配置前缀
@@ -31,17 +33,5 @@ public class GmsConstant {
     // 菜单
     public static final String TYPE_MENU = "0";
 
-    // 网络资源 Url
-    public static final String MEIZU_WEATHER_URL = "http://aider.meizu.com/app/weather/listWeather";
-    public static final String MRYW_TODAY_URL = "https://interface.meiriyiwen.com/article/today";
-    public static final String MRYW_DAY_URL = "https://interface.meiriyiwen.com/article/day";
-    public static final String TIME_MOVIE_HOT_URL = "https://api-m.mtime.cn/Showtime/LocationMovies.api";
-    public static final String TIME_MOVIE_DETAIL_URL = "https://ticket-api-m.mtime.cn/movie/detail.api";
-    public static final String TIME_MOVIE_COMING_URL = "https://api-m.mtime.cn/Movie/MovieComingNew.api";
-    public static final String TIME_MOVIE_COMMENTS_URL = "https://ticket-api-m.mtime.cn/movie/hotComment.api";
-    //数据范围权限
-    public static final int DATA_FILTER_ALL=0;
-    public static final int DATA_FILTER_DEPT=1;
-    public static final int DATA_FILTER_OWN=2;
 
 }

@@ -1,6 +1,7 @@
 package com.gms.common.handler;
 
 import com.gms.common.domain.GmsResponse;
+import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.LimitAccessException;
 import com.gms.common.exception.code.Code;
@@ -43,21 +44,21 @@ public class GlobalExceptionHandler {
     public GmsResponse handleException(Exception e) {
         log.error("系统内部异常，异常信息：", e);
         String message=e instanceof GmsException?e.getMessage(): Code.C500.getDesc();
-        return new GmsResponse().message(message).code(Code.C500.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C500.getCode(),ResponseStat.ERROR.getText(),message));
 
     }
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public GmsResponse handleHttpRequestMethodNotSupportedException(Exception e) {
         log.error("HTTP请求方式不被支持：", e);
-        return new GmsResponse().message(Code.C405.getDesc()).code(Code.C405.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C405.getCode(),ResponseStat.ERROR.getText(),Code.C405.getDesc()));
     }
 
     @ExceptionHandler(value = NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public GmsResponse handleNoHandlerFoundException(Exception e) {
         log.error("HTTP请求内容未找到：", e);
-        return new GmsResponse().message(Code.C404.getDesc()).code(Code.C404.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C404.getCode(),ResponseStat.ERROR.getText(),Code.C404.getDesc()));
     }
 
 
@@ -90,8 +91,7 @@ public class GlobalExceptionHandler {
         }else{
             message.append(e.getMessage());
         }
-
-        return new GmsResponse().message(message.toString()).code(Code.C400.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C400.getCode(),ResponseStat.ERROR.getText(),message.toString()));
 
     }
 
@@ -99,26 +99,26 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     public GmsResponse handleLimitAccessException(LimitAccessException e) {
         log.warn(e.getMessage());
-        return new GmsResponse().message(e.getMessage()).code(Code.C429.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C429.getCode(),ResponseStat.ERROR.getText(),e.getMessage()));
     }
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     public GmsResponse handleHttpMediaTypeNotSupportedException(Exception e) {
         log.warn(e.getMessage());
-        return new GmsResponse().message(Code.C415.getDesc()).code(Code.C415.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C415.getCode(),ResponseStat.ERROR.getText(),Code.C415.getDesc()));
     }
 
     @ExceptionHandler({NotAcceptableStatusException.class, HttpMediaTypeNotAcceptableException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public GmsResponse handleNotAcceptableException(Exception e) {
         log.warn(e.getMessage());
-        return new GmsResponse().message(Code.C406.getDesc()).code(Code.C406.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C406.getCode(),ResponseStat.ERROR.getText(),Code.C406.getDesc()));
     }
 
     @ExceptionHandler(value = UnauthorizedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public GmsResponse handleUnauthorizedException(Exception e) {
         log.error("权限不足，{}", e.getMessage());
-        return new GmsResponse().message(Code.C401.getDesc()).code(Code.C401.getCode().toString()).status(ResponseStat.ERROR.getText());
+        return new GmsResponse().addCodeMessage(new Meta(Code.C401.getCode(),ResponseStat.ERROR.getText(),Code.C401.getDesc()));
     }
 }

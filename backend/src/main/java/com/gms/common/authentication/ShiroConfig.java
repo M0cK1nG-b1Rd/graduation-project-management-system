@@ -31,8 +31,8 @@ public class ShiroConfig {
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 所有请求都要经过 jwt过滤器
-        filterChainDefinitionMap.put("/**", "jwt");
-
+//        filterChainDefinitionMap.put("/**", "jwt");
+        filterChainDefinitionMap.put("/fsafsdfafsdaf", "jwt");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
