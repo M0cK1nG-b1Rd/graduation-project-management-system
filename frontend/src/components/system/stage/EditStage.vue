@@ -1,0 +1,103 @@
+<template>
+  <div>
+<!--    编辑表单框-->
+    <el-row :gutter="20">
+      <el-col :span="20" :offset="2">
+        <el-form label-width="80px" size="mini">
+          <el-form-item label="阶段名称">
+            <el-col :span="14">
+              <el-select v-model="editingStageId" filterable clearable @change="updateForm"
+                         :size="'small'" placeholder="请选择需要编辑的阶段">
+                <el-option
+                  v-for="item in allStageInfo"
+                  :key="item.stageId"
+                  :label="item.stageName"
+                  :value="item.stageId">
+                </el-option>
+              </el-select>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="开始时间">
+            <el-col :span="8">
+              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.startTime" style="width: 100%;"></el-date-picker>
+            </el-col>
+            <el-col :span="8">
+              <el-time-picker placeholder="选择时间" v-model="smallTime" disabled style="width: 100%;"></el-time-picker>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="截止时间">
+            <el-col :span="8">
+              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.endTime" style="width: 100%;"></el-date-picker>
+            </el-col>
+            <el-col :span="8">
+              <el-time-picker placeholder="选择时间" v-model="smallTime" disabled style="width: 100%;"></el-time-picker>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="阶段描述">
+            <el-col :span="16">
+              <el-input type="textarea" :rows="6" v-model="editingForm.description"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item size="mini">
+            <el-button type="primary" @click="submitEdit">提交编辑</el-button>
+            <el-button @click="resetForm">取消修改</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'EditStage',
+  data() {
+    return {
+      // 所有阶段的信息
+      allStageInfo: [],
+      // 当前正在编辑的阶段Id
+      editingStageId: '',
+      // 编辑表单信息
+      editingForm: {
+        stageId: 0,
+        stageName: '',
+        description: '',
+        isCurrent: '',
+        startTime: '',
+        endTime: ''
+      },
+      smallTime: '23:59:59'
+    }
+  },
+  created() {
+    this.getAllStageInfo()
+  },
+  methods: {
+    // 获取所有阶段信息
+    async getAllStageInfo() {
+      const { data: res } = await this.$http.get('/mock/current_stage.json')
+      if (res.meta.code !== 200) return this.$message.error('请求阶段信息失败！')
+      this.allStageInfo = res.data.allStage
+      this.currentStageId = res.data.currentStageId
+      this.totalStageNum = res.data.totalStageNum
+    },
+    // 当选中阶段变化时，更新表单内容
+    updateForm() {
+      this.editingForm = this.allStageInfo[this.editingStageId]
+    },
+    // 提交表单修改结果
+    submitEdit() {
+      // TODO 向后端发送put
+    },
+    // 重置表单内容
+    async resetForm() {
+      await this.getAllStageInfo()
+      this.editingForm = this.allStageInfo[this.editingStageId]
+    }
+  }
+}
+</script>
+
+<style Lang="less" scoped>
+
+</style>

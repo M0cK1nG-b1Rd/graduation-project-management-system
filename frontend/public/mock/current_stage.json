@@ -1,0 +1,117 @@
+{
+  "data": {
+    "allStage": [
+      {
+        "stageId": 0,
+        "stageName": "课题申报",
+        "description": "在该阶段，教师及学生(自拟课题)可以在系统中提交申报毕业设计课题申请，逾期不可进行提交",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 1,
+        "stageName": "课题申报审核",
+        "description": "在该阶段，教研室对所有申报的课题进行审核，课题状态包含’待审核‘、’审核通过‘、’被驳回‘三种状态。对于'审核通过'及‘被驳回’的课题，向申请者发送消息。对于’被驳回‘的课题，可以在整改阶段进行编辑整改，已通过及待审核状态下，不可进行编辑。",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 2,
+        "stageName": "被驳回课题整改",
+        "description": "在该阶段，审核未通过的课题可以进行重新编辑整改，然后再次提交申请",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 3,
+        "stageName": "学生提交选题申请",
+        "description": "在该阶段，学生可以查看所有可选课题信息，然后选择心仪课题进行申请。学生可以随时查看申请审核状态（待审核、审核通过、被驳回）,审核状态变化时，系统向学生发送通知信息告知。当申请被驳回时可再次申请其他课题",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 4,
+        "stageName": "教师审核学生申请",
+        "description": "在该阶段，教师对学生提出的选题申请进行审核，需在规定时间内完成审核，审核结束前2天，讲发送信息提醒教师进行审核",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 5,
+        "stageName": "开题报告及材料提交",
+        "description": "在该阶段，学生可以在系统提交开题报告及与开题相关的材料。",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 6,
+        "stageName": "开题答辩",
+        "description": "在该阶段，学生、老师、答辩秘书按照教研室安排组织进行开题答辩。",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 7,
+        "stageName": "开题阶段收尾",
+        "description": "在该阶段，指导教师对学生开题报告进行评阅；答辩秘书录入开题答辩结果",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 8,
+        "stageName": "中期检查材料提交",
+        "description": "在该阶段，学生需在系统提交中期报告及阶段成果，通过后方可获得答辩资格",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 9,
+        "stageName": "中期答辩",
+        "description": "在该阶段，学生、老师、答辩秘书按照教研室安排组织进行开题答辩。",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 10,
+        "stageName": "中期阶段收尾",
+        "description": "在该阶段，指导教师对学生开题报告进行评阅；答辩秘书录入中期答辩结果",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 11,
+        "stageName": "结题材料提交",
+        "description": "在该阶段，学生提交毕业论文、最终成果物及结题报告",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      },
+      {
+        "stageId": 12,
+        "stageName": "结题收尾工作",
+        "description": "在该阶段，教师对学生毕业论文进行交叉评审并录入结果，答辩秘书录入结题答辩结果",
+        "isCurrent": 0,
+        "startTime": "2021-01-01",
+        "endTime": "2021-02-02"
+      }
+    ],
+    "currentStageId": [3, 4],
+    "totalStageNum": 13
+  },
+  "meta": {
+    "msg": "请求当前阶段信息成功！",
+    "code": 200,
+    "status": "成功"
+  }
+}

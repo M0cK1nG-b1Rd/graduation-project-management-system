@@ -4,3 +4,12 @@ html, body, #app {
     margin: 0;
     padding: 0;
 }
+/*面包屑导航区下方设置一个间隔*/
+.el-breadcrumb{
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+/*设置卡片阴影*/
+.el-card{
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}

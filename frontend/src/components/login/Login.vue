@@ -41,6 +41,10 @@
           </el-form-item>
         </el-form>
       </div>
+<!--      &lt;!&ndash;    底部动态特效&ndash;&gt;-->
+<!--      <div class="decoration">-->
+<!--        <dv-decoration-6 />-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -168,5 +172,12 @@ img {
 .btns {
   display: flex;
   justify-content: flex-end;
+}
+/*底部特效*/
+decoration{
+  width:100px;
+  height:30px;
+  left: 50%;
+  transform: translate(-50%);
 }
 </style>
