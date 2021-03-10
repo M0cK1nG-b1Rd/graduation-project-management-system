@@ -4,22 +4,12 @@ import java.util.HashMap;
 
 public class GmsResponse extends HashMap<String, Object> {
 
-    private static final long serialVersionUID = -8713837118340960775L;
 
-    public GmsResponse message(String message) {
-        this.put("message", message);
+    public GmsResponse meta(Meta meta) {
+        this.put("meta", meta);
         return this;
     }
 
-    public GmsResponse code(String code) {
-        this.put("code", code);
-        return this;
-    }
-
-    public GmsResponse status(String status) {
-        this.put("status", status);
-        return this;
-    }
 
     public GmsResponse data(Object data) {
         this.put("data", data);
@@ -32,18 +22,14 @@ public class GmsResponse extends HashMap<String, Object> {
         return this;
     }
 
-    public GmsResponse addCodeMessage(Integer code,String message,String status,Object data) {
-        this.put("code", code);
-        this.put("message", message);
-        this.put("status", status);
+    public GmsResponse addCodeMessage(Meta meta,Object data) {
+        this.put("meta", meta);
         this.put("data", data);
         return this;
     }
 
-    public GmsResponse addCodeMessage(Integer code,String message,String status) {
-        this.put("code", code);
-        this.put("message", message);
-        this.put("status", status);
+    public GmsResponse addCodeMessage(Meta meta) {
+        this.put("meta", meta);
         return this;
     }
 }

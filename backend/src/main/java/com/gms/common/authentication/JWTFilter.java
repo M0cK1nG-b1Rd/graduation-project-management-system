@@ -1,6 +1,7 @@
 package com.gms.common.authentication;
 
 import com.gms.common.domain.GmsResponse;
+import com.gms.common.domain.Meta;
 import com.gms.common.exception.code.Code;
 import com.gms.common.handler.ResponseStat;
 import com.gms.common.properties.GmsProperties;
@@ -96,7 +97,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setContentType("application/json; charset=utf-8");
         final String message = "未认证，请在前端系统进行认证";
         try (PrintWriter out = httpResponse.getWriter()) {
-            GmsResponse tandemResponse=new GmsResponse().message(Code.C401.getDesc()).code(Code.C401.getCode().toString()).status(ResponseStat.ERROR.getText());
+            GmsResponse tandemResponse=new GmsResponse().addCodeMessage(new Meta(Code.C401.getCode(),ResponseStat.ERROR.getText(),Code.C401.getDesc()));
             String json = SpringContextUtil.getBean("jacksonObjectMapper",ObjectMapper.class).writeValueAsString(tandemResponse);
             System.out.println(json);
             out.print(json);

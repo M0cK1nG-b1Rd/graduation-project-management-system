@@ -70,11 +70,18 @@ public interface CacheService {
     void saveRoles(String username) throws Exception;
 
     /**
-     * 缓存用户权限信息
+     * 缓存用户全部权限信息
      *
      * @param username 用户名
      */
     void savePermissions(String username) throws Exception;
+
+    /**
+     * 缓存用户当前权限信息
+     *
+     * @param username 用户名
+     */
+    void savePermissionsWithStage(String username) throws Exception;
 
     /**
      * 删除用户信息
@@ -91,11 +98,18 @@ public interface CacheService {
     void deleteRoles(String username) throws Exception;
 
     /**
-     * 删除用户权限信息
+     * 删除用户当前阶段权限信息
      *
      * @param username 用户名
      */
     void deletePermissions(String username) throws Exception;
+
+    /**
+     * 删除用户全部权限信息
+     *
+     * @param username 用户名
+     */
+    void deletePermissionsWithStage(String username) throws Exception;
 
     /**
      * 删除用户个性化配置

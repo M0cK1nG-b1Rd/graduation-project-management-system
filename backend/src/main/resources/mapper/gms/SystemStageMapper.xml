@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.SystemStageMapper">
+    <update id="enableStages">
+        UPDATE system_stage SET IS_CURRENT=1
+        WHERE STAGE_ID IN
+        <foreach collection="list" index="index" item="currStageId" open="(" separator="," close=")">
+            #{currStageId}
+        </foreach>
+    </update>
+    <update id="disableAllStage">
+        UPDATE system_stage SET IS_CURRENT=0
+    </update>
+
+
+    <select id="getCurrSystemStage" resultType="com.gms.gms.domain.SystemStage">
+
+    </select>
+    <select id="getSystemStageNum" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM system_stage;
+    </select>
+</mapper>

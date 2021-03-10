@@ -29,11 +29,13 @@ public class VueRouter<T> implements Serializable {
 
     private String component;
 
-    private String icon;
+//    private String icon;
 
     private String redirect;
 
-    private RouterMeta meta;
+//    private RouterMeta meta;
+
+    private String disable;
 
     private List<VueRouter<T>> children;
 

@@ -20,6 +20,8 @@ public interface MenuService extends IService<Menu> {
 
     void createMenu(Menu menu);
 
+    List<Menu> findUserMenusWithStage(String username);
+
 //    void updateMenu(Menu menu) throws Exception;
 
     /**

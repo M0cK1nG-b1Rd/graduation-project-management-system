@@ -33,7 +33,10 @@ public class RedisServiceImpl implements RedisService {
      * @return 处理结果
      */
     private <T> T executeByJedis(JedisExecutor<Jedis, T> j) throws RedisConnectException {
+        // ()中的代码一般放的是对资源的申请，如果{}中的代码出项了异常，（）中的资源就会被关闭
         try (Jedis jedis = jedisPool.getResource()) {
+            //暂时更改数据库，为了测试
+            jedis.select(1);
             return j.execute(jedis);
         } catch (Exception e) {
             throw new RedisConnectException(e.getMessage());

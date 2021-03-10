@@ -77,9 +77,9 @@ public class TreeUtil {
         router.setName("系统主页");
         router.setPath("/home");
         router.setComponent("HomePageView");
-        router.setIcon("home");
+//        router.setIcon("home");
+        router.setDisable("false");
         router.setChildren(null);
-        router.setMeta(new RouterMeta(false, true));
         topRoutes.add(router);
 
         routes.forEach(route -> {
@@ -101,19 +101,13 @@ public class TreeUtil {
                 }
             }
         });
-        router = new VueRouter<>();
-        router.setPath("/profile");
-        router.setName("个人中心");
-        router.setComponent("personal/Profile");
-        router.setIcon("none");
-        router.setMeta(new RouterMeta(true, false));
-        topRoutes.add(router);
 
         ArrayList<VueRouter<T>> list = new ArrayList<>();
         VueRouter<T> root = new VueRouter<>();
         root.setName("主页");
         root.setComponent("MenuView");
-        root.setIcon("none");
+//        root.setIcon("none");
+        root.setDisable("false");
         root.setPath("/");
         root.setRedirect("/home");
         root.setChildren(topRoutes);
