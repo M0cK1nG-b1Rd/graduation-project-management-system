@@ -1,37 +1,27 @@
 <template>
-  <div style="height: 100%">
-    <el-container style="height: 100%">
-      <!--    头部区域-->
+  <el-container style="height: 100%">
+    <!--      侧边栏-->
+    <el-aside :width="isCollapsed ? '64px' : '220px'" class="sider_zone">
+          <my-sider @MenuCollapse="toggleCollapse"></my-sider>
+    </el-aside>
+    <el-container>
       <el-header :height="'8%'" class="header_box">
-        <my-header @MenuCollapse="toggleCollapse"></my-header>
+        <my-header></my-header>
       </el-header>
-      <el-container>
-        <!--      侧边栏-->
-        <el-aside :width="isCollapsed ? '64px' : '220px'">
-          <div class="outer_div">
-            <div class="inner_div">
-              <!--        菜单区-->
-              <my-menu :isCollapsed="isCollapsed"></my-menu>
-            </div>
-          </div>
-        </el-aside>
-        <el-container>
-          <!--    页面主区域-->
-          <el-main>
-            <my-main></my-main>
-          </el-main>
-          <!--    底部区域-->
-          <el-footer>
-            <my-footer :copyright="copyright" style="padding: .29rem 0" class="copyright"/>
-          </el-footer>
-        </el-container>
-      </el-container>
+      <!--    页面主区域-->
+      <el-main class="right_zone">
+        <my-main></my-main>
+      </el-main>
+      <!--    底部区域-->
+      <el-footer>
+        <my-footer :copyright="copyright" style="padding: .29rem 0" class="copyright"/>
+      </el-footer>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script>
-import myMenu from './Sider'
+import mySider from './Sider'
 import myHeader from './Header'
 import myFooter from './Footer'
 import myMain from './MainPage'
@@ -39,7 +29,7 @@ import myMain from './MainPage'
 export default {
   name: 'Home',
   components: {
-    myMenu,
+    mySider,
     myHeader,
     myFooter,
     myMain
@@ -64,7 +54,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style Lang="less" scoped>
 .home-container {
   height: 100%;
 }
@@ -136,30 +126,18 @@ i {
   /*padding-right: 0;*/
 }
 /*隐藏菜单栏滚动条*/
-.outer_div{
-  width: 100%;
-  height: 100%;
-  /*border: 1px solid #AAA;*/
-  overflow: hidden;
-}
-.inner_div{
-  height: 100%;
-  /* 隐藏y轴滚动条 */
-  margin-right: -50px; /* Maximum width of scrollbar */
-  padding-right: 50px; /* Maximum width of scrollbar */
-  overflow-y: scroll;
 
-  /* 隐藏x轴滚动条 */
-  margin-bottom: -50px; /* Maximum width of scrollbar */
-  padding-bottom: 50px; /* Maximum width of scrollbar */
-  overflow-x: scroll;
-}
 /*头部区域盒子边框及阴影*/
 .header_box{
   position: sticky;
   top: 0;
   z-index: 99;
-  /*border-bottom: 1px solid #CCCCCC;*/
-  /*box-shadow: 0px 1px 100px #393e46;*/
+}
+/* 解决滚动条显示问题 */
+.sider_zone::-webkit-scrollbar{
+  width:0;
+}
+.right_zone::-webkit-scrollbar{
+  width:0;
 }
 </style>
