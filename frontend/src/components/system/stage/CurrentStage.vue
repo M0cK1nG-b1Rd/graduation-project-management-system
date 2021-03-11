@@ -2,7 +2,7 @@
   <div>
     <el-card v-for="item in currentStageInfo" :key="item.stageId">
       <el-row>
-        <el-col :span="20" :offset="2">
+        <el-col>
           <el-form label-width="80px" disabled size="mini">
             <el-form-item label="阶段名称">
               <el-col :span="14">
