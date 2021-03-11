@@ -2432,3 +2432,371 @@ SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM syste
 SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
 2021-03-11 16:18:53.540 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 200 ms | SQL 语句：
 SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:27:52.280 gms [http-nio-9528-exec-4] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2021-03-11 16:27:54.608 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2021-03-11 16:31:59.040 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
+2021-03-11 16:31:59.057 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_181 on DESKTOP-73K4U3K with PID 14380 (E:\Team17\Graduation-Project-Management-System\backend\target\classes started by 10512 in E:\Team17\Graduation-Project-Management-System\backend)
+2021-03-11 16:31:59.057 gms [restartedMain] INFO  com.gms.GmsApplication - No active profile set, falling back to default profiles: default
+2021-03-11 16:31:59.135 gms [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-03-11 16:31:59.135 gms [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-03-11 16:32:00.257 gms [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2021-03-11 16:32:00.257 gms [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2021-03-11 16:32:00.332 gms [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 0 Redis repository interfaces.
+2021-03-11 16:32:00.757 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:00.757 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$68087ec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:00.773 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:00.773 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.gms.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$b756fe92] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.493 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisConfig' of type [com.gms.common.config.RedisConfig$$EnhancerBySpringCGLIB$$8b4d63e6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.598 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisPoolFactory' of type [redis.clients.jedis.JedisPool] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.598 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisService' of type [com.gms.common.service.impl.RedisServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.678 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.695 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfig' of type [com.gms.common.config.MybatisPlusConfig$$EnhancerBySpringCGLIB$$d5597478] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.695 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.gms.common.interceptor.PaginationInterceptorImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.695 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$daba83b5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceCreatorAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceCreatorAutoConfiguration$$EnhancerBySpringCGLIB$$2c5447f6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'basicDataSourceCreator' of type [com.baomidou.dynamic.datasource.creator.BasicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jndiDataSourceCreator' of type [com.baomidou.dynamic.datasource.creator.JndiDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'druidDataSourceCreator' of type [com.baomidou.dynamic.datasource.creator.DruidDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'hikariDataSourceCreator' of type [com.baomidou.dynamic.datasource.creator.HikariDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSourceCreator' of type [com.baomidou.dynamic.datasource.creator.DataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:01.716 gms [restartedMain] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource detect P6SPY plugin and enabled it
+2021-03-11 16:32:01.732 gms [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - primary - Starting...
+2021-03-11 16:32:03.593 gms [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - primary - Start completed.
+2021-03-11 16:32:03.594 gms [restartedMain] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource - load a datasource named [primary] success
+2021-03-11 16:32:03.594 gms [restartedMain] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource initial loaded [1] datasource,primary datasource named [primary]
+2021-03-11 16:32:03.594 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:03.612 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:03.621 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.092 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.097 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.100 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.103 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy98] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.105 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleService' of type [com.gms.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.131 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.132 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy100] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.134 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuService' of type [com.gms.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.147 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.149 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy102] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.152 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.153 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy103] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.156 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleService' of type [com.gms.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.165 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userService' of type [com.gms.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.178 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'gmsProperties' of type [com.gms.common.properties.GmsProperties$$EnhancerBySpringCGLIB$$5104569a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.179 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'gmsConfig' of type [com.gms.common.config.GmsConfig$$EnhancerBySpringCGLIB$$13037fb8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.180 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration' of type [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.182 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration' of type [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.188 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties' of type [org.springframework.boot.autoconfigure.jackson.JacksonProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.189 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'standardJacksonObjectMapperBuilderCustomizer' of type [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration$StandardJackson2ObjectMapperBuilderCustomizer] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.192 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration' of type [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.195 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'parameterNamesModule' of type [com.fasterxml.jackson.module.paramnames.ParameterNamesModule] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.198 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration' of type [org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.202 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsonComponentModule' of type [org.springframework.boot.jackson.JsonComponentModule] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.204 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.data.web.config.SpringDataJacksonConfiguration' of type [org.springframework.data.web.config.SpringDataJacksonConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.207 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jacksonGeoModule' of type [org.springframework.data.geo.GeoModule] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.210 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jacksonObjectMapperBuilder' of type [org.springframework.http.converter.json.Jackson2ObjectMapperBuilder] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.230 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jacksonObjectMapper' of type [com.fasterxml.jackson.databind.ObjectMapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.244 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'cacheService' of type [com.gms.common.service.impl.CacheServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.246 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userManager' of type [com.gms.system.manager.UserManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.246 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.gms.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.252 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.263 gms [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-03-11 16:32:04.709 gms [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9528 (http)
+2021-03-11 16:32:04.717 gms [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9528"]
+2021-03-11 16:32:04.717 gms [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2021-03-11 16:32:04.717 gms [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-03-11 16:32:04.883 gms [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2021-03-11 16:32:04.883 gms [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5748 ms
+2021-03-11 16:32:05.680 gms [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'taskExecutor'
+2021-03-11 16:32:05.699 gms [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-03-11 16:32:05.889 gms [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2021-03-11 16:32:06.392 gms [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9528"]
+2021-03-11 16:32:06.407 gms [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 9528 (http) with context path ''
+2021-03-11 16:32:06.407 gms [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2021-03-11 16:32:06.424 gms [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2021-03-11 16:32:06.471 gms [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2021-03-11 16:32:06.772 gms [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: exportUsingPOST_1
+2021-03-11 16:32:06.772 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-11 16:32:06.772 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-03-11 16:32:06.772 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2021-03-11 16:32:06.790 gms [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: exportUsingPOST_2
+2021-03-11 16:32:06.806 gms [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: updateSystemStageUsingPUT_1
+2021-03-11 16:32:06.808 gms [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: exportUsingPOST_3
+2021-03-11 16:32:06.824 gms [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: exportUsingPOST_4
+2021-03-11 16:32:06.851 gms [restartedMain] INFO  com.gms.GmsApplication - Started GmsApplication in 8.63 seconds (JVM running for 10.393)
+2021-03-11 16:32:06.853 gms [restartedMain] INFO  c.gms.common.runner.CacheInitRunner - Redis连接中 ······
+2021-03-11 16:32:06.869 gms [restartedMain] INFO  c.gms.common.runner.CacheInitRunner - 缓存初始化 ······
+2021-03-11 16:32:06.869 gms [restartedMain] INFO  c.gms.common.runner.CacheInitRunner - 缓存用户数据 ······
+2021-03-11 16:32:06.899 gms [http-nio-9528-exec-1] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2021-03-11 16:32:07.175 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:07 | 耗时 99 ms | SQL 语句：
+SELECT USER_ID,gender,mail,real_name,password,tel,username FROM user;
+2021-03-11 16:32:07.308 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:07 | 耗时 92 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'mrbird';
+2021-03-11 16:32:07.426 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:32:07 | 耗时 183 ms | SQL 语句：
+INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T16:32:07.234+0800', '127.0.0.1', 'admin' );
+2021-03-11 16:32:07.532 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 16:32:07.778 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:07 | 耗时 99 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='mrbird';
+2021-03-11 16:32:07.903 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:07 | 耗时 118 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='mrbird';
+2021-03-11 16:32:08.017 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 109 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'scott';
+2021-03-11 16:32:08.125 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 106 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='scott';
+2021-03-11 16:32:08.242 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 115 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='scott';
+2021-03-11 16:32:08.367 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 121 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'jack';
+2021-03-11 16:32:08.467 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 97 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='jack';
+2021-03-11 16:32:08.594 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 125 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='jack';
+2021-03-11 16:32:08.775 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 178 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'xiaoduan';
+2021-03-11 16:32:08.869 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 92 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='xiaoduan';
+2021-03-11 16:32:08.958 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:08 | 耗时 87 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='xiaoduan';
+2021-03-11 16:32:09.050 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 89 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'test';
+2021-03-11 16:32:09.142 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 88 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test';
+2021-03-11 16:32:09.230 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 87 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test';
+2021-03-11 16:32:09.329 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 94 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'ddmtest14';
+2021-03-11 16:32:09.429 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 99 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='ddmtest14';
+2021-03-11 16:32:09.541 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 110 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='ddmtest14';
+2021-03-11 16:32:09.663 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 117 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'test1';
+2021-03-11 16:32:09.756 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 91 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test1';
+2021-03-11 16:32:09.865 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 107 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test1';
+2021-03-11 16:32:09.960 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:09 | 耗时 91 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'admin';
+2021-03-11 16:32:10.051 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 87 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='admin';
+2021-03-11 16:32:10.145 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 90 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='admin';
+2021-03-11 16:32:10.239 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 89 ms | SQL 语句：
+SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'test33333';
+2021-03-11 16:32:10.328 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 88 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
+2021-03-11 16:32:10.468 gms [restartedMain] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 136 ms | SQL 语句：
+SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
+2021-03-11 16:32:10.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2021-03-11 16:32:10.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2021-03-11 16:32:10.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2021-03-11 16:32:10.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 16:32:10.469 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T16:32:10.468
+2021-03-11 16:32:10.842 gms [http-nio-9528-exec-3] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:32:10.963 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:32:10 | 耗时 93 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:32:11.091 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:32:11 | 耗时 100 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:32:11.227 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:32:11 | 耗时 134 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:32:17.595 gms [http-nio-9528-exec-7] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:32:17.778 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:32:17 | 耗时 89 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:32:17.889 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:32:17 | 耗时 106 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:32:17.983 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:32:17 | 耗时 93 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:32:38.750 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:32:38.930 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:32:38 | 耗时 89 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:32:39.024 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:32:39 | 耗时 90 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:32:39.116 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:32:39 | 耗时 90 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:06.490 gms [http-nio-9528-exec-2] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:06.673 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:06 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:06.769 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:06 | 耗时 92 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:06.862 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:06 | 耗时 91 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:11.915 gms [http-nio-9528-exec-4] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:12.111 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:33:12 | 耗时 98 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:12.205 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:33:12 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:12.299 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:33:12 | 耗时 91 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:13.074 gms [http-nio-9528-exec-7] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:13.262 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:13 | 耗时 95 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:13.357 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:13 | 耗时 92 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:13.457 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:13 | 耗时 98 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:18.156 gms [http-nio-9528-exec-8] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:18.340 gms [http-nio-9528-exec-8] INFO  p6spy - 2021-03-11 16:33:18 | 耗时 94 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:18.606 gms [http-nio-9528-exec-8] INFO  p6spy - 2021-03-11 16:33:18 | 耗时 263 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:18.698 gms [http-nio-9528-exec-8] INFO  p6spy - 2021-03-11 16:33:18 | 耗时 90 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:19.600 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:19.875 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:33:19 | 耗时 160 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:19.966 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:33:19 | 耗时 87 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:20.067 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:33:20 | 耗时 99 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:22.218 gms [http-nio-9528-exec-10] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:22.397 gms [http-nio-9528-exec-10] INFO  p6spy - 2021-03-11 16:33:22 | 耗时 89 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:22.488 gms [http-nio-9528-exec-10] INFO  p6spy - 2021-03-11 16:33:22 | 耗时 87 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:22.581 gms [http-nio-9528-exec-10] INFO  p6spy - 2021-03-11 16:33:22 | 耗时 88 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:23.446 gms [http-nio-9528-exec-2] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:23.631 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:23 | 耗时 92 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:23.722 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:23 | 耗时 89 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:23.815 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:33:23 | 耗时 91 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:33:56.996 gms [http-nio-9528-exec-7] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:33:57.186 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:57 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:33:57.283 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:57 | 耗时 94 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:33:57.513 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:33:57 | 耗时 228 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:34:11.708 gms [http-nio-9528-exec-6] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:34:12.070 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:34:12 | 耗时 246 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:34:12.262 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:34:12 | 耗时 189 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 0 , 1 , 2 );
+2021-03-11 16:35:09.837 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:35:10.164 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:35:10 | 耗时 240 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:35:10.379 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:35:10 | 耗时 205 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 5 );
+2021-03-11 16:35:56.703 gms [http-nio-9528-exec-2] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:35:56.859 gms [http-nio-9528-exec-4] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:35:57.036 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:35:57 | 耗时 204 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:35:57.042 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:35:57 | 耗时 90 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:35:57.127 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:35:57 | 耗时 82 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:35:57.215 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:35:57 | 耗时 85 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:35:57.218 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:35:57 | 耗时 180 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 5 );
+2021-03-11 16:36:23.669 gms [http-nio-9528-exec-5] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:36:23.887 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:36:23 | 耗时 100 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:36:24.020 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:36:24 | 耗时 129 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:36:24.211 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:36:24 | 耗时 203 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:13.030 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:13.233 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:37:13 | 耗时 90 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:13.369 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:37:13 | 耗时 132 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:13.466 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:37:13 | 耗时 95 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:24.580 gms [http-nio-9528-exec-1] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:24.841 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:37:24 | 耗时 96 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:24.950 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:37:24 | 耗时 105 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:25.038 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:37:25 | 耗时 87 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:25.825 gms [http-nio-9528-exec-3] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:26.085 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:37:26 | 耗时 112 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:26.184 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:37:26 | 耗时 94 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:26.275 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:37:26 | 耗时 89 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:32.748 gms [http-nio-9528-exec-2] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:32.951 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:37:32 | 耗时 103 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:33.056 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:37:33 | 耗时 101 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:33.174 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:37:33 | 耗时 116 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:33.457 gms [http-nio-9528-exec-7] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:33.551 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:37:33 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:33.644 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:37:33 | 耗时 90 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:33.767 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:37:33 | 耗时 121 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:38.684 gms [http-nio-9528-exec-6] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:38.874 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:37:38 | 耗时 94 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:37:38.979 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:37:38 | 耗时 99 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:37:39.070 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:37:39 | 耗时 89 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:37:45.838 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:37:46.165 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:37:46 | 耗时 201 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=false, STAGE_NAME='课题申报', DESCRIPTION='在该阶段，教师及学生(自拟课题)可以在系统中提交申报毕业设计课题申请，逾期不可进行提交, test', START_TIME='1900-01-19T00:05:43.000+0805', END_TIME='1900-01-20T00:05:43.000+0805' WHERE stage_id=0;
+2021-03-11 16:38:08.112 gms [http-nio-9528-exec-3] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:38:08.369 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 163 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:38:08.492 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 119 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:38:08.590 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 95 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:38:08.596 gms [http-nio-9528-exec-4] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:38:08.775 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:38:08.870 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 92 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:38:08.962 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 16:38:08 | 耗时 91 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:39:34.064 gms [http-nio-9528-exec-6] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:39:34.271 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:39:34 | 耗时 115 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:39:34.369 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:39:34 | 耗时 91 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:39:34.477 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:39:34 | 耗时 100 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:39:45.548 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:39:45.771 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:39:45 | 耗时 108 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:39:45.881 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:39:45 | 耗时 106 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:39:46.083 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:39:46 | 耗时 201 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:39:49.244 gms [http-nio-9528-exec-1] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:39:49.504 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:39:49 | 耗时 175 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:39:49.685 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 16:39:49 | 耗时 181 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 5 );
+2021-03-11 16:40:08.626 gms [http-nio-9528-exec-2] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:40:08.813 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:40:08 | 耗时 93 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:40:08.909 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:40:08 | 耗时 90 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:40:09.011 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 16:40:09 | 耗时 99 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:40:09.026 gms [http-nio-9528-exec-7] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:40:09.125 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:40:09 | 耗时 97 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:40:09.350 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:40:09 | 耗时 219 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:40:09.465 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 16:40:09 | 耗时 113 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:40:15.354 gms [http-nio-9528-exec-6] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:40:15.630 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:40:15 | 耗时 185 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:40:15.839 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:40:15 | 耗时 207 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 5 );
+2021-03-11 16:40:55.798 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:40:56.189 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:40:56 | 耗时 198 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=0;
+2021-03-11 16:40:56.529 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:40:56 | 耗时 338 ms | SQL 语句：
+UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 4 );

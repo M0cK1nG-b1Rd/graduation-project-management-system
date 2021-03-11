@@ -104,6 +104,7 @@ export default {
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/stage/system', this.editingForm)
       if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
       this.$message.success('修改阶段信息成功！')
+      await this.getAllStageInfo()
     },
     // 重置表单内容
     async resetForm() {
