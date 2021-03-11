@@ -2001,3 +2001,9 @@ com.gms.common.exception.GmsException: 用户名或密码错误
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+2021-03-11 20:12:25.741 gms [http-nio-9528-exec-2] ERROR c.g.common.authentication.JWTFilter - token已经过期
+2021-03-11 20:12:25.741 gms [http-nio-9528-exec-2] ERROR c.g.common.authentication.JWTFilter - token已经过期
+2021-03-11 20:43:55.088 gms [http-nio-9528-exec-6] ERROR c.g.common.authentication.JWTFilter - token已经过期
+2021-03-11 20:43:55.104 gms [http-nio-9528-exec-6] ERROR c.g.common.authentication.JWTFilter - token已经过期
+2021-03-11 20:43:59.630 gms [http-nio-9528-exec-7] ERROR c.g.common.authentication.JWTFilter - token已经过期
+2021-03-11 20:43:59.632 gms [http-nio-9528-exec-7] ERROR c.g.common.authentication.JWTFilter - token已经过期

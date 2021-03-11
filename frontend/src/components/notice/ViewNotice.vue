@@ -53,6 +53,7 @@ export default {
 }
 
 .box-card {
+  height: 800px;
 }
 
 /*页面上方标题区*/
