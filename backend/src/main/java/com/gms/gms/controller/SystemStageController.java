@@ -52,22 +52,24 @@ public class SystemStageController {
     }
 
     @PutMapping
-    public void updateSystemStage(@RequestBody SystemStage currStage) throws GmsException {
+    public GmsResponse updateSystemStage(@RequestBody SystemStage currStage) throws GmsException {
         try {
             systemStageService.setCurrStage(currStage);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "更新系统信息成功"));
         } catch (Exception e) {
-            String message = "新建失败";
+            String message = "更新失败";
             log.error(message, e);
             throw new GmsException(message);
         }
     }
 
     @PutMapping("activate")
-    public void updateSystemStage(@RequestBody List<Integer> currStageIds) throws GmsException {
+    public GmsResponse updateSystemStage(@RequestBody List<Integer> currStageIds) throws GmsException {
         try {
             systemStageService.enableStages(currStageIds);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "更新系统状态成功"));
         } catch (Exception e) {
-            String message = "新建失败";
+            String message = "更新失败";
             log.error(message, e);
             throw new GmsException(message);
         }
