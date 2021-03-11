@@ -84,7 +84,7 @@ gms:
     # 后端免认证接口 url
     anonUrl: /login,/logout/**,/regist,/user/check/**,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
     # token有效期，单位秒
-    jwtTimeOut: 3600
+    jwtTimeOut: 360000
 
   # Swagger相关配置
   swagger:
