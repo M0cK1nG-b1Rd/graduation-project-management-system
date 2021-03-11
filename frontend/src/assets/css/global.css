@@ -4,6 +4,10 @@ html, body, #app {
     margin: 0;
     padding: 0;
 }
+body{
+    overflow-x:hidden !important;
+    overflow-y:hidden !important;
+}
 /*面包屑导航区下方设置一个间隔*/
 .el-breadcrumb{
     margin-bottom: 20px;
