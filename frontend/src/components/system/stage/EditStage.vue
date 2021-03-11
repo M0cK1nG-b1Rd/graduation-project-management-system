@@ -75,7 +75,7 @@ export default {
   methods: {
     // 获取所有阶段信息
     async getAllStageInfo() {
-      const { data: res } = await this.$http.get('/mock/current_stage.json')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/system')
       if (res.meta.code !== 200) return this.$message.error('请求阶段信息失败！')
       this.allStageInfo = res.data.allStage
       this.currentStageId = res.data.currentStageId
@@ -86,8 +86,10 @@ export default {
       this.editingForm = this.allStageInfo[this.editingStageId]
     },
     // 提交表单修改结果
-    submitEdit() {
-      // TODO 向后端发送put
+    async submitEdit() {
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/stage/system', this.editingForm)
+      if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
+      this.$message.success('修改阶段信息成功！')
     },
     // 重置表单内容
     async resetForm() {
