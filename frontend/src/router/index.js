@@ -9,6 +9,7 @@ import StageControl from '@/components/system/stage/StageControl'
 import EditStage from '@/components/system/stage/EditStage'
 import CurrentStage from '@/components/system/stage/CurrentStage'
 import ActiveStage from '@/components/system/stage/ActivateStage'
+import ViewNotice from '@/components/notice/ViewNotice'
 
 Vue.use(VueRouter)
 
@@ -64,6 +65,11 @@ const routes = [
             component: ActiveStage
           }
         ]
+      },
+      // 公告界面
+      {
+        path: '/notice/view',
+        component: ViewNotice
       }
     ]
   }
