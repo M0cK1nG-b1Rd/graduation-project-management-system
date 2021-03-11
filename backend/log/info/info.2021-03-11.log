@@ -143,10 +143,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:03:15.360 gms [restartedMain] INFO  p6spy - 2021-03-11 09:03:15 | 耗时 71 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:03:15.361 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:03:15.361
 2021-03-11 09:03:41.252 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 09:03:41.252 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -154,7 +154,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 09:03:41.418 gms [http-nio-9528-exec-1] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 09:03:41.882 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 09:03:41 | 耗时 160 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:03:41.715+0800', '127.0.0.1', 'admin' );
-2021-03-11 09:03:41.956 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 09:03:41.956 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 09:12:11.856 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
 2021-03-11 09:12:11.866 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_112 on DESKTOP-5K4VCTV with PID 11692 (C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes started by Administrator in C:\Users\Administrator\Desktop\graduation-project-management-system\backend)
 2021-03-11 09:12:11.867 gms [restartedMain] INFO  com.gms.GmsApplication - No active profile set, falling back to default profiles: default
@@ -300,10 +300,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:12:24.615 gms [restartedMain] INFO  p6spy - 2021-03-11 09:12:24 | 耗时 70 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:12:24.615 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:12:24.615
 2021-03-11 09:12:33.213 gms [http-nio-9528-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 09:12:33.213 gms [http-nio-9528-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -311,7 +311,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 09:12:33.359 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 09:12:33.801 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 09:12:33 | 耗时 143 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:12:33.650+0800', '127.0.0.1', 'admin' );
-2021-03-11 09:12:33.879 gms [http-nio-9528-exec-2] INFO  p6spy - 
+2021-03-11 09:12:33.879 gms [http-nio-9528-exec-2] INFO  p6spy -
 2021-03-11 09:13:31.895 gms [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'taskExecutor'
 2021-03-11 09:13:31.900 gms [SpringContextShutdownHook] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource start closing ....
 2021-03-11 09:13:50.455 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
@@ -417,7 +417,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:13:59.159+0800', '127.0.0.1', 'admin' );
 2021-03-11 09:13:59.372 gms [restartedMain] INFO  p6spy - 2021-03-11 09:13:59 | 耗时 75 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='mrbird';
-2021-03-11 09:13:59.391 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 09:13:59.391 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 09:13:59.453 gms [restartedMain] INFO  p6spy - 2021-03-11 09:13:59 | 耗时 77 ms | SQL 语句：
 SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEFT JOIN user on (user.USER_ID = user_role.USER_ID) where user.USERNAME = 'scott';
 2021-03-11 09:13:59.532 gms [restartedMain] INFO  p6spy - 2021-03-11 09:13:59 | 耗时 77 ms | SQL 语句：
@@ -466,10 +466,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:14:01.318 gms [restartedMain] INFO  p6spy - 2021-03-11 09:14:01 | 耗时 80 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:14:01.319 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:14:01.319
 2021-03-11 09:14:23.735 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
 2021-03-11 09:14:23.755 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_112 on DESKTOP-5K4VCTV with PID 3564 (C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes started by Administrator in C:\Users\Administrator\Desktop\graduation-project-management-system\backend)
@@ -616,10 +616,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:14:34.841 gms [restartedMain] INFO  p6spy - 2021-03-11 09:14:34 | 耗时 85 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:14:34.841 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:14:34.842 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:14:34.841
 2021-03-11 09:14:36.403 gms [http-nio-9528-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 09:14:36.403 gms [http-nio-9528-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -627,7 +627,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 09:14:36.568 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 09:14:37.010 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 09:14:37 | 耗时 148 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:14:36.854+0800', '127.0.0.1', 'admin' );
-2021-03-11 09:14:37.086 gms [http-nio-9528-exec-2] INFO  p6spy - 
+2021-03-11 09:14:37.086 gms [http-nio-9528-exec-2] INFO  p6spy -
 2021-03-11 09:18:04.580 gms [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'taskExecutor'
 2021-03-11 09:18:04.583 gms [SpringContextShutdownHook] INFO  c.b.d.d.DynamicRoutingDataSource - dynamic-datasource start closing ....
 2021-03-11 09:18:09.482 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
@@ -775,10 +775,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:18:20.483 gms [restartedMain] INFO  p6spy - 2021-03-11 09:18:20 | 耗时 83 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:18:20.484 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:18:20.485 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:18:20.485
 2021-03-11 09:18:40.127 gms [http-nio-9528-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 09:18:40.129 gms [http-nio-9528-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -786,7 +786,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 09:18:40.260 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 09:18:40.720 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 09:18:40 | 耗时 149 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:18:40.561+0800', '127.0.0.1', 'admin' );
-2021-03-11 09:18:40.797 gms [http-nio-9528-exec-2] INFO  p6spy - 
+2021-03-11 09:18:40.797 gms [http-nio-9528-exec-2] INFO  p6spy -
 2021-03-11 09:18:57.594 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 09:18:57 | 耗时 169 ms | SQL 语句：
 UPDATE system_stage SET IS_CURRENT=0; UPDATE system_stage SET IS_CURRENT=1 WHERE STAGE_ID IN ( 1 , 2 );
 2021-03-11 09:19:26.932 gms [SpringContextShutdownHook] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'taskExecutor'
@@ -936,10 +936,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 09:21:16.467 gms [restartedMain] INFO  p6spy - 2021-03-11 09:21:16 | 耗时 98 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 09:21:16.468 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T09:21:16.468
 2021-03-11 09:21:20.191 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 09:21:20.192 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -947,7 +947,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 09:21:20.328 gms [http-nio-9528-exec-1] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 09:21:20.858 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 09:21:20 | 耗时 210 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T09:21:20.642+0800', '127.0.0.1', 'admin' );
-2021-03-11 09:21:20.975 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 09:21:20.975 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 09:21:28.590 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 09:21:28 | 耗时 165 ms | SQL 语句：
 UPDATE system_stage SET IS_CURRENT=0;
 2021-03-11 09:21:28.776 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 09:21:28 | 耗时 181 ms | SQL 语句：
@@ -1105,10 +1105,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 10:00:47.818 gms [restartedMain] INFO  p6spy - 2021-03-11 10:00:47 | 耗时 80 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 10:00:47.819 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T10:00:47.819
 2021-03-11 10:01:02.960 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 10:01:02.960 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -1116,7 +1116,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 10:01:41.406 gms [http-nio-9528-exec-9] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 10:01:41.821 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 10:01:41 | 耗时 150 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T10:01:41.664+0800', '127.0.0.1', 'admin' );
-2021-03-11 10:01:41.895 gms [http-nio-9528-exec-9] INFO  p6spy - 
+2021-03-11 10:01:41.895 gms [http-nio-9528-exec-9] INFO  p6spy -
 2021-03-11 10:02:43.366 gms [http-nio-9528-exec-4] INFO  p6spy - 2021-03-11 10:02:43 | 耗时 156 ms | SQL 语句：
 UPDATE system_stage SET IS_CURRENT=0;
 2021-03-11 10:11:07.701 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
@@ -1268,13 +1268,13 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T10:11:17.508+0800', '127.0.0.1', 'admin' );
 2021-03-11 10:11:17.713 gms [restartedMain] INFO  p6spy - 2021-03-11 10:11:17 | 耗时 78 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 10:11:17.734 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 10:11:17.734 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 10:11:17.793 gms [restartedMain] INFO  p6spy - 2021-03-11 10:11:17 | 耗时 78 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 10:11:17.794 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 10:11:17.794 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 10:11:17.795 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T10:11:17.795
 2021-03-11 10:11:25.813 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 10:11:25 | 耗时 157 ms | SQL 语句：
 UPDATE system_stage SET IS_CURRENT=0;
@@ -1424,10 +1424,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 10:30:38.534 gms [restartedMain] INFO  p6spy - 2021-03-11 10:30:38 | 耗时 75 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 10:30:38.535 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 10:30:38.536 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T10:30:38.536
 2021-03-11 10:30:46.403 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 10:30:46.404 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -1435,7 +1435,7 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 10:30:46.511 gms [http-nio-9528-exec-1] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 10:30:46.932 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 10:30:46 | 耗时 145 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T10:30:46.776+0800', '127.0.0.1', 'admin' );
-2021-03-11 10:30:47.006 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 10:30:47.006 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 10:31:29.079 gms [http-nio-9528-exec-3] INFO  p6spy - 2021-03-11 10:31:29 | 耗时 143 ms | SQL 语句：
 UPDATE system_stage SET IS_CURRENT=true, DESCRIPTION='描述', START_TIME='2021-03-11T00:00:00.000+0800', END_TIME='2021-03-11T00:00:00.000+0800' WHERE stage_id=1;
 2021-03-11 10:32:20.851 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 10:32:20 | 耗时 148 ms | SQL 语句：
@@ -1588,10 +1588,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 03:11:36.317 gms [restartedMain] INFO  p6spy - 2021-03-11 03:11:36 | 耗时 84 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 03:11:36.317 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T03:11:36.317
 2021-03-11 03:14:11.817 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
 2021-03-11 03:14:11.817 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_181 on DESKTOP-73K4U3K with PID 12548 (E:\Team17\Graduation-Project-Management-System\backend\target\classes started by 10512 in E:\Team17\Graduation-Project-Management-System\backend)
@@ -1739,10 +1739,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 03:14:20.964 gms [restartedMain] INFO  p6spy - 2021-03-11 03:14:20 | 耗时 84 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 03:14:20.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T03:14:20.964
 2021-03-11 03:24:25.021 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 03:24:25.022 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -1893,10 +1893,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 14:09:19.034 gms [restartedMain] INFO  p6spy - 2021-03-11 14:09:19 | 耗时 84 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 14:09:19.051 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T14:09:19.051
 2021-03-11 14:10:38.104 gms [http-nio-9528-exec-5] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 14:10:38.104 gms [http-nio-9528-exec-5] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -2056,10 +2056,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 14:59:20.518 gms [restartedMain] INFO  p6spy - 2021-03-11 14:59:20 | 耗时 91 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 14:59:20.518 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 14:59:20.519 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T14:59:20.519
 2021-03-11 15:00:39.696 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
 2021-03-11 15:00:39.714 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_181 on DESKTOP-73K4U3K with PID 11976 (E:\Team17\Graduation-Project-Management-System\backend\target\classes started by 10512 in E:\Team17\Graduation-Project-Management-System\backend)
@@ -2207,10 +2207,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 15:00:49.543 gms [restartedMain] INFO  p6spy - 2021-03-11 15:00:49 | 耗时 87 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 15:00:49.543 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T15:00:49.543
 2021-03-11 15:01:22.267 gms [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.7.Final
 2021-03-11 15:01:22.267 gms [restartedMain] INFO  com.gms.GmsApplication - Starting GmsApplication using Java 1.8.0_181 on DESKTOP-73K4U3K with PID 6584 (E:\Team17\Graduation-Project-Management-System\backend\target\classes started by 10512 in E:\Team17\Graduation-Project-Management-System\backend)
@@ -2358,10 +2358,10 @@ SELECT role.* FROM role JOIN user_role on (role.ROLE_ID = user_role.ROLE_ID) LEF
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
 2021-03-11 15:01:31.963 gms [restartedMain] INFO  p6spy - 2021-03-11 15:01:31 | 耗时 89 ms | SQL 语句：
 SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROLE_ID=ur.ROLE_ID) JOIN user_stage us ON(rsp.STAGE= us.STAGE OR rsp.STAGE IN (SELECT STAGE_ID FROM system_stage)) JOIN user u ON(u.USER_ID=ur.USER_ID) WHERE u.USERNAME='test33333';
-2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
-2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
-2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
-2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -                                                       
+2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -  __    ___   _      ___   _     ____ _____  ____
+2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_
+2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__
+2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner -
 2021-03-11 15:01:31.964 gms [restartedMain] INFO  c.gms.common.runner.StartedUpRunner - FEBS 启动完毕，时间：2021-03-11T15:01:31.964
 2021-03-11 15:01:56.530 gms [http-nio-9528-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2021-03-11 15:01:56.531 gms [http-nio-9528-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
@@ -2369,17 +2369,17 @@ SELECT DISTINCT rsp.PERMS FROM role_stage_perms rsp JOIN user_role ur ON(rsp.ROL
 2021-03-11 15:01:56.674 gms [http-nio-9528-exec-1] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:01:57.143 gms [http-nio-9528-exec-1] INFO  p6spy - 2021-03-11 15:01:57 | 耗时 177 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T15:01:56.969+0800', '127.0.0.1', 'admin' );
-2021-03-11 15:01:57.245 gms [http-nio-9528-exec-1] INFO  p6spy - 
+2021-03-11 15:01:57.245 gms [http-nio-9528-exec-1] INFO  p6spy -
 2021-03-11 15:02:14.126 gms [http-nio-9528-exec-7] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:02:14.448 gms [http-nio-9528-exec-7] INFO  p6spy - 2021-03-11 15:02:14 | 耗时 165 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T15:02:14.293+0800', '127.0.0.1', 'admin' );
-2021-03-11 15:02:14.530 gms [http-nio-9528-exec-7] INFO  p6spy - 
+2021-03-11 15:02:14.530 gms [http-nio-9528-exec-7] INFO  p6spy -
 2021-03-11 15:02:29.421 gms [http-nio-9528-exec-3] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 3 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:02:32.711 gms [http-nio-9528-exec-5] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 4 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:03:20.337 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:03:20.715 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 15:03:20 | 耗时 222 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T15:03:20.497+0800', '127.0.0.1', 'admin' );
-2021-03-11 15:03:20.819 gms [http-nio-9528-exec-2] INFO  p6spy - 
+2021-03-11 15:03:20.819 gms [http-nio-9528-exec-2] INFO  p6spy -
 2021-03-11 15:03:29.546 gms [http-nio-9528-exec-8] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:03:29.774 gms [http-nio-9528-exec-8] INFO  p6spy - 2021-03-11 15:03:29 | 耗时 144 ms | SQL 语句：
 SELECT u.USER_ID, u.REAL_NAME, u.USERNAME, u.PASSWORD, u.MAIL, u.TEL, u.GENDER, GROUP_CONCAT(r.ROLE_ID) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM user u LEFT JOIN user_role ur ON (u.USER_ID = ur.USER_ID) LEFT JOIN role r ON r.ROLE_ID = ur.ROLE_ID WHERE u.username = 'daasc' group by u.username, u.USER_ID, u.password, u.MAIL, u.TEL, u.GENDER;
@@ -2395,4 +2395,40 @@ SELECT u.USER_ID, u.REAL_NAME, u.USERNAME, u.PASSWORD, u.MAIL, u.TEL, u.GENDER, 
 2021-03-11 15:07:00.686 gms [http-nio-9528-exec-2] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
 2021-03-11 15:07:01.036 gms [http-nio-9528-exec-2] INFO  p6spy - 2021-03-11 15:07:01 | 耗时 174 ms | SQL 语句：
 INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T15:07:00.853+0800', '127.0.0.1', 'admin' );
-2021-03-11 15:07:01.118 gms [http-nio-9528-exec-2] INFO  p6spy - 
+2021-03-11 15:07:01.118 gms [http-nio-9528-exec-2] INFO  p6spy -
+2021-03-11 16:18:39.545 gms [http-nio-9528-exec-6] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2021-03-11 16:18:40.017 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:18:40 | 耗时 193 ms | SQL 语句：
+INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T16:18:39.808+0800', '127.0.0.1', 'admin' );
+2021-03-11 16:18:40.126 gms [http-nio-9528-exec-6] INFO  p6spy -
+2021-03-11 16:18:51.821 gms [http-nio-9528-exec-5] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:18:52.257 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 203 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:18:52.413 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 97 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:18:52.508 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 92 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:18:52.851 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:18:53.167 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 309 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:18:53.335 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 159 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:18:53.540 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 200 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:18:39.545 gms [http-nio-9528-exec-6] INFO  com.gms.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2021-03-11 16:18:40.017 gms [http-nio-9528-exec-6] INFO  p6spy - 2021-03-11 16:18:40 | 耗时 193 ms | SQL 语句：
+INSERT INTO login_log ( login_time, ip, username ) VALUES ( '2021-03-11T16:18:39.808+0800', '127.0.0.1', 'admin' );
+2021-03-11 16:18:40.126 gms [http-nio-9528-exec-6] INFO  p6spy -
+2021-03-11 16:18:51.821 gms [http-nio-9528-exec-5] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:18:52.257 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 203 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:18:52.413 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 97 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:18:52.508 gms [http-nio-9528-exec-5] INFO  p6spy - 2021-03-11 16:18:52 | 耗时 92 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
+2021-03-11 16:18:52.851 gms [http-nio-9528-exec-9] INFO  c.gms.common.authentication.JWTUtil - token is valid
+2021-03-11 16:18:53.167 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 309 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage;
+2021-03-11 16:18:53.335 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 159 ms | SQL 语句：
+SELECT stage_id,IS_CURRENT,STAGE_NAME,DESCRIPTION,START_TIME,END_TIME FROM system_stage WHERE (IS_CURRENT = 1);
+2021-03-11 16:18:53.540 gms [http-nio-9528-exec-9] INFO  p6spy - 2021-03-11 16:18:53 | 耗时 200 ms | SQL 语句：
+SELECT COUNT(*) FROM system_stage;;
