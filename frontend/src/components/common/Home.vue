@@ -9,15 +9,6 @@
       <el-aside :width="isCollapsed ? '64px' : '220px'">
         <div class="outer_div">
           <div class="inner_div">
-            <!--       logo及系统名区-->
-<!--            <div class="sider_header">-->
-<!--              <img src="../../assets/imgs/login_logo.jpg" alt="" class="sider_header_logo">-->
-<!--              <span class="sider_header_title">快乐毕设系统</span>-->
-<!--              &lt;!&ndash;            收起、关闭菜单图标&ndash;&gt;-->
-<!--              <div class="toggle_icon">-->
-<!--                <i :class="isCollapsed?'el-icon-s-unfold':'el-icon-s-fold'" @click="toggleCollapse"></i>-->
-<!--              </div>-->
-<!--            </div>-->
             <!--        菜单区-->
             <my-menu :isCollapsed="isCollapsed"></my-menu>
           </div>
