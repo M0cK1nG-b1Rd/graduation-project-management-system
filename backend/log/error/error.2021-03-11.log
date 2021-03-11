@@ -439,10 +439,10 @@ Caused by: org.apache.ibatis.binding.BindingException: Parameter 'currStageIds' 
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426)
 	... 75 common frames omitted
 2021-03-11 09:18:57.704 gms [http-nio-9528-exec-1] ERROR c.g.c.handler.GlobalExceptionHandler - 系统内部异常，异常信息：
-org.springframework.jdbc.BadSqlGrammarException: 
+org.springframework.jdbc.BadSqlGrammarException:
 ### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE system_stage SET IS_CURRENT=1
         WHERE STAGE_ID IN
-         (  
+         (
     ' at line 2
 ### The error may exist in file [C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes\mapper\gms\SystemStageMapper.xml]
 ### The error may involve defaultParameterMap
@@ -450,11 +450,11 @@ org.springframework.jdbc.BadSqlGrammarException:
 ### SQL: UPDATE system_stage SET IS_CURRENT=0;         UPDATE system_stage SET IS_CURRENT=1         WHERE STAGE_ID IN          (               ?          ,              ?          )
 ### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE system_stage SET IS_CURRENT=1
         WHERE STAGE_ID IN
-         (  
+         (
     ' at line 2
 ; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE system_stage SET IS_CURRENT=1
         WHERE STAGE_ID IN
-         (  
+         (
     ' at line 2
 	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:239)
 	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70)
@@ -537,7 +537,7 @@ org.springframework.jdbc.BadSqlGrammarException:
 	at java.lang.Thread.run(Thread.java:745)
 Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE system_stage SET IS_CURRENT=1
         WHERE STAGE_ID IN
-         (  
+         (
     ' at line 2
 	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
 	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
@@ -565,7 +565,7 @@ Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL synta
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426)
 	... 75 common frames omitted
 2021-03-11 10:02:43.390 gms [http-nio-9528-exec-4] ERROR c.g.c.handler.GlobalExceptionHandler - 系统内部异常，异常信息：
-org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException:
 ### Error updating database.  Cause: java.lang.NumberFormatException: For input string: "Thu Mar 11 00:00:00 CST 2021"
 ### The error may exist in file [C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes\mapper\gms\SystemStageMapper.xml]
 ### The error may involve com.gms.gms.dao.SystemStageMapper.setCurrStage
@@ -648,7 +648,7 @@ org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+Caused by: org.apache.ibatis.exceptions.PersistenceException:
 ### Error updating database.  Cause: java.lang.NumberFormatException: For input string: "Thu Mar 11 00:00:00 CST 2021"
 ### The error may exist in file [C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes\mapper\gms\SystemStageMapper.xml]
 ### The error may involve com.gms.gms.dao.SystemStageMapper.setCurrStage
@@ -704,7 +704,7 @@ Caused by: java.lang.NumberFormatException: For input string: "Thu Mar 11 00:00:
 	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197)
 	... 80 common frames omitted
 2021-03-11 10:11:25.823 gms [http-nio-9528-exec-2] ERROR c.g.c.handler.GlobalExceptionHandler - 系统内部异常，异常信息：
-org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException:
 ### Error updating database.  Cause: java.lang.NumberFormatException: For input string: "Thu Mar 11 00:00:00 CST 2021"
 ### The error may exist in file [C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes\mapper\gms\SystemStageMapper.xml]
 ### The error may involve com.gms.gms.dao.SystemStageMapper.setCurrStage
@@ -787,7 +787,7 @@ org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:745)
-Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+Caused by: org.apache.ibatis.exceptions.PersistenceException:
 ### Error updating database.  Cause: java.lang.NumberFormatException: For input string: "Thu Mar 11 00:00:00 CST 2021"
 ### The error may exist in file [C:\Users\Administrator\Desktop\graduation-project-management-system\backend\target\classes\mapper\gms\SystemStageMapper.xml]
 ### The error may involve com.gms.gms.dao.SystemStageMapper.setCurrStage
