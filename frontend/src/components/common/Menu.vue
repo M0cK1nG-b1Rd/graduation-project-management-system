@@ -65,7 +65,6 @@ export default {
     async getMeunList() {
       // TODO 像后端请求菜单列表信息
       const { data: res } = await this.$http.get('/mock/menu_list_success.json')
-      console.log(res)
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       this.menuList = res.data
     },

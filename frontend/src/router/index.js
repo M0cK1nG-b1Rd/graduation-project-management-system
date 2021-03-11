@@ -5,6 +5,11 @@ import Home from '../components/common/Home'
 import Welcome from '../components/common/Welcome'
 import Users from '@/components/system/Users'
 import Test from '@/components/system/Test'
+import StageControl from '@/components/system/stage/StageControl'
+import EditStage from '@/components/system/stage/EditStage'
+import CurrentStage from '@/components/system/stage/CurrentStage'
+import ActiveStage from '@/components/system/stage/ActivateStage'
+import ViewNotice from '@/components/notice/ViewNotice'
 
 Vue.use(VueRouter)
 
@@ -38,6 +43,33 @@ const routes = [
       {
         path: '/test',
         component: Test
+      },
+      // 系统管理-阶段控制
+      {
+        path: '/sys/stage',
+        component: StageControl,
+        children: [
+          // 编辑并设置阶段
+          {
+            path: '/sys/stage/edit',
+            component: EditStage
+          },
+          // 查看当前阶段详情
+          {
+            path: '/sys/stage/current',
+            component: CurrentStage
+          },
+          // 所有==激活阶段
+          {
+            path: '/sys/stage/active',
+            component: ActiveStage
+          }
+        ]
+      },
+      // 公告界面
+      {
+        path: '/notice/view',
+        component: ViewNotice
       }
     ]
   }
