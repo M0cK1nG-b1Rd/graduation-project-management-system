@@ -60,7 +60,7 @@
 <!--      步骤条-->
       <el-steps :space="100"
                 direction="vertical"
-                :active="3"
+                :active="currentStageId[0]"
                 process-status="success"
                 finish-status="process">
         <el-step v-for="item in allStageInfo" :key="item.stageId" :description="item.description" :title="item.stageName"></el-step>
