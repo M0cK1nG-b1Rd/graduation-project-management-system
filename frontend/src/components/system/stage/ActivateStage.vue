@@ -24,9 +24,9 @@
       width="30%">
       <span>提交后，阶段激活立即生效，请问您确认激活吗？</span>
       <span slot="footer" class="dialog-footer">
-    <el-button @click="quitAcitvate">取 消</el-button>
-    <el-button type="primary" @click="submitActivateRequest">确 定</el-button>
-  </span>
+        <el-button @click="quitAcitvate">取 消</el-button>
+        <el-button type="primary" @click="submitActivateRequest">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>

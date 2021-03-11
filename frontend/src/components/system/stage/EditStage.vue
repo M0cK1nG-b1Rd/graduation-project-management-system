@@ -39,12 +39,24 @@
             </el-col>
           </el-form-item>
           <el-form-item size="mini">
-            <el-button type="primary" @click="submitEdit">提交编辑</el-button>
+            <el-button type="primary" @click="dialogVisible=true">提交编辑</el-button>
             <el-button @click="resetForm">取消修改</el-button>
           </el-form-item>
         </el-form>
       </el-col>
     </el-row>
+
+<!--    提示框-->
+<el-dialog
+  title="温馨提示"
+  :visible.sync="dialogVisible"
+  width="30%">
+  <span>提交后，阶段修改立即生效，请问您确认提交修改吗？</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="resetForm">取 消</el-button>
+    <el-button type="primary" @click="submitEdit">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -66,7 +78,8 @@ export default {
         startTime: '',
         endTime: ''
       },
-      smallTime: '23:59:59'
+      // 提示框可见性
+      dialogVisible: false
     }
   },
   created() {
@@ -87,12 +100,14 @@ export default {
     },
     // 提交表单修改结果
     async submitEdit() {
+      this.dialogVisible = false
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/stage/system', this.editingForm)
       if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
       this.$message.success('修改阶段信息成功！')
     },
     // 重置表单内容
     async resetForm() {
+      this.dialogVisible = false
       await this.getAllStageInfo()
       this.editingForm = this.allStageInfo[this.editingStageId]
     }
