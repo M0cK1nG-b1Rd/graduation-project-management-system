@@ -21,6 +21,7 @@ fileStorage
 *.ipr
 
 ### NetBeans ###
+log
 /nbproject/private/
 /nbbuild/
 /dist/

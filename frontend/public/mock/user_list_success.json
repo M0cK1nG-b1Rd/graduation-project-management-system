@@ -1,0 +1,42 @@
+{
+  "data": {
+    "total": 5,
+    "pagenum": 1,
+    "users": [
+      {
+        "id": 25,
+        "username": "tige117",
+        "mobile": "123456",
+        "type": 1,
+        "email": "111@qq.com",
+        "create_time": "2021-3-09T20:36:26.000Z",
+        "mg_state": true,
+        "role_name": "炒鸡管理员"
+      },
+      {
+        "id": 25,
+        "username": "jbc",
+        "mobile": "123456",
+        "type": 1,
+        "email": "111@qq.com",
+        "create_time": "2021-3-09T20:36:26.000Z",
+        "mg_state": false,
+        "role_name": "炒鸡管理员"
+      },
+      {
+        "id": 25,
+        "username": "pwj",
+        "mobile": "123456",
+        "type": 1,
+        "email": "111@qq.com",
+        "create_time": "2021-3-09T20:36:26.000Z",
+        "mg_state": true,
+        "role_name": "炒鸡管理员"
+      }
+    ]
+  },
+  "meta": {
+    "msg": "获取成功",
+    "code": 200
+  }
+}
