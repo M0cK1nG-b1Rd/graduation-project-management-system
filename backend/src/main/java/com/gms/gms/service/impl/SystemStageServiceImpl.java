@@ -33,7 +33,11 @@ public class SystemStageServiceImpl extends ServiceImpl<SystemStageMapper, Syste
     }
 
     @Override
-    public void setCurrStage(List<Integer> currStageIds) {
-        this.baseMapper.setCurrStage(currStageIds);
+    public void setCurrStage(SystemStage currStage) {
+        this.baseMapper.updateById(currStage);
+    }
+    public void enableStages(List<Integer> currStageIds) {
+        this.baseMapper.disableAllStage();
+        this.baseMapper.enableStages(currStageIds);
     }
 }

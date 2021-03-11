@@ -16,5 +16,7 @@ public interface SystemStageService extends IService<SystemStage> {
 
      Integer getSystemStageNum();
 
-    void setCurrStage(List<Integer> currStageIds);
+    void setCurrStage(SystemStage currStage);
+
+    void enableStages(List<Integer> currStageIds);
 }

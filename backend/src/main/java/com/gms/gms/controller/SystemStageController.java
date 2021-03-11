@@ -42,7 +42,12 @@ public class SystemStageController {
     }
 
     @PutMapping
+    public void updateSystemStage(@RequestBody SystemStage currStage) {
+        systemStageService.setCurrStage(currStage);
+    }
+
+    @PutMapping("activate")
     public void updateSystemStage(@RequestBody List<Integer> currStageIds) {
-        systemStageService.setCurrStage(currStageIds);
+        systemStageService.enableStages(currStageIds);
     }
 }
