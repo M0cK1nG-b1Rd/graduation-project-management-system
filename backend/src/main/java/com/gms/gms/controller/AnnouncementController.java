@@ -30,7 +30,10 @@ public class AnnouncementController {
     public GmsResponse getAnnouncement() throws GmsException {
         try {
             List<Announcement> announcement = announcementService.getAnnouncement();
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), announcement);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), announcement);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -42,7 +45,10 @@ public class AnnouncementController {
     public GmsResponse addAnnouncement(Announcement announcement) throws GmsException {
         try {
             announcementService.addAnnouncement(announcement);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "新建公告成功"), announcement);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "新建公告成功"), announcement);
         } catch (Exception e) {
             String message = "新建失败";
             log.error(message, e);
@@ -54,7 +60,10 @@ public class AnnouncementController {
     public GmsResponse updateAnnouncement(Announcement announcement) throws GmsException {
         try {
             announcementService.updateAnnouncement(announcement);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "修改公告成功"));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "修改公告成功"));
         } catch (Exception e) {
             String message = "修改失败";
             log.error(message, e);
@@ -67,7 +76,10 @@ public class AnnouncementController {
     public GmsResponse deleteAnnouncements(List<Integer> annIds) throws GmsException {
         try {
             announcementService.deleteAnnouncements(annIds);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "删除公告成功"));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "删除公告成功"));
         } catch (Exception e) {
             String message = "删除失败";
             log.error(message, e);
