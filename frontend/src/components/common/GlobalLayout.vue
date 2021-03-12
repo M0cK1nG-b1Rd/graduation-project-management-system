@@ -5,7 +5,7 @@
           <my-sider @MenuCollapse="toggleCollapse"></my-sider>
     </el-aside>
     <el-container>
-      <el-header :height="'8%'" class="header_box">
+      <el-header :height="'40px'" class="header_box">
         <my-header></my-header>
       </el-header>
       <!--    页面主区域-->
