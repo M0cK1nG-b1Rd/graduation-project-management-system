@@ -1,10 +1,12 @@
 package com.gms.gms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.gms.dao.AnnouncementMapper;
 import com.gms.gms.domain.Announcement;
-import com.gms.gms.domain.SystemStage;
 import com.gms.gms.service.AnnouncementService;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,14 @@ import java.util.List;
 public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Announcement> implements AnnouncementService {
 
     @Override
-    public List<Announcement> getAnnouncement() {
-        return this.baseMapper.selectList(new LambdaQueryWrapper<>());
+    public IPage<Announcement> getAnnouncement(String keyWord, int page, int size) {
+        Page<Announcement> page1=new Page<>(page,size);
+        QueryWrapper<Announcement> announcementQueryWrapper=new QueryWrapper<>();
+        announcementQueryWrapper.eq("STATUS",2);
+        if(keyWord!=null&&keyWord.length()>0){
+            announcementQueryWrapper.like("ANN_TITLE",keyWord).or().like("ANN_DETAIL",keyWord);
+        }
+        return this.baseMapper.selectPage(page1,announcementQueryWrapper);
     }
 
     @Override
