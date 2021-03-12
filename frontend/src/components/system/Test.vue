@@ -1,32 +1,20 @@
 <template>
   <div>
-    <a-button type="primary" @click="showDrawer"> <a-icon type="plus" /> New account </a-button>
-    <a-drawer
-      title="Create a new account"
-      :width="720"
-      :visible="visible"
-      :body-style="{ paddingBottom: '80px' }"
-      @close="onClose"
-    >
-    </a-drawer>
+    <quill-editor :btn-size="'mini'"></quill-editor>
   </div>
 </template>
+
 <script>
+import quillEditor from '@/plugins/VueQuillEditor'
 export default {
   name: 'Test',
+  components: {
+    quillEditor
+  },
   data() {
-    return {
-      form: this.$form.createForm(this),
-      visible: false
-    }
   },
   methods: {
-    showDrawer() {
-      this.visible = true
-    },
-    onClose() {
-      this.visible = false
-    }
   }
 }
 </script>
+<style Lang="less"></style>
