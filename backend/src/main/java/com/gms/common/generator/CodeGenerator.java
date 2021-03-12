@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class CodeGenerator {
 
     // 数据库 URL
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/gms?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://ij36895496.wicp.vip:28695/gms?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai";
     // 数据库驱动
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // 数据库用户名
