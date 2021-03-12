@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/login/Login'
-import Home from '../components/common/Home'
+// import Home from '../components/common/Home'
 import Welcome from '../components/common/Welcome'
-import Users from '@/components/system/Users'
+import Users from '@/components/system/user/Users'
 import Test from '@/components/system/Test'
 import StageControl from '@/components/system/stage/StageControl'
 import EditStage from '@/components/system/stage/EditStage'
 import CurrentStage from '@/components/system/stage/CurrentStage'
 import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
+import NewLayout from '@/components/common/NewLayout'
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,7 @@ const routes = [
   // 主页
   {
     path: '/home',
-    component: Home,
+    component: NewLayout,
     redirect: '/welcome',
     children: [
       {

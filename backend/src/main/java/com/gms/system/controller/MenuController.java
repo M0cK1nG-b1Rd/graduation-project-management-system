@@ -4,13 +4,11 @@ import com.gms.common.annotation.Log;
 import com.gms.common.controller.BaseController;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
-import com.gms.common.domain.router.VueRouter;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.system.domain.Menu;
 import com.gms.system.manager.UserManager;
 import com.gms.system.service.MenuService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +38,17 @@ public class MenuController extends BaseController {
     private MenuService menuService;
 
     @GetMapping("/{username}")
-    public ArrayList<VueRouter<Menu>> getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
-        return this.userManager.getUserRouters(username);
+    public GmsResponse getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) throws GmsException {
+        try {
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询菜单成功"),this.userManager.getUserRouters(username));
+        } catch (Exception e) {
+            message = "新增菜单/按钮失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
     }
 
     @GetMapping
@@ -57,7 +63,7 @@ public class MenuController extends BaseController {
     public GmsResponse addMenu(@RequestBody @Valid Menu menu) throws GmsException {
         try {
             this.menuService.createMenu(menu);
-            return new GmsResponse().addCodeMessage(new Meta(C200.getCode(),C200.getDesc(),"新增菜单/按钮成功"));
+            return new GmsResponse().addCodeMessage(new Meta(C200.getCode(), C200.getDesc(), "新增菜单/按钮成功"));
         } catch (Exception e) {
             message = "新增菜单/按钮失败";
             log.error(message, e);

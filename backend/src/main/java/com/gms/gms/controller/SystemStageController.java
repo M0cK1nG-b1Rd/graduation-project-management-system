@@ -33,7 +33,7 @@ public class SystemStageController {
     SystemStageService systemStageService;
 
 
-    @GetMapping
+    @GetMapping()
     public GmsResponse getSystemStage() throws GmsException {
         try {
             List<SystemStage> systemStage = systemStageService.getAllSystemStage();
@@ -43,7 +43,11 @@ public class SystemStageController {
             map.put("allStage", systemStage);
             map.put("currentStageId", currStageIds);
             map.put("totalStageNum", totalStageNum);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), map);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),
+                    map);
         } catch (Exception e) {
             String message = "新建失败";
             log.error(message, e);
@@ -55,7 +59,10 @@ public class SystemStageController {
     public GmsResponse updateSystemStage(@RequestBody SystemStage currStage) throws GmsException {
         try {
             systemStageService.setCurrStage(currStage);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "更新系统信息成功"));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "更新系统信息成功"));
         } catch (Exception e) {
             String message = "更新失败";
             log.error(message, e);
@@ -67,7 +74,10 @@ public class SystemStageController {
     public GmsResponse updateSystemStage(@RequestBody List<Integer> currStageIds) throws GmsException {
         try {
             systemStageService.enableStages(currStageIds);
-            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "更新系统状态成功"));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "更新系统状态成功"));
         } catch (Exception e) {
             String message = "更新失败";
             log.error(message, e);

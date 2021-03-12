@@ -49,7 +49,7 @@ export default {
       // 当前阶段ID
       currentStageId: [],
       // 当前阶段信息
-      currentStageInfo: []
+      currentStageInfo: [{}]
     }
   },
   created() {
