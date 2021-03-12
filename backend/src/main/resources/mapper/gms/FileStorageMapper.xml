@@ -5,4 +5,8 @@
     <select id="selectAllFiles" resultType="com.gms.gms.domain.FileStorage">
         SELECT * FROM file_storage
     </select>
+    <select id="selectByDocIdAndHandinId" resultType="com.gms.gms.domain.FileStorage">
+        SELECT * FROM file_storage
+        WHERE (DOC_ID = #{docId} AND HANDIN_ID = #{handinId});
+    </select>
 </mapper>

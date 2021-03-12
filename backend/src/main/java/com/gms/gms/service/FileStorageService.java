@@ -19,7 +19,7 @@ public interface FileStorageService extends IService<FileStorage> {
 
     void save(MultipartFile multipartFile,String docId);
 
-    Resource load(String filename,String handinId);
+    Resource load(String docId,String handinId);
 
     Stream<Path> load();
 
