@@ -31,7 +31,7 @@ public class FileStorageController {
     @Autowired
     FileStorageService fileStorageService;
 
-    @PostMapping("/upload")
+    @PostMapping("upload")
     public GmsResponse upload(@RequestParam("file") MultipartFile file) {
         try {
             fileStorageService.save(file);
@@ -47,7 +47,7 @@ public class FileStorageController {
         }
     }
 
-    @GetMapping("/files")
+    @GetMapping("files")
     public GmsResponse files() {
         List<FileStorage> files = fileStorageService.load()
                 .map(path -> {
@@ -65,8 +65,8 @@ public class FileStorageController {
                 "文件列表查询成功"),files);
     }
 
-    //涉及到下载就不好用封装好的对象了，直接使用ResponseEntity就好
-    @GetMapping("/files/{filename:.+}")
+    //涉及到下载就不好用封装好的响应对象了，直接使用ResponseEntity就好
+    @GetMapping("files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable("filename")String filename){
         Resource file = fileStorageService.load(filename);
         return ResponseEntity.ok()
