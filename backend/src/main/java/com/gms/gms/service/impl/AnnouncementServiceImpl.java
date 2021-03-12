@@ -19,14 +19,15 @@ import java.util.List;
 public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Announcement> implements AnnouncementService {
 
     @Override
-    public IPage<Announcement> getAnnouncement(String keyWord, int page, int size) {
-        Page<Announcement> page1=new Page<>(page,size);
-        QueryWrapper<Announcement> announcementQueryWrapper=new QueryWrapper<>();
-        announcementQueryWrapper.eq("STATUS",2);
-        if(keyWord!=null&&keyWord.length()>0){
-            announcementQueryWrapper.like("ANN_TITLE",keyWord).or().like("ANN_DETAIL",keyWord);
+    public IPage<Announcement> getAnnouncement(String keyWord, int type,int page, int size) {
+        Page<Announcement> page1 = new Page<>(page, size);
+        QueryWrapper<Announcement> announcementQueryWrapper = new QueryWrapper<>();
+        announcementQueryWrapper.eq("STATUS", 2).eq("TYPE",type);
+        if (keyWord != null && keyWord.length() > 0) {
+            announcementQueryWrapper.like("ANN_TITLE", keyWord).or().like("ANN_DETAIL", keyWord);
         }
-        return this.baseMapper.selectPage(page1,announcementQueryWrapper);
+        announcementQueryWrapper.orderByDesc("CREATE_TIME");
+        return this.baseMapper.selectPage(page1, announcementQueryWrapper);
     }
 
     @Override
