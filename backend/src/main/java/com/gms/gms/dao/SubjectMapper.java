@@ -8,4 +8,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SubjectMapper extends BaseMapper<Subject> {
 
+    void giveOpinion(String docId, Boolean isPassed, String feedback);
 }

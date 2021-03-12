@@ -11,4 +11,10 @@ import java.util.List;
 public interface SubjectService extends IService<Subject> {
 
     List<Subject> getSubject();
+
+    void deleteSubject(String subId);
+
+    void giveOpinion(String docId, Boolean isPassed, String feedback);
+
+    List<Subject> trackSubject(String subId);
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,7 +43,7 @@ public class Subject implements Serializable {
     private Integer poseBy;
 
     @TableField("POSE_TIME")
-    private LocalDateTime poseTime;
+    private Date poseTime;
 
     @TableField("STATUS")
     private Integer status;
@@ -57,7 +58,7 @@ public class Subject implements Serializable {
     private String auditBy;
 
     @TableField("AUDIT_TIME")
-    private LocalDateTime auditTime;
+    private Date auditTime;
 
     @TableField("FEEDBACK")
     private String feedback;
