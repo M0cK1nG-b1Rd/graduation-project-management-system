@@ -47,11 +47,8 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public void save(MultipartFile multipartFile, String docId) {
+    public void saveByDefault(MultipartFile multipartFile, String docId) {
         try {
-            //todo 存储到本地时docId使用uuid
-            //todo 在数据库中插入记录
-            //todo 下载时url通过uuid进行映射，下载时通过uuid进行文件名的还原
             FileStorage record = new FileStorage(
                     multipartFile.getOriginalFilename(),
                     dirPath.toString(),
@@ -66,12 +63,24 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public Resource load(String docId, String handinId) {
-        //todo 使用handin
-        if (handinId == null) {
-            handinId = "0";
-        }
+    public void saveByHandinId(MultipartFile multipartFile, String docId,Integer handinId) {
+        try {
+            FileStorage record = new FileStorage(
+                    multipartFile.getOriginalFilename(),
+                    dirPath.toString(),
+                    GmsUtil.getCurrentUser().getUserId(),
+                    docId,
+                    handinId);
+            this.save(record);
+            Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
 
+        } catch (IOException e) {
+            throw new RuntimeException("无法存储文件：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public Resource load(String docId, String handinId) {
         //mybatis-plus自带在这张表会出问题
         FileStorage record = this.baseMapper.selectByDocIdAndHandinId(docId,handinId);
 
