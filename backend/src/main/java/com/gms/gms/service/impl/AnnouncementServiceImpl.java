@@ -18,11 +18,12 @@ import java.util.List;
 @Service
 public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Announcement> implements AnnouncementService {
 
+    //普通用户点击公告栏时看到的信息接口
     @Override
-    public IPage<Announcement> getAnnouncement(String keyWord, int type,int page, int size) {
+    public IPage<Announcement> getAnnouncement(String keyWord, int type,int page, int size, int status) {
         Page<Announcement> page1 = new Page<>(page, size);
         QueryWrapper<Announcement> announcementQueryWrapper = new QueryWrapper<>();
-        announcementQueryWrapper.eq("STATUS", 2).eq("TYPE",type);
+        announcementQueryWrapper.eq("STATUS", status).eq("TYPE",type);
         if (keyWord != null && keyWord.length() > 0) {
             announcementQueryWrapper.like("ANN_TITLE", keyWord).or().like("ANN_DETAIL", keyWord);
         }

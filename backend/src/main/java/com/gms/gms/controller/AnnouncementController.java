@@ -30,9 +30,9 @@ public class AnnouncementController {
 
     //该方法用于普通用户在公告栏查询公告
     @GetMapping
-    public GmsResponse getAnnouncement(String keyWord,int type,int page,int size) throws GmsException {
+    public GmsResponse getAnnouncement(String keyWord,int type,int page,int size, int status) throws GmsException {
         try {
-            IPage<Announcement> announcement = announcementService.getAnnouncement(keyWord,type,page,size);
+            IPage<Announcement> announcement = announcementService.getAnnouncement(keyWord,type,page,size,status);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -61,7 +61,7 @@ public class AnnouncementController {
     }
 
     @PostMapping
-    public GmsResponse addAnnouncement(Announcement announcement) throws GmsException {
+    public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
             announcementService.addAnnouncement(announcement);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -76,7 +76,7 @@ public class AnnouncementController {
     }
 
     @PutMapping
-    public GmsResponse updateAnnouncement(Announcement announcement) throws GmsException {
+    public GmsResponse updateAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
             announcementService.updateAnnouncement(announcement);
             return new GmsResponse().addCodeMessage(new Meta(
