@@ -11,4 +11,6 @@ import java.util.List;
 public interface FileStorageMapper extends BaseMapper<FileStorage> {
 
     List<FileStorage> selectAllFiles();
+
+    FileStorage selectByDocIdAndHandinId(String docId, String handinId);
 }

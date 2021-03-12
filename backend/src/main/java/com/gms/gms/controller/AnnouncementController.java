@@ -28,10 +28,11 @@ public class AnnouncementController {
     @Autowired
     AnnouncementService announcementService;
 
+    //该方法用于普通用户在公告栏查询公告
     @GetMapping
-    public GmsResponse getAnnouncement(String keyWord,int page,int size) throws GmsException {
+    public GmsResponse getAnnouncement(String keyWord,int type,int page,int size) throws GmsException {
         try {
-            IPage<Announcement> announcement = announcementService.getAnnouncement(keyWord,page,size);
+            IPage<Announcement> announcement = announcementService.getAnnouncement(keyWord,type,page,size);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

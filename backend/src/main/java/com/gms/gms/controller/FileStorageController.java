@@ -58,9 +58,9 @@ public class FileStorageController {
 
     //todo 修改函数
     //涉及到下载就不好用封装好的响应对象了，直接使用ResponseEntity就好
-    @GetMapping("files/{filename:.+}/{handinId}")
-    public ResponseEntity<Resource> getFile(@PathVariable("filename")String filename,String handinId){
-        Resource file = fileStorageService.load(filename,handinId);
+    @GetMapping("files/{docId}/{handinId}")
+    public ResponseEntity<Resource> getFile(@PathVariable("docId")String docId,@PathVariable("handinId")String handinId){
+        Resource file = fileStorageService.load(docId,handinId);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment;filename=\""+file.getFilename()+"\"")

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -46,12 +47,12 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public void save(MultipartFile multipartFile,String docId) {
+    public void save(MultipartFile multipartFile, String docId) {
         try {
             //todo 存储到本地时docId使用uuid
             //todo 在数据库中插入记录
             //todo 下载时url通过uuid进行映射，下载时通过uuid进行文件名的还原
-            FileStorage record= new FileStorage(
+            FileStorage record = new FileStorage(
                     multipartFile.getOriginalFilename(),
                     dirPath.toString(),
                     GmsUtil.getCurrentUser().getUserId(),
@@ -65,8 +66,17 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public Resource load(String filename,String handinId) {
+    public Resource load(String docId, String handinId) {
         //todo 使用handin
+        if (handinId == null) {
+            handinId = "0";
+        }
+
+        //mybatis-plus自带在这张表会出问题
+        FileStorage record = this.baseMapper.selectByDocIdAndHandinId(docId,handinId);
+
+        String filename = record.getFileName();
+
         Path file = dirPath.resolve(filename);
         try {
             Resource resource = new UrlResource(file.toUri());

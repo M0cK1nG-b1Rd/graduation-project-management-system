@@ -37,6 +37,9 @@ public class Announcement implements Serializable {
     @TableField("ANN_DETAIL")
     private String annDetail;
 
+    @TableField("TYPE")
+    private Integer type;
+
     @TableField("STATUS")
     private Integer status;
 
