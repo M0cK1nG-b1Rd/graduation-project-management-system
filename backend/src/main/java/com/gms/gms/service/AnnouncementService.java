@@ -11,7 +11,7 @@ import java.util.List;
  * @author MrBird
  */
 public interface AnnouncementService extends IService<Announcement> {
-    IPage<Announcement> getAnnouncement(String keyWord, int page, int size);
+    IPage<Announcement> getAnnouncement(String keyWord, int type,int page, int size, int status);
 
     void updateAnnouncement(Announcement announcement);
 

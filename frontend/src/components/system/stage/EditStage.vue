@@ -82,14 +82,15 @@ export default {
       dialogVisible: false
     }
   },
-  async beforeCreate() {
-    await this.getAllStageInfo()
+  created() {
+    this.getAllStageInfo()
   },
   methods: {
     // 获取所有阶段信息
     async getAllStageInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/system/')
       if (res.meta.code !== 200) return this.$message.error('请求阶段信息失败！')
+      // console.log(res)
       this.allStageInfo = res.data.allStage
       this.currentStageId = res.data.currentStageId
       this.totalStageNum = res.data.totalStageNum
