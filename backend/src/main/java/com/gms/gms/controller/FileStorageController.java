@@ -33,7 +33,6 @@ public class FileStorageController {
 
     @PostMapping("upload/{docId}")
     public GmsResponse upload(@RequestParam("file") MultipartFile file,@PathVariable("docId") String docId) {
-        //todo 测试接口
         try {
             fileStorageService.save(file,docId);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -50,27 +49,18 @@ public class FileStorageController {
 
     @GetMapping("files")
     public GmsResponse files() {
-        List<FileStorage> files = fileStorageService.load()
-                .map(path -> {
-                    String fileName = path.getFileName().toString();
-                    String location = MvcUriComponentsBuilder.fromMethodName(FileStorageController.class,
-                            "getFile",
-                            path.getFileName().toString())
-                            .build()
-                            .toString();
-                    //todo 完善此处代码逻辑
-                    return new FileStorage(fileName, location,1,"123456");
-                }).collect(Collectors.toList());
+        List<FileStorage> files = fileStorageService.selectAllFiles();
         return new GmsResponse().addCodeMessage(new Meta(
                 Code.C200.getCode(),
                 Code.C200.getDesc(),
                 "文件列表查询成功"),files);
     }
 
+    //todo 修改函数
     //涉及到下载就不好用封装好的响应对象了，直接使用ResponseEntity就好
-    @GetMapping("files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable("filename")String filename){
-        Resource file = fileStorageService.load(filename);
+    @GetMapping("files/{filename:.+}/{handinId}")
+    public ResponseEntity<Resource> getFile(@PathVariable("filename")String filename,String handinId){
+        Resource file = fileStorageService.load(filename,handinId);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment;filename=\""+file.getFilename()+"\"")

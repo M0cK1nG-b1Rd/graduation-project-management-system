@@ -1,5 +1,6 @@
 package com.gms.gms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.FileStorage;
 import com.gms.gms.dao.FileStorageMapper;
@@ -20,6 +21,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -45,7 +48,7 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void save(MultipartFile multipartFile,String docId) {
         try {
-            //todo 存储到本地时使用uuid
+            //todo 存储到本地时docId使用uuid
             //todo 在数据库中插入记录
             //todo 下载时url通过uuid进行映射，下载时通过uuid进行文件名的还原
             FileStorage record= new FileStorage(
@@ -62,7 +65,8 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public Resource load(String filename) {
+    public Resource load(String filename,String handinId) {
+        //todo 使用handin
         Path file = dirPath.resolve(filename);
         try {
             Resource resource = new UrlResource(file.toUri());
@@ -90,6 +94,11 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void clear() {
         FileSystemUtils.deleteRecursively(dirPath.toFile());
+    }
+
+    @Override
+    public List<FileStorage> selectAllFiles() {
+        return this.baseMapper.selectAllFiles();
     }
 
 }
