@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public interface FileStorageService extends IService<FileStorage> {
     void init();
 
-    void save(MultipartFile multipartFile);
+    void save(MultipartFile multipartFile,String docId);
 
     Resource load(String filename);
 

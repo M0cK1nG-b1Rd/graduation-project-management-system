@@ -1,9 +1,14 @@
 package com.gms.gms.service.impl;
 
+import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.FileStorage;
 import com.gms.gms.dao.FileStorageMapper;
 import com.gms.gms.service.FileStorageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.system.manager.UserManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -22,48 +27,61 @@ import java.util.stream.Stream;
  */
 @Service
 public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileStorage> implements FileStorageService {
-    private final Path path = Paths.get("fileStorage");
+
+
+    @Value("${file.dir_path}")
+    private Path dirPath;
 
 
     @Override
     public void init() {
         try {
-            Files.createDirectory(path);
+            Files.createDirectory(dirPath);
         } catch (IOException e) {
             throw new RuntimeException("无法创建用于上传的文件夹！");
         }
     }
 
     @Override
-    public void save(MultipartFile multipartFile) {
+    public void save(MultipartFile multipartFile,String docId) {
         try {
-            Files.copy(multipartFile.getInputStream(),this.path.resolve(multipartFile.getOriginalFilename()));
+            //todo 存储到本地时使用uuid
+            //todo 在数据库中插入记录
+            //todo 下载时url通过uuid进行映射，下载时通过uuid进行文件名的还原
+            FileStorage record= new FileStorage(
+                    multipartFile.getOriginalFilename(),
+                    dirPath.toString(),
+                    GmsUtil.getCurrentUser().getUserId(),
+                    docId);
+            this.save(record);
+            Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
+
         } catch (IOException e) {
-            throw new RuntimeException("无法存储文件："+e.getMessage());
+            throw new RuntimeException("无法存储文件：" + e.getMessage());
         }
     }
 
     @Override
     public Resource load(String filename) {
-        Path file = path.resolve(filename);
+        Path file = dirPath.resolve(filename);
         try {
             Resource resource = new UrlResource(file.toUri());
-            if(resource.exists() || resource.isReadable()){
+            if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }else{
+            } else {
                 throw new RuntimeException("无法读取文件");
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException("错误："+e.getMessage());
+            throw new RuntimeException("错误：" + e.getMessage());
         }
     }
 
     @Override
     public Stream<Path> load() {
         try {
-            return Files.walk(this.path,1)
-                    .filter(path -> !path.equals(this.path))
-                    .map(this.path::relativize);
+            return Files.walk(this.dirPath, 1)
+                    .filter(path -> !path.equals(this.dirPath))
+                    .map(this.dirPath::relativize);
         } catch (IOException e) {
             throw new RuntimeException("无法加载文件");
         }
@@ -71,7 +89,7 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
 
     @Override
     public void clear() {
-        FileSystemUtils.deleteRecursively(path.toFile());
+        FileSystemUtils.deleteRecursively(dirPath.toFile());
     }
 
 }

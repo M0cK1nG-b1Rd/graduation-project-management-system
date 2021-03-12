@@ -23,7 +23,7 @@ public class Announcement implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableField("DOC_ID")
-    private Integer docId;
+    private String docId;
 
     @TableId("ANN_ID")
     private Integer annId;
@@ -39,6 +39,9 @@ public class Announcement implements Serializable {
 
     @TableField("STATUS")
     private Integer status;
+
+    @TableField("SIGNATURE")
+    private Integer signature;
 
     @TableField("CREATE_TIME")
     private Date createTime;

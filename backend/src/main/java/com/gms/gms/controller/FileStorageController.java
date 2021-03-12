@@ -31,10 +31,11 @@ public class FileStorageController {
     @Autowired
     FileStorageService fileStorageService;
 
-    @PostMapping("upload")
-    public GmsResponse upload(@RequestParam("file") MultipartFile file) {
+    @PostMapping("upload/{docId}")
+    public GmsResponse upload(@RequestParam("file") MultipartFile file,@PathVariable("docId") String docId) {
+        //todo 测试接口
         try {
-            fileStorageService.save(file);
+            fileStorageService.save(file,docId);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -57,7 +58,8 @@ public class FileStorageController {
                             path.getFileName().toString())
                             .build()
                             .toString();
-                    return new FileStorage(fileName, location);
+                    //todo 完善此处代码逻辑
+                    return new FileStorage(fileName, location,1,"123456");
                 }).collect(Collectors.toList());
         return new GmsResponse().addCodeMessage(new Meta(
                 Code.C200.getCode(),
