@@ -76,7 +76,7 @@ public class AnnouncementController {
     }
 
     @PutMapping
-    public GmsResponse updateAnnouncement(Announcement announcement) throws GmsException {
+    public GmsResponse updateAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
             announcementService.updateAnnouncement(announcement);
             return new GmsResponse().addCodeMessage(new Meta(
