@@ -11,10 +11,7 @@ import com.gms.gms.service.impl.SubjectServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,4 +37,36 @@ public class SubjectController {
             throw new GmsException(message);
         }
     }
+
+    @PostMapping
+    public GmsResponse giveSubject(Subject subject) throws GmsException {
+        try {
+            subjectService.save(subject);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "新建课题成功"));
+        } catch (Exception e) {
+            String message = "新建课题失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    @PostMapping("modify")
+    public GmsResponse modifySubject(Subject subject) {
+
+    }
+
+    @PutMapping("audit")
+    public GmsResponse auditSubject(Subject subject) {
+
+    }
+
+    @DeleteMapping()
+    public GmsResponse deleteSubject(String subId) {
+
+    }
+
+
 }

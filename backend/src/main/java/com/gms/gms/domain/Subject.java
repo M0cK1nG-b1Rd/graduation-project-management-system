@@ -1,8 +1,11 @@
 package com.gms.gms.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,31 +20,46 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Subject implements Serializable {
 
+
     private static final long serialVersionUID = 1L;
 
-        @TableField("DOC_ID")
-    private Integer docId;
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Integer id;
 
-        @TableField("SUB_NAME")
+    @TableField("DOC_ID")
+    private String docId;
+
+    @TableField("SUB_ID")
+    private String subId;
+
+    @TableField("SUB_NAME")
     private String subName;
 
-        @TableField("DESCRIPTION")
+    @TableField("DESCRIPTION")
     private String description;
 
-        @TableField("POSE_BY")
+    @TableField("POSE_BY")
     private Integer poseBy;
 
-            @TableId("SUB_ID")
-    private Integer subId;
+    @TableField("POSE_TIME")
+    private LocalDateTime poseTime;
 
-        @TableField("GIV_SUB_ID")
-    private Integer givSubId;
-
-        @TableField("STATUS")
+    @TableField("STATUS")
     private Integer status;
 
-        @TableField("MAJOR_ID")
+    @TableField("MAJOR_ID")
     private Integer majorId;
 
+    @TableField("IS_PASSED")
+    private Boolean isPassed;
+
+    @TableField("AUDIT_BY")
+    private String auditBy;
+
+    @TableField("AUDIT_TIME")
+    private LocalDateTime auditTime;
+
+    @TableField("FEEDBACK")
+    private String feedback;
 
 }
