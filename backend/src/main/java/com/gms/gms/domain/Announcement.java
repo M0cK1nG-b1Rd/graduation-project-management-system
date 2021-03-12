@@ -41,7 +41,7 @@ public class Announcement implements Serializable {
     private Integer status;
 
     @TableField("SIGNATURE")
-    private Integer signature;
+    private String signature;
 
     @TableField("CREATE_TIME")
     private Date createTime;
