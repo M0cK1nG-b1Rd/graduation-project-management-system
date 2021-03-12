@@ -145,7 +145,7 @@ export default {
   },
   methods: {
     async getNotice() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', this.queryInfo)
       if (res.meta.code !== 200) return this.$message.error('获取公告信息失败！')
       // console.log(res)
       this.noticeList = res.data.records
@@ -195,6 +195,11 @@ export default {
 }
 /*页面上方标题区,不是通知内容标题*/
 .page_title {
+  background-color: #cccccc;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow:  20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff;
   font-size: 25px;
   font-weight: bold;
 }
