@@ -116,8 +116,8 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     }
 
     @Override
-    public List<FileStorage> selectAllFiles() {
-        return this.baseMapper.selectAllFiles();
+    public List<FileStorage> selectByDocId(String docId) {
+        return this.baseMapper.selectByDocId(docId);
     }
 
 }

@@ -28,5 +28,5 @@ public interface FileStorageService extends IService<FileStorage> {
 
     void clear();
 
-    List<FileStorage> selectAllFiles();
+    List<FileStorage> selectByDocId(String docId);
 }

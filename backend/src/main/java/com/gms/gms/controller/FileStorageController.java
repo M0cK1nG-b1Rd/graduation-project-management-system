@@ -48,7 +48,7 @@ public class FileStorageController {
 
     //上传接口（用于重复提交的DOC，如阶段任务等，需要handinId参数）
     @PostMapping("upload/{docId}/{handinId}")
-    public GmsResponse uploadHandin(@RequestParam("file") MultipartFile file,@PathVariable("docId") String docId, @PathVariable("handinId")Integer handinId) {
+    public GmsResponse uploadHandin(@RequestParam("file") MultipartFile file,@PathVariable String docId, @PathVariable Integer handinId) {
         try {
             fileStorageService.saveByHandinId(file,docId,handinId);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -63,9 +63,11 @@ public class FileStorageController {
         }
     }
 
-    @GetMapping("files")
-    public GmsResponse files() {
-        List<FileStorage> files = fileStorageService.selectAllFiles();
+
+    @GetMapping("files/{docId}")
+    // 查询属于该Doc的附件
+    public GmsResponse getFilesByDocId(@PathVariable String docId) {
+        List<FileStorage> files = fileStorageService.selectByDocId(docId);
         return new GmsResponse().addCodeMessage(new Meta(
                 Code.C200.getCode(),
                 Code.C200.getDesc(),
