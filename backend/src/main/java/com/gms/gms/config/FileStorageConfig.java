@@ -3,6 +3,7 @@ package com.gms.gms.config;
 import com.gms.gms.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Service;
  * @Date 2020/4/28 0028 19:15
  * @Version since 1.0
  **/
-@Service
+@Configuration
 public class FileStorageConfig implements CommandLineRunner {
+
 
     @Autowired
     FileStorageService fileStorageService;

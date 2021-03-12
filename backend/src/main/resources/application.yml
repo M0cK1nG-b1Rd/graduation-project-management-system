@@ -52,6 +52,10 @@ spring:
       max-request-size: 50MB
       max-file-size: 50MB
 
+#文件上传路径，如D:\fileuploadtest（Windows）
+file:
+  dir_path: D:\fileuploadtest
+
 
 #mybatis plus 设置
 mybatis-plus:

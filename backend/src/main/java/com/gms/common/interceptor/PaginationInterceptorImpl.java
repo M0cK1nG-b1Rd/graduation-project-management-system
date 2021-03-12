@@ -155,43 +155,41 @@ public class PaginationInterceptorImpl extends PaginationInterceptor {
         }
         //数据权限过滤
         DataFilter anno=null;
-        if(SqlCommandType.SELECT == mappedStatement.getSqlCommandType()){
-            String id=mappedStatement.getId();
-            String className=id.substring(0,id.lastIndexOf("."));
-            String methodName=id.replace(className+".","");
-            System.out.println(methodName);
-            Class clazz=Class.forName(className);
-            if(clazz.isAnnotationPresent(DataFilter.class)){
-                anno=(DataFilter)clazz.getAnnotation(DataFilter.class);
-               String[] methods= anno.filterMethods();
-                String[] ruledOutMethods=anno.ruledOutMethods();
-               if(methods.length==0){
-                   if(ruledOutMethods.length==0){
-                       dataFilter=true;
-                   }else{
-                       String str=","+StringUtils.join(ruledOutMethods,",")+",";
-                       if(str.indexOf(methodName)==-1){
-                           dataFilter=true;
-                       }
-                   }
+        String id=mappedStatement.getId();
+        String className=id.substring(0,id.lastIndexOf("."));
+        String methodName=id.replace(className+".","");
+        System.out.println(methodName);
+        Class clazz=Class.forName(className);
+        if(clazz.isAnnotationPresent(DataFilter.class)){
+            anno=(DataFilter)clazz.getAnnotation(DataFilter.class);
+           String[] methods= anno.filterMethods();
+            String[] ruledOutMethods=anno.ruledOutMethods();
+           if(methods.length==0){
+               if(ruledOutMethods.length==0){
+                   dataFilter=true;
                }else{
-                   Optional<String> optional=Arrays.stream(ruledOutMethods).parallel().filter(me -> me.equals(methodName)).findAny();
-                   if(!optional.isPresent()){
-                       optional=Arrays.stream(methods).parallel().filter(me -> me.equals(methodName)).findAny();
-                       if(optional.isPresent()){
-                           dataFilter=true;
-                       }
+                   String str=","+StringUtils.join(ruledOutMethods,",")+",";
+                   if(!str.contains(methodName)){
+                       dataFilter=true;
                    }
                }
-            }else{
-                try {
-                    Method method = clazz.getDeclaredMethod(methodName);
-                    if (method != null && method.isAnnotationPresent(DataFilter.class)) {
-                        anno=(DataFilter)method.getAnnotation(DataFilter.class);
-                        dataFilter = true;
-                    }
-                }catch (Exception ex){}
-            }
+           }else{
+               Optional<String> optional=Arrays.stream(ruledOutMethods).parallel().filter(me -> me.equals(methodName)).findAny();
+               if(!optional.isPresent()){
+                   optional=Arrays.stream(methods).parallel().filter(me -> me.equals(methodName)).findAny();
+                   if(optional.isPresent()){
+                       dataFilter=true;
+                   }
+               }
+           }
+        }else{
+            try {
+                Method method = clazz.getDeclaredMethod(methodName);
+                if (method.isAnnotationPresent(DataFilter.class)) {
+                    anno=(DataFilter)method.getAnnotation(DataFilter.class);
+                    dataFilter = true;
+                }
+            }catch (Exception ignored){}
         }
         // 针对定义了rowBounds，做为mapper接口方法的参数
         BoundSql boundSql = (BoundSql) metaObject.getValue("delegate.boundSql");

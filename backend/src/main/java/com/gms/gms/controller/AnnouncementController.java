@@ -41,6 +41,22 @@ public class AnnouncementController {
         }
     }
 
+
+    @GetMapping("published")
+    public GmsResponse getPublishedAnnouncement() throws GmsException {
+        try {
+            List<Announcement> announcement = announcementService.getPublishedAnnouncement();
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), announcement);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
     @PostMapping
     public GmsResponse addAnnouncement(Announcement announcement) throws GmsException {
         try {
