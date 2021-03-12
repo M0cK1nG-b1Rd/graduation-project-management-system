@@ -9,81 +9,103 @@
     <!--  卡片视图区-->
     <el-card class="box-card">
       <!--      页面标题-->
-      <el-row type="flex" justify="center" class="page_title">
+      <el-row v-if="Visible" type="flex" justify="center" class="page_title">
         <span>系统通知栏</span>
       </el-row>
       <!--      分割线-->
-      <el-row>
+      <el-row v-if="Visible">
         <el-divider></el-divider>
+      </el-row>
+      <!--      返回通知栏首页按钮链接-->
+      <el-row v-if="!Visible">
+        <el-button type="text" @click="Visible = !Visible">返回公告首页</el-button>
       </el-row>
       <!--      页面主体信息-->
       <el-row class="page_body">
         <el-container>
           <!--      侧边栏-->
-          <el-aside width="400px">
-<!--            侧边栏轮播图片区-->
+          <el-aside width="400px" v-if="Visible">
+            <!--            侧边栏轮播图片区-->
             <el-card class="carousel">
               <el-carousel height="150px" :interval="2000">
-                <el-carousel-item>
-<!--                  轮播卡片01-->
-                  <div class="carousel_box">
-<!--                    轮播卡片内容-->
-                    <div class="carousel_box_content">
-                      <img src="../../assets/imgs/gongGaoLan/lunbotu01.jpg" alt="" style="height: 130px">
-                    </div>
-<!--                    轮播卡片描述-->
-                    <div class="carousel_box_desc">晋校长视察学校食堂，与学生共进午餐</div>
-                  </div>
+                <!--                  轮播卡片01-->
+                <el-carousel-item class="carousel_box">
+                    <!--                    轮播卡片图片-->
+                      <img src="../../assets/imgs/gongGaoLan/lunbotu01.jpg" title="晋校长视察学校食堂，与学生共进午餐" class="carousel_box_img">
+                    <!--                    轮播卡片描述-->
+                    <div class="carousel_box_desc"></div>
                 </el-carousel-item>
-                <el-carousel-item>
-<!--                  轮播卡片02-->
-                  <div class="carousel_box">
-<!--                    轮播卡片内容-->
-                    <div class="carousel_box_content">
-                      <img src="../../assets/imgs/gongGaoLan/lunbotu02.jpg" alt="" style="height: 130px">
-                    </div>
-<!--                    轮播卡片描述-->
-                    <div class="carousel_box_desc">晋校长视察学生机房，与学生一同观看猫和老鼠</div>
-                  </div>
+                <!--                  轮播卡片02-->
+                <el-carousel-item class="carousel_box">
+                    <!--                    轮播卡片图片-->
+                      <img src="../../assets/imgs/gongGaoLan/lunbotu02.jpg" title="晋校长视察学生机房，与学生一同观看猫和老鼠"  class="carousel_box_img">
+                    <!--                    轮播卡片描述-->
+                    <div class="carousel_box_desc"></div>
                 </el-carousel-item>
               </el-carousel>
             </el-card>
-<!--            侧边栏最新通知及分类区-->
+            <!--            侧边栏最新通知及分类区-->
             <el-card class="classification_zone">
-<!--            分类选择按钮-->
+              <!--            分类选择按钮-->
               <div style="margin-top: 20px" class="classification_button">
-                <el-radio-group size="medium">
-                  <el-radio-button label="答辩安排" ></el-radio-button>
-                  <el-radio-button label="学业通知"></el-radio-button>
-                  <el-radio-button label="工作安排"></el-radio-button>
+                <el-radio-group v-model="queryInfo.type" @change="handletypeChange"
+                                style="display: flex; justify-content: center">
+                  <el-radio-button label="1" value="1">学业通知</el-radio-button>
+                  <el-radio-button label="2" value="2">答辩安排</el-radio-button>
+                  <el-radio-button label="3" value="3">工作安排</el-radio-button>
                 </el-radio-group>
               </div>
-<!--            最新通知表格-->
+              <!--           通知表格搜索框-->
+              <el-input prefix-icon="el-icon-search" v-model="queryInfo.keyWord"
+                        @change="getNotice"
+                        placeholder="输入关键字搜索" style="margin-top: 5px">
+              </el-input>
+              <!--            通知表格-->
               <el-table
-                :data="newestNoticeData"
+                :data="noticeList"
                 style="width: 100%">
                 <el-table-column
-                  prop="date"
-                  label="日期"
-                  width="100">
+                  :show-overflow-tooltip="true"
+                  prop="annTitle"
+                  width="235px"
+                  label="标题">
                 </el-table-column>
                 <el-table-column
-                  prop="address"
-                  width="250px"
-                  label="地址">
+                  :show-overflow-tooltip="true"
+                  prop="createTime"
+                  label="发布日期"
+                  width="85px">
+                </el-table-column>
+                <el-table-column
+                  label=""
+                  width="35px">
+                  <template slot-scope="scope">
+                    <i class="el-icon-view" @click="viewDetail(scope.row)"></i>
+                  </template>
                 </el-table-column>
               </el-table>
-<!--            查看更多-按钮-->
-              <div>
-                <el-link>查看更多<i class="el-icon-view el-icon--right" type="primary"></i> </el-link>
-              </div>
+<!--              分页-->
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="queryInfo.page"
+                :page-sizes="[5, 10]"
+                :page-size="queryInfo.size"
+                layout="total, sizes, prev, pager, next"
+                :total="totalPageNum">
+              </el-pagination>
             </el-card>
           </el-aside>
           <!--       右侧通知详情内容区-->
           <el-main>
-            <el-card class="content_zone">
-              <quill-editor></quill-editor>
-            </el-card>
+<!--              通知标题-->
+<!--                <div class="notice_title">-->
+<!--                  {{noticeTitle}}-->
+<!--                </div>-->
+<!--              通知内容-->
+              <div class="ql-container ql-snow" style="height: 860px">
+                <div class="notice_content ql-editor" v-html="noticeDetial"></div>
+              </div>
           </el-main>
         </el-container>
       </el-row>
@@ -92,44 +114,66 @@
 </template>
 
 <script>
-import quillEditor from '@/plugins/VueQuillEditor'
 export default {
   name: 'ViewNotice',
-  components: { quillEditor },
+  created() {
+    this.getNotice()
+  },
   data() {
     return {
-      newestNoticeData: [{
-        date: '2016-05-02',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }, {
-        date: '2016-05-04',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }, {
-        date: '2016-05-04',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }
-      ]
+      // 左侧边框可见性
+      Visible: true,
+      // 查询分页时，向后端发送的参数信息
+      queryInfo: {
+        status: 2, // 需要查询的通知记录类型（1-未发布，2-已发布，3-删除）
+        keyWord: '', // 关键词
+        page: 1, // 当前页号
+        size: 10, // 页面大小
+        type: 1 // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+      },
+      // 当前页编号
+      currentPage: 1,
+      // 总共页数
+      totalPageNum: 1,
+      // 通知列表信息
+      noticeList: [],
+      // 选中通知的内容
+      noticeDetial: '',
+      // 选中通知的标题
+      noticeTitle: ''
+    }
+  },
+  methods: {
+    async getNotice() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', { params: this.queryInfo })
+      if (res.meta.code !== 200) return this.$message.error('获取公告信息失败！')
+      // console.log(res)
+      this.noticeList = res.data.records
+      this.totalPageNum = res.data.total
+      this.noticeDetial = res.data.records[0].annDetail
+      this.noticeTitle = res.data.records[0].annTitle
+      // console.log(this.noticeDetial)
+    },
+    // 当页面大小变化时触发
+    handleSizeChange(newSize) {
+      this.queryInfo.size = newSize
+      this.getNotice()
+    },
+    // 当页面编号变化时触发
+    handleCurrentChange(newPage) {
+      this.queryInfo.page = newPage
+      this.getNotice()
+    },
+    // 处理公告类型改变
+    handletypeChange(newType) {
+      this.queryInfo.type = newType
+      this.getNotice()
+    },
+    // 查看选中公告详情
+    viewDetail(row) {
+      this.noticeDetial = row.annDetail
+      this.noticeTitle = row.annTitle
+      this.Visible = false
     }
   }
 }
@@ -140,47 +184,76 @@ export default {
   margin-top: 20px;
   margin-left: 20px;
 }
+
 /*视图区最外层卡片*/
 .box-card {
 }
-/*页面上方标题区*/
+
+/*卡片组件*/
+.el-card{
+  padding: 0 !important;
+}
+/*页面上方标题区,不是通知内容标题*/
 .page_title {
   font-size: 25px;
   font-weight: bold;
 }
+
 /*左侧上方轮播表*/
-.carousel{
+.carousel {
   margin-bottom: 10px;
 }
-.el-main{
+
+.el-main {
   padding-top: 0;
   padding-bottom: 0;
 }
-/*主体内容区*/
-.content_zone{
+/*选中通知标题区*/
+.notice_title{
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+/*选中通知内容区*/
+.notice_content {
+  padding: 10px;
   height: 100%;
 }
+
+.notice_content::-webkit-scrollbar{
+  width:0;
+}
+
 /*轮播卡片*/
-.carousel_box{
+.carousel_box {
   display: flex;
-  justify-content: center;
-  align-content: end;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+/*轮播卡片图片*/
+.carousel_box_img{
+  height: 200px;
+  width: 300px;
 }
 /*轮播卡片描述*/
-.carousel_box_desc{
+.carousel_box_desc {
   text-align: center;
   z-index: 999;
-  font-size: 15px;
+  font-size: 13px;
 }
+
 /*左侧下方分类区*/
-.classification_zone{
+.classification_zone {
   padding: 0px !important;
 }
+
 /*单选按钮*/
-.el-radio-button{
+.el-radio-button {
   margin-top: 0;
 }
-.el-card{
+
+.el-card {
   padding: 0 !important;
   margin: 0 !important;
 }

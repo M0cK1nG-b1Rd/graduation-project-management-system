@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import quillEditor from '@/plugins/VueQuillEditor'
+import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'Test',
   components: {
