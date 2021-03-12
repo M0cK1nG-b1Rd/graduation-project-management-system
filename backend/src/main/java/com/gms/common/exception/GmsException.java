@@ -1,7 +1,7 @@
 package com.gms.common.exception;
 
 /**
- * FEBS 系统内部异常
+ * GMS 系统内部异常
  */
 public class GmsException extends Exception {
 

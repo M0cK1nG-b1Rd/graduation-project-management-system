@@ -22,6 +22,7 @@ fileStorage
 
 ### NetBeans ###
 log
+spy.log
 /nbproject/private/
 /nbbuild/
 /dist/
