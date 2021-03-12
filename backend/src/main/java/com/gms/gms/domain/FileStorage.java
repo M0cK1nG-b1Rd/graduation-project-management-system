@@ -10,7 +10,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.models.auth.In;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,6 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@AllArgsConstructor
 public class FileStorage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,25 +35,25 @@ public class FileStorage implements Serializable {
     @TableField("HANDIN_ID")
     private Integer handinId;
 
-
+    @JsonIgnore
     @TableId(value = "FILE_ID", type = IdType.AUTO)
     private Integer fileId;
 
     @TableField("FILE_NAME")
     private String fileName;
-
+    @JsonIgnore
     @TableField("TYPE")
     private String type;
-
+    @JsonIgnore
     @TableField("SIZE")
     private Integer size;
-
+    @JsonIgnore
     @TableField("LOCATION")
     private String location;
-
+    @JsonIgnore
     @TableField("DEL_FLAG")
     private Boolean delFlag;
-
+    @JsonIgnore
     @TableField("UPLOAD_BY")
     private Integer uploadBy;
 
