@@ -195,6 +195,11 @@ export default {
 }
 /*页面上方标题区,不是通知内容标题*/
 .page_title {
+  background-color: #cccccc;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow:  20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff;
   font-size: 25px;
   font-weight: bold;
 }
