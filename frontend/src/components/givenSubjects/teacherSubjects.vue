@@ -18,7 +18,7 @@
                 <el-row>
                   <el-col :span="10">
                     <el-form-item label="课题名称">
-                      <el-input v-model="subject.subject_name"></el-input>
+                      <el-input v-model="subject.subName"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="7">
@@ -70,7 +70,7 @@
                 <el-row>
                   <el-col :span="20">
                     <el-form-item label="课题内容">
-                      <el-input type="textarea" v-model="subject.info"></el-input>
+                      <el-input type="textarea" v-model="subject.description"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="20">
@@ -115,14 +115,14 @@ export default {
   data() {
     return {
       subject: {
-        subject_name: '',
+        subName: '',
         teacherName: '',
         type: '',
         date1: '',
         date2: '',
         phone: 0,
         mail: '',
-        info: '',
+        description: '',
         require: '',
         opinion: ''
       },
