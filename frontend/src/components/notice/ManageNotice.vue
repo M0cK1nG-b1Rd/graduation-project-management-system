@@ -7,7 +7,7 @@
       <el-breadcrumb-item>管理公告</el-breadcrumb-item>
     </el-breadcrumb>
     <!--    内容最外层卡片区-->
-    <el-card v-if="!addNewNoticePageVisible">
+    <el-card v-if="!addNewNoticePageVisible" style="padding-left: 20px">
       <!--      搜索框及发布公告按钮-->
       <el-row>
         <!--      搜索框-->
@@ -26,6 +26,8 @@
       <!--      表格区-->
       <el-row>
         <el-table
+          border
+          :highlight-current-row="true"
           :data="noticeList"
           size="medium "
           :default-sort = "{prop: 'date', order: 'descending'}"
@@ -103,7 +105,7 @@
         </el-table>
       </el-row>
       <!--      分页区-->
-      <el-row>
+      <el-row type="flex" style="margin-top: 20px; margin-left: 20px">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -181,6 +183,49 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
+    <!--    编辑修改公告对话框-->
+    <el-dialog
+      :visible.sync="editPageVisible"
+      width="70%">
+        <!--      公告基本信息区-->
+        <el-row type="flex" justify="space-between">
+          <!--      公告标题-->
+          <el-col :span="10">
+            <el-input placeholder="请输入公告标题" v-model="currentNoticeInfo.annTitle"></el-input>
+          </el-col>
+          <!--      公告来源(发布者)-->
+          <el-col :span="8">
+            <el-input placeholder="请输入公告发布单位,如'软件学院'" v-model="currentNoticeInfo.signature"></el-input>
+          </el-col>
+          <!--      公告类型-->
+          <el-col :span="5">
+            <el-select v-model="currentNoticeInfo.type" placeholder="请选择公告类型">
+              <el-option :value="1" :label="'学业通知'"></el-option>
+              <el-option :value="2" :label="'答辩安排'"></el-option>
+              <el-option :value="3" :label="'工作安排'"></el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+        <!--      发布新公告--富文本区-->
+        <el-row>
+          <quill-editor ref="quillEditor" :init-content="currentNoticeInfo.annDetail"></quill-editor>
+        </el-row>
+        <!--      操作按钮区-->
+        <el-row type="flex" justify="center" style="margin-top: 80px">
+          <!--      发布本次编辑-->
+          <el-popconfirm
+            @confirm="submitEdit"
+            title="确定要发布本条通知吗？">
+            <el-button type="success" plain slot="reference">发布本次编辑</el-button>
+          </el-popconfirm>
+          <!--      取消本次编辑-->
+          <el-popconfirm
+            @confirm="cancelEdit"
+            title="确定撤销本次编辑吗？">
+            <el-button type="danger" plain slot="reference">取消本次编辑</el-button>
+          </el-popconfirm>
+        </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -197,8 +242,6 @@ export default {
   },
   data() {
     return {
-      // 发布新公告窗口可见性
-      addNewNoticePageVisible: false,
       // （符合要求）公告总数
       totalPageNum: 0,
       // 所有状态的通知信息
@@ -215,6 +258,10 @@ export default {
       },
       // 查看公告详情对话框可见性
       viewPageVisible: false,
+      // 编辑修改公告对话框可见性
+      editPageVisible: false,
+      // 发布新公告窗口可见性
+      addNewNoticePageVisible: false,
       // 新增的公告内容
       newNoticeInfo: {
         annDetail: '', // 公告富文本字符串
@@ -275,7 +322,7 @@ export default {
     },
     // 编辑公告
     editNotice(row) {
-      this.addNewNoticePageVisible = true
+      this.editPageVisible = true
       this.currentNoticeInfo = row
     },
     // 删除公告
@@ -303,6 +350,17 @@ export default {
     cancelNotice() {
       this.$refs.quillEditor.reset()
       this.addNewNoticePageVisible = false
+    },
+    // !!!!!!!下面是编辑公告页面的操作
+    // 提交公告编辑结果
+    submitEdit() {
+      this.updateNotice()
+      this.editPageVisible = false
+    },
+    // 取消公告编辑结果
+    cancelEdit() {
+      this.editPageVisible = false
+      this.getNotice()
     }
   }
 }
