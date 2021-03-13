@@ -65,14 +65,14 @@
             :show-overflow-tooltip="true"
             prop="status"
             width="120"
-            :filters="[{ text: '等待发布', value: 1 }, { text: '已发布', value: 2 }, { text: '已取消发布', value: 3 }]"
+            :filters="[{ text: '草稿箱', value: 1 }, { text: '已发布', value: 2 }, { text: '回收站', value: 3 }]"
             :filter-method="filterStatus"
             filter-placement="bottom-end"
             label="发布状态">
             <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == 2">已经过发布</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == 1">等待发布</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == 3">已取消发布</el-tag>
+              <el-tag type="success" v-if=" scope.row.status == 2">已发布</el-tag>
+              <el-tag type="warning" v-if=" scope.row.status == 1">待发布</el-tag>
+              <el-tag type="danger" v-if=" scope.row.status == 3">已撤回</el-tag>
             </template>
           </el-table-column>
           <!--          操作-->
@@ -82,11 +82,22 @@
             label="操作">
             <template slot-scope="scope">
 <!--              查看详细内容-->
-              <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewNotice(scope.row)"></el-button>
+              <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
+                <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewNotice(scope.row)"></el-button>
+              </el-tooltip>
 <!--              编辑通知-->
-              <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="editNotice(scope.row)"></el-button>
+              <el-tooltip class="item" effect="dark" content="编辑通知" placement="top" :enterable="false">
+                <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="editNotice(scope.row)"></el-button>
+              </el-tooltip>
 <!--              删除通知-->
-              <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="deleteNotice(scope.row)"></el-button>
+              <el-tooltip class="item" effect="dark" content="删除通知" placement="top" :enterable="false">
+                <el-popconfirm
+                  @confirm="deleteNotice(scope.row)"
+                  style="margin-left: 9px"
+                  title="确定要撤回该公告吗？">
+                  <el-button slot="reference" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+                </el-popconfirm>
+              </el-tooltip>
             </template>
           </el-table-column>
         </el-table>
@@ -109,7 +120,7 @@
       :visible.sync="viewPageVisible"
       width="60%">
         <div class="ql-container ql-snow" style="height: 860px">
-          <div class="notice_content ql-editor" v-html="currentNoticeInfo.annDetail"></div>
+          <div class="dialog_content ql-editor" v-html="currentNoticeInfo.annDetail"></div>
         </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
@@ -154,6 +165,13 @@ export default {
       this.noticeList = res.data.records
       this.totalPageNum = res.data.total
     },
+    // 将前端的更新传到后台(包括：编辑、删除)
+    async updateNotice() {
+      console.log(this.currentNoticeInfo)
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/announcement', this.currentNoticeInfo)
+      if (res.meta.code !== 200) return this.$message.error('更新公告信息失败！')
+      await this.getNotice()
+    },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
       this.queryInfo.size = newSize
@@ -181,7 +199,11 @@ export default {
     // 编辑公告
     editNotice(row) {},
     // 删除公告
-    deleteNotice(row) {}
+    async deleteNotice(row) {
+      this.currentNoticeInfo = row
+      this.currentNoticeInfo.status = 3
+      await this.updateNotice()
+    }
   }
 }
 </script>
@@ -194,5 +216,8 @@ export default {
 /*表格状态颜色*/
 .el-table .success-row {
   background: #f0f9eb;
+}
+.dialog_content::-webkit-scrollbar{
+  width:0;
 }
 </style>

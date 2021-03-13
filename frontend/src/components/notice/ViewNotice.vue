@@ -145,7 +145,7 @@ export default {
   },
   methods: {
     async getNotice() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', this.queryInfo)
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$message.error('获取公告信息失败！')
       // console.log(res)
       this.noticeList = res.data.records
