@@ -5,10 +5,6 @@
                     :options="editorOption" style="height:600px;">
       </quill-editor>
     </el-row>
-    <el-row type="flex" justify="end">
-      <el-button plain  type="info" @click="reset" :size="btnSize">清空</el-button>
-      <el-button plain type="primary" @click="submit" :size="btnSize" style="margin-right: 10px">保存</el-button>
-    </el-row>
   </div>
 </template>
 <script>
@@ -18,10 +14,10 @@ import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 
 export default {
-  created() {
-    this.btnSize = ''
+  props: ['initContent'],
+  mounted() {
+    this.content = this.initContent
   },
-  props: ['btnSize'],
   data() {
     return {
       // 富文本内容
@@ -44,10 +40,9 @@ export default {
     reset() {
       this.content = ''
     },
-    // 提交表单内容, 触发自定义事件submit
-    submit() {
-      this.$emit('submit', this.content)
-      this.$message.success('保存成功！')
+    // 向父组件返回表单内容
+    returnContent() {
+      return this.content
     }
   }
 }

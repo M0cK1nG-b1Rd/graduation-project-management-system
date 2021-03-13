@@ -7,7 +7,7 @@
       <el-breadcrumb-item>管理公告</el-breadcrumb-item>
     </el-breadcrumb>
     <!--    内容最外层卡片区-->
-    <el-card v-if="!editPageVisible">
+    <el-card v-if="!addNewNoticePageVisible">
       <!--      搜索框及发布公告按钮-->
       <el-row>
         <!--      搜索框-->
@@ -20,7 +20,7 @@
         </el-col>
         <!--        发布公告按钮-->
         <el-col :span="4" :offset="1">
-          <el-button type="primary" size="medium" @click="editPageVisible = true">发布新公告</el-button>
+          <el-button type="primary" size="medium" @click="addNotice">发布新公告</el-button>
         </el-col>
       </el-row>
       <!--      表格区-->
@@ -115,34 +115,72 @@
         </el-pagination>
       </el-row>
     </el-card>
-<!--    查看公告详情对话框-->
+<!--    发布新公告页面-->
+    <el-card v-if="addNewNoticePageVisible">
+<!--      公告基本信息区-->
+      <el-row type="flex" justify="space-between">
+        <!--      公告标题-->
+        <el-col :span="10">
+          <el-input placeholder="请输入公告标题" v-model="newNoticeInfo.annTitle"></el-input>
+        </el-col>
+        <!--      公告来源(发布者)-->
+        <el-col :span="8">
+          <el-input placeholder="请输入公告发布单位,如'软件学院'" v-model="newNoticeInfo.signature"></el-input>
+        </el-col>
+        <!--      公告类型-->
+        <el-col :span="5">
+          <el-select v-model="newNoticeInfo.type" placeholder="请选择公告类型">
+            <el-option :value="1" :label="'学业通知'"></el-option>
+            <el-option :value="2" :label="'答辩安排'"></el-option>
+            <el-option :value="3" :label="'工作安排'"></el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+<!--      发布新公告--富文本区-->
+      <el-row>
+        <quill-editor ref="quillEditor"></quill-editor>
+      </el-row>
+      <!--      操作按钮区-->
+      <el-row type="flex" justify="center" style="margin-top: 80px">
+        <!--      返回通知栏首页按钮链接-->
+        <el-button type="info" plain @click="addNewNoticePageVisible = !addNewNoticePageVisible">返回公告首页</el-button>
+        <!--      发布本次编辑-->
+        <el-button type="success" plain @click="submitNotice">发布本次编辑</el-button>
+        <!--      保存至草稿箱-->
+        <el-button type="warning" plain @click="saveAsDraft">保存至草稿箱</el-button>
+        <!--      取消本次编辑-->
+        <el-button type="danger" plain @click="cancelNotice">删除本次编辑</el-button>
+      </el-row>
+    </el-card>
+    <!--    查看公告详情对话框-->
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
-        <div class="ql-container ql-snow" style="height: 860px">
-          <div class="dialog_content ql-editor" v-html="currentNoticeInfo.annDetail"></div>
-        </div>
+      <div class="ql-container ql-snow" style="height: 860px">
+        <div class="dialog_content ql-editor" v-html="currentNoticeInfo.annDetail"></div>
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-<!--    添加、编辑公告页面-->
-    <el-card v-if="editPageVisible">
-      在此编辑公告
-    </el-card>
   </div>
 </template>
 
 <script>
+import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+
 export default {
   name: 'ManageNotice',
+  components: {
+    quillEditor
+  },
   mounted() {
     this.getNotice()
   },
   data() {
     return {
-      // 发布公告窗口可见性
-      editPageVisible: false,
+      // 发布新公告窗口可见性
+      addNewNoticePageVisible: false,
       // （符合要求）公告总数
       totalPageNum: 0,
       // 所有状态的通知信息
@@ -158,7 +196,15 @@ export default {
         type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
       },
       // 查看公告详情对话框可见性
-      viewPageVisible: false
+      viewPageVisible: false,
+      // 新增的公告内容
+      newNoticeInfo: {
+        annDetail: '', // 公告富文本字符串
+        annTitle: '', // 公告标题
+        signature: '', // 信息laiyuan(发布者)
+        status: 1, // 公告状态
+        type: '' // 公告类型
+      }
     }
   },
   methods: {
@@ -173,6 +219,12 @@ export default {
     async updateNotice() {
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/announcement', this.currentNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('更新公告信息失败！')
+      await this.getNotice()
+    },
+    // 将新增的公告发送到后端(发布公告)
+    async submitNewNotice() {
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/announcement', this.newNoticeInfo)
+      if (res.meta.code !== 200) return this.$message.error('发布公告失败!')
       await this.getNotice()
     },
     // 当页面大小变化时触发
@@ -193,19 +245,41 @@ export default {
     filterStatus(value, row) {
       return row.status === value
     },
+    // 发布新公告
+    addNotice() {
+      this.addNewNoticePageVisible = true
+    },
     // 查看公告详情
     viewNotice(row) {
       this.viewPageVisible = true
       this.currentNoticeInfo = row
-      console.log(this.currentNoticeInfo)
     },
     // 编辑公告
-    editNotice(row) {},
+    editNotice(row) {
+      this.addNewNoticePageVisible = true
+      this.currentNoticeInfo = row
+    },
     // 删除公告
     async deleteNotice(row) {
       this.currentNoticeInfo = row
       this.currentNoticeInfo.status = 3
       await this.updateNotice()
+    },
+    // ！！！！！！下面是发布新公告页面的方法
+    // 提交并发布本次公告编辑结果
+    async submitNotice() {
+      this.newNoticeInfo.status = 2
+      this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
+      await this.submitNewNotice()
+    },
+    // 将本次编辑内容存入草稿箱
+    saveAsDraft() {
+      this.newNoticeInfo.status = 1
+      this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
+    },
+    // 取消本次编辑
+    cancelNotice() {
+      this.$refs.quillEditor.reset()
     }
   }
 }
