@@ -12,6 +12,8 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
+import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+import checkSubjects from '../components/givenSubjects/checkSubjects'
 
 Vue.use(VueRouter)
 
@@ -77,6 +79,16 @@ const routes = [
       {
         path: '/notice/manage',
         component: ManageNotice
+      },
+      // 出题管理-教师出题
+      {
+        path: '/subject/apply/teacher',
+        component: teacherSubjects
+      },
+      // 出题管理-审核查询界面
+      {
+        path: '/subject/apply/result',
+        component: checkSubjects
       }
     ]
   }
