@@ -133,7 +133,7 @@ export default {
     // 提交表单
     async subjectSubmit() {
       this.dialogVisible = false
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/system', this.subject)
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.subject)
       if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
     },
     // 重置表单内容
