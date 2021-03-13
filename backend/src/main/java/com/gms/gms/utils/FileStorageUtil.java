@@ -2,7 +2,7 @@ package com.gms.gms.utils;
 
 import java.util.UUID;
 
-public class FileStorageUtils {
+public class FileStorageUtil {
 
     /**
      * 生成FILE_ID作为主键
