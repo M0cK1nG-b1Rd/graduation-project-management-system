@@ -2,15 +2,12 @@ package com.gms.gms.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.gms.domain.Announcement;
-import com.gms.gms.domain.impl.AnnouncementImpl;
 import com.gms.gms.service.AnnouncementService;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +28,7 @@ public class AnnouncementController {
 
     //该方法用于普通用户在公告栏查询公告
     @GetMapping
-    public GmsResponse getAnnouncement(@RequestBody AnnouncementImpl ann) throws GmsException {
+    public GmsResponse getAnnouncement(Announcement ann) throws GmsException {
         try {
             IPage<Announcement> announcement = announcementService.getAnnouncement(ann);
             return new GmsResponse().addCodeMessage(new Meta(
