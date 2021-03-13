@@ -43,7 +43,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public GmsResponse giveSubject(Subject subject) throws GmsException {
+    public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
             subject.setSubId(FileStorageUtil.getDocId());
             subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
@@ -61,7 +61,7 @@ public class SubjectController {
     }
 
     @PostMapping("modify")
-    public GmsResponse modifySubject(Subject subject) throws GmsException {
+    public GmsResponse modifySubject(@RequestBody Subject subject) throws GmsException {
         try {
             //新建一条记录而不是修改记录
             subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());
