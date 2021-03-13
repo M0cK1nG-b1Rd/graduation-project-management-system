@@ -2,7 +2,6 @@ package com.gms.gms.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.gms.gms.domain.impl.AnnouncementImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -50,5 +49,10 @@ public class Announcement implements Serializable{
     @TableField("CREATE_TIME")
     private Date createTime;
 
+    @TableField(exist = false)
+    private int page=1,size=10;
+
+    @TableField(exist = false)
+    private String keyWord;
 
 }
