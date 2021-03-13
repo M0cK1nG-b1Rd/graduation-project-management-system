@@ -7,13 +7,13 @@
     <el-breadcrumb-item>教师出题</el-breadcrumb-item>
   </el-breadcrumb>
   <!--卡片视图区-->
-  <el-card>
+  <el-card class="bg-card" style="padding-left: 10px">
     <el-row type="flex" class="bg-gray">
       <el-col>
         <div class="bg-white">
           <div class="card_header">教师课题申报表</div>
           <el-row type="flex" justify="center">
-            <el-col>
+            <el-col class="formbox">
               <el-form ref="subject" :model="subject" label-width="80px">
                 <el-row>
                   <el-col :span="10">
@@ -145,16 +145,30 @@ export default {
 </script>
 
 <style Lang="lang" scoped>
+  .bg-card{
+    border-radius: 50px;
+    background: linear-gradient(145deg, #adadad, #cdcdcd);
+    box-shadow:  20px 20px 60px #9a9a9a,
+    -20px -20px 60px #e6e6e6;
+  }
   .bg-gray {
-    background-color: #f9fafc;
+    /*background-color:lightgrey;*/
   }
   .bg-white {
-    background-color: white;
+    border-radius: 50px;
+    background: #ffffff;
+    box-shadow:  20px 20px 60px #cccccc,
+    -20px -20px 60px #ffffff;
   }
   .card_header{
+    margin-bottom: 50px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
     align-items: center;
+  }
+  .formbox {
+    /*background-color: #a71d5d;*/
+    padding-left: 80px;
   }
 </style>

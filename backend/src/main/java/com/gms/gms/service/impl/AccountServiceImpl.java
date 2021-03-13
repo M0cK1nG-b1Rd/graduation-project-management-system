@@ -5,7 +5,9 @@ import com.gms.gms.dao.AccountMapper;
 import com.gms.gms.domain.*;
 import com.gms.gms.service.AccountService;
 import com.gms.system.domain.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> implements AccountService {
 
     @Override

@@ -43,7 +43,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public GmsResponse giveSubject(Subject subject) throws GmsException {
+    public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
             subject.setSubId(FileStorageUtil.getDocId());
             subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
