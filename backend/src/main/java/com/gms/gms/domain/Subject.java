@@ -45,14 +45,13 @@ public class Subject implements Serializable {
     @TableField("POSE_TIME")
     private Date poseTime;
 
+    //未审核0，未通过1，已通过2
     @TableField("STATUS")
     private Integer status;
 
     @TableField("MAJOR_ID")
     private Integer majorId;
 
-    @TableField("IS_PASSED")
-    private Boolean isPassed;
 
     @TableField("AUDIT_BY")
     private String auditBy;

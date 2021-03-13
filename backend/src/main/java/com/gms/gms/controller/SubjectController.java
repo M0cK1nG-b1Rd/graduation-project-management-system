@@ -44,6 +44,7 @@ public class SubjectController {
     @PostMapping
     public GmsResponse giveSubject(Subject subject) throws GmsException {
         try {
+            subject.setSubId(FileStorageUtil.getDocId());
             subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());
             subject.setPoseTime(new Date());
             subjectService.save(subject);
