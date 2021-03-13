@@ -35,6 +35,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
     @Override
     public IPage<Teacher> getAllTeacher(int page, int size) {
         Page<Teacher> page1= new Page<>(page,size);
-        return null;
+        return this.baseMapper.selectAllTeacher(page1);
     }
 }
