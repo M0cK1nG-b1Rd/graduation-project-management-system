@@ -1,8 +1,6 @@
 <template>
   <div class="header">
-    <div class="logout">
-      <el-button type="info" @click="logout">退出登录</el-button>
-    </div>
+      <el-button class="logout" type="info" @click="logout">退出登录</el-button>
   </div>
 </template>
 
@@ -31,7 +29,7 @@ export default {
 <style scoped>
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 

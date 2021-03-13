@@ -10,7 +10,7 @@ import EditStage from '@/components/system/stage/EditStage'
 import CurrentStage from '@/components/system/stage/CurrentStage'
 import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
-import NewLayout from '@/components/common/NewLayout'
+import GlobalLayout from '@/components/common/GlobalLayout'
 
 Vue.use(VueRouter)
 
@@ -28,7 +28,7 @@ const routes = [
   // 主页
   {
     path: '/home',
-    component: NewLayout,
+    component: GlobalLayout,
     redirect: '/welcome',
     children: [
       {

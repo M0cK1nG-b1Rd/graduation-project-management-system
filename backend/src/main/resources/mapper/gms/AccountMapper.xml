@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.AccountMapper">
+
+    <select id="getTeacherByUserId" resultType="com.gms.gms.domain.Teacher">
+        select * FROM teacher where USER_ID = #{userId}
+    </select>
+    <select id="getStudentByUserId" resultType="com.gms.gms.domain.Student">
+        select * FROM student where USER_ID = #{userId}
+    </select>
+    <select id="getTeachingOfficeByUserId" resultType="com.gms.gms.domain.TeachingOffice">
+        select * FROM teaching_office where USER_ID = #{userId}
+    </select>
+    <select id="getSecretaryByUserId" resultType="com.gms.gms.domain.Secretary">
+        select * FROM secretary where USER_ID = #{userId}
+    </select>
+</mapper>

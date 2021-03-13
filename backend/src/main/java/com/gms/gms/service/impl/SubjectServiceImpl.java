@@ -19,4 +19,21 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     public List<Subject> getSubject() {
         return this.baseMapper.selectList(new LambdaQueryWrapper<>());
     }
+
+    @Override
+    public void deleteSubject(String subId) {
+        this.baseMapper.deleteById(subId);
+    }
+
+    @Override
+    public void giveOpinion(String docId, Boolean isPassed, String feedback) {
+        this.baseMapper.giveOpinion(docId,isPassed,feedback);
+    }
+
+    @Override
+    public  List<Subject> trackSubject(String subId) {
+        LambdaQueryWrapper<Subject> map=new LambdaQueryWrapper<>();
+        map.eq(Subject::getSubId, subId);
+        return this.baseMapper.selectList(map);
+    }
 }

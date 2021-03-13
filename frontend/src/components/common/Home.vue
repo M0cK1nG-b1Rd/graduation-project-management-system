@@ -156,7 +156,7 @@ i {
 }
 /*头部区域盒子边框及阴影*/
 .header_box{
-  position: sticky;
+  /*position: sticky;*/
   top: 0;
   z-index: 99;
   /*border-bottom: 1px solid #CCCCCC;*/
