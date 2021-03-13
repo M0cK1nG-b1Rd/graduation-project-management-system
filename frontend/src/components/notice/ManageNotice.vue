@@ -7,7 +7,7 @@
       <el-breadcrumb-item>管理公告</el-breadcrumb-item>
     </el-breadcrumb>
     <!--    内容最外层卡片区-->
-    <el-card>
+    <el-card v-if="!editPageVisible">
       <!--      搜索框及发布公告按钮-->
       <el-row>
         <!--      搜索框-->
@@ -20,7 +20,7 @@
         </el-col>
         <!--        发布公告按钮-->
         <el-col :span="4" :offset="1">
-          <el-button type="primary" size="medium" @click="addNoticeFormVisible = true">发布新公告</el-button>
+          <el-button type="primary" size="medium" @click="editPageVisible = true">发布新公告</el-button>
         </el-col>
       </el-row>
       <!--      表格区-->
@@ -126,6 +126,10 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
+<!--    添加、编辑公告页面-->
+    <el-card v-if="editPageVisible">
+      在此编辑公告
+    </el-card>
   </div>
 </template>
 
@@ -138,7 +142,7 @@ export default {
   data() {
     return {
       // 发布公告窗口可见性
-      addNoticeFormVisible: false,
+      editPageVisible: false,
       // （符合要求）公告总数
       totalPageNum: 0,
       // 所有状态的通知信息
@@ -167,7 +171,6 @@ export default {
     },
     // 将前端的更新传到后台(包括：编辑、删除)
     async updateNotice() {
-      console.log(this.currentNoticeInfo)
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/announcement', this.currentNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('更新公告信息失败！')
       await this.getNotice()
