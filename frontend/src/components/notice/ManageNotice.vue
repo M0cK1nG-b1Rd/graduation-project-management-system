@@ -143,13 +143,31 @@
       <!--      操作按钮区-->
       <el-row type="flex" justify="center" style="margin-top: 80px">
         <!--      返回通知栏首页按钮链接-->
-        <el-button type="info" plain @click="addNewNoticePageVisible = !addNewNoticePageVisible">返回公告首页</el-button>
+        <el-popconfirm
+          @confirm="addNewNoticePageVisible = !addNewNoticePageVisible"
+        title="确定要返回通知管理首页吗？">
+          <el-button type="info" plain slot="reference">
+            返回公告首页
+          </el-button>
+        </el-popconfirm>
         <!--      发布本次编辑-->
-        <el-button type="success" plain @click="submitNotice">发布本次编辑</el-button>
+        <el-popconfirm
+          @confirm="submitNotice"
+          title="确定要发布本条通知吗？">
+          <el-button type="success" plain slot="reference">发布本次编辑</el-button>
+        </el-popconfirm>
         <!--      保存至草稿箱-->
-        <el-button type="warning" plain @click="saveAsDraft">保存至草稿箱</el-button>
+        <el-popconfirm
+          @confirm="saveAsDraft"
+          title="确定将此次编辑保存至草稿箱吗？">
+          <el-button type="warning" plain slot="reference">保存至草稿箱</el-button>
+        </el-popconfirm>
         <!--      取消本次编辑-->
-        <el-button type="danger" plain @click="cancelNotice">删除本次编辑</el-button>
+        <el-popconfirm
+          @confirm="cancelNotice"
+          title="确定删除本次编辑吗？">
+          <el-button type="danger" plain slot="reference">删除本次编辑</el-button>
+        </el-popconfirm>
       </el-row>
     </el-card>
     <!--    查看公告详情对话框-->
@@ -224,7 +242,8 @@ export default {
     // 将新增的公告发送到后端(发布公告)
     async submitNewNotice() {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/announcement', this.newNoticeInfo)
-      if (res.meta.code !== 200) return this.$message.error('发布公告失败!')
+      if (res.meta.code !== 200) return this.$message.error('操作失败!')
+      this.$message.success('操作成功!')
       await this.getNotice()
     },
     // 当页面大小变化时触发
@@ -271,15 +290,19 @@ export default {
       this.newNoticeInfo.status = 2
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
       await this.submitNewNotice()
+      this.addNewNoticePageVisible = false
     },
     // 将本次编辑内容存入草稿箱
-    saveAsDraft() {
+    async saveAsDraft() {
       this.newNoticeInfo.status = 1
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
+      await this.submitNewNotice()
+      this.addNewNoticePageVisible = false
     },
     // 取消本次编辑
     cancelNotice() {
       this.$refs.quillEditor.reset()
+      this.addNewNoticePageVisible = false
     }
   }
 }
