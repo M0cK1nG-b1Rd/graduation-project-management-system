@@ -8,6 +8,7 @@ import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.gms.domain.Announcement;
+import com.gms.gms.domain.impl.AnnouncementImpl;
 import com.gms.gms.service.AnnouncementService;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +31,9 @@ public class AnnouncementController {
 
     //该方法用于普通用户在公告栏查询公告
     @GetMapping
-    public GmsResponse getAnnouncement(String keyWord,int type,int page,int size, int status) throws GmsException {
+    public GmsResponse getAnnouncement(@RequestBody AnnouncementImpl ann) throws GmsException {
         try {
-            IPage<Announcement> announcement = announcementService.getAnnouncement(keyWord,type,page,size,status);
+            IPage<Announcement> announcement = announcementService.getAnnouncement(ann);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

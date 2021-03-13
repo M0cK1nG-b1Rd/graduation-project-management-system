@@ -2,6 +2,7 @@ package com.gms.gms.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.gms.gms.domain.impl.AnnouncementImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Announcement implements Serializable {
+public class Announcement implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
