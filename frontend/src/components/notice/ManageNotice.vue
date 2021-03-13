@@ -190,19 +190,33 @@
         <!--      公告基本信息区-->
         <el-row type="flex" justify="space-between">
           <!--      公告标题-->
-          <el-col :span="10">
-            <el-input placeholder="请输入公告标题" v-model="currentNoticeInfo.annTitle"></el-input>
-          </el-col>
+          <el-input placeholder="请输入公告标题" v-model="currentNoticeInfo.annTitle">
+            <template slot="prepend">公告标题</template>
+          </el-input>
+        </el-row>
+        <el-row :gutter="10">
           <!--      公告来源(发布者)-->
           <el-col :span="8">
-            <el-input placeholder="请输入公告发布单位,如'软件学院'" v-model="currentNoticeInfo.signature"></el-input>
+            <el-input placeholder="请输入公告发布单位,如'软件学院'" v-model="currentNoticeInfo.signature">
+              <template slot="prepend">发布单位</template>
+            </el-input>
           </el-col>
           <!--      公告类型-->
-          <el-col :span="5">
-            <el-select v-model="currentNoticeInfo.type" placeholder="请选择公告类型">
+          <el-col :span="8">
+            公告类型
+            <el-select clearable v-model="currentNoticeInfo.type" placeholder="请选择公告类型">
               <el-option :value="1" :label="'学业通知'"></el-option>
               <el-option :value="2" :label="'答辩安排'"></el-option>
               <el-option :value="3" :label="'工作安排'"></el-option>
+            </el-select>
+          </el-col>
+          <!--      公告发布状态-->
+          <el-col :span="8">
+            发布状态
+            <el-select clearable v-model="currentNoticeInfo.status" placeholder="请选择公告发布状态">
+              <el-option :value="1" :label="'暂存'"></el-option>
+              <el-option :value="2" :label="'发布'"></el-option>
+              <el-option :value="3" :label="'撤回'"></el-option>
             </el-select>
           </el-col>
         </el-row>
