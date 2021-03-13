@@ -1,6 +1,8 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
@@ -27,11 +29,13 @@ public class AppliedSubjectController {
     @Autowired
     AppliedSubjectService appliedSubjectService;
 
+    //教研办或老师获取学生申请课题的情况
     @GetMapping
-    public GmsResponse getAppliedSubject() throws GmsException{
+    public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException{
         try {
             //todo
-//            List<AppliedSubject> applyList = appliedSubjectService
+            IPage<AppliedSubject> applyList = appliedSubjectService.selectWithCondition(appliedSubject);
+
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
