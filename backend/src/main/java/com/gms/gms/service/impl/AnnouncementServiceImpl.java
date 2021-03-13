@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.common.utils.GmsUtil;
 import com.gms.gms.dao.AnnouncementMapper;
 import com.gms.gms.domain.Announcement;
-import com.gms.gms.domain.impl.AnnouncementImpl;
 import com.gms.gms.service.AnnouncementService;
+import com.gms.gms.utils.AccountUtil;
+import com.gms.gms.utils.FileStorageUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +24,7 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
 
     //普通用户点击公告栏时看到的信息接口
     @Override
-    public IPage<Announcement> getAnnouncement(AnnouncementImpl announcement) {
+    public IPage<Announcement> getAnnouncement(Announcement announcement) {
         Page<Announcement> page1 = new Page<>(announcement.getPage(), announcement.getSize());
         QueryWrapper<Announcement> announcementQueryWrapper = new QueryWrapper<>();
         if(announcement.getStatus()!=null){
@@ -31,7 +34,8 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
             announcementQueryWrapper.eq("TYPE",announcement.getType());
         }
         if (announcement.getKeyWord() != null && announcement.getKeyWord().length() > 0) {
-            announcementQueryWrapper.like("ANN_TITLE", announcement.getKeyWord()).or().like("ANN_DETAIL", announcement.getKeyWord());
+            announcementQueryWrapper.and(i->i.like("ANN_TITLE",announcement.getKeyWord()).or().like("ANN_DETAIL",announcement.getKeyWord()));
+            //announcementQueryWrapper.like("ANN_TITLE", announcement.getKeyWord()).or().like("ANN_DETAIL", announcement.getKeyWord());
         }
         announcementQueryWrapper.orderByDesc("CREATE_TIME");
         return this.baseMapper.selectPage(page1, announcementQueryWrapper);
@@ -44,6 +48,9 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
 
     @Override
     public void addAnnouncement(Announcement announcement) {
+        announcement.setDocId(FileStorageUtil.getDocId());
+        announcement.setCreateBy(GmsUtil.getCurrentUser().getUserId());
+        announcement.setCreateTime(new Date());
         this.save(announcement);
     }
 

@@ -22,7 +22,9 @@ public class Student extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId
+    /**
+     * 主键,用户id
+     */
     @TableField("STU_ID")
     private Integer stuId;
 
@@ -34,6 +36,9 @@ public class Student extends User implements Serializable {
 
     @TableField("CLASS_ID")
     private Integer classId;
+
+    @TableField("PLEA_TYPE")
+    private Integer pleaType;
 
 
 }
