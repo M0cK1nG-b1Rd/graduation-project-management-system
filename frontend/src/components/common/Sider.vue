@@ -76,11 +76,11 @@ export default {
       // TODO 后端返回的response中没有meta字段
       // const { data: res } = await this.$http.get('http://127.0.0.1:9528/menu/admin')
       const { data: res } = await this.$http.get('/mock/menu_list_success.json')
-      console.log(res)
+      // console.log(res)
       if (res.meta.code !== 200) return this.$message.error(res.meta.msg)
       this.menuList = res.data
       // this.menuList = res
-      console.log(this.menuList)
+      // console.log(this.menuList)
     },
     // 保存菜单的激活状态，以便实现路由跳转后选中菜单的高亮
     saveNavState(activePath) {

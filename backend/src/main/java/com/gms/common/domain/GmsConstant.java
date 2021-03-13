@@ -1,7 +1,7 @@
 package com.gms.common.domain;
 
 /**
- * FEBS常量
+ * GMS常量
  */
 public class GmsConstant {
     public static final String UNDER_LINE = "_";

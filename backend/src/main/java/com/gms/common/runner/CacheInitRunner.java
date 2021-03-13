@@ -51,10 +51,10 @@ public class CacheInitRunner implements ApplicationRunner {
             log.error("| |_   / /\\  | | | |");
             log.error("|_|   /_/--\\ |_| |_|__");
             log.error("                        ");
-            log.error("FEBS启动失败              ");
+            log.error("GMS启动失败              ");
             if (e instanceof RedisConnectException)
                 log.error("Redis连接异常，请检查Redis连接配置并确保Redis服务已启动");
-            // 关闭 FEBS
+            // 关闭 GMS
             context.close();
         }
     }

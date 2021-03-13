@@ -15,11 +15,14 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+fileStorage
 *.iws
 *.iml
 *.ipr
 
 ### NetBeans ###
+log
+spy.log
 /nbproject/private/
 /nbbuild/
 /dist/

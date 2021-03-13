@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <shiro.version>1.7.1</shiro.version>
         <swagger.ui>2.9.2</swagger.ui>
     </properties>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <version>3.3.1</version>
         </dependency>
         <!-- mybatis-plus -->
         <dependency>

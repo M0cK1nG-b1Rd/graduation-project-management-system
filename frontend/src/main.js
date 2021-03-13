@@ -10,8 +10,17 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 // 导入可视化组件库DataV
 import dataV from '@jiaminghi/data-view'
+// 富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+
+// Quill Editor富文本编辑器CSS文件
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 Vue.use(Antd)
 Vue.use(dataV)
+
+Vue.use(VueQuillEditor)
 
 // TODO 这里可以替换为后端的API根路径
 // axios.defaults.baseURL = '127.0.0.1:9528' // 配置请求的根路径
