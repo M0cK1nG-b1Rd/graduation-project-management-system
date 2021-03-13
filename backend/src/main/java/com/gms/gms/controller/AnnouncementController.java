@@ -31,7 +31,7 @@ public class AnnouncementController {
 
     //该方法用于普通用户在公告栏查询公告
     @GetMapping
-    public GmsResponse getAnnouncement(@RequestBody AnnouncementImpl ann) throws GmsException {
+    public GmsResponse getAnnouncement(AnnouncementImpl ann) throws GmsException {
         try {
             IPage<Announcement> announcement = announcementService.getAnnouncement(ann);
             return new GmsResponse().addCodeMessage(new Meta(
