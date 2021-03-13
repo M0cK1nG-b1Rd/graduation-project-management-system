@@ -2,28 +2,82 @@ package com.gms.gms.controller;
 
 
 import com.gms.common.domain.GmsResponse;
+import com.gms.common.domain.Meta;
+import com.gms.common.exception.GmsException;
+import com.gms.common.exception.code.Code;
+import com.gms.gms.domain.Announcement;
 import com.gms.gms.domain.AppliedSubject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.gms.gms.service.AppliedSubjectService;
+import com.gms.gms.utils.AccountUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * @author MrBird
  */
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("subject/apply")
 public class AppliedSubjectController {
-    @PostMapping
-    public GmsResponse applyForSubject(String subId) {
-        AppliedSubject subject = new AppliedSubject();
-        subject.setSubId(subId);
-        subject.setStuId();
+    @Autowired
+    AppliedSubjectService appliedSubjectService;
+
+    @GetMapping
+    public GmsResponse getAppliedSubject() throws GmsException{
+        try {
+            //todo
+//            List<AppliedSubject> applyList = appliedSubjectService
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"));
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
     }
 
+
+    @PostMapping
+    public GmsResponse applyForSubject(String subId) throws GmsException {
+        try {
+            AppliedSubject appliedSubject = new AppliedSubject();
+            appliedSubject.setSubId(subId);
+            appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
+            appliedSubjectService.submitAppliance(appliedSubject);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "选题申请提交成功"));
+        } catch (Exception e) {
+            String message = "选题申请提交失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //需要id is_passed feedback
     @PutMapping("audit")
-    public GmsResponse auditAppliedSubject(AppliedSubject appliedSubject) {
+    public GmsResponse auditAppliedSubject(AppliedSubject appliedSubject) throws GmsException {
+        try {
+            //代表已经审核
+            appliedSubject.setStatus(1);
+            appliedSubjectService.auditAppliance(appliedSubject);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "提交成功"));
+        } catch (Exception e) {
+            String message = "提交失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
 
     }
 

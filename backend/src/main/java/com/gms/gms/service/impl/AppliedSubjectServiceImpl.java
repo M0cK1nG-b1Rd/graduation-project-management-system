@@ -12,4 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppliedSubjectServiceImpl extends ServiceImpl<AppliedSubjectMapper, AppliedSubject> implements AppliedSubjectService {
 
+    @Override
+    public void submitAppliance(AppliedSubject appliedSubject) {
+        this.save(appliedSubject);
+    }
+
+    @Override
+    public void auditAppliance(AppliedSubject appliedSubject) {
+        this.updateById(appliedSubject);
+    }
 }
