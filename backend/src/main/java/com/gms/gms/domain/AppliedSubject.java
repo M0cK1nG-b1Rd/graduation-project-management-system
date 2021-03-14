@@ -44,6 +44,7 @@ public class AppliedSubject implements Serializable {
     @TableField(exist = false)
     private Integer size;
 
+    //联合查询使用的参数
     @TableField(exist = false)
     private Subject subject;
 }

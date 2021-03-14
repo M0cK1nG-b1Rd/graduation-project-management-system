@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface AppliedSubjectMapper extends BaseMapper<AppliedSubject> {
 
-    Page<AppliedSubjectRecord> selectWithCondition(Page<AppliedSubject> appliedSubjectPage);
+    Page<AppliedSubject> selectWithCondition(Page<AppliedSubject> appliedSubjectPage);
 }
