@@ -14,7 +14,9 @@ public interface SubjectMapper extends BaseMapper<Subject> {
 
     void giveOpinion(String docId, String status, String feedback);
 
-    Page<Subject> selectWithCondition(IPage<Subject> page, Subject subject);
+    Page<Subject> getPassedSubject(IPage<Subject> page, Subject subject);
+
+    Page<Subject> getAllSubject(IPage<Subject> page, Subject subject);
 
     List<Subject> getMySubjectInfo(Integer teacherId);
 }
