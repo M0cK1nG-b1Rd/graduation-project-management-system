@@ -44,10 +44,10 @@ public class DictController extends BaseController {
 //        return getDataTable(this.dictService.findDicts(request, dict));
 //    }
 
-    @GetMapping("/trim")
-    public GmsResponse DictTrimList() throws GmsException {
+    @GetMapping("{dictName}")
+    public GmsResponse DictTrimList(@PathVariable String dictName) throws GmsException {
         try {
-            List<Dict> dicts = dictService.getAllDict();
+            List<Dict> dicts = dictService.getDictByName(dictName);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
