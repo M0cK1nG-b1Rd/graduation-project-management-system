@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SubjectMapper extends BaseMapper<Subject> {
 
-    void giveOpinion(String docId, Boolean isPassed, String feedback);
+    void giveOpinion(String docId, String status, String feedback);
 
     Page<Subject> selectWithCondition(IPage<Subject> page, Subject subject);
 }
