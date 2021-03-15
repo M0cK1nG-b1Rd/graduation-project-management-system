@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -36,6 +37,9 @@ public class Subject implements Serializable {
 
     @TableField("SUB_NAME")
     private String subName;
+
+    @TableField("REQUIREMENT")
+    private String requirement;
 
     @TableField("DESCRIPTION")
     private String description;
@@ -73,10 +77,15 @@ public class Subject implements Serializable {
     private Integer chosen;
     @TableField(exist = false)
     private String teacherName;
+
     @TableField(exist = false)
+    @JsonProperty("teacherTitle")
     private String title;
+
     @TableField(exist = false)
+    @JsonProperty("teacherHomePage")
     private String homePage;
+
     @TableField(exist = false)
     private String collegeName;
     @TableField(exist = false)
@@ -84,5 +93,13 @@ public class Subject implements Serializable {
     @TableField(exist = false)
     private List<FileStorage> fileStorage;
 
+    //搜索关键字
+    @TableField(exist = false)
+    private String keyWord;
 
+    //分页
+    @TableField(exist = false)
+    private Integer current;
+    @TableField(exist = false)
+    private Integer size;
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("account")
 public class AccountController {
-    //todo 角色的增删改查
     @Autowired
     AccountService accountService;
 

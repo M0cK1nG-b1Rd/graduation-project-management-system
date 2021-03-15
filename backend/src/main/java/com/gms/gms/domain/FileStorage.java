@@ -15,6 +15,7 @@ import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,6 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @AllArgsConstructor
+@NoArgsConstructor
 public class FileStorage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,4 +79,5 @@ public class FileStorage implements Serializable {
         this(fileName, location, uploadBy, docId);
         this.handinId = handinId;
     }
+
 }
