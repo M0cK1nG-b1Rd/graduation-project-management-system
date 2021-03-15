@@ -28,4 +28,55 @@
                 JOIN `user` ON teacher.USER_ID = `user`.USER_ID
                 JOIN college ON teacher.COLLEGE_ID = college.COLLEGE_ID
     </select>
+    <select id="selectAllStudent" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+        WHERE
+            plea_application.`STATUS` = 'YTG'
+          AND plea_application.STAGE = #{stage}
+    </select>
+    <select id="selectAllTeacherId" resultType="java.lang.Integer">
+        SELECT
+            teacher.TEACHER_ID
+        FROM
+            teacher
+    </select>
+    <select id="selectAllSecretaryId" resultType="java.lang.Integer">
+        SELECT
+            secretary.SEC_ID
+        FROM
+            secretary
+    </select>
+    <insert id="addTeacherTeam">
+        INSERT INTO acceptance_team ( SEC_ID, STAGE )
+        VALUES(
+            #{team.secId},
+            #{team.stage})
+    </insert>
+    <select id="selectMaxTeacherTeam" resultType="java.lang.Integer">
+        SELECT
+            MAX( acceptance_team.TEAM_ID )
+        FROM
+            acceptance_team
+    </select>
+    <insert id="addTeacherTeamMember">
+        INSERT INTO acceptance_teacher ( TEACHER_ID, TEAM_ID, IS_LEADER )
+        VALUES(
+            #{id},
+            #{group},
+            #{b})
+    </insert>
 </mapper>

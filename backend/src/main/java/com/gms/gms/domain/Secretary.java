@@ -22,8 +22,7 @@ public class Secretary extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId
-    @TableField("SEC_ID")
+    @TableId("SEC_ID")
     private Integer secId;
 
 
