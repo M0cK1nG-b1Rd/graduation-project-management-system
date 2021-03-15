@@ -1,193 +1,196 @@
 <template>
   <div>
-    <!--    面包屑导航区域-->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>选题管理</el-breadcrumb-item>
-      <el-breadcrumb-item>选题申请</el-breadcrumb-item>
-    </el-breadcrumb>
-    <!--    卡片区-->
-    <el-card class="outtest_card">
-<!--      搜索框筛选-->
-      <el-row class="search_zone">
-<!--        关键词搜索-->
-        <el-col :span="8">
-          <el-input style="padding-right: 0px" suffix-icon="el-icon-search"
-            placeholder="请输入关键词进行筛选">
-          </el-input>
-        </el-col>
-<!--        选择课题领域-->
-        <el-col :span="5">
-          <el-select placeholder="请选择课题领域">
-            <el-option>
-            </el-option>
-          </el-select>
-        </el-col>
-<!--        选择老师-->
-        <el-col :span="5">
-          <el-select placeholder="请选择指导老师">
-            <el-option>
-            </el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-<!--      分割线-->
-      <el-divider></el-divider>
-<!--      主要内容区(课题信息)-->
-      <el-row class="subject_zone">
-        <div class="card" v-for="item in items" :key="item">
-<!--          卡片头--课题名称-->
-          <div class="card_header">
-            <div class="title_1">
-              这是一个非常长的题目，一行显示不下。。。。。。。
+    <!--    页面标题-->
+    <el-row class="page_header">
+      提交选题申请
+    </el-row>
+    <!--    申请表单区-->
+    <el-row type="flex" justify="center">
+      <el-card class="application_form">
+        <!--        课题名称-->
+        <el-row>
+          课题名称：<a-tag color="blue" style="font-size: 15px">{{currentSubjectInfo.subName}}</a-tag>
+        </el-row>
+        <el-divider></el-divider>
+        <!--        课题领域、所属专业-->
+        <el-row gutter="20">
+          <!--          课题领域-->
+          <el-col :span="12">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+          <!--          所属专业-->
+          <el-col :span="12">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <!--        指导老师信息-->
+        <el-row gutter="20">
+        <!--        教师名字-->
+          <el-col :span="12">老师姓名：
+            <a-tag color="blue">
+              <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank">
+                {{currentSubjectInfo.teacherName+' '}}<i class="el-icon-view"></i>
+              </el-link>
+            </a-tag>
+          </el-col>
+        <!--          教师职称-->
+          <el-col :span="12">教师职称：<a-tag color="blue">{{currentSubjectInfo.teacherTitle}}</a-tag></el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <!--          课题要求-->
+        <el-row type="flex" align="center">
+          <el-col :span="3" class="item_label">选题要求：</el-col>
+          <el-col :span="21">
+            <div class="ql-container ql-snow">
+              <div class="notice_content ql-editor" v-html="currentSubjectInfo.requirement"></div>
             </div>
-            <div class="title_2">
-              这是一个非常长的题目，一行显示不下。。。。。。。
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <!--          课题描述-->
+        <el-row type="flex" align="center">
+          <el-col :span="3" class="item_label">课题内容：</el-col>
+          <el-col :span="21">
+            <div class="ql-container ql-snow">
+              <div class="notice_content ql-editor" v-html="currentSubjectInfo.description"></div>
             </div>
-          </div>
-<!--          卡片内分割线-->
-          <el-divider class="card_divider"></el-divider>
-<!--          卡片体-->
-          <div class="card_body">
-<!--            指导老师-->
-            <el-row>
-              <el-col>指导老师：<el-tag type="info">绕远</el-tag></el-col>
-            </el-row>
-<!--            课题领域-->
-            <el-row>
-              <el-col>课题领域：<el-tag>神学研究及艺术修养</el-tag></el-col>
-            </el-row>
-<!--            课题简介-->
-            <el-row>
-              课题简介：<el-col class="subject_breif">佚名曾经提到过，感激每一佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战</el-col>
-            </el-row>
-<!--            卡片底部-->
-            <el-row type="flex" align="middle" justify="space-around">
-<!--              人数情况-->
-              <el-col>
-                已选2人/限选3人
-              </el-col>
-<!--              查看详情-->
-              <el-col>
-                <el-tag type="success" size="mini" @click="viewSubjectDetail"
-                        style="cursor: pointer;">
-                查看详情
-                </el-tag>
-              </el-col>
-            </el-row>
-          </div>
-        </div>
-      </el-row>
-      <!--          分页-->
-      <div class="pagination">
-        <el-pagination
-                       @size-change="handleSizeChange"
-                       @current-change="handleCurrentChange"
-                       :current-page="currentPage4"
-                       :page-sizes="[100, 200, 300, 400]"
-                       :page-size="100"
-                       layout="total, sizes, prev, pager, next, jumper"
-                       :total="400">
-        </el-pagination>
-      </div>
-    </el-card>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+<!--        学生姓名，班级，专业，学号-->
+        <el-row gutter="10">
+          <el-col :span="3">学生姓名：</el-col>
+          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+          <el-col :span="3">所在专业：</el-col>
+          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row gutter="10">
+          <el-col :span="3">学生班级：</el-col>
+          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+          <el-col :span="3">学生学号：</el-col>
+          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+        </el-row>
+        <el-divider></el-divider>
+<!--        申请理由-->
+        <el-row type="flex" align="center">
+          <el-col :span="3" class="item_label"><span>申请理由：</span></el-col>
+          <el-col :span="21">
+            <div class="ql-container ql-snow">
+              <div class="notice_content ql-editor"
+                   @click="useQuillEditor"
+                   v-html="applicationInfo.applyReason">
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+<!--        上传附件-->
+        <el-row type="flex" align="center">
+          <el-col :span="3" class="item_label"><span>上传附件：</span></el-col>
+          <el-col :span="21">
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-row>
+    <!--    操作按钮区-->
+    <el-row type="flex" justify="center" style="margin-top: 30px">
+<!--      返回上一页（查看所有课题）按钮-->
+      <el-button type="success" icon="el-icon-arrow-left"
+                 @click="returnAllSubjectPage">
+        回到上一页
+      </el-button>
+<!--      提交申请按钮-->
+      <el-button type="primary" icon="el-icon-finished"
+                 @click="submitApplication">
+        提交选题申请
+      </el-button>
+    </el-row>
+    <!--      符文本编辑器对话框-->
+    <el-dialog
+      title="请输入申请理由"
+      :visible.sync="quillEditorVisible"
+      :before-close="resetQuillEditorContent"
+      width="75%">
+      <quill-editor ref="quillEditor"
+                    :init-content="applicationInfo.applyReason">
+      </quill-editor>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="resetQuillEditorContent">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'ChooseSubjectApplication',
+  components: { quillEditor },
   mounted() {
+    this.currentSubjectInfo = this.$route.params
   },
   data() {
     return {
-      items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      // 当前所选课题基本信息
+      currentSubjectInfo: {},
+      // 学生申请信息
+      applicationInfo: {
+        applyReason: '请输入申请原因' // 申请理由
+      },
+      // 富文本编辑器可见性
+      quillEditorVisible: false
     }
   },
   methods: {
-    viewSubjectDetail() {}
+    // 返回查看所有课题信息页面
+    returnAllSubjectPage() {
+      this.$router.push('/subject/all')
+    },
+    // 调用富文本编辑器
+    useQuillEditor() {
+      this.quillEditorVisible = true
+    },
+    // 重置富文本编辑框
+    resetQuillEditorContent() {
+      this.$refs.quillEditor.reset()
+      this.applicationInfo.applyReason = '请输入申请理由'
+      this.quillEditorVisible = false
+    },
+    // 提交（采用）富文本编辑器框
+    submitQuillEditorContent() {
+      this.applicationInfo.applyReason = this.$refs.quillEditor.returnContent()
+      this.quillEditorVisible = false
+    },
+    // 提交选题申请
+    submitApplication() {}
   }
 }
 </script>
 
 <style Lang="less" scoped>
-/*顶部搜索筛选区*/
-.search_zone{
-  z-index: 999;
-}
-/*课题展示区*/
-.subject_zone{
-  display: flex;
-  flex-wrap: wrap;
-}
-/*课题卡片*/
-.card{
-  width: 320px;
-  height: 250px;
-  margin: 3px;
-  border-radius: 20px;
-  background: #ffffff;
-  box-shadow:  20px 20px 60px #d9d9d9,
-    -20px -20px 60px #ffffff;
-}
-/*卡片头, 设置标题太长自动省略，鼠标悬浮显示完整*/
-.card_header{
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  font-size: 16px;
-  text-align: center;
+/*页面标题*/
+.page_header{
+  font-size: 24px;
   font-weight: bold;
-  /*阴影*/
+  text-align: center;
+  margin-bottom: 20px;
 }
-/*长度受限的标题*/
-.title_1{
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-/*完整的标题*/
-.title_2{
-  position: absolute;
-  top: -20px;
-  z-index: 999;
-  background-color: #FFFFFF;
-  display: none;
-}
-.card_header:hover .title_2{
-  display: block;
-}
-/*卡片内分割线*/
-.card_divider{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-/*卡片下方内容*/
-.card_body{
+/*选题表单卡片*/
+.application_form{
+  width: 80%;
+  padding-left: 50px;
   font-size: 16px;
-  padding-left: 25px;
-  padding-right: 25px;
+  /*边框阴影*/
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow:  28px 28px 56px #bababa,
+    -28px -28px 56px #ffffff;
+}
+/*分割线*/
+.el-divider{
+  margin: 6px;
+}
+.item_label{
   display: flex;
-  flex-direction: column;
-}
-/*卡片内，课题简介*/
-.subject_breif{
-  font-size: 14px;
-  margin-top: 5px;
-  height: 65px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-/*卡片脚*/
-.card_footer{
-}
-/*分页区*/
-.pagination{
-  margin: 20px;
-  display: flex;
-  justify-content: center;
+  align-items: center;
 }
 </style>

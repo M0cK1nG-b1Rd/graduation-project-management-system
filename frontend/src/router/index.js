@@ -12,6 +12,8 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
+import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
+import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 
 Vue.use(VueRouter)
@@ -79,9 +81,21 @@ const routes = [
         path: '/notice/manage',
         component: ManageNotice
       },
-      // 学生选题申请
+      // 学生选题申请--查看所有课题信息
       {
         path: '/subject/all',
+        component: ViewAllSubject
+      },
+      // 学生选题申请--查看选中（单个）课题详情
+      {
+        path: '/subject/detail',
+        name: 'viewSubjectDetail',
+        component: ViewSujectDetail
+      },
+      // 学生选题申请--提交选题申请
+      {
+        path: '/subject/application',
+        name: 'chooseSubjectApplication',
         component: ChooseSubjectApplication
       }
     ]
