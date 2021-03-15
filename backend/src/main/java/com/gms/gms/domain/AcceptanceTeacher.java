@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class AcceptanceTeacher implements Serializable {
-    private transient Teacher teacher;
+public class AcceptanceTeacher extends Teacher implements Serializable {
     @TableField("IS_LEADER")
     private Boolean isLeader;
 }

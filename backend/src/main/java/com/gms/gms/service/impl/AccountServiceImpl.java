@@ -2,6 +2,9 @@ package com.gms.gms.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.common.domain.GmsResponse;
+import com.gms.common.domain.Meta;
+import com.gms.common.exception.code.Code;
 import com.gms.gms.dao.AccountMapper;
 import com.gms.gms.domain.*;
 import com.gms.gms.service.AccountService;
@@ -63,5 +66,15 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
                 this.baseMapper.addTeacherTeamMember(teacherIds.get(x),maxGroup,false);
             }
         }
+    }
+
+    @Override
+    public int selectStageInTeam(String stage, String tableName) {
+        return this.baseMapper.selectStageInTeam(stage,tableName);
+    }
+
+    @Override
+    public Page<TeacherTeam> getTeacherTeam(int page, int size, String status) {
+        return this.baseMapper.getTeacherTeam(new Page<TeacherTeam>(page,size),status);
     }
 }

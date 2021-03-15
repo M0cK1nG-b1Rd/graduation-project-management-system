@@ -1,7 +1,4 @@
 # 后端
-<<<<<<< HEAD
 
-介是嘛
-=======
-测试分支合并
->>>>>>> origin/jin
+- 关于请求传json，get和delete不加@RequestBody，put和post加@RequestBody
+
