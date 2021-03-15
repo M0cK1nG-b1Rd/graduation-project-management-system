@@ -42,7 +42,7 @@ public class Announcement implements Serializable{
     private Integer type;
 
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("SIGNATURE")
     private String signature;

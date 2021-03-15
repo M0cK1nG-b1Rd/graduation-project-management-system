@@ -30,9 +30,9 @@ public class AppliedSubject implements Serializable {
     @TableField("STU_ID")
     private Integer stuId;
 
-    //未审核0，未通过1，已通过2
+    //在数据字典中
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("FEEDBACK")
     private String feedback;
@@ -44,6 +44,7 @@ public class AppliedSubject implements Serializable {
     @TableField(exist = false)
     private Integer size;
 
+    //联合查询使用的参数
     @TableField(exist = false)
     private Subject subject;
 }

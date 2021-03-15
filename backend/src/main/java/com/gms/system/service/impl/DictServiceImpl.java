@@ -73,4 +73,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     public List<Dict> getAllDict() {
         return this.baseMapper.selectList(new LambdaQueryWrapper<>());
     }
+
+    @Override
+    public List<Dict> getDictByName(String dictName) {
+        LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dict::getDictName, dictName);
+        return this.baseMapper.selectList(wrapper);
+    }
 }

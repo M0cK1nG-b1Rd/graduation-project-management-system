@@ -19,4 +19,6 @@ public interface DictService extends IService<Dict> {
     void deleteDicts(String[] dictIds);
 
     List<Dict> getAllDict();
+
+    List<Dict> getDictByName(String dictName);
 }

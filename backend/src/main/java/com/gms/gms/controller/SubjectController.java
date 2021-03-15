@@ -1,12 +1,16 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
+import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
+import com.gms.gms.service.SubjectService;
 import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
@@ -28,13 +32,32 @@ import java.util.List;
 @RequestMapping("subject")
 public class SubjectController {
     @Autowired
-    SubjectServiceImpl subjectService;
+    SubjectService subjectService;
 
-    @GetMapping
-    public GmsResponse getSubject() throws GmsException {
+    @GetMapping("my")
+    public GmsResponse getMySubject() throws GmsException {
         try {
-            List<Subject> subjects = subjectService.getSubject();
+            List<Subject> subjects = subjectService.getMySubject();
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //学生查看选题信息，包括详情
+    //筛选 搜索关键字、课题领域、老师名字
+    @GetMapping
+    public GmsResponse getPassedSubject(@RequestBody Subject subject) throws GmsException{
+        try {
+
+            IPage<Subject> applyList = subjectService.selectWithCondition(subject);
+
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),applyList);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
