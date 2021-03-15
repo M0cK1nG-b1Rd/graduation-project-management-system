@@ -93,6 +93,11 @@ public class Subject implements Serializable {
     @TableField(exist = false)
     private List<FileStorage> fileStorage;
 
+    @TableField(exist = false)
+    private String tel;
+    @TableField(exist = false)
+    private String mail;
+
     //搜索关键字
     @TableField(exist = false)
     private String keyWord;
