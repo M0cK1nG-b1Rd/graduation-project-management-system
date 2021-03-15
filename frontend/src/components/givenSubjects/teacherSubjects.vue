@@ -14,10 +14,10 @@
           <div class="card_header">教师课题申报表</div>
           <el-row type="flex" justify="center">
             <el-col class="formbox">
-              <el-form ref="subject" :model="subject" label-width="80px">
+              <el-form ref="subject" :model="subject" :rules="addFormRules" label-width="80px">
                 <el-row>
                   <el-col :span="10">
-                    <el-form-item label="课题名称">
+                    <el-form-item label="课题名称" prop="subName">
                       <el-input v-model="subject.subName"></el-input>
                     </el-form-item>
                   </el-col>
@@ -126,7 +126,11 @@ export default {
         requirement: '',
         opinion: ''
       },
-      dialogVisible: false
+      dialogVisible: false,
+      // 添加表单的验证规则对象
+      addFormRules: {
+        subName: [{ required: true, message: '请输入课题名称', trigger: 'blur' }, { min: 1, max: 10, message: '名字的长度在1~10个字符之间', trigger: 'blur' }]
+      }
     }
   },
   methods: {
