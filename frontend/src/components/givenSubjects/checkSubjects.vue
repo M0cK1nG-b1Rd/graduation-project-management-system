@@ -143,12 +143,12 @@
             </el-col>
             <el-col :span="7">
               <el-form-item label="导师电话">
-                <el-input v-model="currentSubjectInfo.mobile"></el-input>
+                <el-input v-model="currentSubjectInfo.tel"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="7">
               <el-form-item label="导师邮箱">
-                <el-input v-model="currentSubjectInfo.email"></el-input>
+                <el-input v-model="currentSubjectInfo.mail"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
