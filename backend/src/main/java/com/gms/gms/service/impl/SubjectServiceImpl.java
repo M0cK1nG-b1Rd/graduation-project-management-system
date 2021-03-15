@@ -23,9 +23,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     @Override
     public List<Subject> getMySubject() throws GmsException {
         Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
-        LambdaQueryWrapper<Subject> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Subject::getPoseBy, teacherId);
-        return this.baseMapper.selectList(wrapper);
+        return this.baseMapper.getMySubjectInfo(teacherId);
     }
 
     @Override
