@@ -45,14 +45,13 @@ public class Subject implements Serializable {
     @TableField("POSE_TIME")
     private Date poseTime;
 
+    //数据字典中的值
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("MAJOR_ID")
     private Integer majorId;
 
-    @TableField("IS_PASSED")
-    private Boolean isPassed;
 
     @TableField("AUDIT_BY")
     private String auditBy;

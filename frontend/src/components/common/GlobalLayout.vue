@@ -125,7 +125,6 @@ i {
   margin: 0;
   /*padding-right: 0;*/
 }
-/*隐藏菜单栏滚动条*/
 
 /*头部区域盒子边框及阴影*/
 .header_box{

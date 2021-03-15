@@ -11,6 +11,7 @@ import CurrentStage from '@/components/system/stage/CurrentStage'
 import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
+import ManageNotice from '@/components/notice/ManageNotice'
 
 Vue.use(VueRouter)
 
@@ -67,10 +68,15 @@ const routes = [
           }
         ]
       },
-      // 公告界面
+      // 查看公告界面
       {
         path: '/notice/view',
         component: ViewNotice
+      },
+      // 公告增删改（管理）界面
+      {
+        path: '/notice/manage',
+        component: ManageNotice
       }
     ]
   }

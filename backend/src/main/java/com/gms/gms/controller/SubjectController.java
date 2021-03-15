@@ -8,6 +8,7 @@ import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.service.impl.SubjectServiceImpl;
+import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,10 @@ public class SubjectController {
     }
 
     @PostMapping
-    public GmsResponse giveSubject(Subject subject) throws GmsException {
+    public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
-            subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());
+            subject.setSubId(FileStorageUtil.getDocId());
+            subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
             subject.setPoseTime(new Date());
             subjectService.save(subject);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -59,7 +61,7 @@ public class SubjectController {
     }
 
     @PostMapping("modify")
-    public GmsResponse modifySubject(Subject subject) throws GmsException {
+    public GmsResponse modifySubject(@RequestBody Subject subject) throws GmsException {
         try {
             //新建一条记录而不是修改记录
             subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());

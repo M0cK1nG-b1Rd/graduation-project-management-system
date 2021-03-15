@@ -62,7 +62,6 @@ export default {
       for (let i = 0; i < this.currentStageId.length; i++) {
         this.currentStageInfo.push(this.allStageInfo[this.currentStageId[i]])
       }
-      console.log(typeof this.currentStageInfo)
     }
   }
 }

@@ -2,4 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.AppliedSubjectMapper">
 
+    <select id="selectWithCondition" resultType="com.gms.gms.domain.AppliedSubject">
+        SELECT
+            s.DOC_ID,
+            s.SUB_ID,
+            s.SUB_NAME,
+            s.DESCRIPTION,
+            s.ZONE,
+            s.POSE_BY,
+            s.POSE_TIME,
+            s.MAJOR_ID,
+            s.AUDIT_BY,
+            s.AUDIT_TIME,
+            s.FEEDBACK,
+            a.STU_ID,
+            a.`STATUS`,
+            a.FEEDBACK
+        FROM
+            `subject` s
+                JOIN applied_subject a ON (
+                a.SUB_ID = s.SUB_ID) WHERE s.`STATUS`="YTG"
+# todo 和队友讨论
+    </select>
 </mapper>
