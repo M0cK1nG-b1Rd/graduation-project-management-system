@@ -15,7 +15,7 @@ public class RoleStagePerms implements Serializable {
 
     private Integer roleId;
 
-    private Integer stage;
+    private Integer stageId;
 
     private String perms;
 }

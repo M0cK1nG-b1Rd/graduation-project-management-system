@@ -1,5 +1,6 @@
 package com.gms.gms.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class Announcement implements Serializable{
     @TableField("DOC_ID")
     private String docId;
 
-    @TableId("ANN_ID")
+    @TableId(value = "ANN_ID",type = IdType.AUTO)
     private Integer annId;
 
     @TableField("ANN_TITLE")
@@ -41,7 +42,7 @@ public class Announcement implements Serializable{
     private Integer type;
 
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("SIGNATURE")
     private String signature;

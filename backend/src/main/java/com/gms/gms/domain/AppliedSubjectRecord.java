@@ -8,7 +8,7 @@ public class AppliedSubjectRecord {
 
     String studentName;
 
-    Integer status;
+    String status;
 
     String subName;
 
