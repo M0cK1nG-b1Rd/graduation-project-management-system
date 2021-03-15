@@ -3,6 +3,7 @@ package com.gms.gms.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.common.utils.GmsUtil;
@@ -23,8 +24,9 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
 
     //普通用户点击公告栏时看到的信息接口
     @Override
-    public IPage<Announcement> getAnnouncement(Announcement announcement) {
+    public Page<Announcement> getAnnouncement(Announcement announcement) {
         Page<Announcement> page1 = new Page<>(announcement.getPage(), announcement.getSize());
+        page1.addOrder(OrderItem.desc("CREATE_TIME"));
         QueryWrapper<Announcement> announcementQueryWrapper = new QueryWrapper<>();
         if(announcement.getStatus()!=null){
             announcementQueryWrapper.eq("STATUS",announcement.getStatus());
@@ -36,7 +38,6 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
             announcementQueryWrapper.and(i->i.like("ANN_TITLE",announcement.getKeyWord()).or().like("ANN_DETAIL",announcement.getKeyWord()));
             //announcementQueryWrapper.like("ANN_TITLE", announcement.getKeyWord()).or().like("ANN_DETAIL", announcement.getKeyWord());
         }
-        announcementQueryWrapper.orderByDesc("CREATE_TIME");
         return this.baseMapper.selectPage(page1, announcementQueryWrapper);
     }
 
