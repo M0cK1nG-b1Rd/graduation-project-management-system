@@ -45,9 +45,9 @@ public class Subject implements Serializable {
     @TableField("POSE_TIME")
     private Date poseTime;
 
-    //未审核0，未通过1，已通过2
+    //数据字典中的值
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("MAJOR_ID")
     private Integer majorId;
