@@ -35,5 +35,7 @@ public class Teacher extends User implements Serializable {
     @TableField("HOME_PAGE")
     private String homePage;
 
+    @TableField(exist = false)
+    private String collegeName;
 
 }

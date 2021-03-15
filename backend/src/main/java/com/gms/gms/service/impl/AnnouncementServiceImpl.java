@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.common.utils.GmsUtil;
 import com.gms.gms.dao.AnnouncementMapper;
 import com.gms.gms.domain.Announcement;
 import com.gms.gms.service.AnnouncementService;
+import com.gms.gms.utils.AccountUtil;
+import com.gms.gms.utils.FileStorageUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +48,9 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
 
     @Override
     public void addAnnouncement(Announcement announcement) {
+        announcement.setDocId(FileStorageUtil.getDocId());
+        announcement.setCreateBy(GmsUtil.getCurrentUser().getUserId());
+        announcement.setCreateTime(new Date());
         this.save(announcement);
     }
 

@@ -1,5 +1,7 @@
 package com.gms.gms.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.gms.common.exception.GmsException;
 import com.gms.gms.domain.Subject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,11 +12,13 @@ import java.util.List;
  */
 public interface SubjectService extends IService<Subject> {
 
-    List<Subject> getSubject();
+    List<Subject> getMySubject() throws GmsException;
 
     void deleteSubject(String subId);
 
-    void giveOpinion(String docId, Boolean isPassed, String feedback);
+    void giveOpinion(String docId, String status, String feedback);
 
     List<Subject> trackSubject(String subId);
+
+    IPage<Subject> selectWithCondition(Subject subject);
 }

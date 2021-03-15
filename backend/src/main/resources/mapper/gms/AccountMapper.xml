@@ -14,4 +14,9 @@
     <select id="getSecretaryByUserId" resultType="com.gms.gms.domain.Secretary">
         select * FROM secretary where USER_ID = #{userId}
     </select>
+    <select id="selectAllTeacher" resultType="com.gms.gms.domain.Teacher">
+        SELECT `user`.REAL_NAME,`user`.TEL,`user`.MAIL,teacher.TITLE,college.COLLEGE_NAME,teacher.HOME_PAGE
+        FROM teacher JOIN `user` ON teacher.USER_ID=`user`.USER_ID
+            JOIN college ON teacher.COLLEGE_ID=college.COLLEGE_ID
+    </select>
 </mapper>
