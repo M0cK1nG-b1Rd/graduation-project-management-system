@@ -25,8 +25,8 @@ public class Dict implements Serializable {
     @TableField("DICT_KEY")
     private String dictKey;
 
-    @TableField("ORDER")
-    private String order;
+    @TableField("ORDER_ID")
+    private Integer orderId;
 
     @TableField("DICT_VALUE")
     private String dictValue;
