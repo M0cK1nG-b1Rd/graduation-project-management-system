@@ -107,6 +107,17 @@ export default {
   },
   data() {
     return {
+      // 所有课题信息
+      allSubjectInfo: {},
+      // 查询参数（给后端）
+      queryInfo: {
+        keyWord: '', // 关键词
+        page: 1, // 当前页号
+        size: 10, // 页面大小
+        zone: '', // 课题领域
+        teacherName: '' // 指导老师姓名
+      },
+      // 当前选中的课题信息
       currentSubjectInfo: {
         subId: '',
         subName: '',
@@ -118,9 +129,7 @@ export default {
         teacherHomePage: '',
         capacity: '', // 课题容量
         chosen: '' // 已选人数
-      },
-      items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      subjectTitle: '这是一个超级超级长的课题，长到我一行显示不下！这是一个超级超级长的课题，长到我一行显示不下！这是一个超级超级长的课题，长到我一行显示不下！'
+      }
     }
   },
   methods: {
