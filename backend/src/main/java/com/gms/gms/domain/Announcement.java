@@ -39,10 +39,10 @@ public class Announcement implements Serializable{
     private String annDetail;
 
     @TableField("TYPE")
-    private Integer type;
+    private String type;
 
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("SIGNATURE")
     private String signature;

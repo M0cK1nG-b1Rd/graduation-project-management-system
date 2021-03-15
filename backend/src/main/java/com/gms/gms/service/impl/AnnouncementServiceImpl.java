@@ -9,7 +9,6 @@ import com.gms.common.utils.GmsUtil;
 import com.gms.gms.dao.AnnouncementMapper;
 import com.gms.gms.domain.Announcement;
 import com.gms.gms.service.AnnouncementService;
-import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import org.springframework.stereotype.Service;
 
@@ -59,11 +58,12 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
         this.baseMapper.deleteBatchIds(annIds);
     }
 
-    @Override
+    //已弃用
+    /*@Override
     public List<Announcement> getPublishedAnnouncement() {
         LambdaQueryWrapper<Announcement> queryWrapper = new LambdaQueryWrapper<>();
         //在数据字典中，2为已发布，1为未发布
         queryWrapper.eq(Announcement::getStatus,2);
         return this.baseMapper.selectList(queryWrapper);
-    }
+    }*/
 }

@@ -42,8 +42,8 @@ public class AnnouncementController {
         }
     }
 
-
-    @GetMapping("published")
+    //已弃用
+    /*@GetMapping("published")
     public GmsResponse getPublishedAnnouncement() throws GmsException {
         try {
             List<Announcement> announcement = announcementService.getPublishedAnnouncement();
@@ -56,7 +56,7 @@ public class AnnouncementController {
             log.error(message, e);
             throw new GmsException(message);
         }
-    }
+    }*/
 
     @PostMapping
     public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
