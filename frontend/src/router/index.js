@@ -14,6 +14,7 @@ import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
 import teacherSubjects from '../components/givenSubjects/teacherSubjects'
 import checkSubjects from '../components/givenSubjects/checkSubjects'
+import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 
 Vue.use(VueRouter)
 
@@ -89,6 +90,11 @@ const routes = [
       {
         path: '/subject/apply/result',
         component: checkSubjects
+      },
+      // 出题管理-教研室审核课题界面
+      {
+        path: '/subject/judge/final',
+        component: judgeSubjects
       }
     ]
   }
