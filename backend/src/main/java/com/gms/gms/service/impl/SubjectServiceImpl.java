@@ -1,6 +1,9 @@
 package com.gms.gms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.dao.SubjectMapper;
 import com.gms.gms.service.SubjectService;
@@ -35,5 +38,14 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
         LambdaQueryWrapper<Subject> map=new LambdaQueryWrapper<>();
         map.eq(Subject::getSubId, subId);
         return this.baseMapper.selectList(map);
+    }
+
+    @Override
+    public IPage<AppliedSubject> selectWithCondition() {
+        Page<AppliedSubject> page = new Page<>(0, 5);//todo 增加分页
+        Page<AppliedSubject> returnSubjectPage = this.baseMapper.selectWithCondition(page);
+        return returnSubjectPage;
+        //todo
+
     }
 }

@@ -16,5 +16,5 @@ public interface AppliedSubjectService extends IService<AppliedSubject> {
 
     void auditAppliance(AppliedSubject appliedSubject);
 
-    IPage<AppliedSubject> selectWithCondition(AppliedSubject appliedSubject);
+
 }

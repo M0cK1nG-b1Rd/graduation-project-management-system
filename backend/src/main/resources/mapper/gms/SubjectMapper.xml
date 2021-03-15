@@ -5,4 +5,50 @@
     <update id="giveOpinion">
         UPDATE subject SET IS_PASSED=#{isPassed},FEEDBACK=#{feedback} WHERE DOC_ID = #{docId}
     </update>
+
+    <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
+        SELECT s.SUB_ID,
+               s.SUB_NAME,
+               s.DESCRIPTION,
+               s.ZONE,
+               u.REAL_NAME AS TEACHER_NAME,
+               s.POSE_TIME,
+               m.MAJOR_NAME,
+               t.HOME_PAGE,
+               t.TITLE,
+               c.COLLEGE_NAME,
+               p.CAPACITY,
+               p.CHOSEN,
+               f.FILE_NAME,
+               f.DOC_ID,
+               f.HANDIN_ID
+        FROM `subject` s
+                 JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
+                 JOIN USER u ON (t.USER_ID = u.USER_ID)
+                 JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
+                 JOIN major m ON (m.MAJOR_ID = s.MAJOR_ID)
+        WHERE s.`STATUS` = "YTG"
+    </select>
+
+    <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.Subject">
+        <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
+        <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="ZONE" property="zone" jdbcType="VARCHAR"/>
+        <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
+        <result column="POSE_TIME" property="poseTime" jdbcType="DATE"/>
+        <result column="MAJOR_NAME" property="majorName" jdbcType="VARCHAR"/>
+        <result column="HOME_PAGE" property="homePage" jdbcType="VARCHAR"/>
+        <result column="TITLE" property="title" jdbcType="VARCHAR"/>
+        <result column="COLLEGE_NAME" property="collegeName" jdbcType="VARCHAR"/>
+        <result column="CAPACITY" property="capacity" jdbcType="INTEGER"/>
+        <result column="CHOSEN" property="chosen" jdbcType="INTEGER"/>
+        <collection property="fileStorage" javaType="java.util.List" ofType="com.gms.gms.domain.FileStorage">
+            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+            <result column="DOC_ID" property="docId" jdbcType="INTEGER" />
+            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
 </mapper>

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,9 @@ public class Subject implements Serializable {
     @TableField("DESCRIPTION")
     private String description;
 
+    @TableField("ZONE")
+    private String zone;
+
     @TableField("POSE_BY")
     private Integer poseBy;
 
@@ -61,5 +65,24 @@ public class Subject implements Serializable {
 
     @TableField("FEEDBACK")
     private String feedback;
+
+    //详情字段
+    @TableField(exist = false)
+    private Integer capacity;
+    @TableField(exist = false)
+    private Integer chosen;
+    @TableField(exist = false)
+    private String teacherName;
+    @TableField(exist = false)
+    private String title;
+    @TableField(exist = false)
+    private String homePage;
+    @TableField(exist = false)
+    private String collegeName;
+    @TableField(exist = false)
+    private String majorName;
+    @TableField(exist = false)
+    private List<FileStorage> fileStorage;
+
 
 }

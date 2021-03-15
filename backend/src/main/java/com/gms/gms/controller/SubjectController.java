@@ -1,11 +1,13 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
+import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
@@ -30,11 +32,30 @@ public class SubjectController {
     @Autowired
     SubjectServiceImpl subjectService;
 
-    @GetMapping
+//    @GetMapping
     public GmsResponse getSubject() throws GmsException {
         try {
             List<Subject> subjects = subjectService.getSubject();
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //学生查看选题信息，包括详情
+    //筛选 搜索关键字、课题领域、老师名字
+    @GetMapping
+    public GmsResponse getPassedSubject() throws GmsException{
+        try {
+            //todo
+            IPage<AppliedSubject> applyList = subjectService.selectWithCondition();
+
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),applyList);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
