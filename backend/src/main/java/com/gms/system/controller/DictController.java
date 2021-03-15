@@ -39,10 +39,20 @@ public class DictController extends BaseController {
     @Autowired
     private DictService dictService;
 
-//    @GetMapping
-//    public Map<String, Object> DictList(QueryRequest request, Dict dict) {
-//        return getDataTable(this.dictService.findDicts(request, dict));
-//    }
+    @GetMapping("all")
+    public GmsResponse getDictList() throws GmsException {
+        try {
+            List<Dict> dicts = dictService.getAllDict();
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),dicts);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
 
     @GetMapping("{dictName}")
     public GmsResponse DictTrimList(@PathVariable String dictName) throws GmsException {

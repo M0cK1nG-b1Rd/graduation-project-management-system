@@ -65,6 +65,7 @@ public class SubjectController {
         }
     }
 
+    //教师出题
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -83,6 +84,7 @@ public class SubjectController {
         }
     }
 
+    //教师课题被驳回后修改课题
     @PostMapping("modify")
     public GmsResponse modifySubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -102,13 +104,15 @@ public class SubjectController {
         }
     }
 
+    //教研办审核教师课题
     @PutMapping("audit")
     public GmsResponse auditSubject(LinkedHashMap<String,String> opinion) throws GmsException {
         try {
             String docId = opinion.get("docId");
-            Boolean isPassed = opinion.get("isPassed").equals("1");
+            //WTG未通过，YTG已通过
+            String status = opinion.get("status");
             String feedback = opinion.get("feedback");
-            subjectService.giveOpinion(docId, isPassed, feedback);
+            subjectService.giveOpinion(docId, status, feedback);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

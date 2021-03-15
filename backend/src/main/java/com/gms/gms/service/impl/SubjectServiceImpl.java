@@ -34,8 +34,8 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     }
 
     @Override
-    public void giveOpinion(String docId, Boolean isPassed, String feedback) {
-        this.baseMapper.giveOpinion(docId,isPassed,feedback);
+    public void giveOpinion(String docId, String status, String feedback) {
+        this.baseMapper.giveOpinion(docId,status,feedback);
     }
 
     @Override
