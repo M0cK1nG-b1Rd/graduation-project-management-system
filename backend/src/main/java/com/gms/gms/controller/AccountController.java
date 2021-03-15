@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @Validated
 @RestController
@@ -24,10 +26,17 @@ public class AccountController {
     AccountService accountService;
 
     //查询返回所有的老师
-    @GetMapping("/plea/teacher")
-    public GmsResponse searchTeacherInf(int page, int size) throws GmsException{
+    @GetMapping("teacher")
+    public GmsResponse searchTeacherInfo(Integer page, Integer size) throws GmsException{
+        IPage<Teacher> announcement;
         try {
-            IPage<Teacher> announcement = accountService.getAllTeacher(page,size);
+            if(page==null||size==null){
+                //默认返回全部
+                announcement =accountService.getAllTeacher(1,Integer.MAX_VALUE);
+            }else {
+                announcement = accountService.getAllTeacher(page,size);
+            }
+
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
