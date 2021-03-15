@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <!--    卡片区-->
     <el-card class="outtest_card">
-<!--      搜索框-->
+<!--      搜索框筛选-->
       <el-row class="search_zone">
 <!--        关键词搜索-->
         <el-col :span="8">
@@ -62,14 +62,15 @@
               课题简介：<el-col class="subject_breif">佚名曾经提到过，感激每一佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战佚名曾经提到过，感激每一个新的挑战</el-col>
             </el-row>
 <!--            卡片底部-->
-            <el-row type="flex" align="middle" justify="space-around" class="card_footer">
+            <el-row type="flex" align="middle" justify="space-around">
 <!--              人数情况-->
               <el-col>
                 已选2人/限选3人
               </el-col>
 <!--              查看详情-->
               <el-col>
-                <el-tag type="success" size="mini">
+                <el-tag type="success" size="mini" @click="viewSubjectDetail"
+                        style="cursor: pointer;">
                 查看详情
                 </el-tag>
               </el-col>
@@ -96,10 +97,15 @@
 <script>
 export default {
   name: 'ChooseSubjectApplication',
+  mounted() {
+  },
   data() {
     return {
       items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     }
+  },
+  methods: {
+    viewSubjectDetail() {}
   }
 }
 </script>
@@ -177,7 +183,6 @@ export default {
 }
 /*卡片脚*/
 .card_footer{
-  justify-self: end;
 }
 /*分页区*/
 .pagination{
