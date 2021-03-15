@@ -49,7 +49,7 @@ public class SubjectController {
     //学生查看选题信息，包括详情
     //筛选 搜索关键字、课题领域、老师名字
     @GetMapping
-    public GmsResponse getPassedSubject(@RequestBody Subject subject) throws GmsException{
+    public GmsResponse getPassedSubject(Subject subject) throws GmsException{
         try {
 
             IPage<Subject> applyList = subjectService.selectWithCondition(subject);

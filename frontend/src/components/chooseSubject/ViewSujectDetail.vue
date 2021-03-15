@@ -33,7 +33,7 @@
           <el-col :span="4">选题要求：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
-              <div class="notice_content ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
             </div>
           </el-col>
         </el-row>
@@ -43,7 +43,7 @@
           <el-col :span="4">课题内容：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
-              <div class="notice_content ql-editor" v-html="currentSubjectInfo.description"></div>
+              <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
             </div>
           </el-col>
         </el-row>
@@ -68,23 +68,12 @@
 export default {
   name: 'ViewSubjectDetail',
   mounted() {
-    // this.currentSubjectInfo = this.$route.params
+    this.currentSubjectInfo = this.$route.params
   },
   data() {
     return {
-      currentSubjectInfo: {
-        subId: '',
-        subName: '如何摸鱼',
-        zone: '鱼类护理', // 课题领域
-        description: '',
-        requirement: '', // 课题要求
-        majorName: '养鱼专业',
-        teacherTitle: '',
-        teacherName: '绕远',
-        teacherHomePage: 'http://gr.xjtu.edu.cn/web/raoyuan',
-        capacity: '', // 课题容量
-        chosen: '' // 已选人数
-      }
+      // 当前课题信息
+      currentSubjectInfo: {}
     }
   },
   methods: {
@@ -117,5 +106,9 @@ export default {
 /*分割线*/
 .el-divider{
   margin: 6px;
+}
+/*富文本字体大小*/
+.ql-editor{
+  font-size: 15px;
 }
 </style>
