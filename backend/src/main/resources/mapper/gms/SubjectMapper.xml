@@ -45,6 +45,25 @@
             OR s.DESCRIPTION LIKE CONCAT('%',#{subject.keyWord},'%'))
         </if>
     </select>
+    <select id="getMySubjectInfo" resultType="com.gms.gms.domain.Subject">
+        SELECT
+            s.SUB_ID,
+            s.SUB_NAME,
+            s.REQUIREMENT,
+            s.DESCRIPTION,
+            s.ZONE,
+            u.REAL_NAME AS TEACHER_NAME,
+            u.TEL,
+            u.MAIL,
+            s.POSE_TIME
+        FROM
+            `subject` s
+                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
+                JOIN USER u ON ( t.USER_ID = u.USER_ID )
+        WHERE
+            t.TEACHER_ID =#{teacherId}
+
+    </select>
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.Subject">
         <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
