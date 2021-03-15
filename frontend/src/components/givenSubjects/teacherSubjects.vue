@@ -75,7 +75,7 @@
                   </el-col>
                   <el-col :span="20">
                     <el-form-item label="课题要求">
-                      <el-input type="textarea" v-model="subject.require"></el-input>
+                      <el-input type="textarea" v-model="subject.requirement"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="20">
@@ -123,7 +123,7 @@ export default {
         phone: 0,
         mail: '',
         description: '',
-        require: '',
+        requirement: '',
         opinion: ''
       },
       dialogVisible: false

@@ -27,7 +27,7 @@
         <!--          课题名称-->
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="subjectName"
+          prop="subName"
           label="课题名称"
           width="300">
         </el-table-column>
@@ -35,7 +35,7 @@
         <el-table-column
           sortable
           :show-overflow-tooltip="true"
-          prop="create_time"
+          prop="poseTime"
           label="申请日期"
           width="110">
         </el-table-column>
@@ -72,9 +72,9 @@
           filter-placement="bottom-end"
           label="课题状态">
           <template slot-scope="scope">
-            <el-tag type="success" v-if=" scope.row.status == 2">已通过</el-tag>
-            <el-tag type="warning" v-if=" scope.row.status == 1">待审核</el-tag>
-            <el-tag type="danger" v-if=" scope.row.status == 3">未通过</el-tag>
+            <el-tag type="success" v-if=" scope.row.status == '2'">已通过</el-tag>
+            <el-tag type="warning" v-if=" scope.row.status == '0'">待审核</el-tag>
+            <el-tag type="danger" v-if=" scope.row.status == '3'">未通过</el-tag>
           </template>
         </el-table-column>
         <!--          操作-->
@@ -104,7 +104,7 @@
       </el-pagination>
     </el-row>
   </el-card>
-      <!--    查看公告详情对话框-->
+      <!--    查看课题详情对话框-->
       <el-dialog
         :visible.sync="viewPageVisible"
         width="60%">
@@ -112,7 +112,7 @@
           <el-row>
             <el-col :span="10">
               <el-form-item label="课题名称">
-                <el-input v-model="currentSubjectInfo.subjectName"></el-input>
+                <el-input v-model="currentSubjectInfo.subName"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="7">
@@ -130,7 +130,7 @@
             <el-col :span="12">
               <el-form-item label="申报时间">
                 <el-row>
-                  <el-input v-model="currentSubjectInfo.create_time"></el-input>
+                  <el-input v-model="currentSubjectInfo.poseTime"></el-input>
                 </el-row>
               </el-form-item>
             </el-col>
@@ -205,11 +205,11 @@ export default {
   },
   methods: {
     async getSubjectList() {
-      const { data: res } = await this.$http.get('/mock/subjects_list.json', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://localhost:9528/subject/my', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.subjectlist = res.data.subjects
+      this.subjectlist = res.data
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
