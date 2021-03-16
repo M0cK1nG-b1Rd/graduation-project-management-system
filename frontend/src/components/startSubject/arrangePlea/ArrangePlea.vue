@@ -78,7 +78,11 @@
                   </el-row>
                   <!--                查看该组专家-->
                   <el-row>
-                    <a-tag color="green" class="inner_tag">专家信息</a-tag>
+                    <a-tag color="blue" class="inner_tag">专家信息</a-tag>
+                  </el-row>
+                  <!--                查看该组答辩秘书-->
+                  <el-row>
+                    <a-tag color="green" class="inner_tag">答辩秘书</a-tag>
                   </el-row>
                 </el-col>
 <!--                时间、场地设置-->

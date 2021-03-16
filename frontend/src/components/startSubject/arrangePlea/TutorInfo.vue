@@ -66,9 +66,9 @@
         @current-change="handleCurrentChange"
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 20, 50]"
-        :page-size="100"
+        :page-size="queryInfo.size"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="totalPageNum">
+        :total="tutorNum">
       </el-pagination>
     </el-row>
   </div>

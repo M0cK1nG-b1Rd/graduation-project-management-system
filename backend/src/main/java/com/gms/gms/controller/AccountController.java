@@ -132,7 +132,7 @@ public class AccountController {
         }
     }
 
-    //TO DO返回相应时期的学生分组结果
+    //TODO 返回相应时期的学生分组结果
     @GetMapping("/plea/studentGroup")
     public GmsResponse searchStudentGroupInf(int page, int size, String stage) throws GmsException{
         try {

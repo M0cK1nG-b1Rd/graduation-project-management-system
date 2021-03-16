@@ -64,9 +64,9 @@
         @current-change="handleCurrentChange"
         :current-page="queryInfo.page"
         :page-sizes="[5, 10, 20, 50]"
-        :page-size="100"
+        :page-size="queryInfo.size"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="totalPageNum">
+        :total="stuNum">
       </el-pagination>
     </el-row>
   </div>
@@ -89,8 +89,6 @@ export default {
         // TODO 后期改为KT阶段
         stage: 'JT' // 阶段
       },
-      // 总页数
-      totalPageNum: 0,
       // 学生总数
       stuNum: 0
     }
