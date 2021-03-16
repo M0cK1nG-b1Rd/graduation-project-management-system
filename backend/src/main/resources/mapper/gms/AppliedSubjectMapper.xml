@@ -4,89 +4,93 @@
     <update id="auditAppliedSubject" parameterType="com.gms.gms.domain.AppliedSubject">
         UPDATE applied_subject
         SET `STATUS` = #{appliedSubject.status}
-        WHERE
-            STU_ID = #{appliedSubject.stuId}
+        WHERE STU_ID = #{appliedSubject.stuId}
           AND SUB_ID = #{appliedSubject.subId}
           AND `STATUS` = "WSH";
     </update>
 
 
     <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
-        SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
-        FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN user u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN user u2 ON ( u2.USER_ID = t.USER_ID )
-                JOIN file_storage f ON(f.DOC_ID=a.DOC_ID)
+        SELECT a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.HANDIN_ID,
+               f.FILE_NAME
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN user u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN user u2 ON (u2.USER_ID = t.USER_ID)
+                 JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        <if test="appliedSubject.keyWord != null and appliedSubject.keyWord != ''">
+            AND (s.SUB_NAME LIKE CONCAT('%',#{appliedSubject.keyWord},'%')
+        </if>
     </select>
     <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
-        SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
-        FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN user u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN user u2 ON ( u2.USER_ID = t.USER_ID )
-                JOIN file_storage f ON(f.DOC_ID=a.DOC_ID)
-                WHERE s.POSE_BY=#{teacherId}
+        SELECT a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.HANDIN_ID,
+               f.FILE_NAME
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN user u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN user u2 ON (u2.USER_ID = t.USER_ID)
+                 JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        WHERE s.POSE_BY = #{teacherId}
+        <if test="appliedSubject.keyWord != null and appliedSubject.keyWord != ''">
+            AND (s.SUB_NAME LIKE CONCAT('%',#{appliedSubject.keyWord},'%')
+        </if>
     </select>
     <select id="selectWithConditionAsStudent" resultMap="AppliedSubjectMapper">
         SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
+        a.SUB_ID,
+        s.SUB_NAME,
+        s.POSE_BY AS TEACHER_ID,
+        u2.REAL_NAME AS TEACHER_NAME,
+        a.STU_ID AS STUDENT_ID,
+        u1.REAL_NAME AS STUDENT_NAME,
+        a.APPLY_TIME,
+        a.APPLY_REASON,
+        a.`STATUS`,
+        a.FEEDBACK,
+        a.AUDIT_TIME,
+        f.DOC_ID,
+        f.HANDIN_ID,
+        f.FILE_NAME
         FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN user u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN user u2 ON ( u2.USER_ID = t.USER_ID )
-                JOIN file_storage f ON(f.DOC_ID=a.DOC_ID)
-                WHERE a.STU_ID=#{studentId}
+        applied_subject a
+        JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
+        JOIN student stu ON ( stu.STU_ID = a.STU_ID )
+        JOIN user u1 ON ( u1.USER_ID = stu.USER_ID )
+        JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
+        JOIN user u2 ON ( u2.USER_ID = t.USER_ID )
+        JOIN file_storage f ON(f.DOC_ID=a.DOC_ID)
+        WHERE a.STU_ID=#{studentId}
+        <if test="appliedSubject.keyWord != null and appliedSubject.keyWord != ''">
+            AND (s.SUB_NAME LIKE CONCAT('%',#{appliedSubject.keyWord},'%')
+        </if>
     </select>
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
