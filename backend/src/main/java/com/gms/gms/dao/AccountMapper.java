@@ -26,29 +26,36 @@ public interface AccountMapper extends BaseMapper<User> {
 
     List<Integer> selectAllSecretaryId();
 
-    void addTeacherTeam(@Param("team")TeacherTeam teacherTeam);
+    void addTeacherTeam(@Param("team") TeacherTeam teacherTeam);
 
     List<Integer> selectTeacherTeamId(@Param("stage") String stage);
 
-    void addTeacherTeamMember(@Param("id") int integer, @Param("group")int maxGroup, boolean b);
+    void addTeacherTeamMember(@Param("id") int integer, @Param("group") int maxGroup, boolean b);
 
     int selectStageInTeam(String stage, String tableName);
 
-    Page<TeacherTeam> getTeacherTeam(Page<TeacherTeam> teacherTeamPage,@Param("status") String status);
+    Page<TeacherTeam> getTeacherTeam(Page<TeacherTeam> teacherTeamPage, @Param("status") String status);
 
-    Secretary selectSecretaryById(int SecId,int teamId);
+    Secretary selectSecretaryById(int SecId, int teamId);
 
     List<AcceptanceTeacher> selectTeacherByTeamId(int id);
 
     Page<Student> selectAllStudent2(Page<Student> studentPage);
 
-    List<Integer> getStudentNum(@Param("stage")String stage);
+    List<Integer> getStudentNum(@Param("stage") String stage);
+
     //传参暂时没有使用，但便于以后修改不移除
-    List<Integer> getStudentNum2(@Param("stage")String stage);
+    List<Integer> getStudentNum2(@Param("stage") String stage);
 
-    void addStudentGroup(@Param("gro")StuGroup stuGroup);
+    void addStudentGroup(@Param("gro") StuGroup stuGroup);
 
-    Page<StuGroup> getStudentGroup(Page<StuGroup> stuGroupPage,@Param("stage") String stage);
+    Page<StuGroup> getStudentGroup(Page<StuGroup> stuGroupPage, @Param("stage") String stage);
 
     List<Student> selectStudentByGroupId(Integer id);
+
+    void deleteStudent(@Param("stage") String stage);
+
+    void deleteTeacherInTeam(@Param("groupId") List<Integer> groupId);
+
+    void deleteTeacherTeam(@Param("stage") String stage);
 }

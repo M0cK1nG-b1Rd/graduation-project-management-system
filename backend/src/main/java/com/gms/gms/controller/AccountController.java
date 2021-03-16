@@ -71,7 +71,8 @@ public class AccountController {
     @PostMapping("/plea/teacher")
     public GmsResponse groupTeacherAuto(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
-            Integer teamNum = jsonObject.getInteger("teamNum"); String stage= jsonObject.getString("stage");
+            Integer teamNum= jsonObject.getInteger("teamNum");
+            String stage= jsonObject.getString("stage");
             if (accountService.selectStageInTeam(stage, "acceptance_team") > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
@@ -113,8 +114,10 @@ public class AccountController {
 
     //学生的自动分组，传参仿照老师，仍然进行时期选择，不进行组数检测
     @PostMapping("/plea/student")
-    public GmsResponse groupStudentAuto(Integer teamNum, String stage) throws GmsException {
+    public GmsResponse groupStudentAuto(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
+            Integer teamNum= jsonObject.getInteger("teamNum");
+            String stage= jsonObject.getString("stage");
             if (accountService.selectStageInTeam(stage, "stu_group") > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
@@ -149,6 +152,22 @@ public class AccountController {
                     "查询成功"), studentGroupPage1);
         } catch (Exception e) {
             String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //删除相应时期的分组结果，以便重新分组
+    @DeleteMapping("/plea/delete")
+    public GmsResponse deleteAllGroup(String stage) throws GmsException{
+        try {
+            accountService.deleteGroups(stage);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "删除分组成功"));
+        } catch (Exception e) {
+            String message = "删除失败";
             log.error(message, e);
             throw new GmsException(message);
         }

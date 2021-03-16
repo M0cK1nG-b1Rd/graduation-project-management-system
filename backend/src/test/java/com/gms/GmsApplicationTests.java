@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -20,8 +21,11 @@ class GmsApplicationTests {
 
     @Test
     void contextLoads() {
-        List<AcceptanceTeacher> acceptanceTeachers = mapper.selectTeacherByTeamId(10);
-        System.out.println(acceptanceTeachers.get(0).getRealName());
+        List<Integer> teachers = new ArrayList<>();
+        teachers.add(100);
+        teachers.add(101);
+        mapper.deleteTeacherInTeam(teachers);
+        System.out.println();
     }*/
 
 }
