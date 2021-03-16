@@ -4,7 +4,7 @@
     <el-row>
       <el-col :span="2" :offset="2">
         <a-tag color="#CCFFFF" style="color: #000000; font-size: 14px">
-          学生总数: {{stuNum}}人
+          专家总数: {{tutorNum}}人
         </a-tag>
       </el-col>
     </el-row>
@@ -101,7 +101,7 @@ export default {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$notify.error('获取专家老师信息失败！')
       this.tutorInfo = res.data.records
-      this.tutorNum = res.total
+      this.tutorNum = res.data.total
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
