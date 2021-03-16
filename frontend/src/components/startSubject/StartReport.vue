@@ -97,9 +97,10 @@
         <el-form ref="form" :model="form" label-width="80px">
           <el-row>
             <el-col :span="20">
-              <el-form-item label="研究意义" prop="description">
-                <el-input type="textarea" v-model="report.meaning"></el-input>
-              </el-form-item>
+<!--              <el-form-item label="研究意义" prop="description">-->
+<!--                <el-input type="textarea" v-model="report.meaning"></el-input>-->
+<!--              </el-form-item>-->
+              <quill-editor :init-content="'请输入详情'"></quill-editor>
             </el-col>
             <el-col :span="20">
               <el-form-item label="调研结果" prop="requirement">
@@ -139,8 +140,10 @@
 </template>
 
 <script>
+import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'StartReport',
+  components: { quillEditor },
   data() {
     return {
       // 查看学生的课题信息
