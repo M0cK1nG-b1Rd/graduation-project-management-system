@@ -85,7 +85,9 @@ export default {
       // 查询参数
       queryInfo: {
         page: 1, // 当前页号
-        size: 10 // 页面大小
+        size: 10, // 页面大小
+        // TODO 后期改为KT阶段
+        stage: 'JT' // 阶段
       },
       // 总页数
       totalPageNum: 0,
@@ -96,7 +98,7 @@ export default {
   methods: {
     // 获取学生信息
     async getStuInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/student', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$notify.error('获取答辩学生信息失败！')
       this.stuInfo = res.data.records
       this.stuNum = res.total

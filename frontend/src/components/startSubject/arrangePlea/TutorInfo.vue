@@ -98,7 +98,7 @@ export default {
   methods: {
     // 获取专家老师信息
     async getTutorInfo() {
-      const { data: res } = await this.$http.get('/mock/teacher_info.json')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$notify.error('获取专家老师信息失败！')
       this.tutorInfo = res.data.records
       this.tutorNum = res.total
