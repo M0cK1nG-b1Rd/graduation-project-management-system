@@ -93,8 +93,12 @@ export default {
         //    1.1 项目中除了登录之外的其他API接口，必须在登录成功之后才能访问
         //    1.2 token只应该在当前网站打开期间生效，所以需要将token存到sessionStorage而不是localStorage中
         window.sessionStorage.setItem('token', res.data.token)
+        // 存数据字典
+        const { data: resp } = await this.$http.get('http://127.0.0.1:9528/dict/all')
+        if (resp.meta.code !== 200) return this.$message.error('获取数据字典失败！')
+        window.sessionStorage.setItem('dict', resp.data)
         // 2. 通过编程式导航跳转到后台主页， 路由地址是 /home
-        this.$router.push('/home')
+        await this.$router.push('/home')
       })
     }
   }

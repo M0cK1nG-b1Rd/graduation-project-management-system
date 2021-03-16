@@ -98,10 +98,6 @@
           </el-aside>
           <!--       右侧通知详情内容区-->
           <el-main>
-<!--              通知标题-->
-<!--                <div class="notice_title">-->
-<!--                  {{noticeTitle}}-->
-<!--                </div>-->
 <!--              通知内容-->
               <div class="ql-container ql-snow" style="height: 860px">
                 <div class="notice_content ql-editor" v-html="noticeDetial"></div>
