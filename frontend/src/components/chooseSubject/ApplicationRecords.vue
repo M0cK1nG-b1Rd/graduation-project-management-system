@@ -169,7 +169,7 @@ export default {
       // 查询参数
       queryInfo: {
         keyWord: '', // 关键词
-        current: 1, // 当前页号
+        page: 1, // 当前页号
         size: 10 // 页面大小
       },
       // 符合条件的页数
@@ -198,7 +198,11 @@ export default {
   },
   methods: {
     // 获取所有申请记录信息
-    async getApplicationRecords() {},
+    async getApplicationRecords() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
+      if (res.meta.code !== 200) return this.$message.error('拉取选题申请记录失败！')
+      this.allApplicationInfo = res.data
+    },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
       this.queryInfo.size = newSize

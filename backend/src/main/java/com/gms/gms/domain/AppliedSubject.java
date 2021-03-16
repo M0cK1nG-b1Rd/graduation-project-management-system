@@ -81,7 +81,7 @@ public class AppliedSubject implements Serializable {
     private String studentName;
 
 
-    // TODO: 2021/3/16 完善搜索功能 
+    // TODO: 2021/3/16 完善搜索功能
     //搜索关键字
     @TableField(exist = false)
     private String keyWord;
