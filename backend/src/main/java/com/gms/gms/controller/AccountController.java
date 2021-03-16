@@ -6,15 +6,15 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.gms.domain.StuGroup;
-import com.gms.gms.domain.Student;
-import com.gms.gms.domain.Teacher;
-import com.gms.gms.domain.TeacherTeam;
+import com.gms.gms.domain.*;
 import com.gms.gms.service.AccountService;
+import com.gms.gms.service.ClassroomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Validated
@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     @Autowired
     AccountService accountService;
+    @Autowired
+    ClassroomService classroomService;
 
     //进行答辩分组前查询返回所有的老师，所有时期共用
     @GetMapping("/plea/teacher")
@@ -168,6 +170,23 @@ public class AccountController {
                     "删除分组成功"));
         } catch (Exception e) {
             String message = "删除失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //返回教室信息
+    @GetMapping("/plea/classroom")
+    public GmsResponse searchClassroom() throws GmsException {
+        try {
+            //使用MybatisPlus在classroomService中封装的方法
+            List<Classroom> classrooms=classroomService.list();
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),classrooms);
+        } catch (Exception e) {
+            String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
