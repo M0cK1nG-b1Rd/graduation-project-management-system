@@ -136,11 +136,11 @@ public class AccountController {
     @GetMapping("/plea/studentGroup")
     public GmsResponse searchStudentGroupInf(int page, int size, String stage) throws GmsException{
         try {
-            Page<TeacherTeam> teacherTeamPage = accountService.getTeacherTeam(page,size,stage);
+            Page<TeacherTeam> teacherTeamPage1 = accountService.getTeacherTeam(page,size,stage);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"), teacherTeamPage);
+                    "查询成功"), teacherTeamPage1);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
