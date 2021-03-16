@@ -164,4 +164,28 @@
         WHERE
             acceptance_teacher.TEAM_ID = #{id}
     </select>
+    <select id="getStudentNum" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+        WHERE
+            plea_application.`STATUS` = 'YTG'
+          AND plea_application.STAGE = #{stage}
+    </select>
+    <select id="getStudentNum2" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+                JOIN applied_subject ON student.STU_ID = applied_subject.STU_ID
+        WHERE
+            applied_subject.STATUS = 'YTG'
+    </select>
+    <insert id="addStudentGroup">
+        INSERT INTO stu_group ( GROUP_ID, STU_ID, STAGE )
+        VALUES
+            (#{gro.groupId},#{gro.stuId},#{gro.stage})
+    </insert>
 </mapper>

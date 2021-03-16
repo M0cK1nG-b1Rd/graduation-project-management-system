@@ -41,4 +41,10 @@ public interface AccountMapper extends BaseMapper<User> {
     List<AcceptanceTeacher> selectTeacherByTeamId(int id);
 
     Page<Student> selectAllStudent2(Page<Student> studentPage);
+
+    List<Integer> getStudentNum(@Param("stage")String stage);
+    //传参暂时没有使用，但便于以后修改不移除
+    List<Integer> getStudentNum2(@Param("stage")String stage);
+
+    void addStudentGroup(@Param("gro")StuGroup stuGroup);
 }

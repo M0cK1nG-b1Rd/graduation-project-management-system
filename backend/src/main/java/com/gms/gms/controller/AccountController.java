@@ -107,14 +107,24 @@ public class AccountController {
         }
     }
 
-    //TO DO学生的自动分组，传参仿照老师，仍然进行时期选择
+    //学生的自动分组，传参仿照老师，仍然进行时期选择，不进行组数检测
     @PostMapping("/plea/student")
     public GmsResponse groupStudentAuto(Integer teamNum,String stage) throws GmsException{
         try {
-            return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "新建老师分组成功"));
+            if(accountService.selectStageInTeam(stage,"stu_group")>0){
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "已经自动生成分组"));
+            }if(accountService.groupStudentAuto(teamNum,stage)) {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C200.getCode(),
+                        Code.C200.getDesc(),
+                        "新建学生分组成功"));
+            }return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    "时期不对"));
         } catch (Exception e) {
             String message = "新建失败";
             log.error(message, e);
