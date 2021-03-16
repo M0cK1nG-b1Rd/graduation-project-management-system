@@ -30,8 +30,7 @@ public class SystemStage implements Serializable {
     @TableField("IS_CURRENT")
     private Boolean isCurrent;
 
-    @TableField("STAGE_ID")
-    @TableId
+    @TableId("STAGE_ID")
     private Integer stageId;
 
     @TableField("STAGE_NAME")

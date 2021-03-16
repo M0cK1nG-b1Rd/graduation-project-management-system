@@ -181,7 +181,10 @@ export default {
     },
     // 提交选题申请
     async submitApplication() {
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', this.applicationInfo)
+      const applicationForm = {}
+      applicationForm.subId = this.applicationInfo.subId
+      applicationForm.applyReason = this.applicationInfo.applyReason
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
       if (res.meta.code !== 200) return this.$message.error('提交选题申请失败！')
       this.$message.success('选题申请提交成功！')
     }

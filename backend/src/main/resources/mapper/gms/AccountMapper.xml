@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.AccountMapper">
 
+    <resultMap id="MTT" type="com.gms.gms.domain.TeacherTeam">
+        <id property="teamId" column="TEAM_ID"/>
+        <result property="stage" column="STAGE"/>
+        <result property="secId" column="SEC_ID"/>
+        <association property="secretary" column="{SecId=SEC_ID,teamId=TEAM_ID}"
+                     select="com.gms.gms.dao.AccountMapper.selectSecretaryById"/>
+        <collection property="teachers" column="TEAM_ID"
+                    select="com.gms.gms.dao.AccountMapper.selectTeacherByTeamId"/>
+    </resultMap>
     <select id="getTeacherByUserId" resultType="com.gms.gms.domain.Teacher">
         select * FROM teacher where USER_ID = #{userId}
     </select>
@@ -15,8 +24,168 @@
         select * FROM secretary where USER_ID = #{userId}
     </select>
     <select id="selectAllTeacher" resultType="com.gms.gms.domain.Teacher">
-        SELECT `user`.REAL_NAME,`user`.TEL,`user`.MAIL,teacher.TITLE,college.COLLEGE_NAME,teacher.HOME_PAGE
-        FROM teacher JOIN `user` ON teacher.USER_ID=`user`.USER_ID
-            JOIN college ON teacher.COLLEGE_ID=college.COLLEGE_ID
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            teacher.TITLE,
+            college.COLLEGE_NAME,
+            teacher.HOME_PAGE
+        FROM
+            teacher
+                JOIN `user` ON teacher.USER_ID = `user`.USER_ID
+                JOIN college ON teacher.COLLEGE_ID = college.COLLEGE_ID
     </select>
+    <select id="selectAllStudent" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+        WHERE
+            plea_application.`STATUS` = 'YTG'
+          AND plea_application.STAGE = #{stage}
+    </select>
+    <select id="selectAllStudent2" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+                JOIN applied_subject ON student.STU_ID = applied_subject.STU_ID
+        WHERE
+            applied_subject.STATUS = 'YTG'
+    </select>
+    <select id="selectAllTeacherId" resultType="java.lang.Integer">
+        SELECT
+            teacher.TEACHER_ID
+        FROM
+            teacher
+    </select>
+    <select id="selectAllSecretaryId" resultType="java.lang.Integer">
+        SELECT
+            secretary.SEC_ID
+        FROM
+            secretary
+    </select>
+    <insert id="addTeacherTeam">
+        INSERT INTO acceptance_team ( SEC_ID, STAGE )
+        VALUES(
+            #{team.secId},
+            #{team.stage})
+    </insert>
+    <select id="selectTeacherTeamId" resultType="java.lang.Integer">
+        SELECT
+            acceptance_team.TEAM_ID
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{stage}
+    </select>
+    <insert id="addTeacherTeamMember">
+        INSERT INTO acceptance_teacher ( TEACHER_ID, TEAM_ID, IS_LEADER )
+        VALUES(
+            #{id},
+            #{group},
+            #{b})
+    </insert>
+    <select id="selectStageInTeam" resultType="java.lang.Integer">
+        SELECT
+            COUNT( STAGE )
+        FROM
+            ${tableName}
+        WHERE
+            STAGE = #{stage}
+    </select>
+    <select id="getTeacherTeam" resultMap="MTT">
+        SELECT
+            acceptance_team.TEAM_ID,
+            acceptance_team.STAGE,
+            acceptance_team.SEC_ID
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{status}
+    </select>
+    <select id="selectSecretaryById" resultType="com.gms.gms.domain.Secretary">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL
+        FROM
+            secretary
+                JOIN acceptance_team ON acceptance_team.SEC_ID = secretary.SEC_ID
+                JOIN `user` ON secretary.USER_ID = `user`.USER_ID
+        WHERE
+            acceptance_team.SEC_ID = #{SecId}
+            AND acceptance_team.TEAM_ID = #{teamId}
+    </select>
+    <select id="selectTeacherByTeamId" resultType="com.gms.gms.domain.AcceptanceTeacher">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            teacher.TITLE,
+            college.COLLEGE_NAME,
+            teacher.HOME_PAGE,
+            acceptance_teacher.IS_LEADER
+        FROM
+            teacher
+                JOIN `user` ON teacher.USER_ID = `user`.USER_ID
+                JOIN college ON teacher.COLLEGE_ID = college.COLLEGE_ID
+                JOIN acceptance_teacher ON teacher.TEACHER_ID = acceptance_teacher.TEACHER_ID
+        WHERE
+            acceptance_teacher.TEAM_ID = #{id}
+    </select>
+    <select id="getStudentNum" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+        WHERE
+            plea_application.`STATUS` = 'YTG'
+          AND plea_application.STAGE = #{stage}
+    </select>
+    <select id="getStudentNum2" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+                JOIN applied_subject ON student.STU_ID = applied_subject.STU_ID
+        WHERE
+            applied_subject.STATUS = 'YTG'
+    </select>
+    <insert id="addStudentGroup">
+        INSERT INTO stu_group ( GROUP_ID, STU_ID, STAGE )
+        VALUES
+            (#{gro.groupId},#{gro.stuId},#{gro.stage})
+    </insert>
 </mapper>
