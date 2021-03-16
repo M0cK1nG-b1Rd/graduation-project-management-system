@@ -305,10 +305,32 @@
           "children": []
         }
       ]
+      "children": [
+        {
+          "name": "开题报告",
+          "id": 26,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-edit-outline",
+          "path": "/initial/myReport",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "我的记录",
+          "id": 27,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-notebook-2",
+          "path": "/initial/myList",
+          "component": "",
+          "children": []
+        }
+      ]
     },
     {
       "name": "中期管理",
-      "id": 26,
+      "id": 28,
       "disable": false,
       "order": "",
       "icon": "el-icon-time",
@@ -318,7 +340,7 @@
     },
     {
       "name": "结题管理",
-      "id": 27,
+      "id": 29,
       "disable": false,
       "order": "",
       "icon": "el-icon-timer",

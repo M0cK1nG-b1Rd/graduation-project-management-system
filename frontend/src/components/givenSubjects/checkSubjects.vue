@@ -184,7 +184,7 @@ export default {
     return {
       // 查看详情的课题信息
       currentSubjectInfo: {},
-      // （符合要求）公告总数
+      // （符合要求）课题总数
       totalPageNum: 0,
       // 获取课题列表
       queryInfo: {
