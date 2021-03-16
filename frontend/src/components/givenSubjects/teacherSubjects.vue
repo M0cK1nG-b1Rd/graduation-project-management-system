@@ -22,14 +22,14 @@
                     </el-form-item>
                   </el-col>
                   <el-col :span="7">
-                    <el-form-item label="申报人">
+                    <el-form-item label="申报人" prop="teacherName">
                       <el-input v-model="subject.teacherName"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="10">
-                    <el-form-item label="题目类型">
+                    <el-form-item label="题目类型" prop="type">
                       <el-select style="width: 100%;" v-model="subject.type" placeholder="请选择课题类型">
                         <el-option label="类型一" value="shanghai"></el-option>
                         <el-option label="类型二" value="beijing"></el-option>
@@ -52,29 +52,29 @@
                 </el-row>
                 <el-row>
                   <el-col :span="6">
-                    <el-form-item label="指导教师">
+                    <el-form-item label="指导教师" prop="teacherName">
                       <el-input v-model="subject.teacherName"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="7">
-                    <el-form-item label="导师电话">
-                      <el-input v-model="subject.phone"></el-input>
+                    <el-form-item label="导师电话" prop="tel">
+                      <el-input v-model="subject.tel"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="7">
-                    <el-form-item label="导师邮箱">
+                    <el-form-item label="导师邮箱" prop="mail">
                       <el-input v-model="subject.mail"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="20">
-                    <el-form-item label="课题内容">
+                    <el-form-item label="课题内容" prop="description">
                       <el-input type="textarea" v-model="subject.description"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="20">
-                    <el-form-item label="课题要求">
+                    <el-form-item label="课题要求" prop="requirement">
                       <el-input type="textarea" v-model="subject.requirement"></el-input>
                     </el-form-item>
                   </el-col>
@@ -100,7 +100,7 @@
     title="温馨提示"
     :visible.sync="dialogVisible"
     width="30%">
-    <span>提交后，阶段修改立即生效，请问您确认提交修改吗？</span>
+    <span>请问您确认提交课题申请吗？</span>
     <span slot="footer" class="dialog-footer">
     <el-button @click="resetForm">取 消</el-button>
     <el-button type="primary" @click="subjectSubmit">确 定</el-button>
@@ -120,7 +120,7 @@ export default {
         type: '',
         date1: '',
         date2: '',
-        phone: 0,
+        tel: '',
         mail: '',
         description: '',
         requirement: '',
@@ -129,7 +129,13 @@ export default {
       dialogVisible: false,
       // 添加表单的验证规则对象
       addFormRules: {
-        subName: [{ required: true, message: '请输入课题名称', trigger: 'blur' }, { min: 1, max: 10, message: '名字的长度在1~10个字符之间', trigger: 'blur' }]
+        subName: [{ required: true, message: '请输入课题名称', trigger: 'blur' }, { min: 1, max: 20, message: '名字的长度在1~10个字符之间', trigger: 'blur' }],
+        teacherName: [{ required: true, message: '请输入申报人姓名', trigger: 'blur' }],
+        type: [{ required: true, message: '请选择课题类型', trigger: 'blur' }],
+        tel: [{ required: true, message: '请输入您的电话号码', trigger: 'blur' }, { min: 1, max: 20, message: '名字的长度在1~10个字符之间', trigger: 'blur' }],
+        mail: [{ required: true, message: '请输入您的邮箱', trigger: 'blur' }],
+        description: [{ required: true, message: '请输入课题描述', trigger: 'blur' }],
+        requirement: [{ required: true, message: '请输入课题要求', trigger: 'blur' }]
       }
     }
   },
