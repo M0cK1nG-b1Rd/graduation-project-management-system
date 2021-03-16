@@ -293,7 +293,18 @@
       "icon": "el-icon-video-play",
       "path": "/initial",
       "component": "",
-      "children": []
+      "children": [
+        {
+          "name": "答辩安排",
+          "id": 11,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-grid",
+          "path": "/initial/arrange",
+          "component": "",
+          "children": []
+        }
+      ]
     },
     {
       "name": "中期管理",
