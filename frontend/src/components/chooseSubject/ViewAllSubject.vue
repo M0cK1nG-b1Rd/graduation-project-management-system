@@ -121,7 +121,7 @@ export default {
   async mounted() {
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.zoneDict = dataDict.getDict(fullDict, 6)
-    const { data: teachers } = await this.$http.get('http://127.0.0.1:9528/account/teacher')
+    const { data: teachers } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: { page: 1, size: 10000 } })
     if (teachers.meta.code !== 200) return this.$message.error('获取教师信息失败！')
     this.teacherInfo = teachers.data.records
     await this.getAllSubjectInfo()
