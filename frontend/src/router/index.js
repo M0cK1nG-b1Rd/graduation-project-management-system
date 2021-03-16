@@ -15,6 +15,8 @@ import ManageNotice from '@/components/notice/ManageNotice'
 import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
 import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
+import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
+import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
 
 Vue.use(VueRouter)
 
@@ -97,6 +99,16 @@ const routes = [
         path: '/subject/application',
         name: 'chooseSubjectApplication',
         component: ChooseSubjectApplication
+      },
+      // 教师审核学生选题申请
+      {
+        path: '/subject/select/judge/teacher',
+        component: JudgeApplication
+      },
+      // 教师、教研办、学生查看选题记录
+      {
+        path: '/subject/select/result',
+        component: ApplicationRecords
       }
     ]
   }

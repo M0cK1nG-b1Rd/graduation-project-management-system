@@ -78,11 +78,11 @@
             <el-row type="flex" align="middle" justify="space-between">
               <!--              人数情况-->
               <el-col :span="8">
-                <a-tag size="mini" color="green">已选{{item.chosen}}人/限选{{item.capacity}}人</a-tag>
+                <a-tag size="mini" color="orange">已选{{item.chosen}}人/限选{{item.capacity}}人</a-tag>
               </el-col>
               <!--              查看详情-->
               <el-col :span="6" :offset="2">
-                <a-tag color="#108ee9" size="mini" @click="viewSubjectDetail(index)"
+                <a-tag color="green" size="mini" @click="viewSubjectDetail(index)"
                        style="cursor: pointer;">
                   查看详情
                 </a-tag>
@@ -120,6 +120,8 @@ export default {
   mounted() {
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.zoneDict = dataDict.getDict(fullDict, 6)
+    const { data: teachers } = this.$http.get('http://127.0.0.1:9528/account/teacher')
+    console.log(teachers)
     this.getAllSubjectInfo()
   },
   data() {
@@ -151,7 +153,9 @@ export default {
         teacherHomePage: '',
         capacity: '', // 课题容量
         chosen: '' // 已选人数
-      }
+      },
+      // 老师信息
+      teacherInfo: []
     }
   },
   methods: {

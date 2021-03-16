@@ -16,7 +16,7 @@
         <el-row>
 <!--          指导老师-->
           <el-col :span="8">指导老师：
-            <a-tag color="#2db7f5">
+            <a-tag color="cyan">
               <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank">
                 {{currentSubjectInfo.teacherName+' '}}<i class="el-icon-view"></i>
               </el-link>
@@ -29,8 +29,8 @@
         </el-row>
         <el-divider></el-divider>
 <!--          课题要求-->
-        <el-row>
-          <el-col :span="4">选题要求：</el-col>
+        <el-row type="flex" align="center">
+          <el-col :span="4" class="item_label">选题要求：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
               <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
@@ -39,8 +39,8 @@
         </el-row>
         <el-divider></el-divider>
 <!--          课题描述-->
-        <el-row>
-          <el-col :span="4">课题内容：</el-col>
+        <el-row type="flex" align="center">
+          <el-col :span="4" class="item_label">课题内容：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
               <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
@@ -49,8 +49,8 @@
         </el-row>
         <el-divider></el-divider>
 <!--        附件-->
-        <el-row>
-          <el-col :span="4">附件下载：</el-col>
+        <el-row type="flex" align="center">
+          <el-col :span="4" class="item_label">附件下载：</el-col>
         </el-row>
       </el-card>
     </el-row>
@@ -110,5 +110,10 @@ export default {
 /*富文本字体大小*/
 .ql-editor{
   font-size: 15px;
+}
+/*表单标签*/
+.item_label{
+  display: flex;
+  align-items: center;
 }
 </style>

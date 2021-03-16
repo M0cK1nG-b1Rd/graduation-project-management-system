@@ -69,7 +69,7 @@
         </el-row>
         <el-divider></el-divider>
 <!--        学生班级，专业-->
-        <el-row :gutter="10"  type="flex" align="center">
+        <el-row :gutter="10" type="flex" align="center">
           <el-col :span="3" class="item_label">学生班级：</el-col>
           <el-col :span="9">
             <el-input style="width: 70%" v-model="applicationInfo.stuClass">
