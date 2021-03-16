@@ -12,6 +12,8 @@ import 'ant-design-vue/dist/antd.css'
 import dataV from '@jiaminghi/data-view'
 // 富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
+// 导入数据字典工具类
+import dataDict from './assets/js/dataDict'
 
 // Quill Editor富文本编辑器CSS文件
 import 'quill/dist/quill.core.css'
@@ -19,6 +21,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 Vue.use(Antd)
 Vue.use(dataV)
+Vue.use(dataDict)
 
 Vue.use(VueQuillEditor)
 
