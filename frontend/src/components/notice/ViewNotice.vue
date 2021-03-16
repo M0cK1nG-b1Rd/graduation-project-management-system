@@ -148,7 +148,6 @@ export default {
       this.totalPageNum = res.data.total
       this.noticeDetial = res.data.records[0].annDetail
       this.noticeTitle = res.data.records[0].annTitle
-      // console.log(this.noticeDetial)
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {

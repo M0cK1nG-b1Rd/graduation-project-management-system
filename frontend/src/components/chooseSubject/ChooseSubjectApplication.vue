@@ -13,7 +13,7 @@
         </el-row>
         <el-divider></el-divider>
         <!--        课题领域、所属专业-->
-        <el-row gutter="20">
+        <el-row :gutter="20">
           <!--          课题领域-->
           <el-col :span="12">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
           <!--          所属专业-->
@@ -21,7 +21,7 @@
         </el-row>
         <el-divider></el-divider>
         <!--        指导老师信息-->
-        <el-row gutter="20">
+        <el-row :gutter="20">
         <!--        教师名字-->
           <el-col :span="12">老师姓名：
             <a-tag color="blue">
@@ -54,19 +54,32 @@
           </el-col>
         </el-row>
         <el-divider></el-divider>
-<!--        学生姓名，班级，专业，学号-->
-        <el-row gutter="10">
-          <el-col :span="3">学生姓名：</el-col>
-          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
-          <el-col :span="3">所在专业：</el-col>
-          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+<!--        学生姓名，专业-->
+        <el-row :gutter="10" type="flex" align="center">
+          <el-col :span="3" class="item_label">学生姓名：</el-col>
+          <el-col :span="9">
+            <el-input v-model="applicationInfo.stuName" style="width: 70%">
+            </el-input>
+          </el-col>
+          <el-col :span="3" class="item_label">所在专业：</el-col>
+          <el-col :span="9">
+            <el-input style="width: 70%" v-model="applicationInfo.stuMajorName">
+            </el-input>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
-        <el-row gutter="10">
-          <el-col :span="3">学生班级：</el-col>
-          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
-          <el-col :span="3">学生学号：</el-col>
-          <el-col :span="9"><el-input size="mini" style="width: 70%"></el-input></el-col>
+<!--        学生班级，专业-->
+        <el-row :gutter="10" type="flex" align="center">
+          <el-col :span="3" class="item_label">学生班级：</el-col>
+          <el-col :span="9">
+            <el-input style="width: 70%" v-model="applicationInfo.stuClass">
+            </el-input>
+          </el-col>
+          <el-col :span="3" class="item_label">学生学号：</el-col>
+          <el-col :span="9">
+            <el-input style="width: 70%" v-model="applicationInfo.sid">
+            </el-input>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
 <!--        申请理由-->
@@ -127,6 +140,7 @@ export default {
   components: { quillEditor },
   mounted() {
     this.currentSubjectInfo = this.$route.params
+    this.applicationInfo.subId = this.currentSubjectInfo.subId
   },
   data() {
     return {
@@ -134,6 +148,11 @@ export default {
       currentSubjectInfo: {},
       // 学生申请信息
       applicationInfo: {
+        subId: '',
+        stuName: '', // 学生姓名
+        stuMajorName: '', // 学生专业名称
+        stuClass: '', // 学生班级
+        sid: '', // 学号
         applyReason: '请输入申请原因' // 申请理由
       },
       // 富文本编辑器可见性
@@ -161,7 +180,11 @@ export default {
       this.quillEditorVisible = false
     },
     // 提交选题申请
-    submitApplication() {}
+    async submitApplication() {
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', this.applicationInfo)
+      if (res.meta.code !== 200) return this.$message.error('提交选题申请失败！')
+      this.$message.success('选题申请提交成功！')
+    }
   }
 }
 </script>
@@ -189,8 +212,14 @@ export default {
 .el-divider{
   margin: 6px;
 }
+/*表单标签*/
 .item_label{
   display: flex;
   align-items: center;
 }
+/*输入框、富文本字体大小*/
+.ql-editor{
+  font-size: 15px;
+}
+/**/
 </style>
