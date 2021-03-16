@@ -17,6 +17,9 @@ import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
+import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+import checkSubjects from '../components/givenSubjects/checkSubjects'
+import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 
 Vue.use(VueRouter)
 
@@ -109,6 +112,21 @@ const routes = [
       {
         path: '/subject/select/result',
         component: ApplicationRecords
+      },
+      // 出题管理-教师出题
+      {
+        path: '/subject/apply/teacher',
+        component: teacherSubjects
+      },
+      // 出题管理-审核查询界面
+      {
+        path: '/subject/apply/result',
+        component: checkSubjects
+      },
+      // 出题管理-教研室审核课题界面
+      {
+        path: '/subject/judge/final',
+        component: judgeSubjects
       }
     ]
   }
