@@ -20,6 +20,8 @@ import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
+import StartReport from '@/components/startSubject/StartReport'
+import MyRecord from '@/components/startSubject/MyRecord'
 
 Vue.use(VueRouter)
 
@@ -127,6 +129,16 @@ const routes = [
       {
         path: '/subject/select/result',
         component: ApplicationRecords
+      },
+      // 开题--学生上传开题报告
+      {
+        path: '/initial/myReport',
+        component: StartReport
+      },
+      // 开题--学生查看开题记录
+      {
+        path: '/initial/myList',
+        component: MyRecord
       }
     ]
   }
