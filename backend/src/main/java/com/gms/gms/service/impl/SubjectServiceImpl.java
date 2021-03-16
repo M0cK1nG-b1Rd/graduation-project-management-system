@@ -23,9 +23,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     @Override
     public List<Subject> getMySubject() throws GmsException {
         Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
-        LambdaQueryWrapper<Subject> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Subject::getPoseBy, teacherId);
-        return this.baseMapper.selectList(wrapper);
+        return this.baseMapper.getMySubjectInfo(teacherId);
     }
 
     @Override
@@ -46,9 +44,16 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     }
 
     @Override
-    public IPage<Subject> selectWithCondition(Subject subject) {
+    public IPage<Subject> getPassedSubject(Subject subject) {
+        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
+        Page<Subject> returnSubjectPage = this.baseMapper.getPassedSubject(page,subject);
+        return returnSubjectPage;
+    }
+
+    @Override
+    public IPage<Subject> getAllSubject(Subject subject) {
         Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());//todo 增加分页
-        Page<Subject> returnSubjectPage = this.baseMapper.selectWithCondition(page,subject);
+        Page<Subject> returnSubjectPage = this.baseMapper.getAllSubject(page,subject);
         return returnSubjectPage;
     }
 }

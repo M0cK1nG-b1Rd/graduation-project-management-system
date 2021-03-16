@@ -10,6 +10,7 @@ import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
+import com.gms.gms.domain.Teacher;
 import com.gms.gms.service.SubjectService;
 import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
@@ -52,8 +53,7 @@ public class SubjectController {
     public GmsResponse getPassedSubject(Subject subject) throws GmsException{
         try {
 
-            IPage<Subject> applyList = subjectService.selectWithCondition(subject);
-
+            IPage<Subject> applyList = subjectService.getPassedSubject(subject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -64,6 +64,23 @@ public class SubjectController {
             throw new GmsException(message);
         }
     }
+
+    @GetMapping("all")
+    public GmsResponse getAllSubject(Subject subject) throws GmsException{
+        try {
+            IPage<Subject> applyList = subjectService.getAllSubject(subject);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),applyList);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+
 
     //教师出题
     @PostMapping

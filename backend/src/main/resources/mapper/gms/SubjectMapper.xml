@@ -9,7 +9,7 @@
         WHERE DOC_ID = #{docId}
     </update>
 
-    <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
+    <select id="getPassedSubject" resultMap="AppliedSubjectMapper">
         SELECT s.SUB_ID ,
         s.SUB_NAME,
         s.REQUIREMENT,
@@ -36,6 +36,61 @@
         WHERE s.`STATUS` = "YTG"
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
+        </if>
+        <if test="subject.zone != null and subject.zone != ''">
+            AND s.ZONE = #{subject.zone}
+        </if>
+        <if test="subject.keyWord != null and subject.keyWord != ''">
+            AND (s.SUB_NAME LIKE CONCAT('%',#{subject.keyWord},'%')
+            OR s.DESCRIPTION LIKE CONCAT('%',#{subject.keyWord},'%'))
+        </if>
+    </select>
+    <select id="getMySubjectInfo" resultType="com.gms.gms.domain.Subject">
+        SELECT
+            s.SUB_ID,
+            s.SUB_NAME,
+            s.REQUIREMENT,
+            s.DESCRIPTION,
+            s.STATUS,
+            s.ZONE,
+            u.REAL_NAME AS TEACHER_NAME,
+            u.TEL,
+            u.MAIL,
+            s.POSE_TIME
+        FROM
+            `subject` s
+                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
+                JOIN USER u ON ( t.USER_ID = u.USER_ID )
+        WHERE
+            t.TEACHER_ID =#{teacherId}
+
+    </select>
+    <select id="getAllSubject" resultType="com.gms.gms.domain.Subject">
+        SELECT s.SUB_ID ,
+        s.SUB_NAME,
+        s.REQUIREMENT,
+        s.DESCRIPTION,
+        s.ZONE,
+        u.REAL_NAME AS TEACHER_NAME,
+        s.POSE_TIME,
+        m.MAJOR_NAME,
+        t.HOME_PAGE,
+        t.TITLE,
+        c.COLLEGE_NAME,
+        p.CAPACITY,
+        p.CHOSEN,
+        f.FILE_NAME,
+        f.DOC_ID,
+        f.HANDIN_ID
+        FROM `subject` s
+        JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
+        JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+        JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
+        JOIN USER u ON (t.USER_ID = u.USER_ID)
+        JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
+        JOIN major m ON (m.MAJOR_ID = s.MAJOR_ID)
+        <if test="subject.teacherName != null and subject.teacherName != ''">
+            WHERE u.REAL_NAME=#{subject.teacherName}
         </if>
         <if test="subject.zone != null and subject.zone != ''">
             AND s.ZONE = #{subject.zone}

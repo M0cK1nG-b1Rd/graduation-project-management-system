@@ -30,6 +30,16 @@ public class AppliedSubject implements Serializable {
     @TableField("STU_ID")
     private Integer stuId;
 
+    // TODO: 2021/3/15 完善接口 
+    @TableField("APPLY_TIME")
+    private Integer applyTime;
+
+    @TableField("APPLY_REASON")
+    private Integer applyReason;
+
+    @TableField("DOC_ID")
+    private Integer docId;
+
     //在数据字典中
     @TableField("STATUS")
     private String status;
