@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j
 @Validated
 @RestController
@@ -24,7 +22,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    //进行答辩分组前查询返回所有的老师
+    //进行答辩分组前查询返回所有的老师，所有时期共用
     @GetMapping("/plea/teacher")
     public GmsResponse searchTeacherInf(int page, int size) throws GmsException{
         try {
@@ -40,11 +38,22 @@ public class AccountController {
         }
     }
 
-    //进行答辩分组前返回所有的有资格学生
+    //进行答辩分组前返回所有的有资格学生，所有时期共用
     @GetMapping("/plea/student")
     public GmsResponse searchStudentTInf(int page, int size, String stage) throws GmsException{
         try {
-            Page<Student> studentPage = accountService.getAllStudent(page,size,stage);
+            //使用if进行时期筛选
+            Page<Student> studentPage;
+            if("JT".equals(stage)){
+                studentPage = accountService.getAllStudent(page,size,stage);
+            }else if("KT".equals(stage)||"ZQ".equals(stage)){
+                studentPage = accountService.getAllStudent2(page,size);
+            }else {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "时期不对，无答辩安排"));
+            }
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -56,9 +65,9 @@ public class AccountController {
         }
     }
 
-    //老师的自动分组
+    //老师的自动分组，传入总组数和时期
     @PostMapping("/plea/teacher")
-    public GmsResponse groupTeacherAuto(Integer teamSize,String stage) throws GmsException{
+    public GmsResponse groupTeacherAuto(Integer teamNum,String stage) throws GmsException{
         try {
             if(accountService.selectStageInTeam(stage,"acceptance_team")>0){
                 return new GmsResponse().addCodeMessage(new Meta(
@@ -66,7 +75,42 @@ public class AccountController {
                         Code.C500.getDesc(),
                         "已经自动生成分组"));
             }
-            accountService.groupTeacherAuto(teamSize,stage);
+            if(accountService.groupTeacherAuto(teamNum,stage)) {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C200.getCode(),
+                        Code.C200.getDesc(),
+                        "新建老师分组成功"));
+            }return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    "组数过多"));
+        } catch (Exception e) {
+            String message = "新建失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //返回老师的分组结果，支持分页，需要传参阶段
+    @GetMapping("/plea/teacherTeam")
+    public GmsResponse searchTeacherTeamInf(int page, int size, String stage) throws GmsException{
+        try {
+            Page<TeacherTeam> teacherTeamPage = accountService.getTeacherTeam(page,size,stage);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), teacherTeamPage);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //TO DO学生的自动分组，传参仿照老师，仍然进行时期选择
+    @PostMapping("/plea/student")
+    public GmsResponse groupStudentAuto(Integer teamNum,String stage) throws GmsException{
+        try {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -78,19 +122,4 @@ public class AccountController {
         }
     }
 
-    //返回老师的分组结果，支持分页，需要传参阶段
-    @GetMapping("/plea/teacherTeam")
-    public GmsResponse searchTeacherTeamInf(int page, int size, String status) throws GmsException{
-        try {
-            Page<TeacherTeam> teacherTeamPage = accountService.getTeacherTeam(page,size,status);
-            return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "查询成功"), teacherTeamPage);
-        } catch (Exception e) {
-            String message = "查询失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
 }

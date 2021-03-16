@@ -28,7 +28,7 @@ public interface AccountMapper extends BaseMapper<User> {
 
     void addTeacherTeam(@Param("team")TeacherTeam teacherTeam);
 
-    int selectMaxTeacherTeam();
+    List<Integer> selectTeacherTeamId(@Param("stage") String stage);
 
     void addTeacherTeamMember(@Param("id") int integer, @Param("group")int maxGroup, boolean b);
 
@@ -39,4 +39,6 @@ public interface AccountMapper extends BaseMapper<User> {
     Secretary selectSecretaryById(int SecId,int teamId);
 
     List<AcceptanceTeacher> selectTeacherByTeamId(int id);
+
+    Page<Student> selectAllStudent2(Page<Student> studentPage);
 }

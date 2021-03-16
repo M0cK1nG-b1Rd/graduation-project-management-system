@@ -49,23 +49,28 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
     }
 
     @Override
-    public void groupTeacherAuto(int teamSize, String stage) {
+    public Boolean groupTeacherAuto(int teamNum, String stage) {
         List<Integer> teacherIds= this.baseMapper.selectAllTeacherId();
         List<Integer> secretaryIds= this.baseMapper.selectAllSecretaryId();
+        if(teamNum>teacherIds.size()||teamNum>secretaryIds.size()){
+            return false;
+        }
         Collections.shuffle(teacherIds);
         Collections.shuffle(secretaryIds);
-        int maxGroup;
         TeacherTeam teacherTeam=new TeacherTeam();
-        int j=0;
-        for (int i=0;i<teacherIds.size();i+=teamSize,j=(j+1)%secretaryIds.size()){
+        List<Integer> groupId;
+        for(int i=0,j=0;i<teamNum;i++,j++){
             teacherTeam.setSecId(secretaryIds.get(j)).setStage(stage);
             this.baseMapper.addTeacherTeam(teacherTeam);
-            maxGroup=this.baseMapper.selectMaxTeacherTeam();
-            this.baseMapper.addTeacherTeamMember(teacherIds.get(i),maxGroup,true);
-            for (int x=i+1;x<teamSize;x++){
-                this.baseMapper.addTeacherTeamMember(teacherIds.get(x),maxGroup,false);
-            }
         }
+        groupId=this.baseMapper.selectTeacherTeamId(stage);
+        for(int i=0;i<teamNum;i++){
+            this.baseMapper.addTeacherTeamMember(teacherIds.get(i),groupId.get(i),true);
+        }
+        for (int i=teamNum;i<teacherIds.size();i++){
+            this.baseMapper.addTeacherTeamMember(teacherIds.get(i),groupId.get(i%teamNum),false);
+        }
+        return true;
     }
 
     @Override
@@ -76,5 +81,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
     @Override
     public Page<TeacherTeam> getTeacherTeam(int page, int size, String status) {
         return this.baseMapper.getTeacherTeam(new Page<TeacherTeam>(page,size),status);
+    }
+
+    @Override
+    public Page<Student> getAllStudent2(int page, int size) {
+        return this.baseMapper.selectAllStudent2(new Page<Student>(page,size));
     }
 }

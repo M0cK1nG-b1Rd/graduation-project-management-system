@@ -59,6 +59,26 @@
             plea_application.`STATUS` = 'YTG'
           AND plea_application.STAGE = #{stage}
     </select>
+    <select id="selectAllStudent2" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+                JOIN applied_subject ON student.STU_ID = applied_subject.STU_ID
+        WHERE
+            applied_subject.STATUS = 'YTG'
+    </select>
     <select id="selectAllTeacherId" resultType="java.lang.Integer">
         SELECT
             teacher.TEACHER_ID
@@ -77,11 +97,13 @@
             #{team.secId},
             #{team.stage})
     </insert>
-    <select id="selectMaxTeacherTeam" resultType="java.lang.Integer">
+    <select id="selectTeacherTeamId" resultType="java.lang.Integer">
         SELECT
-            MAX( acceptance_team.TEAM_ID )
+            acceptance_team.TEAM_ID
         FROM
             acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{stage}
     </select>
     <insert id="addTeacherTeamMember">
         INSERT INTO acceptance_teacher ( TEACHER_ID, TEAM_ID, IS_LEADER )
