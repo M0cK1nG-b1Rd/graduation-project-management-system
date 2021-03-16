@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.system.dao.MessageMapper">
+
+    <select id="getMessage" resultType="com.gms.system.domain.Message">
+        SELECT
+        message.MESSAGE_ID,
+        message.FROM_ID,
+        `user`.REAL_NAME,
+        message.TITLE,
+        message.DETAIL,
+        message.TYPE,
+        message.CREAT_TIME
+        FROM
+        message
+        JOIN `user` ON message.FROM_ID = `user`.USER_ID
+        WHERE
+        message.TO_ID = #{userId}
+        AND message.TYPE != 'YSC'
+        ORDER BY
+        message.CREAT_TIME DESC
+    </select>
+</mapper>
