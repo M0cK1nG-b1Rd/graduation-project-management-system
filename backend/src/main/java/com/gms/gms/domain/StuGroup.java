@@ -3,6 +3,7 @@ package com.gms.gms.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
@@ -31,5 +32,5 @@ public class StuGroup implements Serializable {
     @TableField("STAGE")
     private String stage;
 
-
+    private transient List<Student> students;
 }

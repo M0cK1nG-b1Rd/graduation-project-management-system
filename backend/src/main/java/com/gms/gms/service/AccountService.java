@@ -27,4 +27,6 @@ public interface AccountService extends IService<User>{
     Page<Student> getAllStudent2(int page, int size);
 
     boolean groupStudentAuto(Integer teamNum, String stage);
+
+    Page<StuGroup> getStudentGroup(int page, int size, String stage);
 }
