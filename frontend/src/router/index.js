@@ -22,6 +22,8 @@ import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
+import MidReport from '@/components/midSubject/MidReport'
+import MidRecord from '@/components/midSubject/MidRecord'
 
 Vue.use(VueRouter)
 
@@ -139,6 +141,16 @@ const routes = [
       {
         path: '/initial/myList',
         component: MyRecord
+      },
+      // 中期--学生填写中期答辩信息
+      {
+        path: '/middle/myReport',
+        component: MidReport
+      },
+      // 中期--学生查看中期审核记录
+      {
+        path: '/middle/myList',
+        component: MidRecord
       }
     ]
   }

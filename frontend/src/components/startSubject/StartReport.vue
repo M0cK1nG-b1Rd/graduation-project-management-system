@@ -10,6 +10,7 @@
   <el-row>
     <el-col>
       <el-card class="bg-top">
+        <div class="card_header">我的课题基本信息</div>
         <el-row>
           <el-col :span="8">
 <!--            名称、申请人表格卡片-->
@@ -100,17 +101,37 @@
 <!--              <el-form-item label="研究意义" prop="description">-->
 <!--                <el-input type="textarea" v-model="report.meaning"></el-input>-->
 <!--              </el-form-item>-->
-              <quill-editor :init-content="'请输入详情'"></quill-editor>
+              <el-col :span="3" class="item_label"><span>研究意义</span></el-col>
+              <el-col :span="21" style="margin-bottom: 10px">
+                <div class="ql-container ql-snow">
+                  <div class="notice_content ql-editor"
+                       @click="useQuillEditor1"
+                       v-html="report.meaning">
+                  </div>
+                </div>
+              </el-col>
             </el-col>
             <el-col :span="20">
-              <el-form-item label="调研结果" prop="requirement">
-                <el-input type="textarea" v-model="report.research"></el-input>
-              </el-form-item>
+              <el-col :span="3" class="item_label"><span>调研结果</span></el-col>
+              <el-col :span="21" style="margin-bottom: 10px">
+                <div class="ql-container ql-snow">
+                  <div class="notice_content ql-editor"
+                       @click="useQuillEditor2"
+                       v-html="report.research">
+                  </div>
+                </div>
+              </el-col>
             </el-col>
             <el-col :span="20">
-              <el-form-item label="研究计划">
-                <el-input type="textarea" v-model="report.myPlan"></el-input>
-              </el-form-item>
+              <el-col :span="3" class="item_label"><span>研究计划</span></el-col>
+              <el-col :span="21" style="margin-bottom: 10px">
+                <div class="ql-container ql-snow">
+                  <div class="notice_content ql-editor"
+                       @click="useQuillEditor3"
+                       v-html="report.myPlan">
+                  </div>
+                </div>
+              </el-col>
             </el-col>
           </el-row>
           <el-form-item>
@@ -136,6 +157,46 @@
     </el-col>
   </el-row>
     </el-card>
+    <!--      符文本编辑器对话框-->
+    <el-dialog
+      title="请输入研究意义"
+      :visible.sync="quillEditor1Visible"
+      :before-close="resetQuillEditor1Content"
+      width="75%">
+      <quill-editor ref="quillEditor1"
+                    :init-content="report.meaning">
+      </quill-editor>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="resetQuillEditor1Content">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditor1Content">确 定</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog
+      title="请输入调研结果"
+      :visible.sync="quillEditor2Visible"
+      :before-close="resetQuillEditor2Content"
+      width="75%">
+      <quill-editor ref="quillEditor2"
+                    :init-content="report.research">
+      </quill-editor>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="resetQuillEditor2Content">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditor2Content">确 定</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog
+      title="请输入研究计划"
+      :visible.sync="quillEditor3Visible"
+      :before-close="resetQuillEditor3Content"
+      width="75%">
+      <quill-editor ref="quillEditor3"
+                    :init-content="report.myPlan">
+      </quill-editor>
+      <span slot="footer" class="dialog-footer">
+          <el-button @click="resetQuillEditor3Content">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditor3Content">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -160,7 +221,11 @@ export default {
           name: 'food2.jpeg',
           url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
         }]
-      }
+      },
+      // 富文本编辑器可见性
+      quillEditor1Visible: false,
+      quillEditor2Visible: false,
+      quillEditor3Visible: false
     }
   },
   methods: {
@@ -173,6 +238,45 @@ export default {
     // handlePreview(file) {
     //   console.log(file)
     // }
+    // 调用富文本编辑器
+    useQuillEditor1() {
+      this.quillEditor1Visible = true
+    },
+    useQuillEditor2() {
+      this.quillEditor2Visible = true
+    },
+    useQuillEditor3() {
+      this.quillEditor3Visible = true
+    },
+    // 重置富文本编辑框
+    resetQuillEditor1Content() {
+      this.$refs.quillEditor.reset()
+      this.report.meaning = '请输入研究意义'
+      this.quillEditor1Visible = false
+    },
+    resetQuillEditor2Content() {
+      this.$refs.quillEditor.reset()
+      this.report.research = '请输入研究结果'
+      this.quillEditor2Visible = false
+    },
+    resetQuillEditor3Content() {
+      this.$refs.quillEditor.reset()
+      this.report.myPlan = '请输入研究计划'
+      this.quillEditor3Visible = false
+    },
+    // 提交（采用）富文本编辑器框
+    submitQuillEditor1Content() {
+      this.report.meaning = this.$refs.quillEditor1.returnContent()
+      this.quillEditor1Visible = false
+    },
+    submitQuillEditor2Content() {
+      this.report.research = this.$refs.quillEditor2.returnContent()
+      this.quillEditor2Visible = false
+    },
+    submitQuillEditor3Content() {
+      this.report.myPlan = this.$refs.quillEditor3.returnContent()
+      this.quillEditor3Visible = false
+    }
   }
 }
 </script>
@@ -189,7 +293,7 @@ export default {
   background-color: #def3fa;
 }
 .card_header{
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
   text-align: center;

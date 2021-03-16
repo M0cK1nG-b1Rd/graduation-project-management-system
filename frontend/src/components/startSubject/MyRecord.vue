@@ -9,6 +9,10 @@
 <!--    查看我的开题报告提交记录列表区-->
     <!--卡片视图区-->
     <el-card class="el-card">
+      <el-row>
+        <el-col :span="18">
+    <!--  表格卡片-->
+      <el-card>
       <!--      表格区-->
       <el-row>
         <el-table
@@ -78,6 +82,33 @@
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalPageNum">
         </el-pagination>
+      </el-row>
+    </el-card>
+        </el-col>
+      <!--      评分区-->
+        <el-col :span="6">
+          <el-card style="margin-left: 10px">
+            <div class="card_header">我的开题成绩</div>
+            <a-progress
+              :stroke-color="{from: '#108ee9',to: '#87d068',}"
+              :percent="90"
+              status="active"
+              :format="percent => `${percent} 分`"
+            />
+            <a-progress
+              :stroke-color="{from: '#108ee9',to: '#87d068',}"
+              :percent="80"
+              status="active"
+              :format="percent => `${percent} 分`"
+            />
+            <a-progress
+              :stroke-color="{from: '#108ee9',to: '#87d068',}"
+              :percent="85"
+              status="active"
+              :format="percent => `${percent} 分`"
+            />
+          </el-card>
+        </el-col>
       </el-row>
     </el-card>
     <!--    查看课题详情对话框-->
@@ -307,5 +338,9 @@ export default {
   font-weight: bold;
   text-align: center;
   align-items: center;
+}
+.grades{
+  display: flex;
+  justify-content: center;
 }
 </style>
