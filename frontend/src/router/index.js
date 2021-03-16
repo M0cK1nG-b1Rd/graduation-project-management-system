@@ -12,9 +12,6 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
-import teacherSubjects from '../components/givenSubjects/teacherSubjects'
-import checkSubjects from '../components/givenSubjects/checkSubjects'
-import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
 import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
@@ -25,6 +22,7 @@ import checkSubjects from '../components/givenSubjects/checkSubjects'
 import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 
 Vue.use(VueRouter)
 
@@ -145,10 +143,13 @@ const routes = [
       },
       // 开题--学生查看开题记录
       {
-        path: '/subject/judge/final',
-        component: judgeSubjects
         path: '/initial/myList',
         component: MyRecord
+      },
+      // 开题--教研室进行答辩安排
+      {
+        path: '/initial/arrange',
+        component: ArrangePlea
       }
     ]
   }
