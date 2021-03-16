@@ -70,11 +70,11 @@
               prop="status"
               label="审核状态"
               width="100"
-              :filters="[{ text: '待审核', value: 'DSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
+              :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
               :filter-method="filterStatus"
               filter-placement="bottom-end">
               <template slot-scope="scope">
-                <a-tag v-if="scope.row.status=='DSH'" style="font-size: 15px" color="cyan">待审核</a-tag>
+                <a-tag v-if="scope.row.status=='WSH'" style="font-size: 15px" color="cyan">未审核</a-tag>
                 <a-tag v-if="scope.row.status=='YTG'" style="font-size: 15px" color="green">已通过</a-tag>
                 <a-tag v-if="scope.row.status=='WTG'" style="font-size: 15px" color="red">未通过</a-tag>
               </template>
