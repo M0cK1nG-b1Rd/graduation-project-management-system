@@ -9,7 +9,7 @@
         WHERE DOC_ID = #{docId}
     </update>
 
-    <select id="getPassedSubject" resultMap="AppliedSubjectMapper">
+    <select id="getPassedSubject" resultMap="SubjectMapper">
         SELECT s.SUB_ID ,
         s.SUB_NAME,
         s.REQUIREMENT,
@@ -81,7 +81,7 @@
         p.CHOSEN,
         f.FILE_NAME,
         f.DOC_ID,
-        f.HANDIN_ID
+        f.HANDIN_ID,
         FROM `subject` s
         JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
@@ -101,7 +101,7 @@
         </if>
     </select>
 
-    <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.Subject">
+    <resultMap id="SubjectMapper" type="com.gms.gms.domain.Subject">
         <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="REQUIREMENT" property="requirement" jdbcType="VARCHAR"/>
