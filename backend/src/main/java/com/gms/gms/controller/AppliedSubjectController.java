@@ -53,7 +53,7 @@ public class AppliedSubjectController {
     }
 
     @PostMapping
-    public GmsResponse addAppliedSubject(AppliedSubject appliedSubject) throws GmsException{
+    public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
         try {
             appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
             appliedSubject.setApplyTime(new Date());
