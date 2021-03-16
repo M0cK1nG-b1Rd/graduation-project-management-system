@@ -132,4 +132,19 @@ public class AccountController {
         }
     }
 
+    //TO DO返回相应时期的学生分组结果
+    @GetMapping("/plea/studentGroup")
+    public GmsResponse searchStudentGroupInf(int page, int size, String stage) throws GmsException{
+        try {
+            Page<TeacherTeam> teacherTeamPage = accountService.getTeacherTeam(page,size,stage);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), teacherTeamPage);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
 }
