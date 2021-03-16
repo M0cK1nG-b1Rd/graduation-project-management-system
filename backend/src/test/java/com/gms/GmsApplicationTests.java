@@ -15,13 +15,13 @@ import java.util.List;
 @Slf4j
 class GmsApplicationTests {
 
-    @Autowired
+    /*@Autowired
     AccountMapper mapper;
 
     @Test
     void contextLoads() {
         List<AcceptanceTeacher> acceptanceTeachers = mapper.selectTeacherByTeamId(10);
         System.out.println(acceptanceTeachers.get(0).getRealName());
-    }
+    }*/
 
 }

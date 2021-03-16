@@ -35,7 +35,7 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
             announcementQueryWrapper.eq("TYPE",announcement.getType());
         }
         if (announcement.getKeyWord() != null && announcement.getKeyWord().length() > 0) {
-            announcementQueryWrapper.and(i->i.like("ANN_TITLE",announcement.getKeyWord()).or().like("ANN_DETAIL",announcement.getKeyWord()));
+            announcementQueryWrapper.nested(i->i.like("ANN_TITLE",announcement.getKeyWord()).or().like("ANN_DETAIL",announcement.getKeyWord()));
             //announcementQueryWrapper.like("ANN_TITLE", announcement.getKeyWord()).or().like("ANN_DETAIL", announcement.getKeyWord());
         }
         return this.baseMapper.selectPage(page1, announcementQueryWrapper);
