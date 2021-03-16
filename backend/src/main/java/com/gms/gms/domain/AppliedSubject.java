@@ -1,5 +1,6 @@
 package com.gms.gms.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 
@@ -21,7 +22,7 @@ public class AppliedSubject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("ID")
+    @TableId(value = "ID",type = IdType.AUTO)
     private Integer id;
 
     @TableField("SUB_ID")
@@ -30,7 +31,7 @@ public class AppliedSubject implements Serializable {
     @TableField("STU_ID")
     private Integer stuId;
 
-    // TODO: 2021/3/15 完善接口 
+    // TODO: 2021/3/15 完善接口
     @TableField("APPLY_TIME")
     private Integer applyTime;
 

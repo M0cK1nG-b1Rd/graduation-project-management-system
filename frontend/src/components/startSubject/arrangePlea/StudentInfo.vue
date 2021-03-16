@@ -96,7 +96,7 @@ export default {
   methods: {
     // 获取学生信息
     async getStuInfo() {
-      const { data: res } = await this.$http.get('/mock/student_info.json')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement')
       if (res.meta.code !== 200) return this.$notify.error('获取答辩学生信息失败！')
       this.stuInfo = res.data.records
       this.stuNum = res.total
