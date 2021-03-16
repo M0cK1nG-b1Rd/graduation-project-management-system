@@ -118,6 +118,8 @@ import tutorInfo from '@/components/startSubject/arrangePlea/TutorInfo'
 export default {
   name: 'ArrangePlea',
   components: { stuInfo, tutorInfo },
+  mounted() {
+  },
   data() {
     return {
       // 答辩小组个数
@@ -142,8 +144,10 @@ export default {
     }
   },
   methods: {
-    // 随机分组
+    // 开始随机分组
     startRandomDivide() {}
+    // 获取答辩安排结果
+    // getArrangeResult()
   }
 }
 </script>

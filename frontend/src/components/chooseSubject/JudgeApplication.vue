@@ -99,7 +99,7 @@
             :page-sizes="[5, 10, 20, 50]"
             :page-size="queryInfo.size"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="totalPageNum">
+            :total="totalRecordNum">
           </el-pagination>
         </el-row>
       </el-card>
@@ -191,27 +191,13 @@ export default {
       // 查询参数
       queryInfo: {
         keyWord: '', // 关键词
-        current: 1, // 当前页号
+        page: 1, // 当前页号
         size: 10 // 页面大小
       },
-      // 符合条件的页数
-      totalPageNum: 0,
+      // 符合条件的记录数
+      totalRecordNum: 0,
       // 申请记录
-      allApplicationInfo: [
-        {
-          subId: 1,
-          subName: '如何摸鱼',
-          teacherId: 12,
-          teacherName: '绕远',
-          studentId: '218112888',
-          studentName: '张静悦',
-          applyTime: '2021-03-12',
-          applyReason: '因为人家就是不行，就是爱哭鬼~~~',
-          status: 'WTG',
-          feedback: '我想把你给打一顿',
-          auditTime: '2021-03-13'
-        }
-      ],
+      allApplicationInfo: [],
       // 当前选中的申请记录详情
       currentApplicationInfo: {},
       // 查看申请记录详情对话框可见性
@@ -222,9 +208,17 @@ export default {
   },
   methods: {
     // 获取所有申请记录信息
-    async getApplicationRecords() {},
+    async getApplicationRecords() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
+      if (res.meta.code !== 200) return this.$message.error('拉取选题申请记录失败！')
+      this.allApplicationInfo = res.data.records
+      this.totalRecordNum = this.allApplicationInfo.length
+    },
     // 更新申请记录信息
-    async updateApplicationRecords() {},
+    async updateApplicationRecords() {
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/apply', this.currentApplicationInfo)
+      if (res.meta.code !== 200) return this.$message.error('更新记录审核状态失败！')
+    },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
       this.queryInfo.size = newSize
