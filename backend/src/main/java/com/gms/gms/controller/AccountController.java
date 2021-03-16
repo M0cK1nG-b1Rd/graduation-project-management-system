@@ -1,5 +1,6 @@
 package com.gms.gms.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
@@ -68,8 +69,9 @@ public class AccountController {
 
     //老师的自动分组，传入总组数和时期
     @PostMapping("/plea/teacher")
-    public GmsResponse groupTeacherAuto(Integer teamNum, String stage) throws GmsException {
+    public GmsResponse groupTeacherAuto(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
+            Integer teamNum = jsonObject.getInteger("teamNum"); String stage= jsonObject.getString("stage");
             if (accountService.selectStageInTeam(stage, "acceptance_team") > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),

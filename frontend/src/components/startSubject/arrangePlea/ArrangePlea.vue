@@ -48,7 +48,7 @@
             </template>
             <el-row class="group_arrange">
               <el-col>
-                <el-input v-model="teamNum" placeholder="请输入答辩小组个数"></el-input>
+                <el-input v-model="arrangeInfo.teamNum" placeholder="请输入答辩小组个数"></el-input>
               </el-col>
               <el-col>
                 <el-button type="primary" @click="startRandomDivide">开始随机分组</el-button>
@@ -122,16 +122,20 @@ export default {
   },
   data() {
     return {
-      // 答辩小组个数
-      teamNum: '',
+      // 分组参数
+      arrangeInfo: {
+        teamNum: '', // 答辩小组个数
+        stage: 'KT' // 答辩安排所属阶段--此处未开题
+      },
+      // 查询分组结果参数
+      queryInfo: {
+        page: 1, // 当前页号
+        size: 10, // 页面大小
+        // TODO 后期改为KT阶段
+        stage: 'KT' // 阶段
+      },
       // 学生答辩分组结果
       studentPleaTeams: [
-        {
-          teamId: 1
-        },
-        {
-          teamId: 1
-        },
         {
           teamId: 1
         },
@@ -145,9 +149,20 @@ export default {
   },
   methods: {
     // 开始随机分组
-    startRandomDivide() {}
+    async startRandomDivide() {
+      this.arrangeInfo.teamNum = parseInt(this.arrangeInfo.teamNum)
+      const { data: res1 } = await this.$http.post('http://127.0.0.1:9528/account/plea/teacher', this.arrangeInfo)
+      const { data: res2 } = await this.$http.post('http://127.0.0.1:9528/account/plea/student', this.arrangeInfo)
+      if (res1.meta.code === 200 && res2.meta.code === 200) return this.$notify.success('答辩分组安排成功！')
+      this.getArrangeResult()
+    },
     // 获取答辩安排结果
-    // getArrangeResult()
+    async getArrangeResult() {
+      const { data: teacherRes } = this.$http.get('http://127.0.0.1:9528/account/plea/teacherTeam', this.queryInfo)
+      this.teacherPleaTeams = teacherRes.data.records
+      const { data: studentRes } = this.$http.get('http://127.0.0.1:9528/account/plea/studentGroup', this.queryInfo)
+      this.studentPleaTeams = studentRes.data.records
+    }
   }
 }
 </script>
