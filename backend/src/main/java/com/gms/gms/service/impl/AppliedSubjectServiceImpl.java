@@ -30,12 +30,5 @@ public class AppliedSubjectServiceImpl extends ServiceImpl<AppliedSubjectMapper,
         this.updateById(appliedSubject);
     }
 
-    @Override
-    public IPage<AppliedSubject> selectWithCondition(AppliedSubject appliedSubject) {
-        Page<AppliedSubject> appliedSubjectPage = new Page<>(appliedSubject.getPage(), appliedSubject.getSize());
-        Page<AppliedSubject> returnSubjectPage = this.baseMapper.selectWithCondition(appliedSubjectPage);
-        return null;
-        //todo
 
-    }
 }

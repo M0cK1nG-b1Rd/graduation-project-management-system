@@ -14,8 +14,6 @@ public interface SystemStageMapper extends BaseMapper<SystemStage> {
 
     Integer getSystemStageNum();
 
-    void setCurrStage(SystemStage currStage);
-
     void enableStages(List<Integer> currStageIds);
 
     void disableAllStage();

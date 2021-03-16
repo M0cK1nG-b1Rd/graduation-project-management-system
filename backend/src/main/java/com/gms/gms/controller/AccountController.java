@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("account")
 public class AccountController {
-    //todo 角色的增删改查
     @Autowired
     AccountService accountService;
 
