@@ -59,8 +59,7 @@ public class FileStorageController {
 
     //涉及到下载就不好用封装好的响应对象了，直接使用ResponseEntity就好
     @GetMapping("download/{docId}/{fileId}")
-    //通过docId和handinId查找对应的文件
-    // handinId可能是0，如果是0则表示该文档不会涉及到重复提交（公告等）
+    //通过docId和fileId查找对应的文件
     public ResponseEntity<Resource> getFile(@PathVariable("docId")String docId,@PathVariable("fileId")String fileId){
         Resource file = fileStorageService.load(docId,fileId);
         return ResponseEntity.ok()

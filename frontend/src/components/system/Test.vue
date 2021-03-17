@@ -4,6 +4,7 @@
       :headers="myHeaders"
       class="upload-demo"
       multiple
+      drag
       ref="upload"
       :action="'http://127.0.0.1:9528/file/upload/' + docId"
       :on-preview="handlePreview"
@@ -15,6 +16,7 @@
       <div slot="tip" class="el-upload__tip">文件格式无限制，单个文件大小不超过50Mb</div>
     </el-upload>
     <div class="download">
+      <el-button @click="down">下载</el-button>
     </div>
   </div>
 </template>
@@ -44,6 +46,11 @@ export default {
     },
     handlePreview(file) {
       console.log(file)
+    },
+    async down() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/file/download/89894554/19')
+      if (res.status === 200) this.$notify.success('文件下载成功！')
+      else this.$notify.error('失败了！')
     }
   }
 }
