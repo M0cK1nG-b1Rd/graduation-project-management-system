@@ -11,80 +11,55 @@
       <el-col>
         <el-card class="bg-top">
           <div class="card_header">我的课题基本信息</div>
-          <el-row>
-            <el-col :span="8">
-              <!--            名称、申请人表格卡片-->
-              <el-card>
-                <el-table
-                  :data="subjectlist"
-                  size="medium "
-                  :default-sort = "{prop: 'date', order: 'descending'}"
-                  style="width: 100%; font-size: 15px">
-                  <!--          课题名称-->
-                  <el-table-column
-                    :show-overflow-tooltip="true"
-                    prop="subName"
-                    label="课题名称"
-                    width="110">
-                  </el-table-column>
-                  <!--        课题类型-->
-                  <el-table-column
-                    :show-overflow-tooltip="true"
-                    prop="type"
-                    label="课题类型"
-                    width="200">
-                    <template slot-scope="scope">
-                      <el-tag v-if="scope.row.type==1" type="info">类型一</el-tag>
-                      <el-tag v-if="scope.row.type==2" type="success">类型二</el-tag>
-                      <el-tag v-if="scope.row.type==3" type="primary">类型三</el-tag>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-card>
-              <!--          申请人-->
-              <el-card>
-                <el-table :data="subjectlist" size="medium " style="width: 100%; font-size: 15px">
-                  <el-table-column
-                    prop="teacherName"
-                    label="指导教师"
-                    width="110">
-                  </el-table-column>
-                  <el-table-column
-                    prop="teacherName"
-                    label="指导教师联系方式"
-                    width="200">
-                  </el-table-column>
-                </el-table>
-              </el-card>
-            </el-col>
-            <el-col :span="16">
-              <!--            内容表格卡片-->
-              <el-card>
-                <el-table
-                  :data="subjectlist"
-                  size="medium "
-                  :default-sort = "{prop: 'date', order: 'descending'}"
-                  style="width: 100%; font-size: 15px">
-                  <!--          课题描述-->
-                  <el-table-column
-                    :show-overflow-tooltip="true"
-                    prop="subName"
-                    label="课题描述"
-                    width="200">
-                  </el-table-column>
-                </el-table>
-              </el-card>
-              <el-card>
-                <el-table :data="subjectlist" size="medium " style="width: 100%; font-size: 15px">
-                  <!--          课题要求-->
-                  <el-table-column
-                    prop="teacherName"
-                    label="课题要求"
-                    width="200">
-                  </el-table-column>
-                </el-table>
-              </el-card>
-            </el-col>
+          <!--    课题详情卡片-->
+          <el-row type="flex" justify="center">
+            <el-card class="subject_detail">
+              <!--        课题名称-->
+              <el-row>
+                课题名称：<a-tag color="blue" style="font-size: 15px">{{currentSubjectInfo.subName}}</a-tag>
+              </el-row>
+              <el-divider></el-divider>
+              <!--        课题领域、所属专业、指导老师-->
+              <el-row>
+                <!--          指导老师-->
+                <el-col :span="8">指导老师：
+                  <a-tag color="cyan">
+                    <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank">
+                      {{currentSubjectInfo.teacherName+' '}}<i class="el-icon-view"></i>
+                    </el-link>
+                  </a-tag>
+                </el-col>
+                <!--          课题领域-->
+                <el-col :span="8">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+                <!--          所属专业-->
+                <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
+              </el-row>
+              <el-divider></el-divider>
+              <!--          课题要求-->
+              <el-row type="flex" align="center">
+                <el-col :span="4" class="item_label">课题要求：</el-col>
+                <el-col :span="20">
+                  <div class="ql-container ql-snow">
+                    <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+                  </div>
+                </el-col>
+              </el-row>
+              <el-divider></el-divider>
+              <!--          课题描述-->
+              <el-row type="flex" align="center">
+                <el-col :span="4" class="item_label">课题内容：</el-col>
+                <el-col :span="20">
+                  <div class="ql-container ql-snow">
+                    <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+                  </div>
+                </el-col>
+              </el-row>
+              <el-divider></el-divider>
+              <!--        附件-->
+              <el-row type="flex" align="center">
+                <el-col :span="4" class="item_label">附件下载：</el-col>
+              </el-row>
+            </el-card>
           </el-row>
         </el-card>
       </el-col>
@@ -181,8 +156,17 @@ export default {
   data() {
     return {
       // 查看学生的课题信息
-      currentSubjectInfo: {},
-      subjectlist: [],
+      currentSubjectInfo: {
+        subId: '',
+        subName: '',
+        zone: '', // 课题领域
+        description: '',
+        majorName: '',
+        requirement: '',
+        teacherTitle: '',
+        teacherName: '',
+        teacherHomePage: ''
+      },
       report: {
         progress: '',
         followPlan: '',
@@ -199,6 +183,9 @@ export default {
       quillEditor2Visible: false
     }
   },
+  created() {
+    this.getCurrentSubjectInfo()
+  },
   methods: {
     // submitUpload() {
     //   this.$refs.upload.submit()
@@ -209,6 +196,14 @@ export default {
     // handlePreview(file) {
     //   console.log(file)
     // }
+    // 获取课题信息
+    async getCurrentSubjectInfo() {
+      const { data: res } = await this.$http.get('/mock/mySubjects.json')
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取课题列表失败')
+      }
+      this.currentSubjectInfo = res.data.MySubject
+    },
     // 调用富文本编辑器
     useQuillEditor1() {
       this.quillEditor1Visible = true
@@ -256,6 +251,26 @@ export default {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+  align-items: center;
+}
+/*分割线*/
+.el-divider{
+  margin: 6px;
+}
+/*课题详情卡片*/
+.subject_detail{
+  width: 80%;
+  padding-left: 50px;
+  font-size: 16px;
+  /*边框阴影*/
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow:  28px 28px 56px #bababa,
+    -28px -28px 56px #ffffff;
+}
+/*表单标签*/
+.item_label{
+  display: flex;
   align-items: center;
 }
 </style>

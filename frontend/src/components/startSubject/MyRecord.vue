@@ -89,18 +89,23 @@
         <el-col :span="6">
           <el-card style="margin-left: 10px">
             <div class="card_header">我的开题成绩</div>
+            <div>答辩表现</div>
             <a-progress
+              style="margin-bottom: 10px"
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
               :percent="90"
               status="active"
               :format="percent => `${percent} 分`"
             />
+            <div>开题材料</div>
             <a-progress
+              style="margin-bottom: 10px"
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
               :percent="80"
               status="active"
               :format="percent => `${percent} 分`"
             />
+            <div>总分</div>
             <a-progress
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
               :percent="85"
@@ -237,12 +242,13 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="22">
+          <el-col :span="22" class="feedback">
 <!--            <el-form-item label="反馈内容">-->
 <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
 <!--            </el-form-item>-->
-            <div class="ql-container ql-snow">
-              <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+            <div class="fankui">反馈表</div>
+            <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+              <div class="ql-editor" v-html="currentSubjectInfo.description" ></div>
             </div>
           </el-col>
         </el-row>
@@ -343,4 +349,13 @@ export default {
   display: flex;
   justify-content: center;
 }
+.fankui{
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 </style>

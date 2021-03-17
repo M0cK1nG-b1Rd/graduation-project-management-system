@@ -13,7 +13,7 @@ import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
 import teacherSubjects from '../components/givenSubjects/teacherSubjects'
-import checkSubjects from '../components/givenSubjects/checkSubjects'
+import checkMySubjects from '../components/givenSubjects/checkMySubjects'
 import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
 import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
@@ -22,6 +22,7 @@ import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
+import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
 import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
 
@@ -98,7 +99,7 @@ const routes = [
       // 出题管理-审核查询界面
       {
         path: '/subject/apply/result',
-        component: checkSubjects
+        component: checkMySubjects
       },
       // 出题管理-教研室审核课题界面
       {
@@ -141,6 +142,11 @@ const routes = [
       {
         path: '/initial/myList',
         component: MyRecord
+      },
+      // 开题--教办审核开题信息
+      {
+        path: '/initial/startCheck',
+        component: CheckStartSubjects
       },
       // 中期--学生填写中期答辩信息
       {

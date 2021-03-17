@@ -313,6 +313,16 @@
           "path": "/initial/myList",
           "component": "",
           "children": []
+        },
+        {
+          "name": "开题审核",
+          "id": 28,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-check",
+          "path": "/initial/startCheck",
+          "component": "",
+          "children": []
         }
       ]
     },
@@ -349,7 +359,7 @@
     },
     {
       "name": "结题管理",
-      "id": 31,
+      "id": 40,
       "disable": false,
       "order": "",
       "icon": "el-icon-timer",
