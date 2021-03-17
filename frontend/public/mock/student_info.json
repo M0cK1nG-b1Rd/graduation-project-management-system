@@ -1,0 +1,82 @@
+{
+  "data": {
+    "records": [
+      {
+        "userId": 2,
+        "realName": "张静月",
+        "mail": "scott@qq.com",
+        "tel": "15134627380",
+        "gender": "M",
+        "collegeName": "软件学院",
+        "majorName": "软件工程",
+        "className": "软件1班",
+        "authCacheKey": 2
+      },
+      {
+        "userId": 3,
+        "realName": "朱一丹",
+        "mail": "jack@hotmail.com",
+        "gender": "M",
+        "collegeName": "软件学院",
+        "majorName": "软件工程",
+        "className": "软件4班",
+        "authCacheKey": 3
+      },
+      {
+        "userId": 4,
+        "realName": "朱二丹",
+        "mail": "test@163.com",
+        "gender": "F",
+        "collegeName": "生命学院",
+        "majorName": "医电",
+        "className": "医电2班",
+        "authCacheKey": 4
+      },
+      {
+        "userId": 5,
+        "realName": "朱三丹",
+        "mail": "sdfsdf@qq.com",
+        "tel": "18811445654",
+        "gender": "F",
+        "collegeName": "电信学院",
+        "majorName": "自动化",
+        "className": "自动化2班",
+        "authCacheKey": 5
+      },
+      {
+        "userId": 6,
+        "realName": "朱四丹",
+        "mail": "45116365@qq.com",
+        "tel": "18856345234",
+        "gender": "F",
+        "collegeName": "电信学院",
+        "majorName": "计算机",
+        "className": "计算机5班",
+        "authCacheKey": 6
+      },
+      {
+        "userId": 7,
+        "realName": "朱五丹",
+        "mail": "test1@qq.com",
+        "tel": "18811487981",
+        "gender": "F",
+        "collegeName": "软件学院",
+        "majorName": "软件工程",
+        "className": "软件3班",
+        "authCacheKey": 7
+      }
+    ],
+    "total": 6,
+    "size": 10,
+    "current": 1,
+    "optimizeCountSql": true,
+    "hitCount": false,
+    "searchCount": true,
+    "pages": 1
+  },
+  "meta": {
+    "code": 200,
+    "status": "Success",
+    "message": "查询成功"
+  }
+}

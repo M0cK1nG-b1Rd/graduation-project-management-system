@@ -21,3 +21,17 @@ body{
     margin-top: 15px;
     font-size: 12px;
 }
+/*覆盖ant-design-vue 输入、选中框禁用时样式**/
+.ant-input[disabled] {
+    color: rgba(0, 0, 0, 1) !important;
+    background-color: #FFFFFF !important;
+}
+
+.ant-select-disabled {
+    color: rgba(0, 0, 0, 1) !important;
+    background-color: #FFFFFF !important;
+}
+.ant-select-disabled .ant-select-selection {
+    background: #f9f9f9;
+    cursor: not-allowed;
+}

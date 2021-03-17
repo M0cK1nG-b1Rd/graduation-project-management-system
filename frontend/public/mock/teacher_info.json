@@ -1,0 +1,67 @@
+{
+  "data": {
+    "records": [
+      {
+        "userId": 10,
+        "realName": "饶元",
+        "mail": "raoyuan@tea.xjtu.edu.cn",
+        "gender": "M",
+        "title": "校长",
+        "homePage": "https://baike.baidu.com/item/%E5%AE%8B%E6%B0%B8%E7%BA%A2/29205?fr=aladdin",
+        "collegeName": "软件学院",
+        "authCacheKey": 10
+      },
+      {
+        "userId": 12,
+        "realName": "老师",
+        "mail": "laoshi@qq.com",
+        "tel": "13389974516",
+        "gender": "F",
+        "title": "院长",
+        "homePage": "http://gr.xjtu.edu.cn/web/xzdu",
+        "collegeName": "电信学院",
+        "authCacheKey": 12
+      },
+      {
+        "userId": 11,
+        "realName": "贾秘书",
+        "tel": "18097275161",
+        "gender": "M",
+        "title": "ICU访问学者",
+        "homePage": "http://gr.xjtu.edu.cn/web/raoyuan",
+        "collegeName": "电信学院",
+        "authCacheKey": 11
+      },
+      {
+        "userId": 17,
+        "realName": "房峰辉",
+        "tel": "15945746235",
+        "gender": "M",
+        "title": "教授",
+        "collegeName": "能动学院",
+        "authCacheKey": 17
+      },
+      {
+        "userId": 18,
+        "realName": "中幅田",
+        "tel": "17025331905",
+        "gender": "F",
+        "title": "副教授",
+        "collegeName": "马克思学院",
+        "authCacheKey": 18
+      }
+    ],
+    "total": 5,
+    "size": 10,
+    "current": 1,
+    "optimizeCountSql": true,
+    "hitCount": false,
+    "searchCount": true,
+    "pages": 1
+  },
+  "meta": {
+    "code": 200,
+    "status": "Success",
+    "message": "查询成功"
+  }
+}

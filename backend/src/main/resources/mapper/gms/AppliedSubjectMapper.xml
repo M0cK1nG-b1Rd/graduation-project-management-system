@@ -4,8 +4,7 @@
     <update id="auditAppliedSubject" parameterType="com.gms.gms.domain.AppliedSubject">
         UPDATE applied_subject
         SET `STATUS` = #{appliedSubject.status}
-        WHERE
-            STU_ID = #{appliedSubject.stuId}
+        WHERE STU_ID = #{appliedSubject.stuId}
           AND SUB_ID = #{appliedSubject.subId}
           AND `STATUS` = "WSH";
     </update>

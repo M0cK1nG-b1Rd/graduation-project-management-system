@@ -1,7 +1,7 @@
 package com.gms.gms.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
@@ -30,7 +30,7 @@ public class AnnouncementController {
     @GetMapping
     public GmsResponse getAnnouncement(Announcement ann) throws GmsException {
         try {
-            IPage<Announcement> announcement = announcementService.getAnnouncement(ann);
+            Page<Announcement> announcement = announcementService.getAnnouncement(ann);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -42,8 +42,8 @@ public class AnnouncementController {
         }
     }
 
-
-    @GetMapping("published")
+    //已弃用
+    /*@GetMapping("published")
     public GmsResponse getPublishedAnnouncement() throws GmsException {
         try {
             List<Announcement> announcement = announcementService.getPublishedAnnouncement();
@@ -56,7 +56,7 @@ public class AnnouncementController {
             log.error(message, e);
             throw new GmsException(message);
         }
-    }
+    }*/
 
     @PostMapping
     public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
