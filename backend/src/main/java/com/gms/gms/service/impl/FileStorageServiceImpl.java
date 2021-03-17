@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Stream;
@@ -49,11 +50,14 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void saveByDefault(MultipartFile multipartFile, String docId) {
         try {
-            FileStorage record = new FileStorage(
-                    multipartFile.getOriginalFilename(),
-                    dirPath.toString(),
-                    GmsUtil.getCurrentUser().getUserId(),
-                    docId);
+            FileStorage record = new FileStorage();
+            record.setFileName(multipartFile.getOriginalFilename());
+            record.setLocation(dirPath.toString());
+            record.setUploadBy(GmsUtil.getCurrentUser().getUserId());
+            record.setDocId(docId);
+            record.setSize(multipartFile.getSize());
+            record.setUploadTime(new Date());
+
             this.save(record);
             Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
 

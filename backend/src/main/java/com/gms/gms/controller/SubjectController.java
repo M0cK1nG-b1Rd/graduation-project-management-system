@@ -102,14 +102,15 @@ public class SubjectController {
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
-            subject.setSubId(FileStorageUtil.getDocId());
+            String docId=FileStorageUtil.getDocId();
+            subject.setSubId(docId);
             subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
             subject.setPoseTime(new Date());
             subjectService.save(subject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "新建课题成功"));
+                    "新建课题成功"),docId);
         } catch (Exception e) {
             String message = "新建课题失败";
             log.error(message, e);
@@ -123,13 +124,13 @@ public class SubjectController {
         try {
             //新建一条记录而不是修改记录
             subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());
-            String uuid = FileStorageUtil.getDocId();
-            subject.setDocId(uuid);
+            String docId = FileStorageUtil.getDocId();
+            subject.setDocId(docId);
             subjectService.save(subject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "修改课题成功"));
+                    "修改课题成功"),docId);
         } catch (Exception e) {
             String message = "修改课题失败";
             log.error(message, e);
