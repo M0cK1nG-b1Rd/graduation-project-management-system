@@ -51,7 +51,7 @@ public interface AccountMapper extends BaseMapper<User> {
 
     Page<StuGroup> getStudentGroup(Page<StuGroup> stuGroupPage, @Param("stage") String stage);
 
-    List<Student> selectStudentByGroupId(Integer id);
+    List<Student> selectStudentByGroupId(Integer id, String stage);
 
     void deleteStudent(@Param("stage") String stage);
 
