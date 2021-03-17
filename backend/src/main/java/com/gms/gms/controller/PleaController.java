@@ -3,6 +3,7 @@ package com.gms.gms.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
@@ -102,7 +103,7 @@ public class PleaController {
                     Code.C200.getDesc(),
                     "修改成功"));
         } catch (Exception e) {
-            String message = "新建失败";
+            String message = "修改失败";
             log.error(message, e);
             throw new GmsException(message);
         }
@@ -129,5 +130,46 @@ public class PleaController {
         }
     }
 
+    /**
+     * 一键发布接口，传参为JSON
+     * stage:时期
+     */
+    @PutMapping("/ture")
+    public GmsResponse updatePleaReleaseTure(@RequestBody JSONObject jsonObject) throws GmsException {
+        try {
+            String stage=jsonObject.getString("stage");
+            pleaService.update(null,new LambdaUpdateWrapper<Plea>().set(Plea::getIsRelease,true).eq(Plea::getStage,stage));
+            //TODO 发布通知预留地
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "修改成功"));
+        } catch (Exception e) {
+            String message = "修改失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 一键撤回接口，传参为JSON
+     * stage:时期
+     */
+    @PutMapping("/false")
+    public GmsResponse updatePleaReleaseFalse(@RequestBody JSONObject jsonObject) throws GmsException {
+        try {
+            String stage=jsonObject.getString("stage");
+            pleaService.update(null,new LambdaUpdateWrapper<Plea>().set(Plea::getIsRelease,false).eq(Plea::getStage,stage));
+            //TODO 发布通知预留地
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "修改成功"));
+        } catch (Exception e) {
+            String message = "修改失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
 }
 
