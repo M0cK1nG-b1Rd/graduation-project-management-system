@@ -25,7 +25,7 @@
                a.FEEDBACK,
                a.AUDIT_TIME,
                f.DOC_ID,
-               f.HANDIN_ID,
+               f.FILE_ID,
                f.FILE_NAME
 
         FROM applied_subject a
@@ -51,7 +51,7 @@
                a.FEEDBACK,
                a.AUDIT_TIME,
                f.DOC_ID,
-               f.HANDIN_ID,
+               f.FILE_ID,
                f.FILE_NAME
 
         FROM applied_subject a
@@ -77,7 +77,7 @@
                a.FEEDBACK,
                a.AUDIT_TIME,
                f.DOC_ID,
-               f.HANDIN_ID,
+               f.FILE_ID,
                f.FILE_NAME
 
         FROM applied_subject a
@@ -106,7 +106,7 @@
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
             <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
 </mapper>

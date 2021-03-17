@@ -77,8 +77,8 @@ public class Report implements Serializable {
     @TableField("POSE_BY")
     private Integer poseBy;
 
-    @TableField("POST_TIME")
-    private Date postTime;
+    @TableField("POSE_TIME")
+    private Date poseTime;
 
     @TableField("STATUS")
     private String status;

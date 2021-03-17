@@ -25,7 +25,7 @@ public class AccountController {
 
     //进行答辩分组前查询返回所有的老师，所有时期共用
     @GetMapping("/plea/teacher")
-    public GmsResponse searchTeacherInf(int page, int size) throws GmsException {
+    public GmsResponse searchTeacherInfo(int page, int size) throws GmsException {
         try {
             Page<Teacher> teacherPage = accountService.getAllTeacher(page, size);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -41,7 +41,7 @@ public class AccountController {
 
     //进行答辩分组前返回所有的有资格学生，所有时期共用
     @GetMapping("/plea/student")
-    public GmsResponse searchStudentTInf(int page, int size, String stage) throws GmsException {
+    public GmsResponse searchStudentInfo(int page, int size, String stage) throws GmsException {
         try {
             //使用if进行时期筛选
             Page<Student> studentPage;
@@ -95,7 +95,7 @@ public class AccountController {
 
     //返回老师的分组结果，支持分页，需要传参阶段
     @GetMapping("/plea/teacherTeam")
-    public GmsResponse searchTeacherTeamInf(int page, int size, String stage) throws GmsException {
+    public GmsResponse searchTeacherTeamInfo(int page, int size, String stage) throws GmsException {
         try {
             Page<TeacherTeam> teacherTeamPage = accountService.getTeacherTeam(page, size, stage);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -138,7 +138,7 @@ public class AccountController {
 
     //返回相应时期的学生分组结果
     @GetMapping("/plea/studentGroup")
-    public GmsResponse searchStudentGroupInf(int page, int size, String stage) throws GmsException {
+    public GmsResponse searchStudentGroupInfo(int page, int size, String stage) throws GmsException {
         try {
             Page<StuGroup> studentGroupPage1 = accountService.getStudentGroup(page, size, stage);
             return new GmsResponse().addCodeMessage(new Meta(

@@ -25,7 +25,7 @@
         p.CHOSEN,
         f.FILE_NAME,
         f.DOC_ID,
-        f.HANDIN_ID
+        f.FILE_ID
         FROM `subject` s
         JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
@@ -78,7 +78,7 @@
         p.CHOSEN,
         f.FILE_NAME,
         f.DOC_ID,
-        f.HANDIN_ID,
+        f.FILE_ID,
         FROM `subject` s
         JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
@@ -113,7 +113,7 @@
                p.CHOSEN,
                f.FILE_NAME,
                f.DOC_ID,
-               f.HANDIN_ID
+               f.FILE_ID
         FROM `subject` s
                  JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
                  JOIN applied_subject a ON (a.SUB_ID = p.SUB_ID)
@@ -144,7 +144,7 @@
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
             <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
 </mapper>

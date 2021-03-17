@@ -54,7 +54,7 @@ public class ReportController {
     public GmsResponse addReport(@RequestBody Report report) throws GmsException {
         try {
             report.setPoseBy(AccountUtil.getCurrentStudent().getStuId());
-            report.setPostTime(new Date());
+            report.setPoseTime(new Date());
             reportService.addReport(report);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
