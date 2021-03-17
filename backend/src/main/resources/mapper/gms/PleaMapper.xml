@@ -65,4 +65,86 @@
             stu_group.STAGE = #{stage}
             AND stu_group.GROUP_ID = #{id}
     </select>
+    <select id="getStuId" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+        WHERE
+            student.USER_ID = #{userId}
+    </select>
+    <select id="getGroupId" resultType="java.lang.Integer">
+        SELECT
+            stu_group.GROUP_ID
+        FROM
+            stu_group
+        WHERE
+            stu_group.STU_ID = #{stuId}
+          AND stu_group.STAGE = #{stage}
+    </select>
+    <select id="getPleaForStudent" resultMap="APP">
+        SELECT
+            plea.ID,
+            plea.STAGE,
+            plea.STU_GROUP_ID,
+            plea.ACCEPTANCE_TEAM_ID,
+            classroom.CLASSROOM_NAME,
+            plea.TIME
+        FROM
+            plea
+                JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
+        WHERE
+            plea.STAGE = #{stage}
+            AND plea.STU_GROUP_ID = #{groupId}
+    </select>
+    <select id="getTeacherId" resultType="java.lang.Integer">
+        SELECT
+            teacher.TEACHER_ID
+        FROM
+            teacher
+        WHERE
+            teacher.USER_ID = #{userId}
+    </select>
+    <select id="getTeamId" resultType="java.lang.Integer">
+        SELECT
+            acceptance_team.TEAM_ID
+        FROM
+            acceptance_team
+                JOIN acceptance_teacher ON acceptance_team.TEAM_ID = acceptance_teacher.TEAM_ID
+        WHERE
+            acceptance_team.STAGE = #{stage}
+          AND acceptance_teacher.TEACHER_ID = #{teacherId}
+    </select>
+    <select id="getPleaForOther" resultMap="APP">
+        SELECT
+            plea.ID,
+            plea.STAGE,
+            plea.STU_GROUP_ID,
+            plea.ACCEPTANCE_TEAM_ID,
+            classroom.CLASSROOM_NAME,
+            plea.TIME
+        FROM
+            plea
+                JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
+        WHERE
+            plea.STAGE = #{stage}
+          AND plea.ACCEPTANCE_TEAM_ID = #{teamId}
+    </select>
+    <select id="getSecId" resultType="java.lang.Integer">
+        SELECT
+            secretary.SEC_ID
+        FROM
+            secretary
+        WHERE
+            secretary.USER_ID = #{userId}
+    </select>
+    <select id="getTeamId1" resultType="java.lang.Integer">
+        SELECT
+            acceptance_team.TEAM_ID
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{stage}
+          AND acceptance_team.SEC_ID = #{secId}
+    </select>
 </mapper>

@@ -13,6 +13,7 @@ import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.Classroom;
 import com.gms.gms.domain.Plea;
 import com.gms.gms.service.PleaService;
+import com.gms.system.domain.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -167,6 +168,63 @@ public class PleaController {
                     "修改成功"));
         } catch (Exception e) {
             String message = "修改失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 用户获取自己的相应时期答辩安排的接口，传参为？
+     * stage:时期
+     */
+    @GetMapping("/user")
+    public GmsResponse getPlea(String stage) throws GmsException {
+        try {
+            Role Role = GmsUtil.getUserRoles().get(0);
+            Integer userId=GmsUtil.getCurrentUser().getUserId();
+            List<Plea> plea;
+            if("学生".equals(Role.getRoleName())){
+                Integer stuId = pleaService.getStuId(userId);
+                Integer groupId = pleaService.getGroupId(stuId,stage);
+                if(groupId==null){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
+                plea = pleaService.getPleaForStudent(groupId,stage);
+            }else if("老师".equals(Role.getRoleName())){
+                Integer teacherId = pleaService.getTeacherId(userId);
+                Integer teamId = pleaService.getTeamId(teacherId,stage);
+                if(teamId==null){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
+                plea = pleaService.getPleaForOther(teamId,stage);
+            }else if ("答辩秘书".equals(Role.getRoleName())){
+                Integer secId = pleaService.getSecId(userId);
+                Integer teamId = pleaService.getTeamId1(secId,stage);
+                if(teamId==null){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
+                plea = pleaService.getPleaForOther(teamId,stage);
+            }else {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "当前用户无需分组"));
+            }
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), plea);
+        } catch (Exception e) {
+            String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
