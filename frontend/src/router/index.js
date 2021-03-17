@@ -12,6 +12,17 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
+import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
+import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
+import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
+import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
+import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
+import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+import checkSubjects from '../components/givenSubjects/checkSubjects'
+import judgeSubjects from '../components/givenSubjects/judgeSubjects'
+import StartReport from '@/components/startSubject/StartReport'
+import MyRecord from '@/components/startSubject/MyRecord'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 
 Vue.use(VueRouter)
 
@@ -77,6 +88,68 @@ const routes = [
       {
         path: '/notice/manage',
         component: ManageNotice
+      },
+      // 出题管理-教师出题
+      {
+        path: '/subject/apply/teacher',
+        component: teacherSubjects
+      },
+      // 出题管理-审核查询界面
+      {
+        path: '/subject/apply/result',
+        component: checkSubjects
+      },
+      // 出题管理-教研室审核课题界面
+      {
+        path: '/subject/judge/final',
+        component: judgeSubjects
+      },
+      // 学生选题申请--查看所有课题信息
+      {
+        path: '/subject/all',
+        component: ViewAllSubject
+      },
+      // 学生选题申请--查看选中（单个）课题详情
+      {
+        path: '/subject/detail',
+        name: 'viewSubjectDetail',
+        component: ViewSujectDetail
+      },
+      // 学生选题申请--提交选题申请
+      {
+        path: '/subject/application',
+        name: 'chooseSubjectApplication',
+        component: ChooseSubjectApplication
+      },
+      // 教师审核学生选题申请
+      {
+        path: '/subject/select/judge/teacher',
+        component: JudgeApplication
+      },
+      // 教师、教研办、学生查看选题记录
+      {
+        path: '/subject/select/result',
+        component: ApplicationRecords
+      },
+      // 出题管理-教师出题
+      {
+        path: '/subject/apply/teacher',
+        component: teacherSubjects
+      },
+      // 开题--学生上传开题报告
+      {
+        path: '/initial/myReport',
+        component: StartReport
+      },
+      // 开题--学生查看开题记录
+      {
+        path: '/initial/myList',
+        component: MyRecord
+      },
+      // 开题--教研室进行答辩安排
+      {
+        path: '/initial/arrange',
+        component: ArrangePlea
       }
     ]
   }
@@ -87,14 +160,14 @@ const router = new VueRouter({
 })
 
 // TODO 挂载路由导航守卫，当后端实现登录接口并返回token后，取消下面注释，挂载路由导航守卫
-// router.beforeEach((to, from, next) => {
-//   // to 将要访问的路径
-//   // from 代表从哪个路径跳转而来
-//   // next 是一个函数，表示放行
-//   if (to.path === '/login') return next() // 如果要去login则直接放行
-//   // 获取token
-//   const tokenStr = window.sessionStorage.getItem('token')
-//   if (!tokenStr) return next('/login') // 如果token为空，则强制跳转到/login
-//   next() // 如果token不为空，则放行
-// })
+router.beforeEach((to, from, next) => {
+  // to 将要访问的路径
+  // from 代表从哪个路径跳转而来
+  // next 是一个函数，表示放行
+  if (to.path === '/login') return next() // 如果要去login则直接放行
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login') // 如果token为空，则强制跳转到/login
+  next() // 如果token不为空，则放行
+})
 export default router

@@ -34,8 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("dict")
 public class DictController extends BaseController {
 
-    private String message;
-
     @Autowired
     private DictService dictService;
 
