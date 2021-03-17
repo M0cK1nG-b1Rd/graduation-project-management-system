@@ -90,16 +90,17 @@
                 查看分组结果并设置答辩信息
               </a-tag>
             </template>
+<!--            查看并设置分组情况-->
             <el-card class="team_info_card"
                      v-for="(item, index) in studentPleaTeams" :key="index">
               <el-row class="group_info">
                 <!--                小组编号-->
-                <el-col :span="7">
-                  小组编号：
+                <el-col :span="6">
+                  组号：
                   <a-tag color="#f6f6f4" class="inner_tag">{{ item.groupId + 1 }}</a-tag>
                 </el-col>
                 <!--                学生、老师信息-->
-                <el-col :span="7">
+                <el-col :span="6">
                   <!--                查看该组学生-->
                   <el-row>
                     <a-tag color="cyan" class="inner_tag" @click="viewChosenStudentGroupInfo(index)">学生信息</a-tag>
@@ -119,6 +120,7 @@
                   <el-row>
                     <a-tag color="#f6f6f4" class="inner_tag">答辩时间</a-tag>
                     <el-date-picker
+                      v-model="currentGroupArrangeInfo.time"
                       type="datetimerange"
                       range-separator="至"
                       start-placeholder="开始日期"
@@ -128,11 +130,45 @@
                   <!--                设置答辩场地-->
                   <el-row>
                     <a-tag color="#ffd4d4" class="inner_tag">答辩场地</a-tag>
-                    <el-select placeholder="请选择答辩场地" style="width: 400px"></el-select>
+                    <el-select placeholder="请选择答辩场地"
+                               v-model="currentGroupArrangeInfo.classroomId"
+                               style="width: 400px">
+                      <el-option
+                        v-for="(item, index) in classroomInfo"
+                        :key=index
+                        :label="item.classroomName"
+                        :value="item.classroomId">
+                      </el-option>
+                    </el-select>
+                  </el-row>
+                </el-col>
+                  <!--                保存、更新按钮-->
+                <el-col :span="4">
+                  <el-row>
+                    <el-button type="primary" size="mini" @click="submitCurrentGroupArrange(index)">保存</el-button>
+                  </el-row>
+                  <el-row style="margin-top: 10px">
+                    <el-button type="success" size="mini" @click="updateCurrentGroupArrange(index)">更新</el-button>
                   </el-row>
                 </el-col>
               </el-row>
             </el-card>
+<!--            分页区-->
+<!--            发布或撤回分组结果-->
+            <el-row type="flex" justify="center" style="margin-top: 20px">
+              <el-popconfirm
+                title="确定要发布当前答辩安排吗？"
+                @comfirm="releaseAllArrange"
+              >
+                <el-button type="primary" slot="reference">发布安排</el-button>
+              </el-popconfirm>
+              <el-popconfirm
+                title="确定要撤回已发布的安排吗？"
+                @comfirm="withdrawAllArrange"
+              >
+                <el-button type="success" slot="reference">撤回安排</el-button>
+              </el-popconfirm>
+            </el-row>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -272,6 +308,7 @@ export default {
   components: { stuInfo, tutorInfo },
   mounted() {
     this.getArrangeResult()
+    this.getClassroomInfo()
   },
   data() {
     return {
@@ -282,6 +319,8 @@ export default {
         teamNum: '', // 答辩小组个数
         stage: 'JT' // 答辩安排所属阶段--此处未开题
       },
+      // 教室信息
+      classroomInfo: [],
       // 查询分组结果参数
       queryInfo: {
         page: 1, // 当前页号
@@ -307,7 +346,14 @@ export default {
       // 选中导师小组信息
       currentTutorInfo: {},
       // 选中秘书小组信息
-      currentSecretaryInfo: {}
+      currentSecretaryInfo: {},
+      // 当前组安排信息
+      currentGroupArrangeInfo: {
+        stuGroupId: '',
+        acceptanceTeamId: '',
+        time: '',
+        classroomId: ''
+      }
     }
   },
   methods: {
@@ -320,11 +366,13 @@ export default {
         this.$message.success('教师答辩分组安排成功！')
       } else {
         this.$message.warning('教师' + res1.meta.message)
+        await this.deleteArrangeResult()
       }
       if (res2.meta.code === 200) {
         this.$message.success('学生答辩分组安排成功！')
       } else {
         this.$message.warning('学生' + res2.meta.message)
+        await this.deleteArrangeResult()
       }
       await this.getArrangeResult()
     },
@@ -350,6 +398,33 @@ export default {
       }
       await this.getArrangeResult()
     },
+    // 获取教室信息
+    async getClassroomInfo() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/classroom')
+      if (res.meta.code === 200) {
+        this.classroomInfo = res.data
+      } else {
+        this.$message.warning(res.meta.message)
+      }
+    },
+    // 提交当前小组时间、地点安排
+    async submitCurrentGroupArrange(index) {
+      this.currentGroupArrangeInfo.acceptanceTeamId = this.tutorPleaTeams[index].teamId
+      this.currentGroupArrangeInfo.stuGroupId = this.studentPleaTeams[index].groupId
+      const { data: res } = this.$http.post('http://127.0.0.1:9528/account/plea/', this.currentGroupArrangeInfo)
+      if (res.meta.code !== 200) return this.$message.error('保存设定失败！')
+    },
+    // 更新当前小组时间、地点安排
+    async updateCurrentGroupArrange(index) {
+      this.currentGroupArrangeInfo.acceptanceTeamId = this.tutorPleaTeams[index].teamId
+      this.currentGroupArrangeInfo.stuGroupId = this.studentPleaTeams[index].groupId
+      const { data: res } = this.$http.post('http://127.0.0.1:9528/account/plea/', this.currentGroupArrangeInfo)
+      if (res.meta.code !== 200) return this.$message.error('保存设定失败！')
+    },
+    // 发布所有小组的答辩安排
+    async releaseAllArrange() {},
+    // 撤回所有小组的答辩安排
+    async withdrawAllArrange() {},
     // 查看选中学生小组信息
     viewChosenStudentGroupInfo(index) {
       this.currentStuInfo = this.studentPleaTeams[index].students
