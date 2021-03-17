@@ -29,4 +29,6 @@ public interface AccountService extends IService<User>{
     boolean groupStudentAuto(Integer teamNum, String stage);
 
     Page<StuGroup> getStudentGroup(int page, int size, String stage);
+
+    void deleteGroups(String stage);
 }

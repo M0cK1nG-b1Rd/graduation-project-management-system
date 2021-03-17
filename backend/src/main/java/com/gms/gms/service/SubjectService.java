@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface SubjectService extends IService<Subject> {
 
-    List<Subject> getMySubject() throws GmsException;
+    List<Subject> getMySubject(String subId) throws GmsException;
 
     void deleteSubject(String subId);
 

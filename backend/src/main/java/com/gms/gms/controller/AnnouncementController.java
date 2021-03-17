@@ -7,8 +7,11 @@ import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.gms.domain.Announcement;
+import com.gms.gms.domain.FileStorage;
 import com.gms.gms.service.AnnouncementService;
+import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -61,11 +64,12 @@ public class AnnouncementController {
     @PostMapping
     public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
-            announcementService.addAnnouncement(announcement);
+            String docId = FileStorageUtil.getDocId();
+            announcementService.addAnnouncement(announcement,docId);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "新建公告成功"), announcement);
+                    "新建公告成功"),docId);
         } catch (Exception e) {
             String message = "新建失败";
             log.error(message, e);

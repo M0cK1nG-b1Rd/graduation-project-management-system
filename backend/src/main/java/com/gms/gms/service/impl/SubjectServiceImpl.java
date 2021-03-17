@@ -21,9 +21,9 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
 
     //todo 对接
     @Override
-    public List<Subject> getMySubject() throws GmsException {
+    public List<Subject> getMySubject(String subId) throws GmsException {
         Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
-        return this.baseMapper.getMySubjectInfo(teacherId);
+        return this.baseMapper.getMySubjectInfo(teacherId,subId);
     }
 
     @Override

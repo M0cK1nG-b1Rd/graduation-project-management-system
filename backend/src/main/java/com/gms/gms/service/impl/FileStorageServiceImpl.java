@@ -7,6 +7,7 @@ import com.gms.gms.dao.FileStorageMapper;
 import com.gms.gms.service.FileStorageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.system.manager.UserManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +23,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,6 +32,7 @@ import java.util.stream.Stream;
  * @author MrBird
  */
 @Service
+@Slf4j
 public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileStorage> implements FileStorageService {
 
 
@@ -40,7 +43,13 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void init() {
         try {
-            Files.createDirectory(dirPath);
+            File folder = dirPath.toFile();
+            if (!folder.exists() && !folder.isDirectory()) {
+                Files.createDirectory(dirPath);
+                log.info("创建文件夹："+dirPath);
+            } else {
+                log.info("文件夹已存在");
+            }
         } catch (IOException e) {
             throw new RuntimeException("无法创建用于上传的文件夹！");
         }
@@ -49,11 +58,14 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void saveByDefault(MultipartFile multipartFile, String docId) {
         try {
-            FileStorage record = new FileStorage(
-                    multipartFile.getOriginalFilename(),
-                    dirPath.toString(),
-                    GmsUtil.getCurrentUser().getUserId(),
-                    docId);
+            FileStorage record = new FileStorage();
+            record.setFileName(multipartFile.getOriginalFilename());
+            record.setLocation(dirPath.toString());
+            record.setUploadBy(GmsUtil.getCurrentUser().getUserId());
+            record.setDocId(docId);
+            record.setSize(multipartFile.getSize());
+            record.setUploadTime(new Date());
+
             this.save(record);
             Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
 
@@ -62,27 +74,12 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
         }
     }
 
-    @Override
-    public void saveByHandinId(MultipartFile multipartFile, String docId,Integer handinId) {
-        try {
-            FileStorage record = new FileStorage(
-                    multipartFile.getOriginalFilename(),
-                    dirPath.toString(),
-                    GmsUtil.getCurrentUser().getUserId(),
-                    docId,
-                    handinId);
-            this.save(record);
-            Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
 
-        } catch (IOException e) {
-            throw new RuntimeException("无法存储文件：" + e.getMessage());
-        }
-    }
 
     @Override
-    public Resource load(String docId, String handinId) {
+    public Resource load(String docId,String fileId) {
         //mybatis-plus自带在这张表会出问题
-        FileStorage record = this.baseMapper.selectByDocIdAndHandinId(docId,handinId);
+        FileStorage record = this.baseMapper.selectByDocIdAndFileId(docId,fileId);
 
         String filename = record.getFileName();
 

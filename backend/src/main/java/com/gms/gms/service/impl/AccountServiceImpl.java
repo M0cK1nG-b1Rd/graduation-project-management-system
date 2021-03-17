@@ -111,4 +111,15 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
     public Page<StuGroup> getStudentGroup(int page, int size, String stage) {
         return this.baseMapper.getStudentGroup(new Page<StuGroup>(page, size), stage);
     }
+
+    @Override
+    public void deleteGroups(String stage) {
+        this.baseMapper.deleteStudent(stage);
+        List<Integer> groupId=this.baseMapper.selectTeacherTeamId(stage);
+        if(groupId.size()>0){
+            this.baseMapper.deleteTeacherInTeam(groupId);
+        }
+        this.baseMapper.deleteTeacherTeam(stage);
+
+    }
 }

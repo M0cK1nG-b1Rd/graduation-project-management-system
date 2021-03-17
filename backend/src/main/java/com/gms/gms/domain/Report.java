@@ -92,12 +92,6 @@ public class Report implements Serializable {
     @TableField("FEEDBACK")
     private String feedback;
 
-    @TableField("FILE_SCORE")
-    private Integer fileScore;
-
-    @TableField("DEFENSE_SCORE")
-    private Integer defenseScore;
-
 
     //分页参数
     @TableField(exist = false)

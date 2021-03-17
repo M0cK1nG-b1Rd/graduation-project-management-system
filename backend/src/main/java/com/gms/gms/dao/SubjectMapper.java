@@ -18,7 +18,7 @@ public interface SubjectMapper extends BaseMapper<Subject> {
 
     Page<Subject> getAllSubject(IPage<Subject> page, Subject subject);
 
-    List<Subject> getMySubjectInfo(Integer teacherId);
+    List<Subject> getMySubjectInfo(Integer teacherId,String subId);
 
     Subject getStudentPassedSubject(Integer stuId);
 }

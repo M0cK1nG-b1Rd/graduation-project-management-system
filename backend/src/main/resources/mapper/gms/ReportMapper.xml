@@ -22,10 +22,8 @@
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.FEEDBACK,
-            r.FILE_SCORE,
-            r.DEFENSE_SCORE,
             f.DOC_ID,
-            f.HANDIN_ID,
+            f.FILE_ID,
             f.FILE_NAME
         FROM
             report r
@@ -54,7 +52,7 @@
             r.FILE_SCORE,
             r.DEFENSE_SCORE,
             f.DOC_ID,
-            f.HANDIN_ID,
+            f.FILE_ID,
             f.FILE_NAME
         FROM
             report r
@@ -85,7 +83,7 @@
             r.FILE_SCORE,
             r.DEFENSE_SCORE,
             f.DOC_ID,
-            f.HANDIN_ID,
+            f.FILE_ID,
             f.FILE_NAME
         FROM
             report r
@@ -113,12 +111,10 @@
         <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
-        <result column="FILE_SCORE" property="fileScore" jdbcType="INTEGER"/>
-        <result column="DEFENSE_SCORE" property="defenseScore" jdbcType="INTEGER"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
             <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
 </mapper>

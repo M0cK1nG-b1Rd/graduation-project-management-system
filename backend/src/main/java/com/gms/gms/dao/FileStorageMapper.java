@@ -12,7 +12,7 @@ public interface FileStorageMapper extends BaseMapper<FileStorage> {
 
     List<FileStorage> selectAllFiles();
 
-    FileStorage selectByDocIdAndHandinId(String docId, String handinId);
+    FileStorage selectByDocIdAndFileId(String docId,String fileId);
 
     List<FileStorage> selectByDocId(String docId);
 }
