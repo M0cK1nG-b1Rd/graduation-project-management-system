@@ -23,4 +23,6 @@ public interface SubjectService extends IService<Subject> {
     IPage<Subject> getPassedSubject(Subject subject);
 
     IPage<Subject> getAllSubject(Subject subject);
+
+    Subject getStudentPassedSubject(Integer stuId);
 }

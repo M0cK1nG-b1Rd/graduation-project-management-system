@@ -35,7 +35,8 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @GetMapping("my")
+    //教师查看自己的课题
+    @GetMapping("teacher/my")
     public GmsResponse getMySubject() throws GmsException {
         try {
             List<Subject> subjects = subjectService.getMySubject();
@@ -47,7 +48,22 @@ public class SubjectController {
         }
     }
 
+    //学生查看自己申请通过的课题
+    @GetMapping("student/my")
+    public GmsResponse getStudentPassedSubject() throws GmsException {
+        try {
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+            Subject subject = subjectService.getStudentPassedSubject(stuId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
     //学生查看选题信息，包括详情
+    //passed是指教师通过的课题而不是学生通过的课题
     //筛选 搜索关键字、课题领域、老师名字
     @GetMapping
     public GmsResponse getPassedSubject(Subject subject) throws GmsException{
