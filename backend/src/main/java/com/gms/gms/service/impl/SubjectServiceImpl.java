@@ -44,9 +44,21 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     }
 
     @Override
-    public IPage<Subject> selectWithCondition(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());//todo 增加分页
-        Page<Subject> returnSubjectPage = this.baseMapper.selectWithCondition(page,subject);
+    public IPage<Subject> getPassedSubject(Subject subject) {
+        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
+        Page<Subject> returnSubjectPage = this.baseMapper.getPassedSubject(page,subject);
         return returnSubjectPage;
+    }
+
+    @Override
+    public IPage<Subject> getAllSubject(Subject subject) {
+        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());//todo 增加分页
+        Page<Subject> returnSubjectPage = this.baseMapper.getAllSubject(page,subject);
+        return returnSubjectPage;
+    }
+
+    @Override
+    public Subject getStudentPassedSubject(Integer stuId) {
+        return this.baseMapper.getStudentPassedSubject(stuId);
     }
 }

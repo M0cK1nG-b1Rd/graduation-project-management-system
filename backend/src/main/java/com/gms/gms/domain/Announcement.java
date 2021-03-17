@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -39,7 +38,7 @@ public class Announcement implements Serializable{
     private String annDetail;
 
     @TableField("TYPE")
-    private Integer type;
+    private String type;
 
     @TableField("STATUS")
     private String status;

@@ -26,6 +26,9 @@ public class Teacher extends User implements Serializable {
     @TableField("TEACHER_ID")
     private Integer teacherId;
 
+    @TableField(exist = false)
+    private String teacherName;
+
     @TableField("COLLEGE_ID")
     private Integer collegeId;
 

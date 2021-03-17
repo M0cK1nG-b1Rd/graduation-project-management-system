@@ -20,5 +20,9 @@ public interface SubjectService extends IService<Subject> {
 
     List<Subject> trackSubject(String subId);
 
-    IPage<Subject> selectWithCondition(Subject subject);
+    IPage<Subject> getPassedSubject(Subject subject);
+
+    IPage<Subject> getAllSubject(Subject subject);
+
+    Subject getStudentPassedSubject(Integer stuId);
 }

@@ -35,7 +35,8 @@
           <el-select placeholder="请选择指导老师"
                      @change="getAllSubjectInfo"
                      v-model="queryInfo.teacherName">
-            <el-option>
+            <el-option v-for="(item, index) in teacherInfo" :key="index"
+                       :value="item.realName" :label="item.realName">
             </el-option>
           </el-select>
         </el-col>
@@ -117,12 +118,13 @@
 import dataDict from '@/assets/js/dataDict'
 export default {
   name: 'ViewAllSubject',
-  mounted() {
+  async mounted() {
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.zoneDict = dataDict.getDict(fullDict, 6)
-    const { data: teachers } = this.$http.get('http://127.0.0.1:9528/account/teacher')
-    console.log(teachers)
-    this.getAllSubjectInfo()
+    const { data: teachers } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: { page: 1, size: 10000 } })
+    if (teachers.meta.code !== 200) return this.$message.error('获取教师信息失败！')
+    this.teacherInfo = teachers.data.records
+    await this.getAllSubjectInfo()
   },
   data() {
     return {

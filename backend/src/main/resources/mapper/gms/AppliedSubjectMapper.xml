@@ -1,32 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.AppliedSubjectMapper">
+    <update id="auditAppliedSubject" parameterType="com.gms.gms.domain.AppliedSubject">
+        UPDATE applied_subject
+        SET `STATUS` = #{appliedSubject.status}
+        WHERE ID = #{appliedSubject.id}
+          AND STU_ID = #{appliedSubject.studentId}
+          AND SUB_ID = #{appliedSubject.subId}
+          AND `STATUS` = "WSH";
+    </update>
 
 
+    <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.HANDIN_ID,
+               f.FILE_NAME
 
-    <!--    <select id="selectWithCondition" resultType="com.gms.gms.domain.AppliedSubject">-->
-    <!--        SELECT-->
-    <!--            s.DOC_ID,-->
-    <!--            s.SUB_ID,-->
-    <!--            s.SUB_NAME,-->
-    <!--            s.DESCRIPTION,-->
-    <!--            s.ZONE,-->
-    <!--            s.POSE_BY,-->
-    <!--            s.POSE_TIME,-->
-    <!--            s.MAJOR_ID,-->
-    <!--            s.AUDIT_BY,-->
-    <!--            s.AUDIT_TIME,-->
-    <!--            s.FEEDBACK,-->
-    <!--            a.STU_ID,-->
-    <!--            a.`STATUS`,-->
-    <!--            a.FEEDBACK-->
-    <!--        FROM-->
-    <!--            `subject` s-->
-    <!--                JOIN applied_subject a ON (-->
-    <!--                a.SUB_ID = s.SUB_ID) WHERE s.`STATUS`="YTG"-->
-    <!--# todo 和队友讨论-->
-    <!--    </select>-->
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+# 需要加上hadninId，对接时解决
+    </select>
+    <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.HANDIN_ID,
+               f.FILE_NAME
 
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        WHERE s.POSE_BY = #{teacherId}
+    </select>
+    <select id="selectWithConditionAsStudent" resultMap="AppliedSubjectMapper">
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.HANDIN_ID,
+               f.FILE_NAME
 
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        WHERE a.STU_ID = #{studentId}
+    </select>
 
+    <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
+        <result column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
+        <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
+        <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
+        <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
+        <result column="STUDENT_ID" property="studentId" jdbcType="INTEGER"/>
+        <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
+        <result column="APPLY_TIME" property="applyTime" jdbcType="DATE"/>
+        <result column="APPLY_REASON" property="applyReason" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
+        <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
+        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
+            <result column="DOC_ID" property="docId"/>
+            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
 </mapper>
