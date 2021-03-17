@@ -2,20 +2,22 @@ package com.gms.gms.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
+import com.gms.common.utils.GmsUtil;
+import com.gms.gms.domain.Classroom;
 import com.gms.gms.domain.Plea;
 import com.gms.gms.service.PleaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @Slf4j
 @Validated
@@ -29,13 +31,21 @@ public class PleaController {
      * 新建答辩分组，传参为JSON
      * stuGroupId:学生组id
      * acceptanceTeamId:老师组id
-     * classroomId:教师id
+     * classroomId:教室id
      * time:答辩时间
      * stage:时期
      */
     @PostMapping
-    public GmsResponse groupStudentAuto(@RequestBody Plea plea) throws GmsException {
+    public GmsResponse addNewPlea(@RequestBody Plea plea) throws GmsException {
         try {
+            if (pleaService.count(new QueryWrapper<Plea>().lambda()
+                    .nested(i -> i.eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId()))
+                    .eq(Plea::getStage, plea.getStage())) > 0) {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "该老师或学生组已安排，无法新建"));
+            }
             //使用MybatisPlus封装的方法
             pleaService.save(plea);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -44,6 +54,76 @@ public class PleaController {
                     "新建答辩安排成功"));
         } catch (Exception e) {
             String message = "新建失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 修改答辩分组，传参为JSON
+     * id:答辩安排的id
+     * stuGroupId:学生组id
+     * acceptanceTeamId:老师组id
+     * classroomId:教室id
+     * time:答辩时间
+     * stage:时期
+     */
+    @PutMapping
+    public GmsResponse updatePlea(@RequestBody Plea plea) throws GmsException {
+        try {
+            //当存在传入id时，使用id进行接下来的操作，stuGroupId、acceptanceTeamId、stage可以不传
+            if (plea.getId() == null) {
+                if (pleaService.getOne(new QueryWrapper<Plea>().lambda()
+                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
+                        .eq(Plea::getStage, plea.getStage())).getIsRelease()) {
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "该安排已发布，无法修改"));
+                }
+                //使用MybatisPlus封装的方法
+                pleaService.update(plea, new QueryWrapper<Plea>().lambda()
+                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
+                        .eq(Plea::getStage, plea.getStage()));
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C200.getCode(),
+                        Code.C200.getDesc(),
+                        "修改成功"));
+            }
+            if (pleaService.getById(plea.getId()).getIsRelease()) {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "该安排已发布，无法修改"));
+            }
+            pleaService.updateById(plea);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "修改成功"));
+        } catch (Exception e) {
+            String message = "新建失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 获取某阶段所有答辩安排的接口，问号传参
+     * page:当前页数
+     * size:每页个数
+     * stage:时期
+     */
+    @GetMapping
+    public GmsResponse getAllPlea(int page, int size, String stage) throws GmsException {
+        try {
+            Page<Plea> pleaPage = pleaService.getAllPlea(page, size, stage);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), pleaPage);
+        } catch (Exception e) {
+            String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
