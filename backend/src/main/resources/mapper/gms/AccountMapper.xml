@@ -11,6 +11,13 @@
         <collection property="teachers" column="TEAM_ID"
                     select="com.gms.gms.dao.AccountMapper.selectTeacherByTeamId"/>
     </resultMap>
+    <resultMap id="ACC" type="com.gms.gms.domain.StuGroup">
+        <!-- id property="id" column="ID"/-->
+        <result property="groupId" column="GROUP_ID"/>
+        <result property="stage" column="STAGE"/>
+        <collection property="students" column="GROUP_ID"
+                    select="com.gms.gms.dao.AccountMapper.selectStudentByGroupId"/>
+    </resultMap>
     <select id="getTeacherByUserId" resultType="com.gms.gms.domain.Teacher">
         select * FROM teacher where USER_ID = #{userId}
     </select>
@@ -188,4 +195,32 @@
         VALUES
             (#{gro.groupId},#{gro.stuId},#{gro.stage})
     </insert>
+    <select id="getStudentGroup" resultMap="ACC">
+        SELECT DISTINCT
+            stu_group.GROUP_ID
+        FROM
+            stu_group
+        WHERE
+            stu_group.STAGE = #{stage}
+    </select>
+    <select id="selectStudentByGroupId" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+                JOIN stu_group ON student.STU_ID = stu_group.STU_ID
+        WHERE
+            stu_group.GROUP_ID = #{id}
+    </select>
 </mapper>

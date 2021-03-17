@@ -106,4 +106,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
         }
         return true;
     }
+
+    @Override
+    public Page<StuGroup> getStudentGroup(int page, int size, String stage) {
+        return this.baseMapper.getStudentGroup(new Page<StuGroup>(page, size), stage);
+    }
 }
