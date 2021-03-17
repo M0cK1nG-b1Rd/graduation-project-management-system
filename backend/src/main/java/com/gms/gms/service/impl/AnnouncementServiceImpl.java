@@ -47,8 +47,8 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
     }
 
     @Override
-    public void addAnnouncement(Announcement announcement) {
-        announcement.setDocId(FileStorageUtil.getDocId());
+    public void addAnnouncement(Announcement announcement,String docId) {
+        announcement.setDocId(docId);
         announcement.setCreateBy(GmsUtil.getCurrentUser().getUserId());
         announcement.setCreateTime(new Date());
         this.save(announcement);

@@ -57,12 +57,13 @@ public class AppliedSubjectController {
         try {
             appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
             appliedSubject.setApplyTime(new Date());
-            appliedSubject.setDocId(FileStorageUtil.getDocId());
+            String docId=FileStorageUtil.getDocId();
+            appliedSubject.setDocId(docId);
             appliedSubjectService.addAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "选题申请提交成功"));
+                    "选题申请提交成功"),docId);
         } catch (Exception e) {
             String message = "选题申请提交失败";
             log.error(message, e);
