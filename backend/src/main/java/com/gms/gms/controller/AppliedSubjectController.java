@@ -73,6 +73,8 @@ public class AppliedSubjectController {
     @PutMapping
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
         try {
+            // TODO: 2021/3/17 查看是否有成功通过的申请，如果有则不让其提交
+            
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
 
