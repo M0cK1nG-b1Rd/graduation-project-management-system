@@ -42,9 +42,9 @@ public class FileStorage implements Serializable {
     @JsonIgnore
     @TableField("TYPE")
     private String type;
-    @JsonIgnore
+
     @TableField("SIZE")
-    private Integer size;
+    private Long size;
     @JsonIgnore
     @TableField("LOCATION")
     private String location;
@@ -58,17 +58,5 @@ public class FileStorage implements Serializable {
     @TableField("UPLOAD_TIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date uploadTime;
-
-    public FileStorage(String fileName, String location, Integer uploadBy) {
-        this.fileName = fileName;
-        this.location = location;
-        this.uploadBy = uploadBy;
-        this.uploadTime = new Date();
-    }
-
-    public FileStorage(String fileName, String location, Integer uploadBy, String docId) {
-        this(fileName, location, uploadBy);
-        this.docId = docId;
-    }
 
 }
