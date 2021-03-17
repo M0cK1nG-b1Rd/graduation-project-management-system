@@ -175,11 +175,6 @@
               </el-row>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="指导教师">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
@@ -207,10 +202,10 @@
     <el-drawer
       title="开题信息反馈及评分"
       :visible.sync="drawer"
-      :before-close="handleClose" size="50%">
+      size="50%">
       <el-row class="drawer-bg">
       <!--      富文本编辑器输入框-->
-      <el-form ref="form" :model="report" label-width="80px">
+      <el-form ref="form" :model="feedBack" label-width="80px">
       <el-row>
         <el-col style="padding: 40px">
         <el-card class="feedBackCard">
@@ -315,7 +310,16 @@ export default {
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.reportlist = res.data.records
+      this.reportlist = res.data.records // 与后端对接
+    },
+    async getSubjectInfo(row) {
+      console.log(row)
+      console.log(row.subId)
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { subId: row.subId } })
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取课题列表失败')
+      }
+      this.currentSubjectInfo = res.data.records // 与后端对接
     },
     // 提交表单
     async feedBackSubmit() {
@@ -325,12 +329,12 @@ export default {
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
       this.queryInfo.size = newSize
-      this.getSubjectList()
+      this.getSubjectInfo()
     },
     // 当页面编号变化时触发
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getSubjectList()
+      this.getSubjectInfo()
     },
     // 筛选课题类型
     filterType(value, row) {
@@ -342,6 +346,7 @@ export default {
     },
     // 查看课题详情
     viewSubject(row) {
+      this.getSubjectInfo(row)
       this.viewPageVisible = true
       this.currentSubjectInfo = row
       console.log(this.currentSubjectInfo)
