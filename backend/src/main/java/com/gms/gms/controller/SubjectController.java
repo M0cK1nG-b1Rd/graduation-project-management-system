@@ -35,7 +35,8 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @GetMapping("my")
+    //教师查看自己的课题
+    @GetMapping("teacher/my")
     public GmsResponse getMySubject() throws GmsException {
         try {
             List<Subject> subjects = subjectService.getMySubject();
@@ -47,7 +48,22 @@ public class SubjectController {
         }
     }
 
+    //学生查看自己申请通过的课题
+    @GetMapping("student/my")
+    public GmsResponse getStudentPassedSubject() throws GmsException {
+        try {
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+            Subject subject = subjectService.getStudentPassedSubject(stuId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
     //学生查看选题信息，包括详情
+    //passed是指教师通过的课题而不是学生通过的课题
     //筛选 搜索关键字、课题领域、老师名字
     @GetMapping
     public GmsResponse getPassedSubject(Subject subject) throws GmsException{
@@ -86,14 +102,15 @@ public class SubjectController {
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
-            subject.setSubId(FileStorageUtil.getDocId());
+            String docId=FileStorageUtil.getDocId();
+            subject.setSubId(docId);
             subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
             subject.setPoseTime(new Date());
             subjectService.save(subject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "新建课题成功"));
+                    "新建课题成功"),docId);
         } catch (Exception e) {
             String message = "新建课题失败";
             log.error(message, e);
@@ -107,13 +124,13 @@ public class SubjectController {
         try {
             //新建一条记录而不是修改记录
             subject.setPoseBy(GmsUtil.getCurrentUser().getUserId());
-            String uuid = FileStorageUtil.getDocId();
-            subject.setDocId(uuid);
+            String docId = FileStorageUtil.getDocId();
+            subject.setDocId(docId);
             subjectService.save(subject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "修改课题成功"));
+                    "修改课题成功"),docId);
         } catch (Exception e) {
             String message = "修改课题失败";
             log.error(message, e);

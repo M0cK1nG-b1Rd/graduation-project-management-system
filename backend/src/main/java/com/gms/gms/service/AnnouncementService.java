@@ -15,7 +15,7 @@ public interface AnnouncementService extends IService<Announcement> {
 
     void updateAnnouncement(Announcement announcement);
 
-    void addAnnouncement(Announcement announcement);
+    void addAnnouncement(Announcement announcement ,String docId);
 
     void deleteAnnouncements(List<Integer> annIds);
 

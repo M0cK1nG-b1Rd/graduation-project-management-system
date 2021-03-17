@@ -56,4 +56,9 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
         Page<Subject> returnSubjectPage = this.baseMapper.getAllSubject(page,subject);
         return returnSubjectPage;
     }
+
+    @Override
+    public Subject getStudentPassedSubject(Integer stuId) {
+        return this.baseMapper.getStudentPassedSubject(stuId);
+    }
 }
