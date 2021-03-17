@@ -37,9 +37,9 @@ public class SubjectController {
 
     //教师查看自己的课题
     @GetMapping("teacher/my")
-    public GmsResponse getMySubject() throws GmsException {
+    public GmsResponse getMySubject(@RequestParam(required = false) String subId) throws GmsException {
         try {
-            List<Subject> subjects = subjectService.getMySubject();
+            List<Subject> subjects = subjectService.getMySubject(subId);
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
         } catch (Exception e) {
             String message = "查询失败";

@@ -7,6 +7,7 @@ import com.gms.gms.dao.FileStorageMapper;
 import com.gms.gms.service.FileStorageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.system.manager.UserManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -31,6 +32,7 @@ import java.util.stream.Stream;
  * @author MrBird
  */
 @Service
+@Slf4j
 public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileStorage> implements FileStorageService {
 
 
@@ -41,7 +43,13 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
     @Override
     public void init() {
         try {
-            Files.createDirectory(dirPath);
+            File folder = dirPath.toFile();
+            if (!folder.exists() && !folder.isDirectory()) {
+                Files.createDirectory(dirPath);
+                log.info("创建文件夹："+dirPath);
+            } else {
+                log.info("文件夹已存在");
+            }
         } catch (IOException e) {
             throw new RuntimeException("无法创建用于上传的文件夹！");
         }
