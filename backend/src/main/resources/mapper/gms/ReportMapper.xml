@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.ReportMapper">
+    <update id="auditReport">
+
+    </update>
+
+    <select id="selectReport" resultMap="ReportMapper">
+        SELECT
+            r.ID,
+            r.SUB_ID,
+            s.SUB_NAME,
+            r.REPORT_ID,
+            r.DOC_ID,
+            r.STAGE,
+            r.MEANING,
+            r.RESULT,
+            r.PLAN,
+            r.PROGRESS,
+            r.POST_PLAN,
+            r.POSE_BY AS STUDENT_ID,
+            u1.REAL_NAME AS STUDENT_NAME,
+            r.`STATUS`,
+            r.FEEDBACK,
+            r.FILE_SCORE,
+            r.DEFENSE_SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            report r
+                JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
+                JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
+                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                LEFT JOIN file_storage f ON(f.DOC_ID)
+    </select>
+    <select id="selectReportAsTeacher" resultMap="ReportMapper">
+        SELECT
+            r.ID,
+            r.SUB_ID,
+            s.SUB_NAME,
+            r.REPORT_ID,
+            r.DOC_ID,
+            r.STAGE,
+            r.MEANING,
+            r.RESULT,
+            r.PLAN,
+            r.PROGRESS,
+            r.POST_PLAN,
+            r.POSE_BY AS STUDENT_ID,
+            u1.REAL_NAME AS STUDENT_NAME,
+            r.`STATUS`,
+            r.FEEDBACK,
+            r.FILE_SCORE,
+            r.DEFENSE_SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            report r
+                JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
+                JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
+                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                JOIN teacher t ON(t.TEACHER_ID=s.POSE_BY)
+                LEFT JOIN file_storage f ON(f.DOC_ID)
+        WHERE t.TEACHER_ID=#{teacherId}
+    </select>
+    <select id="selectReportAsStudent" resultMap="ReportMapper">
+        SELECT
+            r.ID,
+            r.SUB_ID,
+            s.SUB_NAME,
+            r.REPORT_ID,
+            r.DOC_ID,
+            r.STAGE,
+            r.MEANING,
+            r.RESULT,
+            r.PLAN,
+            r.PROGRESS,
+            r.POST_PLAN,
+            r.POSE_BY AS STUDENT_ID,
+            u1.REAL_NAME AS STUDENT_NAME,
+            r.`STATUS`,
+            r.FEEDBACK,
+            r.FILE_SCORE,
+            r.DEFENSE_SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            report r
+                JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
+                JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
+                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                LEFT JOIN file_storage f ON(f.DOC_ID)
+        WHERE r.POSE_BY=#{studentId}
+    </select>
+
+
+    <resultMap id="ReportMapper" type="com.gms.gms.domain.Report">
+        <result column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
+        <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
+        <result column="REPORT_ID" property="reportId" jdbcType="INTEGER"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
+        <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
+        <result column="MEANING" property="meaning" jdbcType="VARCHAR"/>
+        <result column="RESULT" property="result" jdbcType="DATE"/>
+        <result column="PLAN" property="plan" jdbcType="VARCHAR"/>
+        <result column="PROGRESS" property="progress" jdbcType="VARCHAR"/>
+        <result column="POST_PLAN" property="postPlan" jdbcType="VARCHAR"/>
+        <result column="STUDENT_ID" property="poseBy" jdbcType="INTEGER"/>
+        <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
+        <result column="FILE_SCORE" property="fileScore" jdbcType="INTEGER"/>
+        <result column="DEFENSE_SCORE" property="defenseScore" jdbcType="INTEGER"/>
+        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
+            <result column="DOC_ID" property="docId"/>
+            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+</mapper>

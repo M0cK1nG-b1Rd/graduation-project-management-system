@@ -4,94 +4,94 @@
     <update id="auditAppliedSubject" parameterType="com.gms.gms.domain.AppliedSubject">
         UPDATE applied_subject
         SET `STATUS` = #{appliedSubject.status}
-        WHERE STU_ID = #{appliedSubject.stuId}
+        WHERE ID = #{appliedSubject.id}
+          AND STU_ID = #{appliedSubject.studentId}
           AND SUB_ID = #{appliedSubject.subId}
           AND `STATUS` = "WSH";
     </update>
 
 
     <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
-        SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.FILE_ID,
+               f.FILE_NAME
 
-        FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN USER u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN USER u2 ON ( u2.USER_ID = t.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID = a.DOC_ID )
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+# 需要加上hadninId，对接时解决
     </select>
     <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
-        SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.FILE_ID,
+               f.FILE_NAME
 
-        FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN USER u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN USER u2 ON ( u2.USER_ID = t.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID = a.DOC_ID )
-        WHERE s.POSE_BY=#{teacherId}
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        WHERE s.POSE_BY = #{teacherId}
     </select>
     <select id="selectWithConditionAsStudent" resultMap="AppliedSubjectMapper">
-        SELECT
-            a.SUB_ID,
-            s.SUB_NAME,
-            s.POSE_BY AS TEACHER_ID,
-            u2.REAL_NAME AS TEACHER_NAME,
-            a.STU_ID AS STUDENT_ID,
-            u1.REAL_NAME AS STUDENT_NAME,
-            a.APPLY_TIME,
-            a.APPLY_REASON,
-            a.`STATUS`,
-            a.FEEDBACK,
-            a.AUDIT_TIME,
-            f.DOC_ID,
-            f.HANDIN_ID,
-            f.FILE_NAME
+        SELECT a.ID,
+               a.SUB_ID,
+               s.SUB_NAME,
+               s.POSE_BY    AS TEACHER_ID,
+               u2.REAL_NAME AS TEACHER_NAME,
+               a.STU_ID     AS STUDENT_ID,
+               u1.REAL_NAME AS STUDENT_NAME,
+               a.APPLY_TIME,
+               a.APPLY_REASON,
+               a.`STATUS`,
+               a.FEEDBACK,
+               a.AUDIT_TIME,
+               f.DOC_ID,
+               f.FILE_ID,
+               f.FILE_NAME
 
-        FROM
-            applied_subject a
-                JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
-                JOIN student stu ON ( stu.STU_ID = a.STU_ID )
-                JOIN USER u1 ON ( u1.USER_ID = stu.USER_ID )
-                JOIN teacher t ON ( t.TEACHER_ID = s.POSE_BY )
-                JOIN USER u2 ON ( u2.USER_ID = t.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID = a.DOC_ID )
-        WHERE a.STU_ID=#{studentId}
+        FROM applied_subject a
+                 JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                 JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+        WHERE a.STU_ID = #{studentId}
     </select>
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
+        <result column="ID" property="id" jdbcType="INTEGER"/>
         <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
@@ -106,7 +106,7 @@
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
             <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="HANDIN_ID" property="handinId" jdbcType="INTEGER"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
 </mapper>

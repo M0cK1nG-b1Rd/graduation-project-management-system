@@ -62,27 +62,12 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
         }
     }
 
-    @Override
-    public void saveByHandinId(MultipartFile multipartFile, String docId,Integer handinId) {
-        try {
-            FileStorage record = new FileStorage(
-                    multipartFile.getOriginalFilename(),
-                    dirPath.toString(),
-                    GmsUtil.getCurrentUser().getUserId(),
-                    docId,
-                    handinId);
-            this.save(record);
-            Files.copy(multipartFile.getInputStream(), this.dirPath.resolve(multipartFile.getOriginalFilename()));
 
-        } catch (IOException e) {
-            throw new RuntimeException("无法存储文件：" + e.getMessage());
-        }
-    }
 
     @Override
-    public Resource load(String docId, String handinId) {
+    public Resource load(String docId,String fileId) {
         //mybatis-plus自带在这张表会出问题
-        FileStorage record = this.baseMapper.selectByDocIdAndHandinId(docId,handinId);
+        FileStorage record = this.baseMapper.selectByDocIdAndFileId(docId,fileId);
 
         String filename = record.getFileName();
 

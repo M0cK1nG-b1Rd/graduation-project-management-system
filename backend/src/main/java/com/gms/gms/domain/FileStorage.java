@@ -34,10 +34,6 @@ public class FileStorage implements Serializable {
     @TableField("DOC_ID")
     private String docId;
 
-    @TableField("HANDIN_ID")
-    private Integer handinId;
-
-    @JsonIgnore
     @TableId(value = "FILE_ID", type = IdType.AUTO)
     private Integer fileId;
 
@@ -73,11 +69,6 @@ public class FileStorage implements Serializable {
     public FileStorage(String fileName, String location, Integer uploadBy, String docId) {
         this(fileName, location, uploadBy);
         this.docId = docId;
-    }
-
-    public FileStorage(String fileName, String location, Integer uploadBy, String docId, Integer handinId) {
-        this(fileName, location, uploadBy, docId);
-        this.handinId = handinId;
     }
 
 }

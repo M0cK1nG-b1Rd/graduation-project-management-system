@@ -6,9 +6,9 @@
         SELECT * FROM file_storage
     </select>
 
-    <select id="selectByDocIdAndHandinId" resultType="com.gms.gms.domain.FileStorage">
+    <select id="selectByDocIdAndFileId" resultType="com.gms.gms.domain.FileStorage">
         SELECT * FROM file_storage
-        WHERE (DOC_ID = #{docId} AND HANDIN_ID = #{handinId});
+        WHERE (DOC_ID = #{docId} AND FILE_ID = #{fileId});
     </select>
 
     <select id="selectByDocId" resultType="com.gms.gms.domain.FileStorage">
