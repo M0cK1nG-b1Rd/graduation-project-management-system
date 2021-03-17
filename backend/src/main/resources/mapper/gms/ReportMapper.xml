@@ -19,6 +19,7 @@
             r.PROGRESS,
             r.POST_PLAN,
             r.POSE_BY AS STUDENT_ID,
+            r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.FEEDBACK,
@@ -46,6 +47,7 @@
             r.PROGRESS,
             r.POST_PLAN,
             r.POSE_BY AS STUDENT_ID,
+            r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.FEEDBACK,
@@ -77,6 +79,7 @@
             r.PROGRESS,
             r.POST_PLAN,
             r.POSE_BY AS STUDENT_ID,
+            r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.FEEDBACK,
@@ -108,6 +111,7 @@
         <result column="PROGRESS" property="progress" jdbcType="VARCHAR"/>
         <result column="POST_PLAN" property="postPlan" jdbcType="VARCHAR"/>
         <result column="STUDENT_ID" property="poseBy" jdbcType="INTEGER"/>
+        <result column="POSE_TIME" property="poseTime" jdbcType="INTEGER"/>
         <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
