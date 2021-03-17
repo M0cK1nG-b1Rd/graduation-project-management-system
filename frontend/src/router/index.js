@@ -143,12 +143,12 @@ const routes = [
         path: '/initial/myList',
         component: MyRecord
       },
-      // 开题--教办审核开题信息
+      // 开题--教办审核 开题信息
       {
         path: '/initial/startCheck',
         component: CheckStartSubjects
       },
-      // 中期--学生填写中期答辩信息
+      // 中期--学生填 写中期答辩信息
       {
         path: '/middle/myReport',
         component: MidReport

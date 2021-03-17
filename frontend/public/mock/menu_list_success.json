@@ -323,6 +323,16 @@
           "path": "/initial/startCheck",
           "component": "",
           "children": []
+        },
+        {
+          "name": "答辩安排",
+          "id": 2228,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-check",
+          "path": "/initial/arrange",
+          "component": "",
+          "children": [ ]
         }
       ]
     },
