@@ -47,21 +47,6 @@
             label="报告人"
             width="110">
           </el-table-column>
-          <!--        课题类型-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="type"
-            label="课题类型"
-            width="100"
-            :filters="[{ text: '科学探索与技术创新', value: 1 }, { text: '生命关怀与社会认知', value: 2 }, { text: '哲学智慧与创新思维', value: 3 }]"
-            :filter-method="filterType"
-            filter-placement="bottom-end">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.type==1" type="info">类型一</el-tag>
-              <el-tag v-if="scope.row.type==2" type="success">类型二</el-tag>
-              <el-tag v-if="scope.row.type==3" type="primary">类型三</el-tag>
-            </template>
-          </el-table-column>
           <!--         课题状态-->
           <el-table-column
             :show-overflow-tooltip="true"
@@ -72,9 +57,9 @@
             filter-placement="bottom-end"
             label="报告状态">
             <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == '2'">已通过</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == '1'">待审核</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == '3'">未通过</el-tag>
+              <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
+              <el-tag type="warning" v-if=" scope.row.status == 'WSH'">待审核</el-tag>
+              <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
             </template>
           </el-table-column>
           <!--          操作-->
@@ -123,11 +108,6 @@
               <el-input v-model="currentSubjectInfo.subName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
-            <el-form-item label="报告人">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="10">
@@ -135,7 +115,7 @@
               <el-input v-model="currentSubjectInfo.type"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="10">
             <el-form-item label="申报时间">
               <el-row>
                 <el-input v-model="currentSubjectInfo.poseTime"></el-input>
@@ -331,11 +311,11 @@ export default {
   },
   methods: {
     async getReportList() {
-      const { data: res } = await this.$http.get('/mock/report_list.json', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.reportlist = res.data.reports
+      this.reportlist = res.data.records
     },
     // 提交表单
     async feedBackSubmit() {
