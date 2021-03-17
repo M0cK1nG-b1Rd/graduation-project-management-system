@@ -37,8 +37,11 @@ public class Plea implements Serializable {
     @TableField("CLASSROOM_ID")
     private Integer classroomId;
 
-    @TableField("TIME")
-    private String time;
+    @TableField("START_TIME")
+    private String startTime;
+
+    @TableField("END_TIME")
+    private String endTime;
 
     @TableField("IS_RELEASE")
     private Boolean isRelease;
