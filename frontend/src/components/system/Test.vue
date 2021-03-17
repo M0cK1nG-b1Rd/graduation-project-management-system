@@ -1,22 +1,38 @@
 <template>
-  <el-upload
-    class="upload-demo"
-    ref="upload"
-    action="https://jsonplaceholder.typicode.com/posts/"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :file-list="fileList"
-    :auto-upload="false">
-    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-  </el-upload>
+  <div>
+    <el-upload
+      :headers="myHeaders"
+      class="upload-demo"
+      multiple
+      ref="upload"
+      :action="'http://127.0.0.1:9528/file/upload/' + docId"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :file-list="fileList"
+      :auto-upload="false">
+      <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+      <div slot="tip" class="el-upload__tip">文件格式无限制，单个文件大小不超过50Mb</div>
+    </el-upload>
+    <div class="download">
+    </div>
+  </div>
 </template>
 <script>
+const token = window.sessionStorage.getItem('token')
 export default {
+  async mounted() {
+    const { data: res } = await this.$http('http://127.0.0.1:9528/file/files/89894554')
+    if (res.meta.code === 200) return this.$notify.success('文件信息拉取成功！')
+    else {
+      this.$notify.error('文件信息拉取失败！')
+    }
+  },
   data() {
     return {
-      fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
+      docId: 89894554,
+      myHeaders: { Authentication: token },
+      fileList: []
     }
   },
   methods: {
