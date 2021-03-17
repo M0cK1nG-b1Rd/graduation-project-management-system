@@ -35,6 +35,7 @@
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
                  LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
+# 需要加上hadninId，对接时解决
     </select>
     <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
         SELECT a.ID,
