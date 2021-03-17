@@ -34,7 +34,8 @@ public class PleaController {
      * stuGroupId:学生组id
      * acceptanceTeamId:老师组id
      * classroomId:教室id
-     * time:答辩时间
+     * startTime:开始时间
+     * endTime:结束时间
      * stage:时期
      */
     @PostMapping
@@ -67,7 +68,8 @@ public class PleaController {
      * stuGroupId:学生组id
      * acceptanceTeamId:老师组id
      * classroomId:教室id
-     * time:答辩时间
+     * startTime:开始时间
+     * endTime:结束时间
      * stage:时期
      */
     @PutMapping

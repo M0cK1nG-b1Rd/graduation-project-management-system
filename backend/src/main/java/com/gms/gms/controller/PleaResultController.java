@@ -46,7 +46,7 @@ public class PleaResultController {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
-                        "该学生已打分，无法新建"));
+                        "该学生已打分，无法重复打分"));
             }
             //使用MybatisPlus封装的方法
             pleaResultService.save(pleaResult);
