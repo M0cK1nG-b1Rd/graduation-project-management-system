@@ -18,6 +18,7 @@
         <collection property="students" column="GROUP_ID"
                     select="com.gms.gms.dao.AccountMapper.selectStudentByGroupId"/>
     </resultMap>
+
     <select id="getTeacherByUserId" resultType="com.gms.gms.domain.Teacher">
         select * FROM teacher where USER_ID = #{userId}
     </select>
@@ -223,4 +224,28 @@
         WHERE
             stu_group.GROUP_ID = #{id}
     </select>
+    <delete id="deleteStudent">
+        DELETE
+        FROM
+            stu_group
+        WHERE
+            stu_group.STAGE = #{stage}
+    </delete>
+    <delete id="deleteTeacherInTeam" parameterType="java.util.List">
+        DELETE
+        FROM
+            acceptance_teacher
+        WHERE
+            acceptance_teacher.TEAM_ID IN
+        <foreach collection="groupId" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="deleteTeacherTeam">
+        DELETE
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{stage}
+    </delete>
 </mapper>
