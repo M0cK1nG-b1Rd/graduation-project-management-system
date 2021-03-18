@@ -3,8 +3,8 @@
     <!--    面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>开题管理</el-breadcrumb-item>
-      <el-breadcrumb-item>开题审核</el-breadcrumb-item>
+      <el-breadcrumb-item>中期管理</el-breadcrumb-item>
+      <el-breadcrumb-item>中期审核</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图区-->
     <el-card class="el-card">
@@ -72,8 +72,8 @@
               <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
                 <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
               </el-tooltip>
-              <!--              查看开题阶段内容-->
-              <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
+              <!--              查看中期阶段内容-->
+              <el-tooltip class="item" effect="dark" content="查看中期阶段内容" placement="top" :enterable="false">
                 <el-button type="danger" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
               </el-tooltip>
               <!-- 给学生反馈信息-->
@@ -159,7 +159,7 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    查看开题详情对话框  注意下载附件-->
+    <!--    查看中期详情对话框  注意下载附件-->
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
@@ -180,17 +180,12 @@
         </el-row>
         <el-row>
           <el-col :span="20">
-            <el-form-item label="研究意义">
+            <el-form-item label="研究进展">
               <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.meaning"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.result"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="研究计划">
+            <el-form-item label="后续计划">
               <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.plan"></el-input>
             </el-form-item>
           </el-col>
@@ -206,47 +201,47 @@
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
-      <!--      富文本编辑器输入框-->
-      <el-form ref="form" :model="feedBack" label-width="80px">
-      <el-row>
-        <el-col style="padding: 40px">
-        <el-card class="feedBackCard">
-        <el-row>
-          <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
-          <el-col :span="24" style="margin-bottom: 10px">
-            <div class="ql-container ql-snow">
-              <div class="notice_content ql-editor"
-                   @click="useQuillEditor"
-                   v-html="feedBack.comment">
-              </div>
-            </div>
-          </el-col>
-        </el-row>
-          <el-divider></el-divider>
-        <el-col>
-          <div class="block">
-            <el-slider
-              v-model="feedBack.fileScore"
-              show-input>
-            </el-slider>
-          </div>
-        </el-col>
-        <el-col>
-          <el-form-item label="开题结果">
-            <el-radio-group v-model="feedBack.status">
-              <el-radio label="2">通过审核</el-radio>
-              <el-radio label="3">未通过</el-radio>
-            </el-radio-group>
+        <!--      富文本编辑器输入框-->
+        <el-form ref="form" :model="feedBack" label-width="80px">
+          <el-row>
+            <el-col style="padding: 40px">
+              <el-card class="feedBackCard">
+                <el-row>
+                  <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
+                  <el-col :span="24" style="margin-bottom: 10px">
+                    <div class="ql-container ql-snow">
+                      <div class="notice_content ql-editor"
+                           @click="useQuillEditor"
+                           v-html="feedBack.comment">
+                      </div>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <el-col>
+                  <div class="block">
+                    <el-slider
+                      v-model="feedBack.score"
+                      show-input>
+                    </el-slider>
+                  </div>
+                </el-col>
+                <el-col>
+                  <el-form-item label="开题结果">
+                    <el-radio-group v-model="feedBack.status">
+                      <el-radio label="2">通过审核</el-radio>
+                      <el-radio label="3">未通过</el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </el-col>
+              </el-card>
+            </el-col>
+          </el-row>
+          <el-form-item>
+            <el-button type="success" @click="feedBackSubmit(scope.row)">立即提交</el-button>
+            <el-button>取消</el-button>
           </el-form-item>
-        </el-col>
-        </el-card>
-        </el-col>
-      </el-row>
-        <el-form-item>
-          <el-button type="success" @click="feedBackSubmit(scope.row)">立即提交</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
-      </el-form>
+        </el-form>
       </el-row>
     </el-drawer>
     <!--      符文本编辑器对话框-->
@@ -290,7 +285,7 @@ export default {
       total: 0,
       feedBack: {
         comment: '',
-        fileScore: 0,
+        score: 0,
         status: '',
         id: 0
       },
@@ -298,7 +293,7 @@ export default {
       viewPageVisible: false,
       // 查看开题详情对话框可见性
       viewReportVisible: false,
-      // 查看开题详情对话框可见性
+      // 反馈结果抽屉可见性
       drawer: false,
       // 富文本编辑器可见性
       quillEditorVisible: false

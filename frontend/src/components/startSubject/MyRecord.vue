@@ -278,7 +278,7 @@ export default {
         size: 10, // 页面大小
         type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
       },
-      // 查看详情对话框可见性
+      // 查看课题详情对话框可见性
       viewPageVisible: false,
       // 查看开题详情对话框可见性
       viewReportVisible: false,
