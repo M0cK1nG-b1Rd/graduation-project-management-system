@@ -51,7 +51,7 @@
             <el-row class="group_arrange" v-if="hasDivideArranged">
               <a-result
                 status="success"
-                title="当前已有答辩分组安排，可以在此进行撤回">
+                title="当前已有分组安排，可以在此进行撤回">
                 <template #extra>
                   <el-popconfirm
                     title="您确定要撤回已有的答辩安排吗？"
@@ -93,16 +93,21 @@
             <!--            已有答辩安排，在此可以撤回-->
             <a-result v-if="hasPleaArranged"
               status="success"
-              title="已有答辩安排，请前往查看，或撤回已有安排">
+              title="已有答辩安排，请前往查看，在此可以删除或撤回已有安排">
               <template #extra>
-                <el-popconfirm @click="withdrawAllArrange"
-                  title="确定撤回已有答辩安排吗？">
-                  <a-button slot="reference">撤回已有答辩安排</a-button>
+                <el-popconfirm @confirm="withdrawAllArrange"
+                  title="撤回后，已有的答辩可以重新发布，确定撤回已有答辩安排吗？">
+                  <a-button slot="reference" type="primary">撤回已有答辩安排</a-button>
+                </el-popconfirm>
+                <el-popconfirm @confirm="deleteAllArrange"
+                  title="删除后，已有的答辩安排不可再找回，确定删除已有答辩安排吗？">
+                  <a-button slot="reference" type="danger" style="margin-left: 20px">删除已有答辩安排</a-button>
                 </el-popconfirm>
               </template>
             </a-result>
             <!--            暂无答辩安排，查看分组情况并设置答辩信息-->
-            <el-card class="team_info_card" v-else
+            <div v-else>
+              <el-card class="team_info_card"
                        v-for="(item, index) in studentPleaTeams" :key="index">
                 <el-row class="group_info">
                   <!--                小组编号-->
@@ -166,21 +171,22 @@
                   </el-col>
                 </el-row>
               </el-card>
-<!--            发布或撤回分组结果-->
-            <el-row type="flex" justify="center" style="margin-top: 20px">
-              <el-popconfirm
-                title="确定要发布当前答辩安排吗？"
-                @confirm="releaseAllArrange"
-              >
-                <el-button type="primary" slot="reference">发布安排</el-button>
-              </el-popconfirm>
-              <el-popconfirm
-                title="确定要撤回已发布的安排吗？"
-                @confirm="withdrawAllArrange"
-              >
-                <el-button type="success" slot="reference">撤回安排</el-button>
-              </el-popconfirm>
-            </el-row>
+              <!--            发布或撤回分组结果-->
+              <el-row type="flex" justify="center" style="margin-top: 20px">
+                <el-popconfirm
+                  title="确定要发布当前答辩安排吗？"
+                  @confirm="releaseAllArrange"
+                >
+                  <el-button type="primary" slot="reference">发布安排</el-button>
+                </el-popconfirm>
+                <el-popconfirm
+                  title="确定要撤回已发布的安排吗？"
+                  @confirm="withdrawAllArrange"
+                >
+                  <el-button type="success" slot="reference">撤回安排</el-button>
+                </el-popconfirm>
+              </el-row>
+            </div>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -308,11 +314,6 @@
         </el-row>
       </div>
     </el-dialog>
-    <!--    查看选择中小组答辩秘书信息对话框-->
-    <el-dialog title="答辩秘书信息"
-               width="30%" center
-               :visible.sync="secretaryGroupInfoVisible">
-    </el-dialog>
   </div>
 </template>
 
@@ -425,6 +426,8 @@ export default {
       if (res.meta.code === 200) {
         if (res.data.total === 0) {
           this.hasPleaArranged = false
+        } else {
+          this.hasPleaArranged = true
         }
       } else {
         this.$notify.error('获取答辩安排失败！')
@@ -490,6 +493,17 @@ export default {
     async withdrawAllArrange() {
       // TODO 后期改为KT阶段
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/false', { stage: 'JT' })
+      if (res.meta.code === 200) {
+        this.$message.success(res.meta.message)
+      } else {
+        this.$message.error(res.meta.message)
+      }
+      await this.getPleaArrangeResult()
+    },
+    // 删除所有已有的答辩安排
+    async deleteAllArrange() {
+      // TODO 后期改为KT阶段
+      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/plea', { params: { stage: 'JT' } })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {

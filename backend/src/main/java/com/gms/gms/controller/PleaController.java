@@ -190,7 +190,7 @@ public class PleaController {
                     Code.C200.getDesc(),
                     "删除答辩安排成功"));
         } catch (Exception e) {
-            String message = "删除失败";
+            String message = "删除答辩安排失败";
             log.error(message, e);
             throw new GmsException(message);
         }
