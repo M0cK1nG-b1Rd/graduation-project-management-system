@@ -15,7 +15,7 @@
         <!-- id property="id" column="ID"/-->
         <result property="groupId" column="GROUP_ID"/>
         <result property="stage" column="STAGE"/>
-        <collection property="students" column="GROUP_ID"
+        <collection property="students" column="{id=GROUP_ID,stage=STAGE}"
                     select="com.gms.gms.dao.AccountMapper.selectStudentByGroupId"/>
     </resultMap>
 
@@ -198,7 +198,8 @@
     </insert>
     <select id="getStudentGroup" resultMap="ACC">
         SELECT DISTINCT
-            stu_group.GROUP_ID
+            stu_group.GROUP_ID,
+            stu_group.STAGE
         FROM
             stu_group
         WHERE
@@ -223,6 +224,7 @@
                 JOIN stu_group ON student.STU_ID = stu_group.STU_ID
         WHERE
             stu_group.GROUP_ID = #{id}
+            AND stu_group.STAGE = #{stage}
     </select>
     <delete id="deleteStudent">
         DELETE

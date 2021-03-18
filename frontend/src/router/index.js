@@ -12,14 +12,17 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
-import teacherSubjects from '../components/givenSubjects/teacherSubjects'
-import checkMySubjects from '../components/givenSubjects/checkMySubjects'
-import judgeSubjects from '../components/givenSubjects/judgeSubjects'
+// import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+// import checkMySubjects from '../components/givenSubjects/checkMySubjects'
+// import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
 import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
+import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+import checkSubjects from '../components/givenSubjects/checkSubjects'
+import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
 import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
@@ -27,6 +30,7 @@ import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
 import StartPreScore from '@/components/startSubject/StartPreScore'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 
 Vue.use(VueRouter)
 
@@ -100,8 +104,8 @@ const routes = [
       },
       // 出题管理-审核查询界面
       {
-        path: '/subject/apply/result',
-        component: checkMySubjects
+        path: '/subject/apply/result'
+        // component: checkSubjects
       },
       // 出题管理-教研室审核课题界面
       {
@@ -169,6 +173,10 @@ const routes = [
       {
         path: '/middle/midCheck',
         component: CheckMidSubjects
+      // 开题--教研室进行答辩安排
+      {
+        path: '/initial/arrange',
+        component: ArrangePlea
       }
     ]
   }
