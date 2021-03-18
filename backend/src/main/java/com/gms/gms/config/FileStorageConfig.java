@@ -22,7 +22,8 @@ public class FileStorageConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        fileStorageService.clear();
+        //不设置清除文件
+//        fileStorageService.clear();
         fileStorageService.init();
     }
 }
