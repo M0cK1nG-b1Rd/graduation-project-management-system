@@ -176,6 +176,28 @@ public class PleaController {
     }
 
     /**
+     * 一键删除接口，删除所有传参阶段的安排，？传参
+     * stage:时期
+     * 注意，数据中存在外键，可能出现该安排中的学生打分后无法删除的情况
+     * 建议只在答辩安排时使用，正式开始答辩后不使用
+     */
+    @DeleteMapping
+    public GmsResponse deletePleaRelease(String stage) throws GmsException {
+        try {
+            pleaService.remove(new QueryWrapper<Plea>().lambda().eq(Plea::getStage,stage));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "删除答辩安排成功"));
+        } catch (Exception e) {
+            String message = "删除失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+
+    /**
      * 用户获取自己的相应时期答辩安排的接口，传参为？
      * stage:时期
      */
