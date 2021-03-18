@@ -67,14 +67,14 @@
             :show-overflow-tooltip="true"
             prop="status"
             width="120"
-            :filters="[{ text: '草稿箱', value: 1 }, { text: '已发布', value: 2 }, { text: '回收站', value: 3 }]"
+            :filters="[{ text: '草稿箱', value: 'WFB' }, { text: '已发布', value: 'YFB' }, { text: '回收站', value: 'YSC' }]"
             :filter-method="filterStatus"
             filter-placement="bottom-end"
             label="发布状态">
             <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == 2">已发布</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == 1">待发布</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == 3">已撤回</el-tag>
+              <el-tag type="success" v-if=" scope.row.status == 'YFB'">已发布</el-tag>
+              <el-tag type="warning" v-if=" scope.row.status == 'WFB'">待发布</el-tag>
+              <el-tag type="danger" v-if=" scope.row.status == 'YSC'">已撤回</el-tag>
             </template>
           </el-table-column>
           <!--          操作-->
@@ -111,7 +111,7 @@
           @current-change="handleCurrentChange"
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 20]"
-          :page-size="100"
+          :page-size="queryInfo.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalPageNum">
         </el-pagination>
@@ -214,9 +214,9 @@
           <el-col :span="8">
             发布状态
             <el-select clearable v-model="currentNoticeInfo.status" placeholder="请选择公告发布状态">
-              <el-option :value="1" :label="'暂存'"></el-option>
-              <el-option :value="2" :label="'发布'"></el-option>
-              <el-option :value="3" :label="'撤回'"></el-option>
+              <el-option :value="'WFB'" :label="'暂存'"></el-option>
+              <el-option :value="'YFB'" :label="'发布'"></el-option>
+              <el-option :value="'YSC'" :label="'撤回'"></el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -264,11 +264,11 @@ export default {
       currentNoticeInfo: {},
       // 向后端发送查询请求及分页信息时用
       queryInfo: {
-        status: '', // 需要查询的通知记录状态（1-未发布，2-已发布，3-删除）, 不发送则返回所有类型
+        status: null, // 需要查询的通知记录状态（WFB-未发布，YFB-已发布，YSC-删除）, 不发送则返回所有类型
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: null // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
       },
       // 查看公告详情对话框可见性
       viewPageVisible: false,
@@ -281,7 +281,7 @@ export default {
         annDetail: '', // 公告富文本字符串
         annTitle: '', // 公告标题
         signature: '', // 信息laiyuan(发布者)
-        status: 1, // 公告状态
+        status: 'WFB', // 公告状态
         type: '' // 公告类型
       }
     }
@@ -342,20 +342,20 @@ export default {
     // 删除公告
     async deleteNotice(row) {
       this.currentNoticeInfo = row
-      this.currentNoticeInfo.status = 3
+      this.currentNoticeInfo.status = 'YSC'
       await this.updateNotice()
     },
     // ！！！！！！下面是发布新公告页面的方法
     // 提交并发布本次公告编辑结果
     async submitNotice() {
-      this.newNoticeInfo.status = 2
+      this.newNoticeInfo.status = 'YFB'
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
       await this.submitNewNotice()
       this.addNewNoticePageVisible = false
     },
     // 将本次编辑内容存入草稿箱
     async saveAsDraft() {
-      this.newNoticeInfo.status = 1
+      this.newNoticeInfo.status = 'WFB'
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
       await this.submitNewNotice()
       this.addNewNoticePageVisible = false

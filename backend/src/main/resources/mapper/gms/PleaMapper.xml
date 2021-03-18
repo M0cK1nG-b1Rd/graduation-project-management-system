@@ -2,4 +2,149 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.PleaMapper">
 
+    <resultMap id="APP" type="com.gms.gms.domain.Plea">
+        <id property="id" column="ID"/>
+        <result property="stage" column="STAGE"/>
+        <result property="stuGroupId" column="STU_GROUP_ID"/>
+        <result property="acceptanceTeamId" column="ACCEPTANCE_TEAM_ID"/>
+        <result property="classroomId" column="CLASSROOM_ID"/>
+        <result property="classroomName" column="CLASSROOM_NAME"/>
+        <result property="time" column="TIME"/>
+        <result property="isRelease" column="IS_RELEASE"/>
+        <association property="stuGroup" column="{id=STU_GROUP_ID,stage=STAGE}"
+                     select="com.gms.gms.dao.PleaMapper.getStudentGroup"/>
+        <association property="teacherTeam" column="ACCEPTANCE_TEAM_ID"
+                     select="com.gms.gms.dao.PleaMapper.selectTeacherTeam"/>
+    </resultMap>
+    <resultMap id="MTT" type="com.gms.gms.domain.TeacherTeam">
+        <id property="teamId" column="TEAM_ID"/>
+        <result property="stage" column="STAGE"/>
+        <result property="secId" column="SEC_ID"/>
+        <association property="secretary" column="{SecId=SEC_ID,teamId=TEAM_ID}"
+                     select="com.gms.gms.dao.AccountMapper.selectSecretaryById"/>
+        <collection property="teachers" column="TEAM_ID"
+                    select="com.gms.gms.dao.AccountMapper.selectTeacherByTeamId"/>
+    </resultMap>
+    <resultMap id="ACC" type="com.gms.gms.domain.StuGroup">
+        <result property="groupId" column="GROUP_ID"/>
+        <result property="stage" column="STAGE"/>
+        <collection property="students" column="{id=GROUP_ID,stage=STAGE}"
+                    select="com.gms.gms.dao.AccountMapper.selectStudentByGroupId"/>
+    </resultMap>
+    <select id="getAllPlea" resultMap="APP">
+        SELECT
+            plea.ID,
+            plea.STAGE,
+            plea.STU_GROUP_ID,
+            plea.ACCEPTANCE_TEAM_ID,
+            classroom.CLASSROOM_NAME,
+            plea.TIME
+        FROM
+            plea
+                JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
+        WHERE
+            plea.STAGE = #{stage}
+    </select>
+    <select id="selectTeacherTeam" resultMap="MTT">
+        SELECT
+            acceptance_team.TEAM_ID,
+            acceptance_team.STAGE,
+            acceptance_team.SEC_ID
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.TEAM_ID = #{id}
+    </select>
+    <select id="getStudentGroup" resultMap="ACC">
+        SELECT DISTINCT
+            stu_group.GROUP_ID,
+            stu_group.STAGE
+        FROM
+            stu_group
+        WHERE
+            stu_group.STAGE = #{stage}
+            AND stu_group.GROUP_ID = #{id}
+    </select>
+    <select id="getStuId" resultType="java.lang.Integer">
+        SELECT
+            student.STU_ID
+        FROM
+            student
+        WHERE
+            student.USER_ID = #{userId}
+    </select>
+    <select id="getGroupId" resultType="java.lang.Integer">
+        SELECT
+            stu_group.GROUP_ID
+        FROM
+            stu_group
+        WHERE
+            stu_group.STU_ID = #{stuId}
+          AND stu_group.STAGE = #{stage}
+    </select>
+    <select id="getPleaForStudent" resultMap="APP">
+        SELECT
+            plea.ID,
+            plea.STAGE,
+            plea.STU_GROUP_ID,
+            plea.ACCEPTANCE_TEAM_ID,
+            classroom.CLASSROOM_NAME,
+            plea.TIME
+        FROM
+            plea
+                JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
+        WHERE
+            plea.STAGE = #{stage}
+            AND plea.STU_GROUP_ID = #{groupId}
+    </select>
+    <select id="getTeacherId" resultType="java.lang.Integer">
+        SELECT
+            teacher.TEACHER_ID
+        FROM
+            teacher
+        WHERE
+            teacher.USER_ID = #{userId}
+    </select>
+    <select id="getTeamId" resultType="java.lang.Integer">
+        SELECT
+            acceptance_team.TEAM_ID
+        FROM
+            acceptance_team
+                JOIN acceptance_teacher ON acceptance_team.TEAM_ID = acceptance_teacher.TEAM_ID
+        WHERE
+            acceptance_team.STAGE = #{stage}
+          AND acceptance_teacher.TEACHER_ID = #{teacherId}
+    </select>
+    <select id="getPleaForOther" resultMap="APP">
+        SELECT
+            plea.ID,
+            plea.STAGE,
+            plea.STU_GROUP_ID,
+            plea.ACCEPTANCE_TEAM_ID,
+            classroom.CLASSROOM_NAME,
+            plea.TIME
+        FROM
+            plea
+                JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
+        WHERE
+            plea.STAGE = #{stage}
+          AND plea.ACCEPTANCE_TEAM_ID = #{teamId}
+    </select>
+    <select id="getSecId" resultType="java.lang.Integer">
+        SELECT
+            secretary.SEC_ID
+        FROM
+            secretary
+        WHERE
+            secretary.USER_ID = #{userId}
+    </select>
+    <select id="getTeamId1" resultType="java.lang.Integer">
+        SELECT
+            acceptance_team.TEAM_ID
+        FROM
+            acceptance_team
+        WHERE
+            acceptance_team.STAGE = #{stage}
+          AND acceptance_team.SEC_ID = #{secId}
+    </select>
 </mapper>

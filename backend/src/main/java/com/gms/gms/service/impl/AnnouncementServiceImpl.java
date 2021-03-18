@@ -28,10 +28,10 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
         Page<Announcement> page1 = new Page<>(announcement.getPage(), announcement.getSize());
         page1.addOrder(OrderItem.desc("CREATE_TIME"));
         QueryWrapper<Announcement> announcementQueryWrapper = new QueryWrapper<>();
-        if(announcement.getStatus()!=null){
+        if(announcement.getStatus()!=null && announcement.getStatus()!=""){
             announcementQueryWrapper.eq("STATUS",announcement.getStatus());
         }
-        if(announcement.getType()!=null){
+        if(announcement.getType()!=null && announcement.getType()!=""){
             announcementQueryWrapper.eq("TYPE",announcement.getType());
         }
         if (announcement.getKeyWord() != null && announcement.getKeyWord().length() > 0) {

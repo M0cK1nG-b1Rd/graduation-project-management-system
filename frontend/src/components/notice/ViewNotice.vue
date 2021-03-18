@@ -121,7 +121,7 @@ export default {
       Visible: true,
       // 查询分页时，向后端发送的参数信息
       queryInfo: {
-        status: 2, // 需要查询的通知记录类型（1-未发布，2-已发布，3-删除）
+        status: 'YFB', // 需要查询的通知记录类型（1-未发布，2-已发布，3-删除）
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
@@ -190,11 +190,6 @@ export default {
 }
 /*页面上方标题区,不是通知内容标题*/
 .page_title {
-  background-color: #cccccc;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow:  20px 20px 60px #bebebe,
-    -20px -20px 60px #ffffff;
   font-size: 25px;
   font-weight: bold;
 }

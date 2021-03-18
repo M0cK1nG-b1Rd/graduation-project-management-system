@@ -17,7 +17,7 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "MESSAGE_ID", type = IdType.AUTO)
-    private Integer messageId;
+    private Long messageId;
 
     @TableField("FROM_ID")
     private Integer fromId;
