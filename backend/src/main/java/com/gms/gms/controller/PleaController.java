@@ -78,7 +78,7 @@ public class PleaController {
             //当存在传入id时，使用id进行接下来的操作，stuGroupId、acceptanceTeamId、stage可以不传
             if (plea.getId() == null) {
                 if (pleaService.getOne(new QueryWrapper<Plea>().lambda()
-                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
+                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
                         .eq(Plea::getStage, plea.getStage())).getIsRelease()) {
                     return new GmsResponse().addCodeMessage(new Meta(
                             Code.C500.getCode(),
@@ -87,7 +87,7 @@ public class PleaController {
                 }
                 //使用MybatisPlus封装的方法
                 pleaService.update(plea, new QueryWrapper<Plea>().lambda()
-                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
+                        .eq(Plea::getStuGroupId, plea.getStuGroupId()).eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId())
                         .eq(Plea::getStage, plea.getStage()));
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C200.getCode(),

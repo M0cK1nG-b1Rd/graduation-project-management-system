@@ -315,22 +315,12 @@
           "children": []
         },
         {
-          "name": "开题审核",
-          "id": 28,
+          "name": "答辩安排",
+          "id": 11,
           "disable": false,
           "order": "",
-          "icon": "el-icon-s-check",
-          "path": "/initial/startCheck",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "答辩评分",
-          "id": 29,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-finished",
-          "path": "/initial/score",
+          "icon": "el-icon-set-up",
+          "path": "/initial/arrange",
           "component": "",
           "children": []
         }
@@ -338,48 +328,17 @@
     },
     {
       "name": "中期管理",
-      "id": 28,
+      "id": 298,
       "disable": false,
       "order": "",
       "icon": "el-icon-time",
       "path": "/middle",
       "component": "",
-      "children": [
-        {
-          "name": "中期报告",
-          "id": 29,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-edit-outline",
-          "path": "/middle/myReport",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "我的记录",
-          "id": 30,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-notebook-2",
-          "path": "/middle/myList",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "中期审核",
-          "id": 31,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-s-check",
-          "path": "/middle/midCheck",
-          "component": "",
-          "children": []
-        }
-      ]
+      "children": []
     },
     {
       "name": "结题管理",
-      "id": 40,
+      "id": 29,
       "disable": false,
       "order": "",
       "icon": "el-icon-timer",
