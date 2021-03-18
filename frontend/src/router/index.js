@@ -26,6 +26,7 @@ import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
 import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
+import StartPreScore from '@/components/startSubject/StartPreScore'
 
 Vue.use(VueRouter)
 
@@ -148,6 +149,11 @@ const routes = [
       {
         path: '/initial/startCheck',
         component: CheckStartSubjects
+      },
+      // 开题--教师审核开题信息
+      {
+        path: '/initial/score',
+        component: StartPreScore
       },
       // 中期--学生上传中期报告
       {
