@@ -1,91 +1,91 @@
 <template>
   <div>
-  <!--    面包屑导航区域-->
-  <el-breadcrumb separator-class="el-icon-arrow-right">
-    <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item>开题管理</el-breadcrumb-item>
-    <el-breadcrumb-item>报告记录</el-breadcrumb-item>
-  </el-breadcrumb>
-<!--    查看我的开题报告提交记录列表区-->
+    <!--    面包屑导航区域-->
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>开题管理</el-breadcrumb-item>
+      <el-breadcrumb-item>报告记录</el-breadcrumb-item>
+    </el-breadcrumb>
+    <!--    查看我的开题报告提交记录列表区-->
     <!--卡片视图区-->
     <el-card class="el-card">
       <el-row>
         <el-col :span="18">
-    <!--  表格卡片-->
-      <el-card>
-      <!--      表格区-->
-      <el-row>
-        <el-table
-          :data="subjectlist"
-          size="medium "
-          style="width: 100%; font-size: 15px">
-          <!--          课题名称-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="subName"
-            label="课题名称"
-            width="300">
-          </el-table-column>
-          <!--          申请日期-->
-          <el-table-column
-            sortable
-            :show-overflow-tooltip="true"
-            prop="poseTime"
-            label="提交日期"
-            width="110">
-          </el-table-column>
-          <!--         报告状态-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="status"
-            width="120"
-            :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
-            :filter-method="filterStatus"
-            filter-placement="bottom-end"
-            label="报告状态">
-            <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == '2'">已通过</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == '1'">待审核</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == '3'">未通过</el-tag>
-            </template>
-          </el-table-column>
-          <!--          操作-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            width="200"
-            label="操作">
-            <template slot-scope="scope">
-              <!--              查看课题详细内容-->
-              <el-tooltip class="item" effect="dark" content="查看课题详细内容" placement="top" :enterable="false">
-                <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
-              </el-tooltip>
-              <!--              查看开题阶段内容-->
-              <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
-                <el-button type="warning" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
-              </el-tooltip>
-              <!--              查看反馈结果-->
-              <el-tooltip class="item" effect="dark" content="查看反馈结果" placement="top" :enterable="false">
-                <el-button type="primary" icon="el-icon-message" circle size="mini" @click="viewFeedback(scope.row)"></el-button>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-row>
-      <!--      分页区-->
-      <el-row>
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.page"
-          :page-sizes="[5, 10, 20]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="totalPageNum">
-        </el-pagination>
-      </el-row>
-    </el-card>
+          <!--  表格卡片-->
+          <el-card>
+            <!--      表格区-->
+            <el-row>
+              <el-table
+                :data="subjectlist"
+                size="medium "
+                style="width: 100%; font-size: 15px">
+                <!--          课题名称-->
+                <el-table-column
+                  :show-overflow-tooltip="true"
+                  prop="subName"
+                  label="课题名称"
+                  width="300">
+                </el-table-column>
+                <!--          申请日期-->
+                <el-table-column
+                  sortable
+                  :show-overflow-tooltip="true"
+                  prop="poseTime"
+                  label="提交日期"
+                  width="110">
+                </el-table-column>
+                <!--         报告状态-->
+                <el-table-column
+                  :show-overflow-tooltip="true"
+                  prop="status"
+                  width="120"
+                  :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+                  :filter-method="filterStatus"
+                  filter-placement="bottom-end"
+                  label="报告状态">
+                  <template slot-scope="scope">
+                    <el-tag type="success" v-if=" scope.row.status == '2'">已通过</el-tag>
+                    <el-tag type="warning" v-if=" scope.row.status == '1'">待审核</el-tag>
+                    <el-tag type="danger" v-if=" scope.row.status == '3'">未通过</el-tag>
+                  </template>
+                </el-table-column>
+                <!--          操作-->
+                <el-table-column
+                  :show-overflow-tooltip="true"
+                  width="200"
+                  label="操作">
+                  <template slot-scope="scope">
+                    <!--              查看课题详细内容-->
+                    <el-tooltip class="item" effect="dark" content="查看课题详细内容" placement="top" :enterable="false">
+                      <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
+                    </el-tooltip>
+                    <!--              查看中期阶段内容-->
+                    <el-tooltip class="item" effect="dark" content="查看中期阶段内容" placement="top" :enterable="false">
+                      <el-button type="warning" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
+                    </el-tooltip>
+                    <!--              查看中期反馈结果-->
+                    <el-tooltip class="item" effect="dark" content="查看中期反馈结果" placement="top" :enterable="false">
+                      <el-button type="primary" icon="el-icon-message" circle size="mini" @click="viewFeedback(scope.row)"></el-button>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-row>
+            <!--      分页区-->
+            <el-row>
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="queryInfo.page"
+                :page-sizes="[5, 10, 20]"
+                :page-size="100"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalPageNum">
+              </el-pagination>
+            </el-row>
+          </el-card>
         </el-col>
-      <!--      评分区-->
+        <!--      评分区-->
         <el-col :span="6">
           <el-card style="margin-left: 10px">
             <div class="card_header">我的开题成绩</div>
@@ -181,7 +181,7 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    查看开题详情对话框-->
+    <!--    查看中期详情对话框-->
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
@@ -207,17 +207,12 @@
         </el-row>
         <el-row>
           <el-col :span="20">
-            <el-form-item label="研究意义">
+            <el-form-item label="研究进展">
               <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="研究计划">
+            <el-form-item label="后续计划">
               <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
             </el-form-item>
           </el-col>
@@ -229,10 +224,10 @@
     </el-dialog>
     <!--    查看反馈抽屉-->
     <el-drawer
-      title="开题报告意见"
+      title="中期反馈意见"
       :with-header="false"
       :visible.sync="drawer">
-      <div class="card_header">开题报告意见</div>
+      <div class="card_header">中期反馈意见</div>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
           <el-col :span="20">
@@ -243,9 +238,9 @@
         </el-row>
         <el-row>
           <el-col :span="22" class="feedback">
-<!--            <el-form-item label="反馈内容">-->
-<!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
-<!--            </el-form-item>-->
+            <!--            <el-form-item label="反馈内容">-->
+            <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
+            <!--            </el-form-item>-->
             <div class="fankui">反馈表</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
               <div class="ql-editor" v-html="currentSubjectInfo.description" ></div>
@@ -278,7 +273,7 @@ export default {
         size: 10, // 页面大小
         type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
       },
-      // 查看课题详情对话框可见性
+      // 查看详情对话框可见性
       viewPageVisible: false,
       // 查看开题详情对话框可见性
       viewReportVisible: false,
