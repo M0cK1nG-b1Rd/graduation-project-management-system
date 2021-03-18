@@ -38,7 +38,8 @@
             plea.STU_GROUP_ID,
             plea.ACCEPTANCE_TEAM_ID,
             classroom.CLASSROOM_NAME,
-            plea.TIME
+            plea.START_TIME,
+            plea.END_TIME
         FROM
             plea
                 JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
@@ -89,7 +90,8 @@
             plea.STU_GROUP_ID,
             plea.ACCEPTANCE_TEAM_ID,
             classroom.CLASSROOM_NAME,
-            plea.TIME
+            plea.START_TIME,
+            plea.END_TIME
         FROM
             plea
                 JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
@@ -122,7 +124,8 @@
             plea.STU_GROUP_ID,
             plea.ACCEPTANCE_TEAM_ID,
             classroom.CLASSROOM_NAME,
-            plea.TIME
+            plea.START_TIME,
+            plea.END_TIME
         FROM
             plea
                 JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
