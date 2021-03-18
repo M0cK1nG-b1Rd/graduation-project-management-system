@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -89,8 +90,24 @@ public class Report implements Serializable {
     @TableField("AUDIT_TIME")
     private Date auditTime;
 
-    @TableField("FEEDBACK")
-    private String feedback;
+    @TableField("COMMENT")
+    private String comment;
+
+    @TableField("FILE_SCORE")
+    private Integer fileScore;
+
+    @TableField("FILE_SCORE_WEIGHT")
+    private Float fileScoreWeight;
+
+    @TableField("DEFENSE_SCORE")
+    private Integer defenseScore;
+
+    @TableField("DEFENSE_SCORE_WEIGHT")
+    private Float defenseScoreWeight;
+
+    @TableField("IS_RELEASED")
+    private Boolean isReleased;
+
 
 
     //分页参数
