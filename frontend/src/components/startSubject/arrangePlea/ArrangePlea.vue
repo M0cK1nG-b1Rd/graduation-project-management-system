@@ -131,6 +131,7 @@
                     <el-row>
                       <a-tag color="#f6f6f4" class="inner_tag">答辩时间</a-tag>
                       <el-date-picker
+                        @blur="timeOrSpaceChanged"
                         v-model="item.time"
                         type="datetimerange"
                         range-separator="至"
@@ -143,6 +144,7 @@
                       <a-tag color="#ffd4d4" class="inner_tag">答辩场地</a-tag>
                       <el-select placeholder="请选择答辩场地"
                                  v-model="item.classroomId"
+                                 @change="timeOrSpaceChanged"
                                  style="width: 400px">
                         <el-option
                           v-for="(it, idx) in classroomInfo"
@@ -164,18 +166,17 @@
                   </el-col>
                 </el-row>
               </el-card>
-<!--            分页区-->
 <!--            发布或撤回分组结果-->
             <el-row type="flex" justify="center" style="margin-top: 20px">
               <el-popconfirm
                 title="确定要发布当前答辩安排吗？"
-                @comfirm="releaseAllArrange"
+                @confirm="releaseAllArrange"
               >
                 <el-button type="primary" slot="reference">发布安排</el-button>
               </el-popconfirm>
               <el-popconfirm
                 title="确定要撤回已发布的安排吗？"
-                @comfirm="withdrawAllArrange"
+                @confirm="withdrawAllArrange"
               >
                 <el-button type="success" slot="reference">撤回安排</el-button>
               </el-popconfirm>
@@ -307,6 +308,11 @@
         </el-row>
       </div>
     </el-dialog>
+    <!--    查看选择中小组答辩秘书信息对话框-->
+    <el-dialog title="答辩秘书信息"
+               width="30%" center
+               :visible.sync="secretaryGroupInfoVisible">
+    </el-dialog>
   </div>
 </template>
 
@@ -340,7 +346,7 @@ export default {
       // 查询分组结果参数
       queryInfo: {
         page: 1, // 当前页号
-        size: 10, // 页面大小
+        size: 1000, // 页面大小
         // TODO 后期改为KT阶段
         stage: 'JT' // 阶段
       },
@@ -451,7 +457,10 @@ export default {
       this.currentGroupArrangeInfo.startTime = this.studentPleaTeams[index].time[0]
       this.currentGroupArrangeInfo.endTime = this.studentPleaTeams[index].time[1]
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/plea', this.currentGroupArrangeInfo)
-      if (res.meta.code !== 200) this.$message.error('保存设定失败！')
+      if (res.meta.code !== 200) this.$message.error(res.meta.message)
+      else {
+        this.$message.success(res.meta.message)
+      }
     },
     // 更新当前小组时间、地点安排
     async updateCurrentGroupArrange(index) {
@@ -461,14 +470,31 @@ export default {
       this.currentGroupArrangeInfo.startTime = this.studentPleaTeams[index].time[0]
       this.currentGroupArrangeInfo.endTime = this.studentPleaTeams[index].time[1]
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea', this.currentGroupArrangeInfo)
-      if (res.meta.code !== 200) this.$message.error('修改设定失败！')
+      if (res.meta.code !== 200) this.$message.error(res.meta.message)
+      else {
+        this.$message.success(res.meta.message)
+      }
     },
     // 发布所有小组的答辩安排
     async releaseAllArrange() {
+      // TODO 后期改为KT阶段
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/true', { stage: 'JT' })
+      if (res.meta.code === 200) {
+        this.$message.success(res.meta.message)
+      } else {
+        this.$message.error(res.meta.message)
+      }
       await this.getPleaArrangeResult()
     },
     // 撤回所有小组的答辩安排
     async withdrawAllArrange() {
+      // TODO 后期改为KT阶段
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/false', { stage: 'JT' })
+      if (res.meta.code === 200) {
+        this.$message.success(res.meta.message)
+      } else {
+        this.$message.error(res.meta.message)
+      }
       await this.getPleaArrangeResult()
     },
     // 查看选中学生小组信息
@@ -485,6 +511,9 @@ export default {
     viewChosenSecretaryGroupInfo(index) {
       this.currentSecretaryInfo = this.tutorPleaTeams[index].secretary
       this.secretaryGroupInfoVisible = true
+    },
+    timeOrSpaceChanged() {
+      this.$forceUpdate()
     }
   }
 }
