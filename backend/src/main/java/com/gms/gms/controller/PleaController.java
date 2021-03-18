@@ -125,9 +125,9 @@ public class PleaController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"), pleaPage);
+                    "查询答辩安排成功"), pleaPage);
         } catch (Exception e) {
-            String message = "查询失败";
+            String message = "查询答辩安排失败";
             log.error(message, e);
             throw new GmsException(message);
         }
@@ -137,7 +137,7 @@ public class PleaController {
      * 一键发布接口，传参为JSON
      * stage:时期
      */
-    @PutMapping("/ture")
+    @PutMapping("/true")
     public GmsResponse updatePleaReleaseTure(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
             String stage=jsonObject.getString("stage");
@@ -146,9 +146,9 @@ public class PleaController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "修改成功"));
+                    "答辩安排发布成功！"));
         } catch (Exception e) {
-            String message = "修改失败";
+            String message = "答辩安排发布失败！";
             log.error(message, e);
             throw new GmsException(message);
         }
@@ -167,9 +167,9 @@ public class PleaController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "修改成功"));
+                    "答辩已成功取消发布！"));
         } catch (Exception e) {
-            String message = "修改失败";
+            String message = "取消发布答辩安排失败！";
             log.error(message, e);
             throw new GmsException(message);
         }
