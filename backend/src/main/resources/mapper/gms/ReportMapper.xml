@@ -22,7 +22,7 @@
             r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
-            r.FEEDBACK,
+            r.COMMENT,
             f.DOC_ID,
             f.FILE_ID,
             f.FILE_NAME
@@ -50,7 +50,7 @@
             r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
-            r.FEEDBACK,
+            r.COMMENT,
             r.FILE_SCORE,
             r.DEFENSE_SCORE,
             f.DOC_ID,
