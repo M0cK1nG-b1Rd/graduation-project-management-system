@@ -25,6 +25,7 @@ import MyRecord from '@/components/startSubject/MyRecord'
 import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
 import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
+import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
 
 Vue.use(VueRouter)
 
@@ -143,20 +144,25 @@ const routes = [
         path: '/initial/myList',
         component: MyRecord
       },
-      // 开题--教办审核开题信息
+      // 开题--教师审核开题信息
       {
         path: '/initial/startCheck',
         component: CheckStartSubjects
       },
-      // 中期--学生填写中期答辩信息
+      // 中期--学生上传中期报告
       {
         path: '/middle/myReport',
         component: MidReport
       },
-      // 中期--学生查看中期审核记录
+      // 中期--学生查看中期记录
       {
         path: '/middle/myList',
         component: MidRecord
+      },
+      // 中期--教师审核中期报告
+      {
+        path: '/middle/midCheck',
+        component: CheckMidSubjects
       }
     ]
   }
