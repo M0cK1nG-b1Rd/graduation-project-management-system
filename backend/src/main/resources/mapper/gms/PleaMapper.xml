@@ -39,7 +39,8 @@
             plea.ACCEPTANCE_TEAM_ID,
             classroom.CLASSROOM_NAME,
             plea.START_TIME,
-            plea.END_TIME
+            plea.END_TIME,
+            plea.IS_RELEASE
         FROM
             plea
                 JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
@@ -98,6 +99,7 @@
         WHERE
             plea.STAGE = #{stage}
             AND plea.STU_GROUP_ID = #{groupId}
+            AND plea.IS_RELEASE = true
     </select>
     <select id="getTeacherId" resultType="java.lang.Integer">
         SELECT
@@ -131,7 +133,8 @@
                 JOIN classroom ON plea.CLASSROOM_ID = classroom.CLASSROOM_ID
         WHERE
             plea.STAGE = #{stage}
-          AND plea.ACCEPTANCE_TEAM_ID = #{teamId}
+            AND plea.ACCEPTANCE_TEAM_ID = #{teamId}
+            AND plea.IS_RELEASE = true
     </select>
     <select id="getSecId" resultType="java.lang.Integer">
         SELECT

@@ -92,7 +92,7 @@
                 <div class="ql-container ql-snow">
                   <div class="notice_content ql-editor"
                        @click="useQuillEditor2"
-                       v-html="report.research">
+                       v-html="report.result">
                   </div>
                 </div>
               </el-col>
@@ -103,7 +103,7 @@
                 <div class="ql-container ql-snow">
                   <div class="notice_content ql-editor"
                        @click="useQuillEditor3"
-                       v-html="report.myPlan">
+                       v-html="report.plan">
                   </div>
                 </div>
               </el-col>
@@ -152,7 +152,7 @@
       :before-close="resetQuillEditor2Content"
       width="75%">
       <quill-editor ref="quillEditor2"
-                    :init-content="report.research">
+                    :init-content="report.result">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditor2Content">清 空</el-button>
@@ -165,7 +165,7 @@
       :before-close="resetQuillEditor3Content"
       width="75%">
       <quill-editor ref="quillEditor3"
-                    :init-content="report.myPlan">
+                    :init-content="report.plan">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditor3Content">清 空</el-button>
@@ -197,8 +197,9 @@ export default {
       },
       report: {
         meaning: '',
-        research: '',
-        myPlan: ''
+        result: '',
+        plan: '',
+        stage: 'KT'
       },
       fileList: [{
         name: 'food.jpeg',
@@ -228,15 +229,15 @@ export default {
     // }
     // 获取课题信息
     async getCurrentSubjectInfo() {
-      const { data: res } = await this.$http.get('/mock/mySubjects.json')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.currentSubjectInfo = res.data.MySubject
+      this.currentSubjectInfo = res.data
     },
     // 提交表单
     async reportSubmit() {
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.report)
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
       if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
     },
     // 调用富文本编辑器
@@ -271,11 +272,11 @@ export default {
       this.quillEditor1Visible = false
     },
     submitQuillEditor2Content() {
-      this.report.research = this.$refs.quillEditor2.returnContent()
+      this.report.result = this.$refs.quillEditor2.returnContent()
       this.quillEditor2Visible = false
     },
     submitQuillEditor3Content() {
-      this.report.myPlan = this.$refs.quillEditor3.returnContent()
+      this.report.plan = this.$refs.quillEditor3.returnContent()
       this.quillEditor3Visible = false
     }
   }

@@ -217,6 +217,12 @@ public class PleaController {
                             "没有分组"));
                 }
                 plea = pleaService.getPleaForStudent(groupId,stage);
+                if (plea.size()==0){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
             }else if("老师".equals(Role.getRoleName())){
                 Integer teacherId = pleaService.getTeacherId(userId);
                 Integer teamId = pleaService.getTeamId(teacherId,stage);
@@ -227,6 +233,12 @@ public class PleaController {
                             "没有分组"));
                 }
                 plea = pleaService.getPleaForOther(teamId,stage);
+                if (plea.size()==0){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
             }else if ("答辩秘书".equals(Role.getRoleName())){
                 Integer secId = pleaService.getSecId(userId);
                 Integer teamId = pleaService.getTeamId1(secId,stage);
@@ -237,11 +249,17 @@ public class PleaController {
                             "没有分组"));
                 }
                 plea = pleaService.getPleaForOther(teamId,stage);
+                if (plea.size()==0){
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "没有分组"));
+                }
             }else {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
-                        "当前用户无需分组"));
+                        "当前用户无分组"));
             }
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),

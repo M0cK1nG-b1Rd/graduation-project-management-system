@@ -19,7 +19,7 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
 
     @Override
     public IPage<Report> selectReport(Report report, String roleName) throws GmsException {
-        Page<Report> page = new Page<>(report.getPage(),  report.getSize());
+        Page<Report> page = new Page<>(report==null?report.getPage():1,  report==null?report.getSize():Integer.MAX_VALUE);
         Page<Report> appliedSubjectPage;
 
         //区分不同角色并调用不同的方法

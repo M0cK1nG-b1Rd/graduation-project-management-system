@@ -60,6 +60,9 @@
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN USER u ON (t.USER_ID = u.USER_ID)
         WHERE t.TEACHER_ID = #{teacherId}
+        <if test="subId != null and subId != ''">
+            AND s.SUB_ID=#{subId}
+        </if>
 
     </select>
     <select id="getAllSubject" resultType="com.gms.gms.domain.Subject">
