@@ -12,19 +12,17 @@ import ActiveStage from '@/components/system/stage/ActivateStage'
 import ViewNotice from '@/components/notice/ViewNotice'
 import GlobalLayout from '@/components/common/GlobalLayout'
 import ManageNotice from '@/components/notice/ManageNotice'
-import teacherSubjects from '../components/givenSubjects/teacherSubjects'
-import checkMySubjects from '../components/givenSubjects/checkMySubjects'
-import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import ViewAllSubject from '@/components/chooseSubject/ViewAllSubject'
 import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
+import teacherSubjects from '../components/givenSubjects/teacherSubjects'
+// import checkSubjects from '../components/givenSubjects/checkSubjects'
+import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
-import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
-import MidReport from '@/components/midSubject/MidReport'
-import MidRecord from '@/components/midSubject/MidRecord'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 
 Vue.use(VueRouter)
 
@@ -98,8 +96,8 @@ const routes = [
       },
       // 出题管理-审核查询界面
       {
-        path: '/subject/apply/result',
-        component: checkMySubjects
+        path: '/subject/apply/result'
+        // component: checkSubjects
       },
       // 出题管理-教研室审核课题界面
       {
@@ -133,6 +131,11 @@ const routes = [
         path: '/subject/select/result',
         component: ApplicationRecords
       },
+      // 出题管理-教师出题
+      {
+        path: '/subject/apply/teacher',
+        component: teacherSubjects
+      },
       // 开题--学生上传开题报告
       {
         path: '/initial/myReport',
@@ -143,20 +146,10 @@ const routes = [
         path: '/initial/myList',
         component: MyRecord
       },
-      // 开题--教办审核开题信息
+      // 开题--教研室进行答辩安排
       {
-        path: '/initial/startCheck',
-        component: CheckStartSubjects
-      },
-      // 中期--学生填写中期答辩信息
-      {
-        path: '/middle/myReport',
-        component: MidReport
-      },
-      // 中期--学生查看中期审核记录
-      {
-        path: '/middle/myList',
-        component: MidRecord
+        path: '/initial/arrange',
+        component: ArrangePlea
       }
     ]
   }
