@@ -69,6 +69,7 @@ public class ReportController {
     }
 
 
+    //包括给反馈，打分
     @PutMapping
     public GmsResponse auditReport(@RequestBody Report report) throws GmsException {
         try {
