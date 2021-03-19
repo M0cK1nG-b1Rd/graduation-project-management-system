@@ -17,4 +17,6 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
     void modifyStageTaskResult(StageTaskResult task);
 
     void giveStageTaskScore(StageTaskResult task);
+
+    void changeStatus(Integer taskId);
 }

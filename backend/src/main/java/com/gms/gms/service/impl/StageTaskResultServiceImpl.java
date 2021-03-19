@@ -36,4 +36,9 @@ public class StageTaskResultServiceImpl extends ServiceImpl<StageTaskResultMappe
     public void giveStageTaskScore(StageTaskResult task) {
 
     }
+
+    @Override
+    public void changeStatus(Integer taskId) {
+        this.baseMapper.changeStatus(taskId);
+    }
 }
