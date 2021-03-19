@@ -117,7 +117,8 @@
               v-model="newTaskInfo.time"
               range-separator="-"
               start-placeholder="开始时间"
-              end-placeholder="截止时间">
+              end-placeholder="截止时间"
+              value-format="yyyy-MM-dd HH:mm:ss">
             </el-date-picker>
           </el-col>
         </el-row>

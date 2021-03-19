@@ -40,7 +40,7 @@
                     <el-form-item label="申报时间">
                       <el-row>
                         <el-col :span="6">
-                          <el-date-picker type="date" placeholder="选择日期" v-model="subject.date1" style="width: 100%;"></el-date-picker>
+                          <el-date-picker type="date" placeholder="选择日期" v-model="subject.date1" style="width: 100%; " value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                         </el-col>
                         <el-col class="line" :span="0.5">---</el-col>
                         <el-col :span="6">
