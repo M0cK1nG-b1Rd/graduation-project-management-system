@@ -105,7 +105,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.startMaterial"
               status="active"/>
           </el-col>
@@ -119,7 +119,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.startPlea"
               status="active"/>
           </el-col>
@@ -134,7 +134,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.middleMaterial"
               status="active"/>
           </el-col>
@@ -148,7 +148,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.middlePlea"
               status="active"/>
           </el-col>
@@ -163,7 +163,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.endMaterial"
               status="active"/>
           </el-col>
@@ -177,7 +177,7 @@
           </el-col>
           <el-col :span="18">
             <a-progress
-              :stroke-color="{from: '#7fe30d', to: '#00d9ff'}"
+              :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
               :percent="weightSetting.endPlea"
               status="active"/>
           </el-col>
@@ -187,7 +187,11 @@
 <!--      保存配置按钮-->
       <el-divider></el-divider>
       <el-row type="flex" justify="center">
-        <el-button type="primary" plain>保存权重配置</el-button>
+        <el-popconfirm
+          @confirm="submitWeightSetting"
+          title="确定要保存分数权重设置吗？">
+          <el-button type="primary" plain slot="reference">保存权重配置</el-button>
+        </el-popconfirm>
       </el-row>
     </el-card>
   </div>
@@ -196,21 +200,61 @@
 <script>
 export default {
   name: 'SetWeight',
+  mounted() {
+    this.getWeightSetting()
+  },
   data() {
     return {
       weightSetting: {
         // 大阶段分
-        startStage: '',
-        middleStage: '',
-        endStage: '',
-        stageTask: '',
+        startStage: 0,
+        middleStage: 0,
+        endStage: 0,
+        stageTask: 0,
         // 阶段小分
-        startMaterial: '',
-        startPlea: '',
-        middleMaterial: '',
-        middlePlea: '',
-        endMaterial: '',
-        endPlea: ''
+        startMaterial: 0,
+        startPlea: 0,
+        middleMaterial: 0,
+        middlePlea: 0,
+        endMaterial: 0,
+        endPlea: 0
+      }
+    }
+  },
+  methods: {
+    // 提交权重设置
+    async submitWeightSetting() {
+      // 校验四部分权重之和是否为100%
+      if (parseInt(this.weightSetting.startStage) + parseInt(this.weightSetting.middleStage) + parseInt(this.weightSetting.endStage) + parseInt(this.weightSetting.stageTask) !== 100) {
+        return this.$message.warning('开题、中期、结题及过程任务四部分之和不为100，请检查！')
+      }
+      // 校验开题小分
+      if (parseInt(this.weightSetting.startMaterial) + parseInt(this.weightSetting.startPlea) !== 100) {
+        return this.$message.warning('开题材料及开题答辩权重之和不为100%，请检查！')
+      }
+      // 校验中期小分
+      if (parseInt(this.weightSetting.middleMaterial) + parseInt(this.weightSetting.middlePlea) !== 100) {
+        return this.$message.warning('中期材料及中期答辩权重之和不为100%，请检查！')
+      }
+      // 校验结题小分
+      if (parseInt(this.weightSetting.endMaterial) + parseInt(this.weightSetting.endPlea) !== 100) {
+        return this.$message.warning('结题材料及结题答辩权重之和不为100%，请检查！')
+      }
+      // 校验通过后发送到后端
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/score/weight', this.weightSetting)
+      if (res.meta.code === 200) {
+        this.$notify.success('配置打分权重成功！')
+      } else {
+        this.$notify.error('配置打分权重失败！')
+      }
+    },
+    // 获取权重设置
+    async getWeightSetting() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/score/weight')
+      if (res.meta.code === 200) {
+        this.weightSetting = res.data
+      } else {
+        this.$notify.error('获得打分配置失败！')
       }
     }
   }
