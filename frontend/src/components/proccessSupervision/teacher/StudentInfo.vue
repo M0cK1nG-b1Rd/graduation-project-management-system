@@ -162,7 +162,7 @@
       title="上传附件"
       :visible.sync="uploaderVisible"
       width="30%">
-      <uploader></uploader>
+      <uploader :doc-id="newTaskDocId"></uploader>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
       </span>
@@ -184,13 +184,23 @@ export default {
   name: 'StudentInfo',
   components: { Uploader },
   mounted() {
-    // 通过路由参数获取学生信息
-    this.stuInfo = this.$route.params.stuInfo
-    this.subName = this.$route.params.subName
-    this.subId = this.$route.params.subId
+    // 通过路由参数获取学生信息,并存储到sessionStorage
+    window.sessionStorage.setItem('subId', JSON.stringify(this.$route.params.subId))
+    window.sessionStorage.setItem('stuInfo', JSON.stringify(this.$route.params.stuInfo))
+    window.sessionStorage.setItem('subName', JSON.stringify(this.$route.params.subName))
+    // 从数据字典获得参数
+    this.subId = JSON.parse(window.sessionStorage.getItem('subId'))
+    this.stuInfo = JSON.parse(window.sessionStorage.getItem('stuInfo'))
+    this.subName = JSON.parse(window.sessionStorage.getItem('subName'))
     // 获取数据字典
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.stageDict = dataDict.getDict(fullDict, 1).splice(2, 5)
+  },
+  // 实例销毁前，删除相应的sessionStorage
+  beforeDestroy() {
+    window.sessionStorage.removeItem('subId')
+    window.sessionStorage.removeItem('stuInfo')
+    window.sessionStorage.removeItem('subName')
   },
   data() {
     return {
@@ -246,7 +256,7 @@ export default {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task', this.newTaskInfo)
       if (res.meta.code === 200) {
         this.$notify.success(res.meta.message)
-        this.newTaskDocId = res.data.docId
+        this.newTaskDocId = res.data
         // 恢复时间属性
         this.newTaskInfo.time = ''
       } else {
@@ -267,7 +277,7 @@ export default {
     // 获得某学生所有任务信息
     async getAllTaskInfo(subId, stuId) {
       const queryInfo = {
-        stuId: subId,
+        stuId: stuId,
         subId: subId
       }
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: queryInfo })
