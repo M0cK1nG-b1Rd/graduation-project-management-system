@@ -30,7 +30,7 @@ public class PleaResultController {
 
     /**
      * 答辩秘书添加答辩结果时使用的接口，传参为JSON
-     * stuId:要评分的学生id
+     * userId:要评分的学生的用户id
      * pleaId:该场答辩id
      * stage:时期
      * score:得分，可以为null或者空值
@@ -48,7 +48,7 @@ public class PleaResultController {
                         Code.C500.getDesc(),
                         "该学生已打分，无法重复打分"));
             }
-            //使用MybatisPlus封装的方法
+            pleaResult.setStuId(pleaResultService.getStuId(pleaResult.getUserId()));
             pleaResultService.save(pleaResult);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),

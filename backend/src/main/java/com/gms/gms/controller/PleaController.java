@@ -155,8 +155,6 @@ public class PleaController {
         try {
             String stage=jsonObject.getString("stage");
             pleaService.update(null,new LambdaUpdateWrapper<Plea>().set(Plea::getIsRelease,true).eq(Plea::getStage,stage));
-            //发布通知
-            CreatNewMessage.creatNewPleaOne(stage);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
