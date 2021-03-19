@@ -37,8 +37,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private RoleService roleService;
 
     @GetMapping("check/{username}")
     public boolean checkUserName(@NotBlank(message = "{required}") @PathVariable String username) {
@@ -47,7 +45,6 @@ public class UserController extends BaseController {
 
     @GetMapping("/{username}")
     public User detail(@NotBlank(message = "{required}") @PathVariable String username) {
-        //UserServiceImpl中findByName方法改为调用baseMapper.findDetail(username)
         return this.userService.findByName(username);
     }
 
