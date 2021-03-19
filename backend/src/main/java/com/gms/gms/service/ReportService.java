@@ -19,5 +19,8 @@ public interface ReportService extends IService<Report> {
 
     void auditReport(Report report);
 
+    Report getStartReport(Integer stuId);
+    Report getMidReport(Integer stuId);
+
     List<Report> selectReportByStuId(Integer stuId, String stage);
 }

@@ -89,6 +89,28 @@
                  LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
         WHERE a.STU_ID = #{studentId}
     </select>
+    <select id="getStudentsInSubject" resultType="com.gms.gms.domain.Student">
+        SELECT
+            s.STU_ID,
+            u.USER_ID,
+            u.REAL_NAME,
+            u.GENDER,
+            u.TEL,
+            u.MAIL,
+            co.COLLEGE_NAME,
+            m.MAJOR_NAME,
+            cl.CLASS_NAME
+        FROM
+            student s
+                JOIN `user` u ON ( u.USER_ID = s.USER_ID )
+                JOIN college co ON s.COLLEGE_ID = co.COLLEGE_ID
+                JOIN major m ON s.MAJOR_ID = m.MAJOR_ID
+                JOIN class cl ON s.CLASS_ID = cl.CLASS_ID
+        WHERE
+                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE `STATUS` = "YTG" AND SUB_ID = 1 )
+    </select>
+
+
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
         <result column="ID" property="id" jdbcType="INTEGER"/>

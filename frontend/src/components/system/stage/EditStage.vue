@@ -19,7 +19,7 @@
           </el-form-item>
           <el-form-item label="开始时间">
             <el-col :span="8">
-              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.startTime" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.startTime" style="width: 100%;" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
             </el-col>
             <el-col :span="8">
               <el-time-picker placeholder="选择时间" disabled style="width: 100%;"></el-time-picker>
@@ -27,7 +27,7 @@
           </el-form-item>
           <el-form-item label="截止时间">
             <el-col :span="8">
-              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.endTime" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="editingForm.endTime" style="width: 100%;" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
             </el-col>
             <el-col :span="8">
               <el-time-picker placeholder="选择时间" disabled style="width: 100%;"></el-time-picker>

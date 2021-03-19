@@ -51,8 +51,7 @@
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.COMMENT,
-            r.FILE_SCORE,
-            r.DEFENSE_SCORE,
+            r.SCORE,
             f.DOC_ID,
             f.FILE_ID,
             f.FILE_NAME
@@ -83,8 +82,7 @@
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.COMMENT,
-            r.FILE_SCORE,
-            r.DEFENSE_SCORE,
+            r.SCORE,
             r.IS_RELEASED,
             f.DOC_ID,
             f.FILE_ID,
@@ -135,10 +133,7 @@
         <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="COMMENT" property="comment" jdbcType="VARCHAR"/>
-        <result column="FILE_SCORE" property="fileScore" jdbcType="INTEGER"/>
-        <result column="FILE_SCORE_WEIGHT" property="fileScoreWeight" jdbcType="FLOAT"/>
-        <result column="DEFENSE_SCORE" property="defenseScore" jdbcType="INTEGER"/>
-        <result column="DEFENSE_SCORE_WEIGHT" property="defenseScoreWeight" jdbcType="FLOAT"/>
+        <result column="SCORE" property="score" jdbcType="INTEGER"/>
         <result column="IS_RELEASED" property="isReleased" jdbcType="BOOLEAN"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
             <result column="DOC_ID" property="docId"/>

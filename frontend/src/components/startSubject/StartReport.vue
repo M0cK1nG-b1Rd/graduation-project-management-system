@@ -30,7 +30,11 @@
                 </a-tag>
               </el-col>
               <!--          课题领域-->
-              <el-col :span="8">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+              <el-col :span="8">课题领域：
+                <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</a-tag>
+                <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</a-tag>
+                <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</a-tag>
+              </el-col>
               <!--          所属专业-->
               <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
             </el-row>
@@ -196,6 +200,7 @@ export default {
         teacherHomePage: ''
       },
       report: {
+        subId: '',
         meaning: '',
         result: '',
         plan: '',
@@ -234,6 +239,7 @@ export default {
         return this.$message.error('获取课题列表失败')
       }
       this.currentSubjectInfo = res.data
+      this.report.subId = res.data.subId
     },
     // 提交表单
     async reportSubmit() {
