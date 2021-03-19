@@ -8,4 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PleaResultService extends IService<PleaResult> {
 
+    PleaResult getStartPleaResult(Integer stuId);
+
+    PleaResult getMidPleaResult(Integer stuId);
 }

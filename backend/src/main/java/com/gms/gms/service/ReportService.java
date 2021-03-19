@@ -16,4 +16,7 @@ public interface ReportService extends IService<Report> {
     void addReport(Report report);
 
     void auditReport(Report report);
+
+    Report getStartReport(Integer stuId);
+    Report getMidReport(Integer stuId);
 }
