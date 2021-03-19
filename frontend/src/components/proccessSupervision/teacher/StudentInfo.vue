@@ -167,6 +167,12 @@
         <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+<!--    查看某学生所有任务窗口-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="viewAllTaskVisible"
+      width="50%">
+    </el-dialog>
   </div>
 </template>
 
@@ -200,6 +206,10 @@ export default {
       newTaskDrawerVisible: false,
       // 上传文件窗口可见性
       uploaderVisible: false,
+      // 查看某学生所有任务详情窗口可见性
+      viewAllTaskVisible: false,
+      // 某学生所有任务信息
+      allTaskInfo: [],
       // 新增任务信息
       newTaskInfo: {
         subId: '',
@@ -235,12 +245,12 @@ export default {
       delete this.newTaskInfo.time
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task', this.newTaskInfo)
       if (res.meta.code === 200) {
-        this.$message.success(res.meta.message)
+        this.$notify.success(res.meta.message)
         this.newTaskDocId = res.data.docId
         // 恢复时间属性
         this.newTaskInfo.time = ''
       } else {
-        this.$message.error(res.meta.message)
+        this.$notify.error(res.meta.message)
         // 恢复时间属性
         this.newTaskInfo.time = ''
       }
@@ -248,7 +258,24 @@ export default {
     // 上传附件
     async uploadFile(docId) {},
     // 查看所有某学生阶段任务
-    viewAllTask(row) {}
+    async viewAllTask(row) {
+      this.newTaskInfo.stuId = row.stuId
+      this.newTaskInfo.subId = this.subId
+      this.viewAllTaskVisible = true
+      await this.getAllTaskInfo(this.SubId, this.stuId)
+    },
+    // 获得某学生所有任务信息
+    async getAllTaskInfo(subId, stuId) {
+      const queryInfo = {
+        stuId: subId,
+        subId: subId
+      }
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: queryInfo })
+      if (res.meta.code === 200) {
+      } else {
+        this.$message.error('获取该学生阶段任务信息失败！')
+      }
+    }
   }
 }
 </script>
