@@ -330,7 +330,9 @@
           "disable": false,
           "order": "",
           "icon": "el-icon-finished",
-          "path": "/initial/score",
+          "path": "/initial/score"
+        },
+        {
           "name": "答辩安排",
           "id": 11,
           "disable": false,
