@@ -11,6 +11,7 @@ import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.domain.Teacher;
+import com.gms.gms.service.AccountService;
 import com.gms.gms.service.SubjectService;
 import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
@@ -34,6 +35,8 @@ import java.util.List;
 public class SubjectController {
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    AccountService accountService;
 
     //教师查看自己的课题
     @GetMapping("teacher/my")
@@ -63,13 +66,13 @@ public class SubjectController {
     }
 
     /**
-     *通过学生id返回当前学生的课题信息，restful传参
+     *通过userid返回当前学生的课题信息，restful传参
      *stuId:学生id
      */
-    @GetMapping("studentId/#{stuId}")
-    public GmsResponse getStudentPassedSubjectById(@PathVariable Integer stuId) throws GmsException {
+    @GetMapping("studentId/#{userId}")
+    public GmsResponse getStudentPassedSubjectById(@PathVariable Integer userId) throws GmsException {
         try {
-            Subject subject = subjectService.getStudentPassedSubject(stuId);
+            Subject subject = subjectService.getStudentPassedSubject(accountService.getStudentByUserId(userId).getStuId());
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
         } catch (Exception e) {
             String message = "查询失败";
