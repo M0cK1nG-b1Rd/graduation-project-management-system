@@ -12,4 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PleaResultServiceImpl extends ServiceImpl<PleaResultMapper, PleaResult> implements PleaResultService {
 
+    @Override
+    public Integer getStuId(Integer userId) {
+        return this.baseMapper.getStuId(userId);
+    }
 }
