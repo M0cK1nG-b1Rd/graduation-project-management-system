@@ -12,7 +12,7 @@
           <div class="card_header">开题答辩安排信息</div>
           <!--    答辩相情卡片-->
           <el-row type="flex" justify="center">
-            <el-card class="pre_detail">
+            <el-card class="pre_detail" style="width: 80%">
               <!--        课题名称-->
               <el-row>
                 <el-col :span="8">
@@ -78,64 +78,7 @@
               </el-row>
               <!--         回形针区     -->
               <el-col>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
-                <i class="el-icon-paperclip"></i>
+                <a-divider style="height: 1px; background-color: #e8e8e8"><i class="el-icon-s-claim"></i></a-divider>
               </el-col>
               <div class="card_header">开题答辩成绩登记</div>
               <el-row type="flex" justify="center">
@@ -294,7 +237,7 @@
                     <div class="ql-container ql-snow">
                       <div class="notice_content ql-editor"
                            @click="useQuillEditor"
-                           v-html="feedBack.comment">
+                           v-html="feedBack.feedback">
                       </div>
                     </div>
                   </el-col>
@@ -303,7 +246,7 @@
                 <el-col>
                   <div class="block">
                     <el-slider
-                      v-model="feedBack.fileScore"
+                      v-model="feedBack.score"
                       show-input>
                     </el-slider>
                   </div>
@@ -333,7 +276,7 @@
       :before-close="resetQuillEditorContent"
       width="75%">
       <quill-editor ref="quillEditor"
-                    :init-content="feedBack.comment">
+                    :init-content="feedBack.feedback">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
@@ -390,7 +333,7 @@ export default {
       }
       this.currentPreInfo = res.data[0] // 与后端对接
       this.feedBack.pleaId = res.data[0].id
-      console.log(this.feedBack.pleaId)
+      // console.log(this.feedBack.pleaId)
     },
     async getSubjectInfo(row) {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/userId', { params: { userId: row.userId } })
@@ -418,19 +361,19 @@ export default {
       this.getSubjectInfo(row)
       this.viewPageVisible = true
       this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
+      // console.log(this.currentSubjectInfo)
     },
     // 查看学生开题报告详情
     viewReport(row) {
       this.getReportInfo(row)
       this.viewReportVisible = true
       this.currentReportInfo = row
-      console.log(this.currentReportInfo)
+      // console.log(this.currentReportInfo)
     },
     // 编辑反馈表单
     editFeedback(row) {
       console.log(row)
-      this.feedBack.userId = row.id
+      this.feedBack.userId = row.userId
       this.drawer = true
     },
     // 调用富文本编辑器
@@ -440,12 +383,12 @@ export default {
     // 重置富文本编辑框
     resetQuillEditorContent() {
       this.$refs.quillEditor.reset()
-      this.feedBack.comment = '请输入反馈信息'
+      this.feedBack.feedback = '请输入反馈信息'
       this.quillEditorVisible = false
     },
     // 提交（采用）富文本编辑器框
     submitQuillEditorContent() {
-      this.feedBack.comment = this.$refs.quillEditor.returnContent()
+      this.feedBack.feedback = this.$refs.quillEditor.returnContent()
       this.quillEditorVisible = false
     }
   }
@@ -455,7 +398,7 @@ export default {
 <style Lang="less" scoped>
 .el-card{
   margin-bottom: 20px;
-  margin-right: 5px;
+  margin-right: 1%;
 }
 .bg-top{
   background-color: #faf9f9;

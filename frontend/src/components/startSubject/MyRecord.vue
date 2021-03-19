@@ -291,7 +291,7 @@ export default {
   },
   methods: {
     async getSubjectList() {
-      const { data: res } = await this.$http.get('/mock/report_list.json', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
