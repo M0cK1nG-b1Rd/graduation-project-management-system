@@ -20,4 +20,19 @@
         ORDER BY
         message.CREAT_TIME DESC
     </select>
+    <select id="getStudentUserId" resultType="java.lang.Integer">
+        SELECT
+            student.USER_ID
+        FROM
+            student
+        WHERE
+                student.STU_ID IN (
+                SELECT
+                    stu_group.STU_ID
+                FROM
+                    stu_group
+                WHERE
+                    stu_group.GROUP_ID IN ( SELECT plea.STU_GROUP_ID FROM plea WHERE plea.STAGE = #{stage} )
+                    AND stu_group.STAGE = #{stage} )
+    </select>
 </mapper>

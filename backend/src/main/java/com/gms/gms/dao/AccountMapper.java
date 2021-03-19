@@ -58,4 +58,6 @@ public interface AccountMapper extends BaseMapper<User> {
     void deleteTeacherInTeam(@Param("groupId") List<Integer> groupId);
 
     void deleteTeacherTeam(@Param("stage") String stage);
+
+    Integer selectMaxId();
 }

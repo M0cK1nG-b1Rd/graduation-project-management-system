@@ -62,6 +62,22 @@ public class SubjectController {
         }
     }
 
+    /**
+     *通过学生id返回当前学生的课题信息，restful传参
+     *stuId:学生id
+     */
+    @GetMapping("studentId/#{stuId}")
+    public GmsResponse getStudentPassedSubjectById(@PathVariable Integer stuId) throws GmsException {
+        try {
+            Subject subject = subjectService.getStudentPassedSubject(stuId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
     //学生查看选题信息，包括详情
     //passed是指教师通过的课题而不是学生通过的课题
     //筛选 搜索关键字、课题领域、老师名字
