@@ -417,16 +417,6 @@
       "children": []
     },
     {
-      "name": "统计报表",
-      "id": 218,
-      "disable": false,
-      "order": "",
-      "icon": "el-icon-data-line",
-      "path": "/statics",
-      "component": "el-icon-data-analysis",
-      "children": []
-    },
-    {
       "name": "成绩管理",
       "id": 2183,
       "disable": false,
@@ -446,6 +436,16 @@
           "children": []
         }
       ]
+    },
+    {
+      "name": "统计报表",
+      "id": 218,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-data-line",
+      "path": "/statics",
+      "component": "el-icon-data-analysis",
+      "children": []
     }
   ],
   "meta": {
