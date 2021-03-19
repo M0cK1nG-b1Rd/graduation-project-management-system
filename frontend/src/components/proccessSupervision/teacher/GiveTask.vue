@@ -38,7 +38,7 @@
 <!--            选择该题学生-->
             <el-row type="flex" justify="center" style="margin-top: 8px">
               <a-tag color="red"
-                     @click="viewStudentInfo(item.subId)"
+                     @click="viewStudentInfo(item.subId, item.subName)"
                      style="font-size: 15px; color: #393e46">
                 选择该题学生名单
               </a-tag>
@@ -64,7 +64,9 @@ export default {
       // 该教师所有课题信息
       allSubjectInfo: [],
       // 课题领域数据字典
-      zoneDict: []
+      zoneDict: [],
+      // 选中课题的学生信息
+      stuInfo: []
     }
   },
   methods: {
@@ -85,9 +87,24 @@ export default {
         this.$message.error('获取课题信息失败!')
       }
     },
+    // 获取该课题学生信息
+    async getStuInfo(subId) {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/students/' + subId)
+      if (res.meta.code === 200) {
+        this.stuInfo = res.data
+      } else {
+        this.$message.error('获取该课题学生信息失败！')
+      }
+    },
     // 查看选中课题的所有选择此题学生信息
-    viewStudentInfo(subId) {
-      this.$router.push({ name: 'processStuInfo', params: { subId: subId } })
+    async viewStudentInfo(subId, subName) {
+      await this.getStuInfo(subId)
+      const para = {
+        stuInfo: this.stuInfo,
+        subName: subName,
+        subId: subId
+      }
+      await this.$router.push({ name: 'processStuInfo', params: para })
     }
   }
 }
