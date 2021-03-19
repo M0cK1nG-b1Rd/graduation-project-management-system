@@ -31,6 +31,7 @@ import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 import GiveTask from '@/components/proccessSupervision/teacher/GiveTask'
 import MyTask from '@/components/proccessSupervision/MyTask'
 import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
+import SetWeight from '@/components/scoreManage/SetWeight'
 
 Vue.use(VueRouter)
 
@@ -194,6 +195,11 @@ const routes = [
       {
         path: '/process/student',
         component: MyTask
+      },
+      // 成绩管理--权重配置
+      {
+        path: '/score/weight',
+        component: SetWeight
       }
     ]
   }

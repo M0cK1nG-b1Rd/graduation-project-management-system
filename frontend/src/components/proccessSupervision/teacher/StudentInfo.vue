@@ -49,7 +49,7 @@
             <el-table-column
               width="180"
               label="操作">
-              <template  slot-scope="scope">
+              <template slot-scope="scope">
                 <!--            发布新阶段任务-->
                 <el-tooltip class="item" effect="dark" :enterable="false" content="给该学生布置新的阶段任务" placement="top">
                   <el-button type="danger" icon="el-icon-edit"
@@ -169,9 +169,34 @@
     </el-dialog>
 <!--    查看某学生所有任务窗口-->
     <el-dialog
-      title="上传附件"
+      title="该学生所有阶段任务"
       :visible.sync="viewAllTaskVisible"
       width="50%">
+      <el-table
+        :data="allTaskInfo"
+        stripe
+        style="width: 100%; font-size: 15px">
+        <el-table-column
+          prop="taskName"
+          label="任务名称"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="stage"
+          label="所属阶段"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="startTime"
+          label="开始时间"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="endTime"
+          label="截止时间"
+          width="80">
+        </el-table-column>
+      </el-table>
     </el-dialog>
   </div>
 </template>
@@ -272,13 +297,13 @@ export default {
       this.newTaskInfo.stuId = row.stuId
       this.newTaskInfo.subId = this.subId
       this.viewAllTaskVisible = true
-      await this.getAllTaskInfo(this.SubId, this.stuId)
+      await this.getAllTaskInfo(this.subId, row.stuId)
     },
     // 获得某学生所有任务信息
     async getAllTaskInfo(subId, stuId) {
       const queryInfo = {
-        stuId: stuId,
-        subId: subId
+        subId: subId,
+        stuId: stuId
       }
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: queryInfo })
       if (res.meta.code === 200) {
