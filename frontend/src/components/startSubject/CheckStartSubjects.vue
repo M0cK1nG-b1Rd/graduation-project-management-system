@@ -243,7 +243,7 @@
         </el-col>
       </el-row>
         <el-form-item>
-          <el-button type="success" @click="feedBackSubmit(scope.row)">立即提交</el-button>
+          <el-button type="success" @click="feedBackSubmit">立即提交</el-button>
           <el-button>取消</el-button>
         </el-form-item>
       </el-form>
@@ -326,8 +326,10 @@ export default {
     },
     // 提交表单
     async feedBackSubmit() {
+      this.drawer = false
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedBack)
-      if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
+      if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
+      else this.$message.success('提交反馈信息成功！')
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -360,6 +362,7 @@ export default {
       this.currentSubjectInfo = row
       console.log(this.currentSubjectInfo)
     },
+    // 编辑反馈表单
     editFeedback(row) {
       this.feedBack.id = row.id
       this.drawer = true

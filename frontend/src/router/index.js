@@ -26,6 +26,11 @@ import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
 import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
+import StartPreScore from '@/components/startSubject/StartPreScore'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
+import GiveTask from '@/components/proccessSupervision/teacher/GiveTask'
+import MyTask from '@/components/proccessSupervision/MyTask'
+import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
 
 Vue.use(VueRouter)
 
@@ -149,6 +154,16 @@ const routes = [
         path: '/initial/startCheck',
         component: CheckStartSubjects
       },
+      // 开题--答辩秘书进行评分
+      {
+        path: '/initial/score',
+        component: StartPreScore
+      },
+      // 开题--教研室进行答辩安排
+      {
+        path: '/initial/arrange',
+        component: ArrangePlea
+      },
       // 中期--学生上传中期报告
       {
         path: '/middle/myReport',
@@ -163,6 +178,22 @@ const routes = [
       {
         path: '/middle/midCheck',
         component: CheckMidSubjects
+      },
+      // 过程监督--教师布置任务
+      {
+        path: '/process/teacher/give',
+        component: GiveTask
+      },
+      // 过程监督--教师查看选某一课题的学生名单信息
+      {
+        path: '/process/teacher/stuInfo',
+        name: 'processStuInfo',
+        component: StudentInfo
+      },
+      // 过程监督--学生查看并提交任务
+      {
+        path: '/process/student',
+        component: MyTask
       }
     ]
   }

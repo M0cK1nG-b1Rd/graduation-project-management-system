@@ -48,7 +48,7 @@
         <div class="card" v-for="(item, index) in allSubjectInfo" :key="item.subId">
           <!--          卡片头--课题名称-->
           <div class="card_header">
-            <el-tooltip class="item" effect="dark" :content="item.subName" placement="top-start">
+            <el-tooltip class="item" effect="dark" :content="item.subName" placement="top">
               <div class="title_1">
                 {{ item.subName }}
               </div>

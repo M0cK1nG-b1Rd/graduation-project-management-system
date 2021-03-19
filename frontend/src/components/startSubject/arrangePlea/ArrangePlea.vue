@@ -51,7 +51,7 @@
             <el-row class="group_arrange" v-if="hasDivideArranged">
               <a-result
                 status="success"
-                title="当前已有答辩分组安排，可以在此进行撤回">
+                title="当前已有分组安排，可以在此进行撤回">
                 <template #extra>
                   <el-popconfirm
                     title="您确定要撤回已有的答辩安排吗？"
@@ -93,16 +93,21 @@
             <!--            已有答辩安排，在此可以撤回-->
             <a-result v-if="hasPleaArranged"
               status="success"
-              title="已有答辩安排，请前往查看，或撤回已有安排">
+              title="已有答辩安排，请前往查看，在此可以删除或撤回已有安排">
               <template #extra>
-                <el-popconfirm @click="withdrawAllArrange"
-                  title="确定撤回已有答辩安排吗？">
-                  <a-button slot="reference">撤回已有答辩安排</a-button>
+                <el-popconfirm @confirm="withdrawAllArrange"
+                  title="撤回后，已有的答辩可以重新发布，确定撤回已有答辩安排吗？">
+                  <a-button slot="reference" type="primary">撤回已有答辩安排</a-button>
+                </el-popconfirm>
+                <el-popconfirm @confirm="deleteAllArrange"
+                  title="删除后，已有的答辩安排不可再找回，确定删除已有答辩安排吗？">
+                  <a-button slot="reference" type="danger" style="margin-left: 20px">删除已有答辩安排</a-button>
                 </el-popconfirm>
               </template>
             </a-result>
             <!--            暂无答辩安排，查看分组情况并设置答辩信息-->
-            <el-card class="team_info_card" v-else
+            <div v-else>
+              <el-card class="team_info_card"
                        v-for="(item, index) in studentPleaTeams" :key="index">
                 <el-row class="group_info">
                   <!--                小组编号-->
@@ -114,15 +119,15 @@
                   <el-col :span="6">
                     <!--                查看该组学生-->
                     <el-row>
-                      <a-tag color="cyan" class="inner_tag" @click="viewChosenStudentGroupInfo(index)">学生信息</a-tag>
+                      <a-tag color="cyan" class="inner_tag" @click="viewChosenStudentGroupInfo(item.students)">学生信息</a-tag>
                     </el-row>
                     <!--                查看该组专家-->
                     <el-row>
-                      <a-tag color="blue" class="inner_tag" @click="viewChosenTutorGroupInfo(index)">专家信息</a-tag>
+                      <a-tag color="blue" class="inner_tag" @click="viewChosenTutorGroupInfo(tutorPleaTeams[index].teachers)">专家信息</a-tag>
                     </el-row>
                     <!--                查看该组答辩秘书-->
                     <el-row>
-                      <a-tag color="green" class="inner_tag" @click="viewChosenSecretaryGroupInfo(index)">答辩秘书</a-tag>
+                      <a-tag color="green" class="inner_tag" @click="viewChosenSecretaryGroupInfo(tutorPleaTeams[index].secretary)">答辩秘书</a-tag>
                     </el-row>
                   </el-col>
                   <!--                时间、场地设置-->
@@ -166,21 +171,86 @@
                   </el-col>
                 </el-row>
               </el-card>
-<!--            发布或撤回分组结果-->
-            <el-row type="flex" justify="center" style="margin-top: 20px">
-              <el-popconfirm
-                title="确定要发布当前答辩安排吗？"
-                @confirm="releaseAllArrange"
-              >
-                <el-button type="primary" slot="reference">发布安排</el-button>
-              </el-popconfirm>
-              <el-popconfirm
-                title="确定要撤回已发布的安排吗？"
-                @confirm="withdrawAllArrange"
-              >
-                <el-button type="success" slot="reference">撤回安排</el-button>
-              </el-popconfirm>
-            </el-row>
+              <!--            发布或撤回分组结果-->
+              <el-row type="flex" justify="center" style="margin-top: 20px">
+                <el-popconfirm
+                  title="确定要发布当前答辩安排吗？"
+                  @confirm="releaseAllArrange"
+                >
+                  <el-button type="primary" slot="reference">发布安排</el-button>
+                </el-popconfirm>
+                <el-popconfirm
+                  title="确定要撤回已发布的安排吗？"
+                  @confirm="withdrawAllArrange"
+                >
+                  <el-button type="success" slot="reference">撤回安排</el-button>
+                </el-popconfirm>
+              </el-row>
+            </div>
+          </el-collapse-item>
+          <!--          折叠框5--查看已发布的答辩安排-->
+          <el-collapse-item>
+            <template slot="title">
+              <a-tag color="#e6e5ea" class="collapse_title_tag">
+                <i class="el-icon-files"></i>
+                查看已发布的答辩安排
+              </a-tag>
+            </template>
+            <!--            答辩安排已发布，在此可以查看-->
+            <div v-if="hasPleaArranged">
+              <el-card class="team_info_card"
+                       v-for="(item, index) in pleaArrangeInfo" :key="index">
+                <el-row class="group_info">
+                  <!--                小组编号-->
+                  <el-col :span="6">
+                    组号：
+                    <a-tag color="#f6f6f4" class="inner_tag">{{ index + 1 }}</a-tag>
+                  </el-col>
+                  <!--                学生、老师信息-->
+                  <el-col :span="6">
+                    <!--                查看该组学生-->
+                    <el-row>
+                      <a-tag color="cyan" class="inner_tag" @click="viewChosenStudentGroupInfo(item.stuGroup.students)">学生信息</a-tag>
+                    </el-row>
+                    <!--                查看该组专家-->
+                    <el-row>
+                      <a-tag color="blue" class="inner_tag" @click="viewChosenTutorGroupInfo(item.teacherTeam.teachers)">专家信息</a-tag>
+                    </el-row>
+                    <!--                查看该组答辩秘书-->
+                    <el-row>
+                      <a-tag color="green" class="inner_tag" @click="viewChosenSecretaryGroupInfo(item.teacherTeam.secretary)">答辩秘书</a-tag>
+                    </el-row>
+                  </el-col>
+                  <!--                时间、场地设置-->
+                  <el-col>
+                    <!--                设置答辩时间-->
+                    <el-row>
+                      <a-tag color="#f6f6f4" class="inner_tag">答辩时间</a-tag>
+                      <el-date-picker
+                        @blur="timeOrSpaceChanged"
+                        v-model="item.time"
+                        type="datetimerange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                      </el-date-picker>
+                    </el-row>
+                    <!--                设置答辩场地-->
+                    <el-row>
+                      <a-tag color="#ffd4d4" class="inner_tag">答辩场地</a-tag>
+                      {{item.classroomName}}
+                    </el-row>
+                  </el-col>
+                </el-row>
+              </el-card>
+            </div>
+            <!--            答辩安排暂未发布-->
+            <a-result v-else
+                      status="warning"
+              title="答辩安排尚未发布哦！">
+              <template #extra>
+              </template>
+            </a-result>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -308,11 +378,6 @@
         </el-row>
       </div>
     </el-dialog>
-    <!--    查看选择中小组答辩秘书信息对话框-->
-    <el-dialog title="答辩秘书信息"
-               width="30%" center
-               :visible.sync="secretaryGroupInfoVisible">
-    </el-dialog>
   </div>
 </template>
 
@@ -403,28 +468,34 @@ export default {
     async getArrangeResult() {
       const { data: teacherRes } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacherTeam', { params: this.queryInfo })
       this.tutorPleaTeams = teacherRes.data.records
-      for (let i = 0; i < this.tutorPleaTeams.length; i++) {
-        this.tutorPleaTeams[i].time = null
-        this.tutorPleaTeams[i].classroomId = null
-      }
       const { data: studentRes } = await this.$http.get('http://127.0.0.1:9528/account/plea/studentGroup', { params: this.queryInfo })
       this.studentPleaTeams = studentRes.data.records
-      for (let i = 0; i < this.studentPleaTeams.length; i++) {
-        this.studentPleaTeams[i].time = null
-        this.studentPleaTeams[i].classroomId = null
-      }
       if (undefined === teacherRes.data.records) {
         this.hasDivideArranged = false
       } else {
         this.hasDivideArranged = true
+        for (let i = 0; i < this.tutorPleaTeams.length; i++) {
+          this.tutorPleaTeams[i].time = null
+          this.tutorPleaTeams[i].classroomId = null
+        }
+        for (let i = 0; i < this.studentPleaTeams.length; i++) {
+          this.studentPleaTeams[i].time = null
+          this.studentPleaTeams[i].classroomId = null
+        }
       }
     },
     // 获取答辩安排结果
     async getPleaArrangeResult() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea', { params: this.queryInfo })
       if (res.meta.code === 200) {
-        if (res.data.total === 0) {
+        if (res.data.total === 0 || !res.data.records[0].isRelease) {
           this.hasPleaArranged = false
+        } else {
+          this.pleaArrangeInfo = res.data.records
+          this.hasPleaArranged = true
+          for (let i = 0; i < this.pleaArrangeInfo.length; i++) {
+            this.pleaArrangeInfo[i].time = [this.pleaArrangeInfo[i].startTime, this.pleaArrangeInfo[i].endTime]
+          }
         }
       } else {
         this.$notify.error('获取答辩安排失败！')
@@ -497,21 +568,33 @@ export default {
       }
       await this.getPleaArrangeResult()
     },
+    // 删除所有已有的答辩安排
+    async deleteAllArrange() {
+      // TODO 后期改为KT阶段
+      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/plea', { params: { stage: 'JT' } })
+      if (res.meta.code === 200) {
+        this.$message.success(res.meta.message)
+      } else {
+        this.$message.error(res.meta.message)
+      }
+      await this.getPleaArrangeResult()
+    },
     // 查看选中学生小组信息
-    viewChosenStudentGroupInfo(index) {
-      this.currentStuInfo = this.studentPleaTeams[index].students
+    viewChosenStudentGroupInfo(stuInfo) {
+      this.currentStuInfo = stuInfo
       this.stuGroupInfoVisible = true
     },
     // 查看选中导师小组信息
-    viewChosenTutorGroupInfo(index) {
-      this.currentTutorInfo = this.tutorPleaTeams[index].teachers
+    viewChosenTutorGroupInfo(tutorInfo) {
+      this.currentTutorInfo = tutorInfo
       this.tutorGroupInfoVisible = true
     },
     // 查看选中秘书小组信息
-    viewChosenSecretaryGroupInfo(index) {
-      this.currentSecretaryInfo = this.tutorPleaTeams[index].secretary
+    viewChosenSecretaryGroupInfo(secretaryInfo) {
+      this.currentSecretaryInfo = secretaryInfo
       this.secretaryGroupInfoVisible = true
     },
+    // 强制页面更新
     timeOrSpaceChanged() {
       this.$forceUpdate()
     }

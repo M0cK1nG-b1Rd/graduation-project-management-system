@@ -28,7 +28,7 @@ spring:
     encoding: utf-8
 
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm
     time-zone: GMT+8
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
