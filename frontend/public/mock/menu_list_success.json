@@ -161,7 +161,28 @@
       "icon": "el-icon-data-line",
       "path": "/process",
       "component": "",
-      "children": []
+      "children": [
+        {
+          "name": "发布任务",
+          "id": 211118,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-edit-outline",
+          "path": "/process/teacher/give",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "我的任务",
+          "id": 2118,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-postcard",
+          "path": "/process/student",
+          "component": "",
+          "children": []
+        }
+      ]
     },
     {
       "name": "出题管理",

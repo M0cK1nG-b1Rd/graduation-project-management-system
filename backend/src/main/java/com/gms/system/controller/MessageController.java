@@ -77,7 +77,7 @@ public class MessageController {
                     Code.C200.getDesc(),
                     "修改成功"));
         } catch (Exception e) {
-            String message1 = "查询失败";
+            String message1 = "修改失败";
             log.error(message1, e);
             throw new GmsException(message1);
         }

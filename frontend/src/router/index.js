@@ -20,9 +20,6 @@ import ViewSujectDetail from '@/components/chooseSubject/ViewSujectDetail'
 import ChooseSubjectApplication from '@/components/chooseSubject/ChooseSubjectApplication'
 import JudgeApplication from '@/components/chooseSubject/JudgeApplication'
 import ApplicationRecords from '@/components/chooseSubject/ApplicationRecords'
-// import teacherSubjects from '../components/givenSubjects/teacherSubjects'
-// import checkSubjects from '../components/givenSubjects/checkSubjects'
-// import judgeSubjects from '../components/givenSubjects/judgeSubjects'
 import StartReport from '@/components/startSubject/StartReport'
 import MyRecord from '@/components/startSubject/MyRecord'
 import CheckStartSubjects from '@/components/startSubject/CheckStartSubjects'
@@ -31,6 +28,9 @@ import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
 import StartPreScore from '@/components/startSubject/StartPreScore'
 import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
+import GiveTask from '@/components/proccessSupervision/teacher/GiveTask'
+import MyTask from '@/components/proccessSupervision/MyTask'
+import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
 
 Vue.use(VueRouter)
 
@@ -178,6 +178,22 @@ const routes = [
       {
         path: '/middle/midCheck',
         component: CheckMidSubjects
+      },
+      // 过程监督--教师布置任务
+      {
+        path: '/process/teacher/give',
+        component: GiveTask
+      },
+      // 过程监督--教师查看选某一课题的学生名单信息
+      {
+        path: '/process/teacher/stuInfo',
+        name: 'processStuInfo',
+        component: StudentInfo
+      },
+      // 过程监督--学生查看并提交任务
+      {
+        path: '/process/student',
+        component: MyTask
       }
     ]
   }
