@@ -11,7 +11,9 @@ import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.domain.Teacher;
+import com.gms.gms.service.AppliedSubjectService;
 import com.gms.gms.service.SubjectService;
+import com.gms.gms.service.impl.AppliedSubjectServiceImpl;
 import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
@@ -34,6 +36,8 @@ import java.util.List;
 public class SubjectController {
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    AppliedSubjectService appliedSubjectService;
 
     //教师查看自己的课题
     @GetMapping("teacher/my")

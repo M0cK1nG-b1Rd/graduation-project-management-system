@@ -48,7 +48,7 @@ public class FileStorageServiceImpl extends ServiceImpl<FileStorageMapper, FileS
                 Files.createDirectory(dirPath);
                 log.info("创建文件夹："+dirPath);
             } else {
-                log.info("文件夹已存在");
+                log.info("文件夹已存在，不再创建文件夹 "+dirPath);
             }
         } catch (IOException e) {
             throw new RuntimeException("无法创建用于上传的文件夹！");

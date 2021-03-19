@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.StageTaskResultMapper">
+
+    <select id="getStageTaskResult" resultMap="StageTaskResultMapper">
+
+    </select>
+
+    <resultMap id="StageTaskResultMapper" type="com.gms.gms.domain.StageTaskResult">
+        <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
+        <result column="RETRIES" property="retries" jdbcType="INTEGER"/>
+        <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
+        <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
+        <result column="SCORE" property="score" jdbcType="INTEGER"/>
+        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
+            <result column="DOC_ID" property="docId"/>
+            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+</mapper>
