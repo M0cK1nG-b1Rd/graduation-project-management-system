@@ -31,7 +31,7 @@ public class StageTaskController {
     StageTaskService stageTaskService;
 
     @PostMapping
-    public GmsResponse giveStageTask(StageTask task) throws GmsException {
+    public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {
             stageTaskService.addStageTask(task);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -65,7 +65,7 @@ public class StageTaskController {
 
     // TODO: 2021/3/18 测试 
     @PutMapping
-    public GmsResponse modifyStageTask(StageTask task) throws GmsException {
+    public GmsResponse modifyStageTask(@RequestBody StageTask task) throws GmsException {
         try {
             stageTaskService.modifyStageTask(task);
             return new GmsResponse().addCodeMessage(new Meta(
