@@ -40,6 +40,7 @@ public class PleaResultController {
     @PostMapping
     public GmsResponse addNewPleaResult(@RequestBody PleaResult pleaResult) throws GmsException {
         try {
+            pleaResult.setStuId(pleaResultService.getStuId(pleaResult.getUserId()));
             if (pleaResultService.count(new QueryWrapper<PleaResult>().lambda()
                     .eq(PleaResult::getStuId, pleaResult.getStuId())
                     .eq(PleaResult::getStage, pleaResult.getStage())) > 0) {
@@ -48,7 +49,6 @@ public class PleaResultController {
                         Code.C500.getDesc(),
                         "该学生已打分，无法重复打分"));
             }
-            pleaResult.setStuId(pleaResultService.getStuId(pleaResult.getUserId()));
             pleaResultService.save(pleaResult);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),

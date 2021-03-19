@@ -25,4 +25,14 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public List<Integer> getStudentUserId(String stage) {
         return this.baseMapper.getStudentUserId(stage);
     }
+
+    @Override
+    public List<Integer> getTeacherUserId(String stage) {
+        return this.baseMapper.getTeacherUserId(stage);
+    }
+
+    @Override
+    public Integer getSecretaryUserId(String stage) {
+        return this.baseMapper.getSecretaryUserId(stage);
+    }
 }
