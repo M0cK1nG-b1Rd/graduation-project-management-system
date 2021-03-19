@@ -12,6 +12,8 @@ import com.gms.gms.domain.PleaResult;
 import com.gms.gms.domain.Report;
 import com.gms.gms.service.PleaResultService;
 import com.gms.gms.service.ReportService;
+import com.gms.gms.service.StageTaskResultService;
+import com.gms.gms.service.StageTaskService;
 import com.gms.gms.utils.AccountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,10 @@ public class StatisticsController {
     ReportService reportService;
     @Autowired
     PleaResultService pleaResultService;
+    @Autowired
+    StageTaskResultService stageTaskResultService;
+    @Autowired
+    StageTaskService stageTaskService;
 
     @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
@@ -89,5 +95,20 @@ public class StatisticsController {
         }
     }
 
+// TODO: 2021/3/19  
+//        @GetMapping("statistics")
+//    public GmsResponse getStageTaskResultStatistics() throws GmsException {
+//        try {
+//              =  reportService.getStageTaskResultStatistics(result);
+//            return new GmsResponse().addCodeMessage(new Meta(
+//                    Code.C200.getCode(),
+//                    Code.C200.getDesc(),
+//                    "查询成功"),stageTaskList);
+//        } catch (Exception e) {
+//            String message = "查询失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
 }
