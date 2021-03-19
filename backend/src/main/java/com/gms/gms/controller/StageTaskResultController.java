@@ -6,7 +6,6 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.gms.domain.StageTask;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
@@ -25,12 +24,17 @@ import org.springframework.web.bind.annotation.*;
 public class StageTaskResultController {
 
     @Autowired
-    StageTaskResultService service;
+    StageTaskResultService stageTaskResultService;
+
+    @Autowired
+    StageTaskService stageTaskService;
 
     @PostMapping
     public GmsResponse giveStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            service.giveStageTaskResult(result);
+            stageTaskResultService.giveStageTaskResult(result);
+            //更新状态为未审核
+            stageTaskResultService.changeStatus(result.getTaskId());
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -46,7 +50,7 @@ public class StageTaskResultController {
     @GetMapping
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            IPage<StageTaskResult> stageTaskList =  service.getStageTaskResult(result);
+            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -78,7 +82,7 @@ public class StageTaskResultController {
     @PutMapping
     public GmsResponse modifyStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            service.modifyStageTaskResult(result);
+            stageTaskResultService.modifyStageTaskResult(result);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -93,7 +97,7 @@ public class StageTaskResultController {
     @PutMapping("score")
     public GmsResponse giveStageTaskScore(StageTaskResult result) throws GmsException {
         try {
-            service.giveStageTaskScore(result);
+            stageTaskResultService.giveStageTaskScore(result);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

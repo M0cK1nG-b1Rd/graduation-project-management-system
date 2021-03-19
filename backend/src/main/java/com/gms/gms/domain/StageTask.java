@@ -52,7 +52,7 @@ public class StageTask implements Serializable {
     private String stage;
 
     @TableField("STATUS")
-    private Integer status;
+    private String status;
 
     @TableField("START_TIME")
     private Date startTime;

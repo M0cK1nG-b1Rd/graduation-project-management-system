@@ -7,6 +7,8 @@
                st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
                st.TEACHER_ID,
                u1.REAL_NAME AS TEACHER_NAME,
                st.STU_ID,
@@ -31,6 +33,8 @@
             st.TASK_NAME,
             st.SUB_ID,
             st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
             st.TEACHER_ID,
             u1.REAL_NAME AS TEACHER_NAME,
             st.STU_ID,
@@ -60,6 +64,8 @@
         SELECT st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
                st.TEACHER_ID,
                u1.REAL_NAME AS TEACHER_NAME,
                st.STU_ID,
@@ -84,6 +90,8 @@
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
         <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
         <result column="STU_ID" property="stuId" jdbcType="INTEGER"/>

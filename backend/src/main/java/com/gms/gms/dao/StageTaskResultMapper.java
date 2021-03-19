@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface StageTaskResultMapper extends BaseMapper<StageTaskResult> {
 
     IPage<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page, StageTaskResult task);
+
+    void changeStatus(Integer taskId);
 }
