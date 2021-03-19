@@ -41,6 +41,6 @@ public class Student extends User implements Serializable {
     private Integer pleaType;
 
     @TableField(exist = false)
-    private String collegeName,majorName,className;
+    private String collegeName, majorName, className;
 
 }

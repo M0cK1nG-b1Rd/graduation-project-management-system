@@ -30,6 +30,9 @@ public class StageTask implements Serializable {
     @TableId(value = "TASK_ID", type = IdType.AUTO)
     private Integer taskId;
 
+    @TableField("SUB_ID")
+    private String subId;
+
     @TableField("TASK_NAME")
     private String taskName;
 

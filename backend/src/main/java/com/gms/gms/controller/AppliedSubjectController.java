@@ -10,6 +10,8 @@ import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.Announcement;
 import com.gms.gms.domain.AppliedSubject;
+import com.gms.gms.domain.Student;
+import com.gms.gms.domain.Subject;
 import com.gms.gms.service.AppliedSubjectService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
@@ -27,13 +29,14 @@ import java.util.List;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("subject/apply")
+@RequestMapping("subject")
 public class AppliedSubjectController {
     @Autowired
     AppliedSubjectService appliedSubjectService;
 
     //不同角色调用同一接口将返回不同结果
-    @GetMapping
+
+    @GetMapping("apply")
     public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException{
         try {
             //默认使用第一个角色，即取第一个角色的名字
@@ -52,7 +55,20 @@ public class AppliedSubjectController {
         }
     }
 
-    @PostMapping
+    //查看指定课题的所有学生
+    @GetMapping("students/{subId}")
+    public GmsResponse getStudentsInSubject(@PathVariable String subId) throws GmsException {
+        try {
+            List<Student> subjects = appliedSubjectService.getStudentsInSubject(subId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    @PostMapping("apply")
     public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
         try {
             appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
@@ -71,7 +87,7 @@ public class AppliedSubjectController {
         }
     }
 
-    @PutMapping
+    @PutMapping("apply")
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
         try {
             // TODO: 2021/3/17 查看是否有成功通过的申请，如果有则不让其提交

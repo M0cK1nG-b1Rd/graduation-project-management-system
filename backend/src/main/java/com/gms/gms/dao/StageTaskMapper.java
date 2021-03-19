@@ -10,5 +10,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface StageTaskMapper extends BaseMapper<StageTask> {
 
-    IPage<StageTask> getStageTask(Page<StageTask> page, StageTask task);
+    Page<StageTask> getStageTask(Page<StageTask> page, StageTask task);
+
+    Page<StageTask> getStageTaskAsTeacher(Page<StageTask> page, StageTask task, Integer teacherId);
+
+    Page<StageTask> getStageTaskAsStudent(Page<StageTask> page, StageTask task, Integer studentId);
 }
