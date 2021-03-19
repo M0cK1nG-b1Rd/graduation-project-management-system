@@ -61,4 +61,5 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     public Subject getStudentPassedSubject(Integer stuId) {
         return this.baseMapper.getStudentPassedSubject(stuId);
     }
+
 }

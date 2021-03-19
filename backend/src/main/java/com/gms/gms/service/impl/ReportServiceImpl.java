@@ -1,5 +1,6 @@
 package com.gms.gms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.exception.GmsException;
@@ -48,6 +49,20 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
     @Override
     public void auditReport(Report report) {
         this.updateById(report);
+    }
+
+    @Override
+    public Report getStartReport(Integer stuId) {
+        LambdaQueryWrapper<Report> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"KT");
+        return this.baseMapper.selectOne(mapper);
+    }
+
+    @Override
+    public Report getMidReport(Integer stuId) {
+        LambdaQueryWrapper<Report> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"ZQ");
+        return this.baseMapper.selectOne(mapper);
     }
 
     @Override
