@@ -93,17 +93,8 @@ public class Report implements Serializable {
     @TableField("COMMENT")
     private String comment;
 
-    @TableField("FILE_SCORE")
-    private Integer fileScore;
-
-    @TableField("FILE_SCORE_WEIGHT")
-    private Float fileScoreWeight;
-
-    @TableField("DEFENSE_SCORE")
-    private Integer defenseScore;
-
-    @TableField("DEFENSE_SCORE_WEIGHT")
-    private Float defenseScoreWeight;
+    @TableField("SCORE")
+    private Integer score;
 
     @TableField("IS_RELEASED")
     private Boolean isReleased;
