@@ -89,7 +89,7 @@ export default {
     },
     // 获取该课题学生信息
     async getStuInfo(subId) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/students/' + subId)
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/students/', { params: { subId: subId } })
       if (res.meta.code === 200) {
         this.stuInfo = res.data
       } else {

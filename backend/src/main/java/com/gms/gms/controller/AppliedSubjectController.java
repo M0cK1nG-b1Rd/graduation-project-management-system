@@ -56,8 +56,8 @@ public class AppliedSubjectController {
     }
 
     //查看指定课题的所有学生
-    @GetMapping("students/{subId}")
-    public GmsResponse getStudentsInSubject(@PathVariable String subId) throws GmsException {
+    @GetMapping("students")
+    public GmsResponse getStudentsInSubject(String subId) throws GmsException {
         try {
             List<Student> subjects = appliedSubjectService.getStudentsInSubject(subId);
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);

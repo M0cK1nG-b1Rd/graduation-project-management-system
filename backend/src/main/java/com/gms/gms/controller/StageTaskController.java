@@ -10,6 +10,7 @@ import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.StageTask;
 import com.gms.gms.service.StageTaskService;
 import com.gms.gms.utils.AccountUtil;
+import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,13 @@ public class StageTaskController {
     @PostMapping
     public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {
+            String docId = FileStorageUtil.getDocId();
+            task.setDocId(docId);
             stageTaskService.addStageTask(task);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "布置阶段任务成功"));
+                    "布置阶段任务成功"),docId);
         } catch (Exception e) {
             String message = "布置阶段任务失败";
             log.error(message, e);

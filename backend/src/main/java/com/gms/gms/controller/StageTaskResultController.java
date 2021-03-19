@@ -58,6 +58,22 @@ public class StageTaskResultController {
         }
     }
 
+    // TODO: 2021/3/19  
+    @GetMapping("statistics")
+    public GmsResponse getStageTaskResultStatistics(StageTaskResult result) throws GmsException {
+        try {
+            IPage<StageTaskResult> stageTaskList =  service.getStageTaskResult(result);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),stageTaskList);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
     // TODO: 2021/3/18 测试
     @PutMapping
     public GmsResponse modifyStageTaskResult(StageTaskResult result) throws GmsException {

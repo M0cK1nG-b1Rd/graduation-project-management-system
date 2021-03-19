@@ -50,10 +50,10 @@
                 f.DOC_ID = st.DOC_ID)
         WHERE t.TEACHER_ID=#{teacherId}
         <if test="task.subId != null and task.subId != ''">
-            AND st.SUB_ID=1
+            AND st.SUB_ID=#{task.subId}
         </if>
         <if test="task.stuId != null and task.stuId != ''">
-            AND st.STU_ID=1
+            AND st.STU_ID=#{task.stuId}
         </if>
     </select>
     <select id="getStageTaskAsStudent" resultType="com.gms.gms.domain.StageTask">
