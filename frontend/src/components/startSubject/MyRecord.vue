@@ -44,9 +44,9 @@
             filter-placement="bottom-end"
             label="报告状态">
             <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == '2'">已通过</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == '1'">待审核</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == '3'">未通过</el-tag>
+              <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
+              <el-tag type="warning" v-if=" scope.row.status == 'WSH'">待审核</el-tag>
+              <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
             </template>
           </el-table-column>
           <!--          操作-->
@@ -122,28 +122,21 @@
       width="60%">
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="课题名称">
-              <el-input v-model="currentSubjectInfo.subName"></el-input>
+              <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="题目类型">
-              <el-input v-model="currentSubjectInfo.type"></el-input>
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
+              <el-tag type="warning" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
+              <el-tag type="danger" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
-              </el-row>
+                <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.poseTime">{{currentSubjectInfo.poseTime}}</el-tag>
             </el-form-item>
           </el-col>
         </el-row>
@@ -287,15 +280,22 @@ export default {
     }
   },
   created() {
-    this.getSubjectList()
+    this.getReportList()
   },
   methods: {
-    async getSubjectList() {
+    async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.subjectlist = res.data.subjects
+      this.subjectlist = res.data.records
+    },
+    async getSubjectInfo() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取课题列表失败')
+      }
+      this.currentSubjectInfo = res.data
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -316,10 +316,9 @@ export default {
       return row.status === value
     },
     // 查看课题详情
-    viewSubject(row) {
+    viewSubject() {
+      this.getSubjectInfo()
       this.viewPageVisible = true
-      this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
     },
     // 查看课题详情
     viewReport(row) {
