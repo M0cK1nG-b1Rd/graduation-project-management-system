@@ -85,6 +85,7 @@ export default {
         this.$message.error('获取课题信息失败!')
       }
     },
+    // 查看选中课题的所有选择此题学生信息
     viewStudentInfo(subId) {
       this.$router.push({ name: 'processStuInfo', params: { subId: subId } })
     }

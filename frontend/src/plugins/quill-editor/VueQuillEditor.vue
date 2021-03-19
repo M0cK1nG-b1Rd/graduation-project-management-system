@@ -5,7 +5,6 @@
                     :options="editorOption" style="height:600px;">
       </quill-editor>
     </el-row>
-    {{content}}
   </div>
 </template>
 <script>
