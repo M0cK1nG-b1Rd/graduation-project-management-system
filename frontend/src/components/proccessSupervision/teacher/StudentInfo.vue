@@ -140,21 +140,42 @@
           <el-popconfirm
             @confirm="submitNewTask"
             title="确定要发布该任务吗？">
-            <el-button type="primary" slot="reference">发布新任务</el-button>
+            <el-button type="primary" slot="reference" plain>发布任务</el-button>
           </el-popconfirm>
         </el-row>
         <el-divider></el-divider>
 <!--        上传附件-->
+        <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">上传附件</el-row>
+        <div class="divider"></div>
+        <el-row type="flex" justify="center">
+          <el-popconfirm
+            @confirm="uploaderVisible=true"
+            title="上传附件前请确认已发布阶段任务！">
+            <el-button slot="reference" type="success" plain>上传附件</el-button>
+          </el-popconfirm>
+        </el-row>
       </div>
     </el-drawer>
+<!--    上传附件对话框-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="uploaderVisible"
+      width="30%">
+      <uploader></uploader>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import dataDict from '@/assets/js/dataDict'
+import Uploader from '@/plugins/upload-download/Uploader'
 
 export default {
   name: 'StudentInfo',
+  components: { Uploader },
   mounted() {
     // 通过路由参数获取学生信息
     this.stuInfo = this.$route.params.stuInfo
@@ -176,6 +197,8 @@ export default {
       subName: '',
       // 布置新任务抽屉可见性
       newTaskDrawerVisible: false,
+      // 上传文件窗口可见性
+      uploaderVisible: false,
       // 新增任务信息
       newTaskInfo: {
         subId: '',
@@ -207,17 +230,22 @@ export default {
       // 转换日期
       this.newTaskInfo.startTime = this.newTaskInfo.time[0]
       this.newTaskInfo.endTime = this.newTaskInfo.time[1]
+      // 删除多余时间属性
       delete this.newTaskInfo.time
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task', this.newTaskInfo)
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
         this.newTaskDocId = res.data.docId
+        // 恢复时间属性
         this.newTaskInfo.time = ''
       } else {
         this.$message.error(res.meta.message)
+        // 恢复时间属性
         this.newTaskInfo.time = ''
       }
     },
+    // 上传附件
+    async uploadFile(docId) {},
     // 查看所有某学生阶段任务
     viewAllTask(row) {}
   }
