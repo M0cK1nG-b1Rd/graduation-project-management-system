@@ -67,7 +67,7 @@ public class SubjectController {
 
     /**
      *通过userid返回当前学生的课题信息
-     *stuId:学生id
+     *userId:学生用户id
      */
     @GetMapping("/userId")
     public GmsResponse getStudentPassedSubjectById(Integer userId) throws GmsException {

@@ -97,6 +97,25 @@
                 LEFT JOIN file_storage f ON(f.DOC_ID)
         WHERE r.POSE_BY=#{studentId}
     </select>
+    <select id="selectReportByStuId" resultMap="ReportMapper">
+        SELECT
+            r.MEANING,
+            r.RESULT,
+            r.PLAN,
+            r.POSE_TIME,
+            u1.REAL_NAME AS STUDENT_NAME,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            report r
+                JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
+                JOIN USER u1 ON ( stu.USER_ID = u1.USER_ID )
+                LEFT JOIN file_storage f ON ( f.DOC_ID )
+        WHERE
+            r.POSE_BY = #{stuId}
+          AND r.STAGE = #{stage}
+    </select>
 
 
     <resultMap id="ReportMapper" type="com.gms.gms.domain.Report">
