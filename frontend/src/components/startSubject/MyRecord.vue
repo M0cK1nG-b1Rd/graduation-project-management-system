@@ -24,7 +24,7 @@
             :show-overflow-tooltip="true"
             prop="subName"
             label="课题名称"
-            width="300">
+            width="200">
           </el-table-column>
           <!--          申请日期-->
           <el-table-column
@@ -32,7 +32,7 @@
             :show-overflow-tooltip="true"
             prop="poseTime"
             label="提交日期"
-            width="110">
+            width="200">
           </el-table-column>
           <!--         报告状态-->
           <el-table-column
@@ -93,7 +93,7 @@
             <a-progress
               style="margin-bottom: 10px"
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="90"
+              :percent="score.defenseScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
@@ -101,7 +101,7 @@
             <a-progress
               style="margin-bottom: 10px"
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="80"
+              :percent="score.fileScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
@@ -178,40 +178,35 @@
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
-      <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
+      <el-form ref="subject" :model="currentReportInfo" label-width="80px">
         <el-row>
           <el-col :span="7">
             <el-form-item label="提交人">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
+              <el-input v-model="currentReportInfo.studentName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="提交时间">
               <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
+                <el-input v-model="currentReportInfo.poseTime"></el-input>
               </el-row>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="指导教师">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
             <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -226,7 +221,7 @@
       :with-header="false"
       :visible.sync="drawer">
       <div class="card_header">开题报告意见</div>
-      <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
+      <el-form ref="subject" :model="currentReportInfo" label-width="80px">
         <el-row>
           <el-col :span="20">
             <el-form-item label="反馈教师">
@@ -239,9 +234,18 @@
 <!--            <el-form-item label="反馈内容">-->
 <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
 <!--            </el-form-item>-->
-            <div class="fankui">反馈表</div>
+            <div class="fankui">报告反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
-              <div class="ql-editor" v-html="currentSubjectInfo.description" ></div>
+              <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
+            </div>
+          </el-col>
+          <el-col :span="22" class="feedback">
+            <!--            <el-form-item label="反馈内容">-->
+            <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
+            <!--            </el-form-item>-->
+            <div class="fankui">答辩反馈</div>
+            <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+              <div class="ql-editor" v-html="feedBack.secretatryComment"></div>
             </div>
           </el-col>
         </el-row>
@@ -261,6 +265,12 @@ export default {
       // 查看详情的课题信息
       currentSubjectInfo: {},
       subjectlist: [],
+      currentReportInfo: {},
+      // 查看反馈信息
+      feedBack: {
+        teacherComment: '',
+        secretatryComment: ''
+      },
       // （符合要求）课题总数
       totalPageNum: 0,
       // 获取课题列表
@@ -270,6 +280,12 @@ export default {
         page: 1, // 当前页号
         size: 10, // 页面大小
         type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+      },
+      // 查看分数
+      score: {
+        fileScore: 0, // 材料分数
+        defenseScore: 0, // 答辩分数
+        total: 0 // 总分
       },
       // 查看课题详情对话框可见性
       viewPageVisible: false,
@@ -281,21 +297,39 @@ export default {
   },
   created() {
     this.getReportList()
+    this.getScore()
+    this.getSubjectInfo()
+    this.getFeedBackInfo()
   },
   methods: {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        return this.$message.error('获取开题报告列表失败')
       }
       this.subjectlist = res.data.records
     },
     async getSubjectInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        return this.$message.error('获取课题信息失败')
       }
       this.currentSubjectInfo = res.data
+    },
+    async getFeedBackInfo() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report')
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取反馈失败')
+      }
+      this.feedBack = res.data.records[0]
+    },
+    async getScore() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取反馈失败')
+      }
+      this.score = res.data
+      this.feedBack.secretatryComment = res.data.defenseFeedback
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -323,14 +357,13 @@ export default {
     // 查看课题详情
     viewReport(row) {
       this.viewReportVisible = true
-      this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
+      this.currentReportInfo = row
     },
     // 查看反馈结果
     viewFeedback(row) {
+      this.feedBack.teacherComment = row.comment
+      console.log(row)
       this.drawer = true
-      this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
     }
   }
 }
