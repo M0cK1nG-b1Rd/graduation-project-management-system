@@ -9,6 +9,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface PleaResultService extends IService<PleaResult> {
 
     Integer getStuId(Integer userId);
-
-    Integer getPleaId(Integer stuId);
 }
