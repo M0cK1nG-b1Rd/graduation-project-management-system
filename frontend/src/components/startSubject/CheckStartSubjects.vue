@@ -298,7 +298,7 @@ export default {
       viewPageVisible: false,
       // 查看开题详情对话框可见性
       viewReportVisible: false,
-      // 查看开题详情对话框可见性
+      // 反馈抽屉可见性
       drawer: false,
       // 富文本编辑器可见性
       quillEditorVisible: false
