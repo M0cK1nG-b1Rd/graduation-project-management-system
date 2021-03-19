@@ -201,42 +201,21 @@
       width="60%">
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="课题名称">
-              <el-input v-model="currentSubjectInfo.subName"></el-input>
+              <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="10">
+          <el-col :span="8">
             <el-form-item label="题目类型">
-              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
-              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
-              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
+              <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
+              <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
+              <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
-            <el-form-item label="申报时间">
-              <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
-              </el-row>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-form-item label="指导教师">
-              <el-input v-model="currentSubjectInfo.teacherName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师电话">
-              <el-input v-model="currentSubjectInfo.tel"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师邮箱">
-              <el-input v-model="currentSubjectInfo.mail"></el-input>
+              <el-tag type="warning"  effect="plain" v-model="currentSubjectInfo.teacherName">{{currentSubjectInfo.teacherName}}</el-tag>
             </el-form-item>
           </el-col>
         </el-row>
@@ -333,19 +312,19 @@ export default {
       }
       this.currentPreInfo = res.data[0] // 与后端对接
     },
-    // async getStudentList() {
-    //   const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/studentId')
-    //   if (res.meta.code !== 200) {
-    //     this.$message.error('获取开题报告信息失败')
-    //   }
-    //   this.studentList = res.data // 与后端对接
-    // },
     async getSubjectInfo(row) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { subId: row.subId } })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/userId', { params: { userId: row.userId } })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题信息失败')
       }
-      this.currentSubjectInfo = res.data[0] // 与后端对接
+      this.currentSubjectInfo = res.data // 与后端对接
+    },
+    async getReportInfo(row) {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'KT' } })
+      if (res.meta.code !== 200) {
+        this.$message.error('获取开题报告信息失败')
+      }
+      this.studentList = res.data // 与后端对接
     },
     // 查看课题详情
     viewSubject(row) {
@@ -356,6 +335,7 @@ export default {
     },
     // 查看学生开题报告详情
     viewReport(row) {
+      this.getReportInfo(row)
       this.viewReportVisible = true
       this.currentSubjectInfo = row
       console.log(this.currentSubjectInfo)

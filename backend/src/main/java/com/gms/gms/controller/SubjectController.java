@@ -66,11 +66,11 @@ public class SubjectController {
     }
 
     /**
-     *通过userid返回当前学生的课题信息，restful传参
+     *通过userid返回当前学生的课题信息
      *stuId:学生id
      */
-    @GetMapping("studentId/#{userId}")
-    public GmsResponse getStudentPassedSubjectById(@PathVariable Integer userId) throws GmsException {
+    @GetMapping("/userId")
+    public GmsResponse getStudentPassedSubjectById(Integer userId) throws GmsException {
         try {
             Subject subject = subjectService.getStudentPassedSubject(accountService.getStudentByUserId(userId).getStuId());
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
