@@ -118,11 +118,11 @@ public class StatisticsController {
         try {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
 
-            
+
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),statistics);
+                    "查询成功"));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
