@@ -19,8 +19,6 @@ export default {
   name: 'Uploader',
   props: ['docId'],
   mounted() {
-    // if (this.docId === undefined) this.docId = ''
-    this.docId = 1
   },
   data() {
     return {

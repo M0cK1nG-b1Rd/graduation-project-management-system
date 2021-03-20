@@ -1,37 +1,17 @@
 <template>
   <div>
-    <el-upload
-      class="upload-demo"
-      :headers="myHeaders"
-      ref="upload"
-      multiple
-      :action="'http://127.0.0.1:9528/file/upload/' + docId"
-      :file-list="fileList"
-      :auto-upload="false">
-      <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-    </el-upload>
+    <downloader :doc-id="'9f772ce77c484c7ba5d80a11e12c7821'"></downloader>
   </div>
 </template>
 <script>
-const token = window.sessionStorage.getItem('token')
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
-  name: 'Uploader',
-  props: ['docId'],
+  name: 'Test',
+  components: { Downloader },
   mounted() {
-    // if (this.docId === undefined) this.docId = ''
-    this.docId = 1
   },
   data() {
-    return {
-      myHeaders: { Authentication: token },
-      fileList: []
-    }
-  },
-  methods: {
-    submitUpload() {
-      this.$refs.upload.submit()
-    }
+    return {}
   }
 }
 </script>

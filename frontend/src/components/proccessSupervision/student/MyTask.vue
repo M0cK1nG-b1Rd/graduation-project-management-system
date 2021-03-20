@@ -25,13 +25,6 @@
            label="任务名称"
            width="200">
          </el-table-column>
-         <!--          老师-->
-         <el-table-column
-           :show-overflow-tooltip="true"
-           prop="teacherName"
-           label="老师"
-           width="110">
-         </el-table-column>
          <!--          开始时间-->
          <el-table-column
            sortable
@@ -48,19 +41,35 @@
            label="截止时间"
            width="120">
          </el-table-column>
+         <!--          所属阶段-->
+         <el-table-column
+           :show-overflow-tooltip="true"
+           prop="status"
+           width="100"
+           :filters="[{ text: '开题', value: 'KT' }, { text: '中期', value: 'ZQ' }, { text: '结题', value: 'JT' }]"
+           :filter-method="filterStage"
+           filter-placement="bottom-end"
+           label="所属阶段">
+           <template slot-scope="scope">
+             <el-tag type="info" v-if=" scope.row.stage == 'KT'">开题</el-tag>
+             <el-tag type="primary" v-if=" scope.row.stage == 'ZQ'">中期</el-tag>
+             <el-tag type="success" v-if=" scope.row.stage == 'JT'">结题</el-tag>
+           </template>
+         </el-table-column>
          <!--          任务状态-->
          <el-table-column
            :show-overflow-tooltip="true"
            prop="status"
            width="120"
-           :filters="[{ text: '草稿箱', value: 'WFB' }, { text: '已发布', value: 'YFB' }, { text: '回收站', value: 'YSC' }]"
+           :filters="[{ text: '未提交', value: 'WTJ' }, { text: '待审核', value: 'DSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
            :filter-method="filterStatus"
            filter-placement="bottom-end"
            label="任务状态">
            <template slot-scope="scope">
-             <el-tag type="success" v-if=" scope.row.status == 'YFB'">已发布</el-tag>
-             <el-tag type="warning" v-if=" scope.row.status == 'WFB'">待发布</el-tag>
-             <el-tag type="danger" v-if=" scope.row.status == 'YSC'">已撤回</el-tag>
+             <el-tag type="warning" v-if=" scope.row.status == 'WTJ'">未提交</el-tag>
+             <el-tag type="info" v-if=" scope.row.status == 'DSH'">待审核</el-tag>
+             <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
+             <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
            </template>
          </el-table-column>
          <!--          操作-->
@@ -98,10 +107,9 @@
        size="50%"
        :visible.sync="taskDetailDrawerVisible"
        :direction="'rtl'">
-       <div class="drawer_title" slot="title">
-         阶段任务详情
-       </div>
        <div style="margin-left: 20px">
+         <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">任务详情</el-row>
+         <div class="divider"></div>
          <!--        任务名称-->
          <el-row type="flex" align="middle">
            <el-col :span="4" class="form_label">任务名称：</el-col>
@@ -110,33 +118,19 @@
            </el-col>
          </el-row>
          <div class="divider"></div>
-         <!--        所属阶段-->
+         <!--        开始时间-->
          <el-row type="flex" align="middle">
-           <el-col :span="4" class="form_label">所属阶段：</el-col>
-           <el-col :span="20">
-             <el-select
-               size="medium"
-               style="width: 80%"
-               v-model="currentTask.stage"
-               placeholder="请选择所属阶段">
-             </el-select>
+           <el-col :span="4" class="form_label">开始时间：</el-col>
+           <el-col :span="16">
+             <el-input v-model="currentTask.startTime" size="medium"></el-input>
            </el-col>
          </el-row>
          <div class="divider"></div>
-         <!--        起止时间-->
+         <!--        截止时间-->
          <el-row type="flex" align="middle">
-           <el-col :span="4" class="form_label">起止时间：</el-col>
-           <el-col :span="20">
-             <el-date-picker
-               style="width: 80%"
-               size="medium"
-               type="datetimerange"
-               v-model="currentTask.time"
-               range-separator="-"
-               start-placeholder="开始时间"
-               end-placeholder="截止时间"
-               value-format="yyyy-MM-dd HH:mm:ss">
-             </el-date-picker>
+           <el-col :span="4" class="form_label">截止时间：</el-col>
+           <el-col :span="16">
+             <el-input v-model="currentTask.endTime" size="medium"></el-input>
            </el-col>
          </el-row>
          <div class="divider"></div>
@@ -152,16 +146,10 @@
            </el-col>
          </el-row>
          <div class="divider"></div>
-         <el-divider></el-divider>
-         <!--        上传附件-->
-         <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">上传附件</el-row>
+         <!--        相关附件-->
+         <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">相关附件</el-row>
          <div class="divider"></div>
          <el-row type="flex" justify="center">
-           <el-popconfirm
-             @confirm="uploaderVisible=true"
-             title="上传附件前请确认已发布阶段任务！">
-             <el-button slot="reference" type="success" plain>上传附件</el-button>
-           </el-popconfirm>
          </el-row>
        </div>
      </el-drawer>
@@ -198,7 +186,7 @@ export default {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.taskInfo = res.data.records
-        this.totalPageNum = res.data.pages
+        this.totalPageNum = res.data.total
       } else {
         this.$message.error('获取阶段任务信息失败!')
       }
@@ -216,8 +204,15 @@ export default {
     // 查看任务详情
     viewTaskDetail(row) {
       this.currentTask = row
-      this.currentTask.time = [row.startTime, row.endTime]
       this.taskDetailDrawerVisible = true
+    },
+    // 筛选任务状态
+    filterStatus(value, row) {
+      return row.status === value
+    },
+    // 筛选任务阶段
+    filterStage(value, row) {
+      return row.stage === value
     }
   }
 }

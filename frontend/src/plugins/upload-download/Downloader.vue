@@ -1,80 +1,41 @@
 <template>
   <div>
-    <el-upload
-      :headers="myHeaders"
-      class="upload-demo"
-      multiple
-      ref="upload"
-      :action="'http://127.0.0.1:9528/file/upload/' + docId"
-      :file-list="fileList"
-      :auto-upload="false">
-      <!--      提示文字-->
-      <div slot="tip" class="el-upload__tip tips">{{ tip }}</div>
-      <div class="body">
-        <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到系统</el-button>
-      </div>
-    </el-upload>
-    <!--下载调试-->
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitDownload">下载到系统</el-button>
+    <file-item v-for="(item, index) in fileInfo"
+               :key="index"
+               :file-name="item.fileName"
+               :file-id="item.fileId"
+               :doc-id="docId"></file-item>
   </div>
 </template>
+
 <script>
-const token = window.sessionStorage.getItem('token')
+import fileItem from '@/plugins/upload-download/FileItem'
 export default {
   name: 'Downloader',
-  props: ['tip', 'docId'],
+  props: ['docId'],
+  components: { fileItem },
   mounted() {
-    if (this.docId === undefined) this.docId = ''
+    this.getFileInfo()
   },
   data() {
     return {
-      myHeaders: { Authentication: token },
-      fileList: []
+      fileInfo: []
     }
   },
   methods: {
-    submitUpload() {
-      this.$refs.upload.submit()
-    },
-    async submitDownload() {
-      // eslint-disable-next-line no-unused-vars
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/file/download/test/34', {
-        responseType: 'blob',
-        headers: { Authentication: token }
-      }).then(res => {
-        if (res) {
-          const blob = new Blob([res.data])
-          if ('download' in document.createElement('a')) {
-            const link = document.createElement('a')
-            link.download = 'wallhaven-zxv71g_3840x2160.png' // 文件名，从后端获取
-            link.style.display = 'none'
-            link.href = URL.createObjectURL(blob)
-            document.body.appendChild(link)
-            link.click()// 执行下载
-            URL.revokeObjectURL(link.href) // 释放url
-            document.body.removeChild(link)// 释放标签
-          } else {
-            navigator.msSaveBlob(blob, 'wallhaven-zxv71g_3840x2160.png')
-          }
-        }
-      })
-        .catch((err) => {
-          console.log(err)
-        })
+    // 根据docId获取文件信息列表
+    async getFileInfo() {
+      const { data: res } = await this.$http.get(`http://127.0.0.1:9528/file/files/${this.docId}`)
+      if (res.meta.code === 200) {
+        this.fileInfo = res.data
+      } else {
+        this.$message.error(res.meta.message)
+      }
     }
   }
 }
 </script>
 
-<style Lang="less" scoped>
-/*提示信息*/
-.tips {
-  font-size: 15px;
-}
+<style scoped>
 
-.body {
-  display: flex;
-  justify-content: center;
-}
 </style>
