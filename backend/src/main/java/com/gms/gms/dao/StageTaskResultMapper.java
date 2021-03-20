@@ -11,11 +11,15 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface StageTaskResultMapper extends BaseMapper<StageTaskResult> {
 
-    IPage<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page ,Integer stuId);
+    Page<StageTaskResult> getStageTaskResultAsStudent(Page<StageTaskResult> page ,StageTaskResult task, Integer stuId);
 
     void changeStatus(Integer taskId,String status);
 
     Integer getRetriesTime(Integer taskId);
 
     void giveStageTaskScore(@Param("task") StageTaskResult task);
+
+    Page<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page, StageTaskResult task);
+
+    Page<StageTaskResult> getStageTaskResultAsTeacher(Page<StageTaskResult> page, StageTaskResult task, Integer teacherId);
 }

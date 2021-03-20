@@ -1,6 +1,7 @@
 package com.gms.gms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.gms.common.exception.GmsException;
 import com.gms.gms.domain.StageTaskResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +12,7 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
 
     void giveStageTaskResult(StageTaskResult task);
 
-    IPage<StageTaskResult> getStageTaskResult(StageTaskResult task, Integer stuId);
+    IPage<StageTaskResult> getStageTaskResult(StageTaskResult task, String roleName) throws GmsException;
 
     void modifyStageTaskResult(StageTaskResult task);
 
