@@ -6,6 +6,7 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
+import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
@@ -63,8 +64,9 @@ public class StageTaskResultController {
     @GetMapping
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
-            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result,stuId);
+            //默认使用第一个角色，即取第一个角色的名字
+            String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
+            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result,roleName);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
