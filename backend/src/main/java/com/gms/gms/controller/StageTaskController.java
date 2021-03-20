@@ -34,6 +34,8 @@ public class StageTaskController {
     @PostMapping
     public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {
+            Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
+            task.setTeacherId(teacherId);
             String docId = FileStorageUtil.getDocId();
             task.setDocId(docId);
             stageTaskService.addStageTask(task);

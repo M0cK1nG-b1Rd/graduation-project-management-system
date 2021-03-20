@@ -144,7 +144,7 @@ public class SubjectController {
 
     //教研办审核教师课题
     @PutMapping("audit")
-    public GmsResponse auditSubject(LinkedHashMap<String,String> opinion) throws GmsException {
+    public GmsResponse auditSubject(@RequestBody LinkedHashMap<String,String> opinion) throws GmsException {
         try {
             String docId = opinion.get("docId");
             //WTG未通过，YTG已通过
