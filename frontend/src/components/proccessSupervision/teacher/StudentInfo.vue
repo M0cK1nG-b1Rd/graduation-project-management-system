@@ -49,7 +49,7 @@
             <el-table-column
               width="180"
               label="操作">
-              <template  slot-scope="scope">
+              <template slot-scope="scope">
                 <!--            发布新阶段任务-->
                 <el-tooltip class="item" effect="dark" :enterable="false" content="给该学生布置新的阶段任务" placement="top">
                   <el-button type="danger" icon="el-icon-edit"
@@ -141,29 +141,91 @@
           <el-popconfirm
             @confirm="submitNewTask"
             title="确定要发布该任务吗？">
-            <el-button type="primary" slot="reference">发布新任务</el-button>
+            <el-button type="primary" slot="reference" plain>发布任务</el-button>
           </el-popconfirm>
         </el-row>
         <el-divider></el-divider>
 <!--        上传附件-->
+        <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">上传附件</el-row>
+        <div class="divider"></div>
+        <el-row type="flex" justify="center">
+          <el-popconfirm
+            @confirm="uploaderVisible=true"
+            title="上传附件前请确认已发布阶段任务！">
+            <el-button slot="reference" type="success" plain>上传附件</el-button>
+          </el-popconfirm>
+        </el-row>
       </div>
     </el-drawer>
+<!--    上传附件对话框-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="uploaderVisible"
+      width="30%">
+      <uploader :doc-id="newTaskDocId"></uploader>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+<!--    查看某学生所有任务窗口-->
+    <el-dialog
+      title="该学生所有阶段任务"
+      :visible.sync="viewAllTaskVisible"
+      width="50%">
+      <el-table
+        :data="allTaskInfo"
+        stripe
+        style="width: 100%; font-size: 15px">
+        <el-table-column
+          prop="taskName"
+          label="任务名称"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="stage"
+          label="所属阶段"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="startTime"
+          label="开始时间"
+          width="80">
+        </el-table-column>
+        <el-table-column
+          prop="endTime"
+          label="截止时间"
+          width="80">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import dataDict from '@/assets/js/dataDict'
+import Uploader from '@/plugins/upload-download/Uploader'
 
 export default {
   name: 'StudentInfo',
+  components: { Uploader },
   mounted() {
-    // 通过路由参数获取学生信息
-    this.stuInfo = this.$route.params.stuInfo
-    this.subName = this.$route.params.subName
-    this.subId = this.$route.params.subId
+    // 通过路由参数获取学生信息,并存储到sessionStorage
+    window.sessionStorage.setItem('subId', JSON.stringify(this.$route.params.subId))
+    window.sessionStorage.setItem('stuInfo', JSON.stringify(this.$route.params.stuInfo))
+    window.sessionStorage.setItem('subName', JSON.stringify(this.$route.params.subName))
+    // 从数据字典获得参数
+    this.subId = JSON.parse(window.sessionStorage.getItem('subId'))
+    this.stuInfo = JSON.parse(window.sessionStorage.getItem('stuInfo'))
+    this.subName = JSON.parse(window.sessionStorage.getItem('subName'))
     // 获取数据字典
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.stageDict = dataDict.getDict(fullDict, 1).splice(2, 5)
+  },
+  // 实例销毁前，删除相应的sessionStorage
+  beforeDestroy() {
+    window.sessionStorage.removeItem('subId')
+    window.sessionStorage.removeItem('stuInfo')
+    window.sessionStorage.removeItem('subName')
   },
   data() {
     return {
@@ -177,6 +239,12 @@ export default {
       subName: '',
       // 布置新任务抽屉可见性
       newTaskDrawerVisible: false,
+      // 上传文件窗口可见性
+      uploaderVisible: false,
+      // 查看某学生所有任务详情窗口可见性
+      viewAllTaskVisible: false,
+      // 某学生所有任务信息
+      allTaskInfo: [],
       // 新增任务信息
       newTaskInfo: {
         subId: '',
@@ -208,19 +276,41 @@ export default {
       // 转换日期
       this.newTaskInfo.startTime = this.newTaskInfo.time[0]
       this.newTaskInfo.endTime = this.newTaskInfo.time[1]
+      // 删除多余时间属性
       delete this.newTaskInfo.time
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task', this.newTaskInfo)
       if (res.meta.code === 200) {
-        this.$message.success(res.meta.message)
-        this.newTaskDocId = res.data.docId
+        this.$notify.success(res.meta.message)
+        this.newTaskDocId = res.data
+        // 恢复时间属性
         this.newTaskInfo.time = ''
       } else {
-        this.$message.error(res.meta.message)
+        this.$notify.error(res.meta.message)
+        // 恢复时间属性
         this.newTaskInfo.time = ''
       }
     },
+    // 上传附件
+    async uploadFile(docId) {},
     // 查看所有某学生阶段任务
-    viewAllTask(row) {}
+    async viewAllTask(row) {
+      this.newTaskInfo.stuId = row.stuId
+      this.newTaskInfo.subId = this.subId
+      this.viewAllTaskVisible = true
+      await this.getAllTaskInfo(this.subId, row.stuId)
+    },
+    // 获得某学生所有任务信息
+    async getAllTaskInfo(subId, stuId) {
+      const queryInfo = {
+        subId: subId,
+        stuId: stuId
+      }
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: queryInfo })
+      if (res.meta.code === 200) {
+      } else {
+        this.$message.error('获取该学生阶段任务信息失败！')
+      }
+    }
   }
 }
 </script>
