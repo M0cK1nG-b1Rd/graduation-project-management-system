@@ -2,7 +2,6 @@ package com.gms.gms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.gms.gms.domain.StageTask;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.dao.StageTaskResultMapper;
 import com.gms.gms.service.StageTaskResultService;
@@ -29,16 +28,21 @@ public class StageTaskResultServiceImpl extends ServiceImpl<StageTaskResultMappe
 
     @Override
     public void modifyStageTaskResult(StageTaskResult task) {
-
+        // TODO: 2021/3/20
     }
 
     @Override
     public void giveStageTaskScore(StageTaskResult task) {
-
+        this.baseMapper.giveStageTaskScore(task);
     }
 
     @Override
-    public void changeStatus(Integer taskId) {
-        this.baseMapper.changeStatus(taskId);
+    public void changeStatus(Integer taskId, String status) {
+        this.baseMapper.changeStatus(taskId,status);
+    }
+
+    @Override
+    public Integer getRetriesTime(Integer taskId) {
+        return this.baseMapper.getRetriesTime(taskId);
     }
 }

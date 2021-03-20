@@ -3,13 +3,22 @@
 <mapper namespace="com.gms.gms.dao.StageTaskResultMapper">
     <update id="changeStatus">
         UPDATE stage_task
-        SET `STATUS` = "WSH"
-        WHERE
-            TASK_ID = #{taskId}
+        SET `STATUS` = #{status}
+        WHERE TASK_ID = #{taskId}
+    </update>
+    <update id="giveStageTaskScore">
+        UPDATE stage_task_result
+        SET FEEDBACK = #{task.feedback}, `STATUS` =#{task.status},SCORE = #{task.score}
+        WHERE TASK_ID = #{task.taskId} AND RETRIES =#{task.retries}
     </update>
 
     <select id="getStageTaskResult" resultMap="StageTaskResultMapper">
 
+    </select>
+    <select id="getRetriesTime" resultType="java.lang.Integer">
+        SELECT COUNT(TASK_ID)
+        FROM stage_task_result
+        WHERE TASK_ID = #{taskId}
     </select>
 
     <resultMap id="StageTaskResultMapper" type="com.gms.gms.domain.StageTaskResult">
@@ -21,7 +30,7 @@
         <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
         <result column="SCORE" property="score" jdbcType="INTEGER"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
+            <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
             <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>
