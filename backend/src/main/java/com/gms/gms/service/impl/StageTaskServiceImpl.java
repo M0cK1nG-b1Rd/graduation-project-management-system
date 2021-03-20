@@ -23,7 +23,6 @@ public class StageTaskServiceImpl extends ServiceImpl<StageTaskMapper, StageTask
 
     @Override
     public IPage<StageTask> getStageTask(StageTask task, String roleName) throws GmsException {
-        // TODO: 2021/3/18 增加权限校验
         Page<StageTask> page = new Page<>(task==null?task.getPage():1,task==null?task.getSize():Integer.MAX_VALUE);
         Page<StageTask> stageTaskPage;
 

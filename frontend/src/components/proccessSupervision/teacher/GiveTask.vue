@@ -9,7 +9,7 @@
 <!--    卡片内容区-->
     <el-card>
 <!--      页面标题-->
-      <el-row type="flex" justify="center" class="page_title">发布任务</el-row>
+      <el-row type="flex" justify="center" class="page_title">发布阶段任务</el-row>
 <!--      该老师所有课题信息-->
       <el-row class="subject_zone">
         <div class="subject_card" v-for="(item, index) in allSubjectInfo"

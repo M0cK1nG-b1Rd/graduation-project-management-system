@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.StageTaskResultMapper">
+    <update id="changeStatus">
+        UPDATE stage_task
+        SET `STATUS` = #{status}
+        WHERE TASK_ID = #{taskId}
+    </update>
+    <update id="giveStageTaskScore">
+        UPDATE stage_task_result
+        SET FEEDBACK = #{task.feedback}, `STATUS` =#{task.status},SCORE = #{task.score}
+        WHERE TASK_ID = #{task.taskId} AND RETRIES =#{task.retries}
+    </update>
 
-    <select id="getStageTaskResult" resultMap="StageTaskResultMapper">
+    <select id="getStageTaskResultAsStudent" resultMap="com.gms.gms.dao.StageTaskMapper.StageTaskMapWithResult">
+        SELECT
+            st.TASK_ID,
+            st.SUB_ID,
+            st.TASK_NAME,
+            st.DESCRIPTION,
+            st.TEACHER_ID,
+            u1.REAL_NAME AS TEACHER_NAME,
+            st.STU_ID,
+            u2.REAL_NAME AS STUDENT_NAME,
+            st.STAGE,
+            st.`STATUS`,
+            st.START_TIME,
+            st.END_TIME,
+            str.RETRIES,
+            str.SUMMARY,
+            str.DOC_ID,
+            str.FEEDBACK,
+            str.`STATUS`,
+            str.AUDIT_TIME,
+            str.SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            stage_task st
+                JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
+                JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
+                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN student s ON ( s.STU_ID = st.STU_ID )
+                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                LEFT JOIN file_storage f ON ( f.DOC_ID = str.DOC_ID )
+        WHERE
+            st.STU_ID = #{stuId}
+    </select>
 
+    <select id="getRetriesTime" resultType="java.lang.Integer">
+        SELECT COUNT(TASK_ID)
+        FROM stage_task_result
+        WHERE TASK_ID = #{taskId}
+    </select>
+    <select id="getStageTaskResult" resultType="com.gms.gms.domain.StageTaskResult">
+         #好像不用做
+    </select>
+    <select id="getStageTaskResultAsTeacher" resultType="com.gms.gms.domain.StageTaskResult">
+        SELECT
+            st.TASK_ID,
+            st.SUB_ID,
+            st.TASK_NAME,
+            st.DESCRIPTION,
+            st.TEACHER_ID,
+            u1.REAL_NAME AS TEACHER_NAME,
+            st.STU_ID,
+            u2.REAL_NAME AS STUDENT_NAME,
+            st.STAGE,
+            st.`STATUS`,
+            st.START_TIME,
+            st.END_TIME,
+            str.RETRIES,
+            str.SUMMARY,
+            str.DOC_ID,
+            str.FEEDBACK,
+            str.`STATUS`,
+            str.AUDIT_TIME,
+            str.SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            stage_task st
+                JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
+                JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
+                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN student s ON ( s.STU_ID = st.STU_ID )
+                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                LEFT JOIN file_storage f ON ( f.DOC_ID = str.DOC_ID )
+        WHERE
+        st.TEACHER_ID = #{teacherId}
     </select>
 
     <resultMap id="StageTaskResultMapper" type="com.gms.gms.domain.StageTaskResult">
@@ -15,7 +101,7 @@
         <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
         <result column="SCORE" property="score" jdbcType="INTEGER"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
+            <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
             <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>

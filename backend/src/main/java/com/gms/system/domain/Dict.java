@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-//todo 修改字典表
 public class Dict implements Serializable {
 
     private static final long serialVersionUID = 1L;

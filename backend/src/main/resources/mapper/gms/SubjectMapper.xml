@@ -112,6 +112,8 @@
                m.MAJOR_NAME,
                t.HOME_PAGE,
                t.TITLE,
+               u.TEL,
+               u.MAIL,
                c.COLLEGE_NAME,
                p.CAPACITY,
                p.CHOSEN,
@@ -142,6 +144,8 @@
         <result column="MAJOR_NAME" property="majorName" jdbcType="VARCHAR"/>
         <result column="HOME_PAGE" property="homePage" jdbcType="VARCHAR"/>
         <result column="TITLE" property="title" jdbcType="VARCHAR"/>
+        <result column="TEL" property="tel" jdbcType="VARCHAR"/>
+        <result column="MAIL" property="mail" jdbcType="VARCHAR"/>
         <result column="COLLEGE_NAME" property="collegeName" jdbcType="VARCHAR"/>
         <result column="CAPACITY" property="capacity" jdbcType="INTEGER"/>
         <result column="CHOSEN" property="chosen" jdbcType="INTEGER"/>

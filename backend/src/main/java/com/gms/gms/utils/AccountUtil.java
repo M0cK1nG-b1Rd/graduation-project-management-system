@@ -15,7 +15,6 @@ public class AccountUtil {
      * 账号工具类，用于获得老师，教务，学生，秘书等具体角色个体的信息
      * */
 
-    //todo 看能不能抽代码出来
 
     public static Teacher getCurrentTeacher() throws GmsException {
         Integer userId = GmsUtil.getCurrentUser().getUserId();

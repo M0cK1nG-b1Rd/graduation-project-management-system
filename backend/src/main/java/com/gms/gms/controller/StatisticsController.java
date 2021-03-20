@@ -1,26 +1,23 @@
 package com.gms.gms.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.common.utils.GmsUtil;
-import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.PleaResult;
 import com.gms.gms.domain.Report;
-import com.gms.gms.service.PleaResultService;
-import com.gms.gms.service.ReportService;
+import com.gms.gms.domain.StageTaskStatistics;
+import com.gms.gms.domain.StageTaskStatisticsDetail;
+import com.gms.gms.service.*;
 import com.gms.gms.utils.AccountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Action;
-import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author MrBird
@@ -35,6 +32,13 @@ public class StatisticsController {
     ReportService reportService;
     @Autowired
     PleaResultService pleaResultService;
+    @Autowired
+    StageTaskResultService stageTaskResultService;
+    @Autowired
+    StageTaskService stageTaskService;
+    @Autowired
+    StageTaskStatisticsService stageTaskStatisticsService;
+
 
     @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
@@ -89,5 +93,41 @@ public class StatisticsController {
         }
     }
 
+
+        @GetMapping("stageTask")
+    public GmsResponse getStageTaskResultStatistics() throws GmsException {
+        try {
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+            StageTaskStatistics statistics = stageTaskStatisticsService.getSummaryStatistics(stuId);
+            List<StageTaskStatisticsDetail> statistics_detail = stageTaskStatisticsService.getSummaryStatisticsDetail(stuId);
+            statistics.setDetailList(statistics_detail);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),statistics);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+
+    @GetMapping("allScore")
+    public GmsResponse getAllScore() throws GmsException {
+        try {
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+
+            
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"));
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
 
 }
