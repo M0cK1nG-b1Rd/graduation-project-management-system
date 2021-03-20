@@ -9,7 +9,11 @@ public class StageTaskStatisticsDetail {
 
     private String  taskName;
 
+    private String  description;
+
     private Integer finalScore;
+
+    private String finalFeedback;
 
     private Integer retries;
 
