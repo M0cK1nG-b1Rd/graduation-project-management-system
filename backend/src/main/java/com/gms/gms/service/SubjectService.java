@@ -16,7 +16,7 @@ public interface SubjectService extends IService<Subject> {
 
     void deleteSubject(String subId);
 
-    void giveOpinion(String docId, String status, String feedback);
+    void giveOpinion(String subId, String status, String feedback);
 
     List<Subject> trackSubject(String subId);
 

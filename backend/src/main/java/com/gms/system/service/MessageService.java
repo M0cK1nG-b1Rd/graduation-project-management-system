@@ -19,4 +19,6 @@ public interface MessageService extends IService<Message> {
     List<Integer> getTeacherUserId(String stage);
 
     Integer getSecretaryUserId(String stage);
+
+    Integer getUserIdByStuId(Integer studentId);
 }

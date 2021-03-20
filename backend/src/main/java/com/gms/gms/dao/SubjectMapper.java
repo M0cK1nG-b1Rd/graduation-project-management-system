@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface SubjectMapper extends BaseMapper<Subject> {
 
-    void giveOpinion(String docId, String status, String feedback);
+    void giveOpinion(String subId, String status, String feedback);
 
     Page<Subject> getPassedSubject(IPage<Subject> page, Subject subject);
 

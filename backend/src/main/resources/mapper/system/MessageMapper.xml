@@ -16,7 +16,6 @@
         JOIN `user` ON message.FROM_ID = `user`.USER_ID
         WHERE
         message.TO_ID = #{userId}
-        AND message.TYPE != 'YSC'
         ORDER BY
         message.CREAT_TIME DESC
     </select>
@@ -63,5 +62,13 @@
                 WHERE
                         acceptance_team.TEAM_ID = ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = 'XT' )
             )
+    </select>
+    <select id="getUserIdByStuId" resultType="java.lang.Integer">
+        SELECT
+            USER_ID
+        FROM
+            student
+        WHERE
+            STU_ID = #{id}
     </select>
 </mapper>

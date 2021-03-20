@@ -35,4 +35,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public Integer getSecretaryUserId(String stage) {
         return this.baseMapper.getSecretaryUserId(stage);
     }
+
+    @Override
+    public Integer getUserIdByStuId(Integer studentId) {
+        return this.baseMapper.getUserIdByStuId(studentId);
+    }
 }

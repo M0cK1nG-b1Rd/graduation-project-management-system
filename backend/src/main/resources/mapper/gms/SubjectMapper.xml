@@ -6,7 +6,7 @@
         UPDATE subject
         SET STATUS=#{status},
             FEEDBACK=#{feedback}
-        WHERE DOC_ID = #{docId}
+        WHERE SUB_ID = #{subId}
     </update>
 
     <select id="getPassedSubject" resultMap="SubjectMapper">
@@ -33,7 +33,7 @@
         JOIN USER u ON (t.USER_ID = u.USER_ID)
         JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
         JOIN major m ON (m.MAJOR_ID = s.MAJOR_ID)
-        WHERE s.`STATUS` = "YTG"
+        WHERE s.`STATUS` = 'YTG'
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
         </if>
@@ -89,8 +89,9 @@
         JOIN USER u ON (t.USER_ID = u.USER_ID)
         JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
         JOIN major m ON (m.MAJOR_ID = s.MAJOR_ID)
+        WHERE 1=1
         <if test="subject.teacherName != null and subject.teacherName != ''">
-            WHERE u.REAL_NAME=#{subject.teacherName}
+            AND u.REAL_NAME=#{subject.teacherName}
         </if>
         <if test="subject.zone != null and subject.zone != ''">
             AND s.ZONE = #{subject.zone}
@@ -125,8 +126,8 @@
                  JOIN USER u ON (t.USER_ID = u.USER_ID)
                  LEFT JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
                  JOIN major m ON (m.MAJOR_ID = s.MAJOR_ID)
-        WHERE s.`STATUS` = "YTG"
-          AND a.`STATUS` = "YTG"
+        WHERE s.`STATUS` = 'YTG'
+          AND a.`STATUS` = 'YTG'
           AND a.STU_ID = #{stuId}
     </select>
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.ThesisMapper">
+
+    <resultMap id="ZJYSB" type="com.gms.gms.domain.Thesis">
+        <id property="thesisId" column="THESIS_ID"/>
+        <result property="docId" column="DOC_ID"/>
+        <result property="stuId" column="STU_ID"/>
+        <result property="poseTime" column="POSE_TIME"/>
+        <result property="status" column="STATUS"/>
+        <result property="score" column="SCORE"/>
+        <collection property="fileStorages" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId"/>
+    </resultMap>
+
+    <select id="getMyThesis" resultMap="">
+        SELECT
+            thesis.THESIS_ID,
+            thesis.DOC_ID,
+            thesis.`STATUS`,
+            thesis.POSE_TIME
+        FROM
+            thesis
+        WHERE
+            thesis.STU_ID = #{stuId}
+    </select>
+    <select id="selectByDocId" resultType="com.gms.gms.domain.FileStorage">
+        SELECT
+            file_storage.DOC_ID,
+            file_storage.FILE_ID,
+            file_storage.FILE_NAME
+        FROM
+            file_storage
+        WHERE
+            file_storage.DOC_ID = #{docId};
+    </select>
+</mapper>

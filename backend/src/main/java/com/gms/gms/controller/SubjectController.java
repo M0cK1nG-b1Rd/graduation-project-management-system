@@ -104,6 +104,7 @@ public class SubjectController {
         }
     }
 
+    //教研办审核用
     @GetMapping("all")
     public GmsResponse getAllSubject(Subject subject) throws GmsException{
         try {
@@ -165,11 +166,11 @@ public class SubjectController {
     @PutMapping("audit")
     public GmsResponse auditSubject(LinkedHashMap<String,String> opinion) throws GmsException {
         try {
-            String docId = opinion.get("docId");
+            String subId = opinion.get("subId");
             //WTG未通过，YTG已通过
             String status = opinion.get("status");
             String feedback = opinion.get("feedback");
-            subjectService.giveOpinion(docId, status, feedback);
+            subjectService.giveOpinion(subId, status, feedback);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -179,10 +180,6 @@ public class SubjectController {
             log.error(message, e);
             throw new GmsException(message);
         }
-
-
-
-
     }
 
     @DeleteMapping()
@@ -198,24 +195,21 @@ public class SubjectController {
             log.error(message, e);
             throw new GmsException(message);
         }
-
     }
+
     @GetMapping("track/{subId}")
     public GmsResponse trackSubject(@PathVariable String subId) throws GmsException {
         try {
             List<Subject> subjectList = subjectService.trackSubject(subId);
             return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "查询成功"),
+                            Code.C200.getCode(),
+                            Code.C200.getDesc(),
+                            "查询成功"),
                     subjectList);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
-
-
-
     }
 }

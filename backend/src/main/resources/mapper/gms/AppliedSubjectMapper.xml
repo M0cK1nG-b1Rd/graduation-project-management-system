@@ -7,7 +7,7 @@
         WHERE ID = #{appliedSubject.id}
           AND STU_ID = #{appliedSubject.studentId}
           AND SUB_ID = #{appliedSubject.subId}
-          AND `STATUS` = "WSH";
+          AND `STATUS` = 'WSH';
     </update>
 
 
@@ -107,7 +107,7 @@
                 JOIN major m ON s.MAJOR_ID = m.MAJOR_ID
                 JOIN class cl ON s.CLASS_ID = cl.CLASS_ID
         WHERE
-                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE `STATUS` = "YTG" AND SUB_ID = 1 )
+                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE `STATUS` = 'YTG' AND SUB_ID = 1 )
     </select>
 
 
