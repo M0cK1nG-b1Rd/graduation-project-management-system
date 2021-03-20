@@ -26,18 +26,18 @@
 <!--          所属阶段-->
           <el-row>
             所属阶段：
-            <a-tag v-if="item.stage === 'KT'" color="cyan" style="font-size: 15px">开题阶段</a-tag>
-            <a-tag v-if="item.stage === 'ZQ'" color="cyan" style="font-size: 15px">中期阶段</a-tag>
-            <a-tag v-if="item.stage === 'JT'" color="cyan" style="font-size: 15px">结题阶段</a-tag>
+            <a-tag v-if="item.stage === 'KT'" style="font-size: 15px; color: #393e46;" color="blue">开题阶段</a-tag>
+            <a-tag v-if="item.stage === 'ZQ'" style="font-size: 15px; color: #393e46;" color="blue">中期阶段</a-tag>
+            <a-tag v-if="item.stage === 'JT'" style="font-size: 15px; color: #393e46;" color="blue">结题阶段</a-tag>
           </el-row>
           <div class="divider"></div>
 <!--          任务状态-->
           <el-row>
             任务状态：
-            <a-tag v-if="item.status === 'WTJ'" style="font-size: 15px" color="cyan">未提交</a-tag>
-            <a-tag v-if="item.status === 'DSH'" style="font-size: 15px" color="cyan">待审核</a-tag>
-            <a-tag v-if="item.status === 'YTG'" style="font-size: 15px" color="cyan">已通过</a-tag>
-            <a-tag v-if="item.status === 'WTG'" style="font-size: 15px" color="cyan">未通过</a-tag>
+            <a-tag v-if="item.status === 'WTJ'" style="font-size: 15px; color: #393e46" color="blue">未提交</a-tag>
+            <a-tag v-if="item.status === 'DSH'" style="font-size: 15px; color: #393e46" color="blue">待审核</a-tag>
+            <a-tag v-if="item.status === 'YTG'" style="font-size: 15px; color: #393e46" color="blue">已通过</a-tag>
+            <a-tag v-if="item.status === 'WTG'" style="font-size: 15px; color: #393e46" color="blue">未通过</a-tag>
           </el-row>
           <div class="divider"></div>
 <!--          开始时间-->
@@ -61,11 +61,11 @@
           <div class="divider"></div>
 <!--          查看详情-->
           <el-row type="flex" justify="center">
-            <el-button style="float: right; padding: 3px 0"
-                       @click="viewSubmitDetail(item.resultList)"
-                       type="primary">
+            <a-tag color="green"
+                   @click="viewSubmitDetail(item.resultList)"
+                   style="font-size: 15px; color: #393e46">
               查看提交详情
-            </el-button>
+            </a-tag>
           </el-row>
         </div>
       </el-card>
@@ -73,16 +73,79 @@
 <!--    选中任务所有提交详情信息对话框-->
     <el-dialog
       :visible.sync="submitDetailVisible"
-      width="60%">
+      width="65%">
       <el-timeline>
         <el-row type="flex" justify="center" style="font-size: 25px; font-weight: bold">提交历史</el-row>
         <div class="divider"></div>
         <div class="divider"></div>
         <div class="divider"></div>
         <el-timeline-item v-for="(item, index) in currentTaskSubmitInfo" :key="index">
-          <el-card>
-            <el-row>该任务的第{{currentTaskSubmitInfo.retries}}次提交</el-row>
-            <p>王小虎 提交于 2018/4/12 20:46</p>
+          <el-card style="font-size: 15px">
+<!--            提交次序-->
+            <el-row type="flex" justify="center">
+              <a-tag style="font-size: 18px">第{{item.retries}}次提交</a-tag>
+            </el-row>
+<!--            任务总结-->
+            <el-row>
+              <el-col :span="4">
+                <a-tag style="font-size: 15px">任务总结：</a-tag>
+              </el-col>
+              <el-col :span="18">
+                {{item.summary}}
+              </el-col>
+            </el-row>
+            <div class="divider"></div>
+<!--            审核时间-->
+            <el-row>
+              <el-col :span="4">
+                <a-tag color="green" style="font-size: 15px">审核时间：</a-tag>
+              </el-col>
+              <el-col :span="18">
+                {{item.auditTime}}
+              </el-col>
+            </el-row>
+            <div class="divider"></div>
+<!--            审核意见-->
+            <el-row>
+              <el-col :span="4">
+                <a-tag color="cyan" style="font-size: 15px">审核意见：</a-tag>
+              </el-col>
+              <el-col :span="18">
+                {{item.feedback}}
+              </el-col>
+            </el-row>
+            <div class="divider"></div>
+<!--            得分-->
+            <el-row>
+              <el-col :span="4">
+                <a-tag color="blue" style="font-size: 15px">本次得分：</a-tag>
+              </el-col>
+              <el-col :span="18">
+                <a-progress
+                  :stroke-color="{from: '#e9ba10', to: '#ff4646'}"
+                  :percent="parseInt(item.score)"
+                  status="active"
+                />
+              </el-col>
+            </el-row>
+            <div class="divider"></div>
+<!--            审核结果-->
+            <el-row>
+              <el-col :span="4">
+                <a-tag color="orange" style="font-size: 15px">审核结果：</a-tag>
+              </el-col>
+              <el-col :span="18">
+                <el-tag v-if="item.status === 'WTG'" type="danger">未通过</el-tag>
+                <el-tag v-if="item.status === 'YTG'" type="success">已通过</el-tag>
+                <el-tag v-if="item.status === 'DSH'" type="danger">待审核</el-tag>
+              </el-col>
+            </el-row>
+<!--            相关附件-->
+            <el-divider></el-divider>
+            <el-row type="flex" justify="center" style="font-size: 16px; font-weight: bold">相关附件</el-row>
+            <el-row type="flex" justify="center">
+              <Downloader :doc-id="item.fileStorage[0].docId"></Downloader>
+            </el-row>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -91,8 +154,10 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'SubmitRecord',
+  components: { Downloader },
   mounted() {
     this.getTaskSubmitRecords()
   },
@@ -120,7 +185,6 @@ export default {
     // 查看某一课题的提交详情
     viewSubmitDetail(submitInfo) {
       this.currentTaskSubmitInfo = submitInfo
-      console.log(this.currentTaskSubmitInfo)
       this.submitDetailVisible = true
     }
   }
@@ -136,8 +200,8 @@ export default {
   flex-wrap: wrap;
 }
 .task_card{
-  margin: 20px;
-  width: 300px;
+  margin: 10px;
+  width: 280px;
   height: 280px;
 }
 /*页面标题*/
