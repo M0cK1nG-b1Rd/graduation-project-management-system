@@ -1,17 +1,48 @@
 <template>
   <div>
-    <downloader :doc-id="'9f772ce77c484c7ba5d80a11e12c7821'"></downloader>
+    <v-chart :force-fit="true" :height="height" :data="data">
+      <v-legend :offset="40" />
+      <v-axis />
+      <v-polygon :position="seriesOpts.position" :color="seriesOpts.color" />
+    </v-chart>
   </div>
 </template>
+
 <script>
-import Downloader from '@/plugins/upload-download/Downloader'
+import * as $ from 'jquery'
+const DataSet = require('@antv/data-set')
+
+const seriesOpts = {
+  quickType: 'polygon',
+  color: ['count', '#BAE7FF-#1890FF-#0050B3'],
+  position: 'x*y'
+}
+
 export default {
-  name: 'Test',
-  components: { Downloader },
   mounted() {
+    $.getJSON('/assets/data/heatmap-2.json', (sourceData) => {
+      const ds = new DataSet({
+        state: {
+          sizeEncoding: false
+        }
+      })
+
+      const dv = ds.createView('diamond').source(sourceData)
+      dv.transform({
+        sizeByCount: '$state.sizeEncoding',
+        type: 'bin.rectangle',
+        fields: ['x', 'y'],
+        bins: [20, 10]
+      })
+      this.$data.data = dv
+    })
   },
   data() {
-    return {}
+    return {
+      data: [],
+      height: 400,
+      seriesOpts
+    }
   }
 }
 </script>
