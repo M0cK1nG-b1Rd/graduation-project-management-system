@@ -36,9 +36,6 @@ public class Report implements Serializable {
     @TableField("SUB_ID")
     private String subId;
 
-    @TableField("REPORT_ID")
-    private Integer reportId;
-
     @TableField("DOC_ID")
     private String docId;
 

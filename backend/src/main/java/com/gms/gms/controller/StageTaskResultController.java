@@ -9,6 +9,7 @@ import com.gms.common.exception.code.Code;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
+import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +59,12 @@ public class StageTaskResultController {
     }
 
 
+    //学生查看自己的阶段任务提交和评分
     @GetMapping
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result);
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result,stuId);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
