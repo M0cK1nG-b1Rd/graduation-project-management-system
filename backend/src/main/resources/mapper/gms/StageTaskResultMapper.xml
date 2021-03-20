@@ -3,7 +3,7 @@
 <mapper namespace="com.gms.gms.dao.StageTaskResultMapper">
     <update id="changeStatus">
         UPDATE stage_task
-        SET `STATUS` = "WSH"
+        SET `STATUS` = #{status}
         WHERE
             TASK_ID = #{taskId}
     </update>
@@ -21,7 +21,7 @@
         <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
         <result column="SCORE" property="score" jdbcType="INTEGER"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
+            <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
             <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>

@@ -34,7 +34,7 @@ public class StageTaskResult implements Serializable {
     private String summary;
 
     @TableField("DOC_ID")
-    private Integer docId;
+    private String docId;
 
     @TableField("FEEDBACK")
     private String feedback;

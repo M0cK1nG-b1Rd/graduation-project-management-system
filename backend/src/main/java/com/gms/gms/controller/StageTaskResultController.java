@@ -9,7 +9,9 @@ import com.gms.common.exception.code.Code;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
+import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +34,15 @@ public class StageTaskResultController {
     @PostMapping
     public GmsResponse giveStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
+            String docId = FileStorageUtil.getDocId();
+            result.setDocId(docId);
             stageTaskResultService.giveStageTaskResult(result);
             //更新状态为未审核
-            stageTaskResultService.changeStatus(result.getTaskId());
+            stageTaskResultService.changeStatus(result.getTaskId(),"WSH");
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "提交阶段任务成果成功"));
+                    "提交阶段任务成果成功"),docId);
         } catch (Exception e) {
             String message = "提交阶段任务成果失败";
             log.error(message, e);
@@ -83,6 +87,7 @@ public class StageTaskResultController {
     public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {
             stageTaskResultService.giveStageTaskScore(result);
+            stageTaskResultService.changeStatus(result.getTaskId(),result.getStatus());
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

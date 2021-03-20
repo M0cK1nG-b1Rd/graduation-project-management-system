@@ -1,7 +1,6 @@
 package com.gms.gms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.gms.gms.domain.StageTask;
 import com.gms.gms.domain.StageTaskResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -18,5 +17,5 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
 
     void giveStageTaskScore(StageTaskResult task);
 
-    void changeStatus(Integer taskId);
+    void changeStatus(Integer taskId, String status);
 }

@@ -12,5 +12,5 @@ public interface StageTaskResultMapper extends BaseMapper<StageTaskResult> {
 
     IPage<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page, StageTaskResult task);
 
-    void changeStatus(Integer taskId);
+    void changeStatus(Integer taskId,String status);
 }
