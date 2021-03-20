@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> implements SubjectService {
 
-    //todo 对接
     @Override
     public List<Subject> getMySubject(String subId) throws GmsException {
         Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
@@ -52,7 +51,7 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
 
     @Override
     public IPage<Subject> getAllSubject(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());//todo 增加分页
+        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
         Page<Subject> returnSubjectPage = this.baseMapper.getAllSubject(page,subject);
         return returnSubjectPage;
     }

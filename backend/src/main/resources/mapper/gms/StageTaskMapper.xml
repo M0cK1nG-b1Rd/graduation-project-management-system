@@ -82,6 +82,7 @@
                  JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
                  LEFT JOIN file_storage f ON (
             f.DOC_ID = st.DOC_ID)
+        WHERE s.STU_ID=#{studentId}
     </select>
 
 

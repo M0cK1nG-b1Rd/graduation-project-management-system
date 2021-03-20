@@ -30,7 +30,7 @@ public class StageTaskResultController {
     StageTaskService stageTaskService;
 
     @PostMapping
-    public GmsResponse giveStageTaskResult(StageTaskResult result) throws GmsException {
+    public GmsResponse giveStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
             stageTaskResultService.giveStageTaskResult(result);
             //更新状态为未审核
@@ -62,25 +62,10 @@ public class StageTaskResultController {
         }
     }
 
-    // TODO: 2021/3/19  
-//    @GetMapping("statistics")
-//    public GmsResponse getStageTaskResultStatistics(StageTaskResult result) throws GmsException {
-//        try {
-//            IPage<StageTaskResult> stageTaskList =  service.getStageTaskResultStatistics(result);
-//            return new GmsResponse().addCodeMessage(new Meta(
-//                    Code.C200.getCode(),
-//                    Code.C200.getDesc(),
-//                    "查询成功"),stageTaskList);
-//        } catch (Exception e) {
-//            String message = "查询失败";
-//            log.error(message, e);
-//            throw new GmsException(message);
-//        }
-//    }
 
     // TODO: 2021/3/18 测试
     @PutMapping
-    public GmsResponse modifyStageTaskResult(StageTaskResult result) throws GmsException {
+    public GmsResponse modifyStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
             stageTaskResultService.modifyStageTaskResult(result);
             return new GmsResponse().addCodeMessage(new Meta(
@@ -95,7 +80,7 @@ public class StageTaskResultController {
     }
 
     @PutMapping("score")
-    public GmsResponse giveStageTaskScore(StageTaskResult result) throws GmsException {
+    public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {
             stageTaskResultService.giveStageTaskScore(result);
             return new GmsResponse().addCodeMessage(new Meta(
