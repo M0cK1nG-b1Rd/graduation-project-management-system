@@ -412,9 +412,20 @@
       "disable": false,
       "order": "",
       "icon": "el-icon-timer",
-      "path": "/conclusion",
+      "path": "/finish",
       "component": "",
-      "children": []
+      "children": [
+        {
+          "name": "结题申请",
+          "id": 41,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-claim",
+          "path": "/finish/apply",
+          "component": "",
+          "children": []
+        }
+      ]
     },
     {
       "name": "统计报表",
@@ -423,8 +434,39 @@
       "order": "",
       "icon": "el-icon-data-line",
       "path": "/statics",
-      "component": "el-icon-data-analysis",
+      "component": "",
       "children": []
+    },
+    {
+      "name": "成绩管理",
+      "id": 218,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-s-platform",
+      "path": "/scoreManage",
+      "component": "",
+      "children": [
+        {
+          "name": "我的成绩",
+          "id": 41,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-collection",
+          "path": "/scoreManage/myScoreList",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "成绩列表",
+          "id": 42,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-document-copy",
+          "path": "/scoreManage/totalList",
+          "component": "",
+          "children": []
+        }
+      ]
     }
   ],
   "meta": {

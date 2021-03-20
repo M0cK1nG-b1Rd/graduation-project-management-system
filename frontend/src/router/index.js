@@ -31,6 +31,9 @@ import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 import GiveTask from '@/components/proccessSupervision/teacher/GiveTask'
 import MyTask from '@/components/proccessSupervision/MyTask'
 import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
+import applyClosing from '@/components/finishSubject/applyClosing'
+import MyScore from '@/components/scoreManage/MyScore'
+import StuScoreList from '@/components/scoreManage/StuScoreList'
 
 Vue.use(VueRouter)
 
@@ -179,6 +182,11 @@ const routes = [
         path: '/middle/midCheck',
         component: CheckMidSubjects
       },
+      // 结题--学生结题申请
+      {
+        path: '/finish/apply',
+        component: applyClosing
+      },
       // 过程监督--教师布置任务
       {
         path: '/process/teacher/give',
@@ -194,6 +202,16 @@ const routes = [
       {
         path: '/process/student',
         component: MyTask
+      },
+      // 成绩管理--学生查看自己各个阶段成绩
+      {
+        path: '/scoreManage/myScoreList',
+        component: MyScore
+      },
+      // 成绩管理--老师查看所有学生详细成绩
+      {
+        path: '/scoreManage/totalList',
+        component: StuScoreList
       }
     ]
   }
