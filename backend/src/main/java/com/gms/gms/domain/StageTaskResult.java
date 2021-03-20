@@ -60,6 +60,10 @@ public class StageTaskResult implements Serializable {
     private String teacherName;
     @TableField(exist = false)
     private String  studentName;
+    @TableField(exist = false)
+    private String taskName;
+    @TableField(exist = false)
+    private String  description;
 
     @TableField(exist = false)
     private List<FileStorage> fileStorage;
