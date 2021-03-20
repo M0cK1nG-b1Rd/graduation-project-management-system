@@ -20,10 +20,9 @@ public class StageTaskResultServiceImpl extends ServiceImpl<StageTaskResultMappe
     }
 
     @Override
-    public IPage<StageTaskResult> getStageTaskResult(StageTaskResult task) {
+    public IPage<StageTaskResult> getStageTaskResult(StageTaskResult task, Integer stuId) {
         Page<StageTaskResult> page = new Page<>(task==null?task.getPage():1,task==null?task.getSize():Integer.MAX_VALUE);
-
-        return this.baseMapper.getStageTaskResult(page,task);
+        return this.baseMapper.getStageTaskResult(page,stuId);
     }
 
     @Override

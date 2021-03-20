@@ -55,6 +55,11 @@ public class StageTaskResult implements Serializable {
     @TableField(exist = false)
     private Integer size;
 
+    //详细信息
+    @TableField(exist = false)
+    private String teacherName;
+    @TableField(exist = false)
+    private String  studentName;
 
     @TableField(exist = false)
     private List<FileStorage> fileStorage;

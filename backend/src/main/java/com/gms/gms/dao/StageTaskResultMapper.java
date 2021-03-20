@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface StageTaskResultMapper extends BaseMapper<StageTaskResult> {
 
-    IPage<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page, StageTaskResult task);
+    IPage<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page ,Integer stuId);
 
     void changeStatus(Integer taskId,String status);
 

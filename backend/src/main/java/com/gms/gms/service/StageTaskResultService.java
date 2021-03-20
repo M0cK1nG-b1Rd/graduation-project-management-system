@@ -11,7 +11,7 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
 
     void giveStageTaskResult(StageTaskResult task);
 
-    IPage<StageTaskResult> getStageTaskResult(StageTaskResult task);
+    IPage<StageTaskResult> getStageTaskResult(StageTaskResult task, Integer stuId);
 
     void modifyStageTaskResult(StageTaskResult task);
 

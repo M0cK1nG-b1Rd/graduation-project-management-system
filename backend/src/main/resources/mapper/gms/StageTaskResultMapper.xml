@@ -12,9 +12,42 @@
         WHERE TASK_ID = #{task.taskId} AND RETRIES =#{task.retries}
     </update>
 
-    <select id="getStageTaskResult" resultMap="StageTaskResultMapper">
-
+    <select id="getStageTaskResult" resultMap="com.gms.gms.dao.StageTaskMapper.StageTaskMapWithResult">
+        SELECT
+            st.TASK_ID,
+            st.SUB_ID,
+            st.TASK_NAME,
+            DESCRIPTION,
+            st.TEACHER_ID,
+            u1.REAL_NAME AS TEACHER_NAME,
+            st.STU_ID,
+            u2.REAL_NAME AS STUDENT_NAME,
+            st.STAGE,
+            st.`STATUS`,
+            st.START_TIME,
+            st.END_TIME,
+            str.RETRIES,
+            str.SUMMARY,
+            str.DOC_ID,
+            str.FEEDBACK,
+            str.`STATUS`,
+            str.AUDIT_TIME,
+            str.SCORE,
+            f.DOC_ID,
+            f.FILE_ID,
+            f.FILE_NAME
+        FROM
+            stage_task st
+                JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
+                JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
+                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN student s ON ( s.STU_ID = st.STU_ID )
+                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                LEFT JOIN file_storage f ON ( f.DOC_ID = str.DOC_ID )
+        WHERE
+            st.STU_ID = #{stuId}
     </select>
+
     <select id="getRetriesTime" resultType="java.lang.Integer">
         SELECT COUNT(TASK_ID)
         FROM stage_task_result
