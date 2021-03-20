@@ -358,10 +358,4 @@ export default {
 .divider{
   height: 12px;
 }
-/*抽屉标题*/
-.drawer_title{
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
 </style>

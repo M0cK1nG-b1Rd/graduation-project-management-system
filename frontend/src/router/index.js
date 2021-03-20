@@ -28,10 +28,13 @@ import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
 import StartPreScore from '@/components/startSubject/StartPreScore'
 import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
-import GiveTask from '@/components/proccessSupervision/teacher/GiveTask'
-import MyTask from '@/components/proccessSupervision/student/MyTask'
+import GiveTask from '@/components/proccessSupervision/teacher/ManageTask'
 import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
 import SetWeight from '@/components/scoreManage/SetWeight'
+import MyTask from '@/components/proccessSupervision/student/MyTask'
+import SubmitRecord from '@/components/proccessSupervision/student/SubmitRecord'
+import JudgeTaskSubmit from '@/components/proccessSupervision/teacher/JudgeTaskSubmit'
+import TaskStatistics from '@/components/proccessSupervision/TaskStatistics'
 
 Vue.use(VueRouter)
 
@@ -52,6 +55,7 @@ const routes = [
     component: GlobalLayout,
     redirect: '/welcome',
     children: [
+      // 欢迎页--主页
       {
         path: '/welcome',
         component: Welcome
@@ -182,7 +186,7 @@ const routes = [
       },
       // 过程监督--教师布置任务
       {
-        path: '/process/teacher/give',
+        path: '/process/teacher/manage',
         component: GiveTask
       },
       // 过程监督--教师查看选某一课题的学生名单信息
@@ -191,10 +195,26 @@ const routes = [
         name: 'processStuInfo',
         component: StudentInfo
       },
-      // 过程监督--学生查看并提交任务
+      // 教师审核学生提交的阶段任务
       {
-        path: '/process/student',
+        path: '/process/teacher/judge',
+        component: JudgeTaskSubmit
+      },
+      // 过程监督--学生查看自己的任务
+      {
+        path: '/process/student/my',
         component: MyTask
+      },
+      // 过程监督--学生查看自己的提交记录
+      {
+        path: '/process/student/records',
+        component: SubmitRecord
+      },
+      // 过程监督统计报表
+      {
+        path: '/process/statistics',
+        component: TaskStatistics,
+        name: TaskStatistics
       },
       // 成绩管理--权重配置
       {

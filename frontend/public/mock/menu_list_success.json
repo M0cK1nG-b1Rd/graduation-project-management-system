@@ -163,12 +163,12 @@
       "component": "",
       "children": [
         {
-          "name": "发布任务",
+          "name": "任务管理",
           "id": 211118,
           "disable": false,
           "order": "",
           "icon": "el-icon-edit-outline",
-          "path": "/process/teacher/give",
+          "path": "/process/teacher/manage",
           "component": "",
           "children": []
         },
@@ -178,7 +178,37 @@
           "disable": false,
           "order": "",
           "icon": "el-icon-postcard",
-          "path": "/process/student",
+          "path": "/process/student/my",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "提交记录",
+          "id": 22118,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-postcard",
+          "path": "/process/student/records",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "任务审核",
+          "id": 23118,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-folder-checked",
+          "path": "/process/teacher/judge",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "统计报表",
+          "id": 23118,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-data",
+          "path": "/process/statistics",
           "component": "",
           "children": []
         }
