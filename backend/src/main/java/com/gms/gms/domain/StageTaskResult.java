@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import io.swagger.models.auth.In;
@@ -43,7 +44,7 @@ public class StageTaskResult implements Serializable {
     private String status;
 
     @TableField("AUDIT_TIME")
-    private LocalDateTime auditTime;
+    private Date auditTime;
 
     @TableField("SCORE")
     private String score;

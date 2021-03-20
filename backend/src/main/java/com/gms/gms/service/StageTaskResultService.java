@@ -18,4 +18,6 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
     void giveStageTaskScore(StageTaskResult task);
 
     void changeStatus(Integer taskId, String status);
+
+    Integer getRetriesTime(Integer taskId);
 }

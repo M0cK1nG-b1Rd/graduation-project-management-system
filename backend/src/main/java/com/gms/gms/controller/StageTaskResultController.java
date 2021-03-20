@@ -10,11 +10,14 @@ import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
 import com.gms.gms.utils.FileStorageUtil;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * @author MrBird
@@ -36,9 +39,13 @@ public class StageTaskResultController {
         try {
             String docId = FileStorageUtil.getDocId();
             result.setDocId(docId);
+
+            Integer currRetries = stageTaskResultService.getRetriesTime(result.getTaskId());
+            // 重复次数加1
+            result.setRetries(currRetries + 1);
             stageTaskResultService.giveStageTaskResult(result);
-            //更新状态为未审核
-            stageTaskResultService.changeStatus(result.getTaskId(),"WSH");
+            //更新状态为待审核
+            stageTaskResultService.changeStatus(result.getTaskId(),"DSH");
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -86,6 +93,7 @@ public class StageTaskResultController {
     @PutMapping("score")
     public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {
+            result.setAuditTime(new Date());
             stageTaskResultService.giveStageTaskScore(result);
             stageTaskResultService.changeStatus(result.getTaskId(),result.getStatus());
             return new GmsResponse().addCodeMessage(new Meta(
