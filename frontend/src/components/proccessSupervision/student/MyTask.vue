@@ -82,9 +82,9 @@
              <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
                <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewTaskDetail(scope.row)"></el-button>
              </el-tooltip>
-             <!--              编辑通知-->
+             <!--              进行任务提交-->
              <el-tooltip class="item" effect="dark" content="进行提交" placement="top" :enterable="false">
-               <el-button type="danger" icon="el-icon-edit" circle size="mini" @click="editNotice(scope.row)"></el-button>
+               <el-button type="danger" icon="el-icon-edit" circle size="mini" @click="viewSubmitTask(scope.row)"></el-button>
              </el-tooltip>
            </template>
          </el-table-column>
@@ -150,16 +150,97 @@
          <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">相关附件</el-row>
          <div class="divider"></div>
          <el-row type="flex" justify="center">
+           <Downloader :doc-id="downloadDocId"></Downloader>
          </el-row>
        </div>
      </el-drawer>
+<!--     任务提交抽屉-->
+     <el-drawer
+       size="50%"
+       :visible.sync="taskSubmitDrawerVisible"
+       :direction="'rtl'">
+       <div class="drawer_title" slot="title">
+         提交任务
+       </div>
+       <div style="margin-left: 20px">
+         <!--        任务名称-->
+         <el-row type="flex" align="middle">
+           <el-col :span="4" class="form_label">任务名称：</el-col>
+           <el-col :span="16">
+             <el-input size="medium" v-model="currentTask.taskName"></el-input>
+           </el-col>
+         </el-row>
+         <div class="divider"></div>
+         <!--        开始时间-->
+         <el-row type="flex" align="middle">
+           <el-col :span="4" class="form_label">开始时间：</el-col>
+           <el-col :span="16">
+             <el-input v-model="currentTask.startTime" size="medium"></el-input>
+           </el-col>
+         </el-row>
+         <div class="divider"></div>
+         <!--        截止时间-->
+         <el-row type="flex" align="middle">
+           <el-col :span="4" class="form_label">截止时间：</el-col>
+           <el-col :span="16">
+             <el-input v-model="currentTask.endTime" size="medium"></el-input>
+           </el-col>
+         </el-row>
+         <div class="divider"></div>
+         <!--         填写任务总结-->
+         <el-row type="flex" align="middle">
+           <el-col :span="4" class="form_label">任务总结：</el-col>
+           <el-col :span="16">
+             <el-input
+               type="textarea"
+               :autosize="{ minRows: 4}"
+               placeholder="请输入对本次任务的总结"
+               v-model="taskSubmitInfo.summary">
+             </el-input>
+           </el-col>
+         </el-row>
+         <div class="divider"></div>
+         <!--        发布任务表单-->
+         <el-row type="flex" align="middle" justify="center">
+           <el-popconfirm
+             @confirm="submitTaskForm"
+             title="确定要提交本次任务吗？">
+             <el-button type="primary" slot="reference" plain>提交任务回执</el-button>
+           </el-popconfirm>
+         </el-row>
+         <el-divider></el-divider>
+         <!--        上传附件-->
+         <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px">上传附件</el-row>
+         <div class="divider"></div>
+         <el-row type="flex" justify="center">
+           <el-popconfirm
+             @confirm="uploaderVisible=true"
+             title="上传附件前请确认已发布阶段任务！">
+             <el-button slot="reference" type="success" plain>上传附件</el-button>
+           </el-popconfirm>
+         </el-row>
+       </div>
+     </el-drawer>
+<!--    上传附件对话框-->
+     <el-dialog
+       title="上传附件"
+       :visible.sync="uploaderVisible"
+       width="30%">
+       <uploader :doc-id="uploadDocId"></uploader>
+       <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+     </el-dialog>
    </el-card>
  </div>
 </template>
 
 <script>
+import Uploader from '@/plugins/upload-download/Uploader'
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'MyTask',
+  components: { Downloader, Uploader },
   mounted() {
     this.getTaskInfo()
   },
@@ -176,8 +257,21 @@ export default {
       totalPageNum: 0,
       // 当前任务详情
       currentTask: {},
+      // 任务提交表单内容
+      taskSubmitInfo: {
+        taskId: null,
+        summary: ''
+      },
       // 任务详情抽屉可见性
-      taskDetailDrawerVisible: false
+      taskDetailDrawerVisible: false,
+      // 任务提交抽屉可见性
+      taskSubmitDrawerVisible: false,
+      // 上传附件对话框可见性
+      uploaderVisible: false,
+      // 查看任务详情时，该任务的DocID，用于下载
+      downloadDocId: '',
+      // 提交任务时，该任务提交的DocId，用于上传
+      uploadDocId: ''
     }
   },
   methods: {
@@ -204,7 +298,26 @@ export default {
     // 查看任务详情
     viewTaskDetail(row) {
       this.currentTask = row
+      this.downloadDocId = row.docId
       this.taskDetailDrawerVisible = true
+    },
+    // 进入提交阶段任务抽屉
+    viewSubmitTask(row) {
+      this.currentTask = row
+      this.downloadDocId = row.docId
+      this.taskSubmitInfo.taskId = row.taskId
+      this.taskSubmitDrawerVisible = true
+    },
+    // 提交任务表单上传
+    async submitTaskForm() {
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task/result', this.taskSubmitInfo)
+      if (res.meta.code === 200) {
+        this.$notify.success(res.meta.message)
+        // 更新docId
+        this.uploadDocId = res.data
+      } else {
+        this.$notify.error(res.meta.message)
+      }
     },
     // 筛选任务状态
     filterStatus(value, row) {
@@ -244,5 +357,11 @@ export default {
 /*自定义分割线*/
 .divider{
   height: 12px;
+}
+/*抽屉标题*/
+.drawer_title{
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 }
 </style>
