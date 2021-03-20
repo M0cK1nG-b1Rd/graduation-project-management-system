@@ -23,7 +23,9 @@ public class StageTaskResultServiceImpl extends ServiceImpl<StageTaskResultMappe
 
     @Override
     public IPage<StageTaskResult> getStageTaskResult(StageTaskResult task, String roleName) throws GmsException {
-        Page<StageTaskResult> page = new Page<>(task==null?task.getPage():1,task==null?task.getSize():Integer.MAX_VALUE);
+        Integer inPage = task.getPage();
+        Integer inSize = task.getSize();
+        Page<StageTaskResult> page = new Page<>(inPage==null?1:inPage,inSize==null?Integer.MAX_VALUE:inSize);
         Page<StageTaskResult> stageTaskResultPage;
 
         //区分不同角色并调用不同的方法

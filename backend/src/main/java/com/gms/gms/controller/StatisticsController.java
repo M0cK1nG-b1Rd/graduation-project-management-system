@@ -5,10 +5,7 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.gms.domain.PleaResult;
-import com.gms.gms.domain.Report;
-import com.gms.gms.domain.StageTaskStatistics;
-import com.gms.gms.domain.StageTaskStatisticsDetail;
+import com.gms.gms.domain.*;
 import com.gms.gms.service.*;
 import com.gms.gms.utils.AccountUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +35,8 @@ public class StatisticsController {
     StageTaskService stageTaskService;
     @Autowired
     StageTaskStatisticsService stageTaskStatisticsService;
+    @Autowired
+    TotalScoreService totalScoreService;
 
 
     @GetMapping("score/start")
@@ -117,12 +116,11 @@ public class StatisticsController {
     public GmsResponse getAllScore() throws GmsException {
         try {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
-
-            
+            TotalScore score = totalScoreService.getAllScore(stuId);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"));
+                    "查询成功"),score);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
