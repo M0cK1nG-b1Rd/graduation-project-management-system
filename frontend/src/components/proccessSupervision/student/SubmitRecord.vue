@@ -16,7 +16,29 @@
 
 <script>
 export default {
-  name: 'SubmitRecord'
+  name: 'SubmitRecord',
+  mounted() {
+    this.getSubmitRecords()
+  },
+  data() {
+    return {
+      submitRecords: [],
+      queryInfo: {
+        page: 1, // 当前页数
+        size: 5 // 页面大小
+      }
+    }
+  },
+  methods: {
+    async getSubmitRecords() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task/result', { params: this.queryInfo })
+      if (res.meta.code === 200) {
+        this.$message.success(res.meta.message)
+      } else {
+        this.$message.error(res.meta.message)
+      }
+    }
+  }
 }
 </script>
 

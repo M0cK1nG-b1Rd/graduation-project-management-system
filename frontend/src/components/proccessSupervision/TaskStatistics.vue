@@ -10,13 +10,126 @@
     <el-card class="outer_card">
       <!--      页面标题-->
       <el-row type="flex" justify="center" class="page_title">统计数据</el-row>
+      <el-divider></el-divider>
+<!--      任务总数-->
+<!--      任务通过率-->
+      <dv-decoration-9
+          style="width:150px;height:150px;font-size: 25px">
+          {{statisticsInfo.passRatio}}%
+    </dv-decoration-9>
+<!--      任务通过次数-->
+<!--      任务驳回次数-->
+<!--      平均得分-->
+      <dv-water-level-pond :config="swtconfig" style="width:150px;height:200px" />
+      <dv-percent-pond :config="jdcconfig" style="width:200px;height:100px;" />
+      <dv-capsule-chart :config="jnztconfig" style="width:300px;height:200px;color: #393e46" />
+      <dv-conical-column-chart :config="zxztconfig" style="width:400px;height:200px;"/>
     </el-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TaskStatistics'
+  name: 'TaskStatistics',
+  mounted() {
+    this.getStatistics()
+  },
+  data() {
+    return {
+      statisticsInfo: {
+        avgScore: Number, // 所有任务的平均分
+        totalTask: Number, // 总共的任务数量
+        passedTask: Number, // 通过的任务数
+        rejectTimes: Number, // 被驳回的次数
+        passRatio: Number // 通过率
+      },
+      // 水位图
+      swtconfig: {
+        data: [55],
+        shape: 'round'
+      },
+      // 进度池
+      jdcconfig: {
+        value: 66,
+        borderWidth: 5,
+        borderRadius: 10,
+        borderGap: 5
+      },
+      // 胶囊柱图
+      jnztconfig: {
+        data: [
+          {
+            name: '南阳',
+            value: 167
+          },
+          {
+            name: '周口',
+            value: 67
+          },
+          {
+            name: '漯河',
+            value: 123
+          },
+          {
+            name: '郑州',
+            value: 55
+          },
+          {
+            name: '西峡',
+            value: 98
+          }
+        ]
+      },
+      // 锥型柱图
+      zxztconfig: {
+        data: [
+          {
+            name: '周口',
+            value: 55
+          },
+          {
+            name: '南阳',
+            value: 120
+          },
+          {
+            name: '西峡',
+            value: 71
+          },
+          {
+            name: '驻马店',
+            value: 66
+          },
+          {
+            name: '新乡',
+            value: 80
+          },
+          {
+            name: '信阳',
+            value: 35
+          },
+          {
+            name: '漯河',
+            value: 15
+          }
+        ],
+        showValue: true,
+        textColor: '#000',
+        fontSize: 15
+      }
+    }
+  },
+  methods: {
+    async getStatistics() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/stageTask')
+      if (res.meta.code === 200) {
+        this.statisticsInfo = res.data
+        this.statisticsInfo.passRatio = this.statisticsInfo.passedTask / (this.statisticsInfo.rejectTimes + this.statisticsInfo.passedTask)
+        this.statisticsInfo.passRatio *= 100
+      } else {
+        this.$message.error(res.meta.message)
+      }
+    }
+  }
 }
 </script>
 
@@ -30,18 +143,6 @@ export default {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-}
-/*抽屉标题*/
-.drawer_title{
-  font-size: 20px;
-  font-weight: bold;
-  text-align: center;
-}
-/*自定义表单的标题*/
-.form_label{
-  padding-left: 20px;
-  font-size: 16px;
-  text-align: start;
 }
 /*自定义分割线*/
 .divider{
