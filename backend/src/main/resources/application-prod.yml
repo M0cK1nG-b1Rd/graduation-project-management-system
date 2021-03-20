@@ -53,7 +53,7 @@ spring:
 
 #文件上传路径，如D:\fileuploadtest（Windows）
 file:
-  dir_path: D:\fileuploadtest
+  dir_path: /tmp/upload
 
 
 #mybatis plus 设置
