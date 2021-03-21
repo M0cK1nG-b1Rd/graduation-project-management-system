@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.gms.utils.AccountUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author MrBird
  */
@@ -64,6 +66,11 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
         LambdaQueryWrapper<Report> mapper = new LambdaQueryWrapper<>();
         mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"ZQ");
         return this.baseMapper.selectOne(mapper);
+    }
+
+    @Override
+    public List<Report> selectReportByStuId(Integer stuId, String stage) {
+        return this.baseMapper.selectReportByStuId(stuId,stage);
     }
 
 }

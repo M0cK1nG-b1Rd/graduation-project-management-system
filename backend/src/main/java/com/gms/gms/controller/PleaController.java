@@ -14,6 +14,7 @@ import com.gms.gms.domain.Classroom;
 import com.gms.gms.domain.Plea;
 import com.gms.gms.service.PleaService;
 import com.gms.system.domain.Role;
+import com.gms.system.utils.CreatNewMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -41,6 +42,18 @@ public class PleaController {
     @PostMapping
     public GmsResponse addNewPlea(@RequestBody Plea plea) throws GmsException {
         try {
+            if(plea.getStuGroupId()==null){
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "没有选择学生组"));
+            }
+            if(plea.getTeacherTeam()==null){
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "没有选择老师组"));
+            }
             if (pleaService.count(new QueryWrapper<Plea>().lambda()
                     .nested(i -> i.eq(Plea::getStuGroupId, plea.getStuGroupId()).or().eq(Plea::getAcceptanceTeamId, plea.getAcceptanceTeamId()))
                     .eq(Plea::getStage, plea.getStage())) > 0) {
@@ -142,7 +155,6 @@ public class PleaController {
         try {
             String stage=jsonObject.getString("stage");
             pleaService.update(null,new LambdaUpdateWrapper<Plea>().set(Plea::getIsRelease,true).eq(Plea::getStage,stage));
-            //TODO 发布通知预留地
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -225,14 +237,14 @@ public class PleaController {
                 }
             }else if("老师".equals(Role.getRoleName())){
                 Integer teacherId = pleaService.getTeacherId(userId);
-                Integer teamId = pleaService.getTeamId(teacherId,stage);
-                if(teamId==null){
+                Integer teamId1 = pleaService.getTeamId(teacherId,stage);
+                if(teamId1==null){
                     return new GmsResponse().addCodeMessage(new Meta(
                             Code.C500.getCode(),
                             Code.C500.getDesc(),
                             "没有分组"));
                 }
-                plea = pleaService.getPleaForOther(teamId,stage);
+                plea = pleaService.getPleaForOther(teamId1,stage);
                 if (plea.size()==0){
                     return new GmsResponse().addCodeMessage(new Meta(
                             Code.C500.getCode(),

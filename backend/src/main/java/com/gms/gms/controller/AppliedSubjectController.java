@@ -1,6 +1,7 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
@@ -90,11 +91,17 @@ public class AppliedSubjectController {
     @PutMapping("apply")
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
         try {
-            // TODO: 2021/3/17 查看是否有成功通过的申请，如果有则不让其提交
-            
+            if("YTG".equals(appliedSubject.getStatus())&&
+               appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
+                                                .eq(AppliedSubject::getStudentId,appliedSubject.getStudentId())
+                                                .eq(AppliedSubject::getStatus,"YTG"))>0){
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "该学生已经有通过课题，请驳回该申请"));
+            }
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
-
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

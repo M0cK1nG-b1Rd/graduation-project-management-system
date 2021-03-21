@@ -42,5 +42,5 @@ public class PleaResult implements Serializable {
     @TableField("IS_PASSED")
     private Boolean isPassed;
 
-
+    private transient Integer userId;
 }

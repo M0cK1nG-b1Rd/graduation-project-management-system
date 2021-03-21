@@ -9,6 +9,7 @@ import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Report;
+import com.gms.gms.service.AccountService;
 import com.gms.gms.service.ReportService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Action;
 import java.util.Date;
+import java.util.List;
 import java.util.LinkedHashMap;
 
 /**
@@ -33,6 +35,9 @@ public class ReportController {
     @Autowired
     ReportService reportService;
 
+    @Autowired
+    AccountService accountService;
+
     @GetMapping
     public GmsResponse getReport(Report report) throws GmsException {
         try {
@@ -45,6 +50,23 @@ public class ReportController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"),applyList);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    //根据userId和stage返回成果
+    @GetMapping("/user")
+    public GmsResponse getReportByUser(Integer userId, String stage) throws GmsException {
+        try {
+            Integer stuId = accountService.getStudentByUserId(userId).getStuId();
+            List<Report> apply = reportService.selectReportByStuId(stuId,stage);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),apply);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);

@@ -254,4 +254,10 @@
         WHERE
             acceptance_team.STAGE = #{stage}
     </delete>
+    <select id="selectMaxId" resultType="java.lang.Integer">
+        SELECT
+            MAX( stu_group.GROUP_ID )
+        FROM
+            stu_group
+    </select>
 </mapper>

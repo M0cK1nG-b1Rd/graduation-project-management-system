@@ -6,6 +6,8 @@ import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Report;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * @author MrBird
  */
@@ -19,4 +21,6 @@ public interface ReportService extends IService<Report> {
 
     Report getStartReport(Integer stuId);
     Report getMidReport(Integer stuId);
+
+    List<Report> selectReportByStuId(Integer stuId, String stage);
 }

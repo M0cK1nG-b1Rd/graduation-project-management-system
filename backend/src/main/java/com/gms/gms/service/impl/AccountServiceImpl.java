@@ -100,7 +100,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
         }
         Collections.shuffle(studentIds);
         StuGroup stuGroup = new StuGroup();
-        for (int i=0,j=0;i<studentIds.size();i++,j=(j+1)%teamNum){
+        Integer groupId = this.baseMapper.selectMaxId();
+        if(groupId==null){groupId=0;}
+        for (int i=0,j=groupId;i<studentIds.size();i++,j=((j-groupId+1)%teamNum)+groupId){
             stuGroup.setGroupId(j).setStuId(studentIds.get(i)).setStage(stage);
             this.baseMapper.addStudentGroup(stuGroup);
         }

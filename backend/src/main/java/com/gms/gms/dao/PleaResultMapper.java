@@ -8,4 +8,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PleaResultMapper extends BaseMapper<PleaResult> {
 
+    Integer getStuId(Integer userId);
 }

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,8 +18,8 @@ public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "MESSAGE_ID", type = IdType.AUTO)
-    private Long messageId;
+    @TableId(value = "MESSAGE_ID")
+    private String messageId;
 
     @TableField("FROM_ID")
     private Integer fromId;
@@ -35,7 +37,7 @@ public class Message implements Serializable {
     private String detail;
 
     @TableField("CREAT_TIME")
-    private LocalDateTime creatTime;
+    private Date creatTime;
 
     private transient String realName;
 }

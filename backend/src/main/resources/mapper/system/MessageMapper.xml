@@ -16,8 +16,59 @@
         JOIN `user` ON message.FROM_ID = `user`.USER_ID
         WHERE
         message.TO_ID = #{userId}
-        AND message.TYPE != 'YSC'
         ORDER BY
         message.CREAT_TIME DESC
+    </select>
+    <select id="getStudentUserId" resultType="java.lang.Integer">
+        SELECT
+            student.USER_ID
+        FROM
+            student
+        WHERE
+                student.STU_ID IN (
+                SELECT
+                    stu_group.STU_ID
+                FROM
+                    stu_group
+                WHERE
+                    stu_group.GROUP_ID IN ( SELECT plea.STU_GROUP_ID FROM plea WHERE plea.STAGE = #{stage} )
+                    AND stu_group.STAGE = #{stage} )
+    </select>
+    <select id="getTeacherUserId" resultType="java.lang.Integer">
+        SELECT
+            teacher.USER_ID
+        FROM
+            teacher
+        WHERE
+                teacher.TEACHER_ID IN (
+                SELECT
+                    acceptance_teacher.TEACHER_ID
+                FROM
+                    acceptance_teacher
+                WHERE
+                        acceptance_teacher.TEAM_ID IN ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = 'XT' ))
+    </select>
+    <select id="getSecretaryUserId" resultType="java.lang.Integer">
+        SELECT
+            secretary.USER_ID
+        FROM
+            secretary
+        WHERE
+                secretary.SEC_ID IN (
+                SELECT
+                    acceptance_team.SEC_ID
+                FROM
+                    acceptance_team
+                WHERE
+                        acceptance_team.TEAM_ID = ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = 'XT' )
+            )
+    </select>
+    <select id="getUserIdByStuId" resultType="java.lang.Integer">
+        SELECT
+            USER_ID
+        FROM
+            student
+        WHERE
+            STU_ID = #{id}
     </select>
 </mapper>

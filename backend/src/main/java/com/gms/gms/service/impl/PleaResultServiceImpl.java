@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 public class PleaResultServiceImpl extends ServiceImpl<PleaResultMapper, PleaResult> implements PleaResultService {
 
     @Override
+    public Integer getStuId(Integer userId) {
+        return this.baseMapper.getStuId(userId);
+    }
+    @Override
     public PleaResult getStartPleaResult(Integer stuId) {
         LambdaQueryWrapper<PleaResult> mapper = new LambdaQueryWrapper<>();
         mapper.eq(PleaResult::getStuId, stuId).eq(PleaResult::getStage,"KT");
