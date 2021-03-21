@@ -60,7 +60,7 @@ public class ThesisController {
     /**
      * 学生查看自己的论文状态
      */
-    @GetMapping
+    @GetMapping("/student")
     public GmsResponse getMyThesis() throws GmsException {
         try {
             Integer stuId= AccountUtil.getCurrentStudent().getStuId();
@@ -70,9 +70,34 @@ public class ThesisController {
                     Code.C200.getDesc(),
                     "查询论文成功"), thesis);
         } catch (Exception e) {
-            String message = "查询论文成功";
+            String message = "查询论文失败";
             log.error(message, e);
             throw new GmsException(message);
         }
     }
+
+    /**
+     * 老师查看自己的学生论文状态，JSON传参分页
+     * page:
+     * size:
+     */
+    @GetMapping("/teacher")
+    public GmsResponse getStuThesis(Thesis thesis) throws GmsException {
+        try {
+            Integer teacherId= AccountUtil.getCurrentTeacher().getTeacherId();
+            Page<Thesis> thesisPage = thesisService.getStuThesis(thesis,teacherId);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询论文成功"), thesisPage);
+        } catch (Exception e) {
+            String message = "查询论文失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 教研处查看所有的论文接口，可传参进行
+     */
 }

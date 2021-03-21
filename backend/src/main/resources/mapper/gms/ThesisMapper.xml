@@ -12,8 +12,12 @@
         <collection property="fileStorages" column="DOC_ID"
                     select="com.gms.gms.dao.ThesisMapper.selectByDocId"/>
     </resultMap>
+    <resultMap id="ZJYSB2" type="com.gms.gms.domain.Thesis" extends="ZJYSB">
+        <association property="student" column="STU_ID"
+                     select="com.gms.gms.dao.ThesisMapper.selectStudentById"/>
+    </resultMap>
 
-    <select id="getMyThesis" resultMap="">
+    <select id="getMyThesis" resultMap="ZJYSB">
         SELECT
             thesis.THESIS_ID,
             thesis.DOC_ID,
@@ -26,12 +30,50 @@
     </select>
     <select id="selectByDocId" resultType="com.gms.gms.domain.FileStorage">
         SELECT
-            file_storage.DOC_ID,
             file_storage.FILE_ID,
             file_storage.FILE_NAME
         FROM
             file_storage
         WHERE
             file_storage.DOC_ID = #{docId};
+    </select>
+    <select id="getStuThesis" resultMap="ZJYSB2">
+        SELECT
+            thesis.THESIS_ID,
+            thesis.DOC_ID,
+            thesis.STU_ID,
+            thesis.POSE_TIME,
+            thesis.`STATUS`,
+            thesis.SCORE
+        FROM
+            thesis
+        WHERE
+            thesis.STU_ID IN (
+            SELECT
+                applied_subject.STU_ID
+            FROM
+                applied_subject
+            WHERE
+                applied_subject.SUB_ID IN ( SELECT `subject`.SUB_ID FROM `subject` WHERE `subject`.POSE_BY = #{teacherId} )
+                AND applied_subject.`STATUS` = 'YTG')
+    </select>
+    <select id="selectStudentById" resultType="com.gms.gms.domain.Student">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            college.COLLEGE_NAME,
+            major.MAJOR_NAME,
+            class.CLASS_NAME
+        FROM
+            student
+                JOIN `user` ON student.USER_ID = `user`.USER_ID
+                JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
+                JOIN major ON student.MAJOR_ID = major.MAJOR_ID
+                JOIN class ON student.CLASS_ID = class.CLASS_ID
+        WHERE
+            student.STU_ID = #{stuId}
     </select>
 </mapper>
