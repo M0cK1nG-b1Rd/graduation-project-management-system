@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValidateDao {
+public class Validate {
 
     private Integer id;
 

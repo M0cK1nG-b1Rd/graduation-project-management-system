@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.ValidateDaoMapper">
-    <resultMap id="BaseResultMap" type="com.gms.gms.domain.ValidateDao">
+    <resultMap id="BaseResultMap" type="com.gms.gms.domain.Validate">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
         <result column="email" jdbcType="VARCHAR" property="email" />
@@ -16,21 +16,21 @@
     <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from pm_validate
+        from validate
         where reset_token = #{token,jdbcType=VARCHAR}
     </select>
     <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
-        from pm_validate
+        from validate
         where email=#{email,jdbcType=VARCHAR}
     </select>
-    <insert id="insert" parameterType="com.gms.gms.domain.ValidateDao">
-        insert into pm_validate (user_id,email,reset_token,type,gmt_create,gmt_modified)
+    <insert id="insert" parameterType="com.gms.gms.domain.Validate">
+        insert into validate (user_id,email,reset_token,type,gmt_create,gmt_modified)
         values (#{userId,jdbcType=VARCHAR},#{email,jdbcType=INTEGER},#{resetToken,jdbcType=INTEGER},#{type,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
                )
     </insert>
-    <insert id="insertSelective" parameterType="com.gms.gms.domain.ValidateDao">
-        insert into pm_validate
+    <insert id="insertSelective" parameterType="com.gms.gms.domain.Validate">
+        insert into validate
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
                 user_id,

@@ -4,7 +4,7 @@ package com.gms.gms.controller;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.code.Code;
-import com.gms.gms.domain.ValidateDao;
+import com.gms.gms.domain.Validate;
 import com.gms.gms.service.ValidateService;
 import com.gms.system.domain.User;
 import com.gms.system.service.UserService;
@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -55,7 +52,7 @@ public class ValidateController {
      */
     @ApiOperation(value = "发送忘记密码邮件", notes = "发送忘记密码邮件")
     @PostMapping("sendValidationEmail")
-    public GmsResponse sendValidationEmail(@ApiParam("邮箱地址") @RequestParam("email") String email,
+    public GmsResponse sendValidationEmail(@ApiParam("邮箱地址") @RequestParam String email,
                                            HttpServletRequest request) throws MessagingException {
         User user = userService.findUserByEmail(email);
         if (user == null) {
@@ -66,10 +63,11 @@ public class ValidateController {
             );
         }
         if (validateService.sendValidateLimitation(email, 20, 1)) {
-            // 若允许重置密码，则在pm_validate表中插入一行数据，带有token
-            ValidateDao validateDao = new ValidateDao();
-            validateService.insertNewResetRecord(validateDao, user, UUID.randomUUID().toString());
+            // 若允许重置密码，则在validate表中插入一行数据，带有token
+            Validate validate = new Validate();
+            validateService.insertNewResetRecord(validate, user, UUID.randomUUID().toString());
             // 设置邮件内容
+            // TODO: 2021/3/21 替换为前端工程的入口 
             String appUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             // multipart模式
@@ -80,14 +78,14 @@ public class ValidateController {
             StringBuilder sb = new StringBuilder();
             sb.append("<html><head></head>");
             sb.append("<body><h1>点击下面的链接重置密码</h1>" +
-                    "<a href = " + appUrl + "/validate/resetPassword?token=" + validateDao.getResetToken() + ">" + appUrl + "/validate/resetPassword?token=" + validateDao.getResetToken() + "</a></body>");
+                    "<a href = " + appUrl + "/validate/resetPassword?token=" + validate.getResetToken() + ">" + appUrl + "/validate/resetPassword?token=" + validate.getResetToken() + "</a></body>");
             sb.append("</html>");
             // 启用html
             mimeMessageHelper.setText(sb.toString(), true);
             validateService.sendPasswordResetEmail(mimeMessage);
             Map<String, Object> map1 = new HashMap<>();
-            map1.put("token", validateDao.getResetToken());
-            map1.put("link", appUrl + "/validate/resetPassword?token=" + validateDao.getResetToken());
+            map1.put("token", validate.getResetToken());
+            map1.put("link", appUrl + "/validate/resetPassword?token=" + validate.getResetToken());
             map1.put("message", "邮件已经发送");
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
@@ -118,16 +116,16 @@ public class ValidateController {
                                      @ApiParam("密码") @RequestParam("password") String password,
                                      @ApiParam("密码确认") @RequestParam("confirmPassword") String confirmPassword) {
         // 通过token找到validate记录
-        ValidateDao validateDao = validateService.findUserByResetToken(token);
-        if (validateDao == null) {
+        Validate validate = validateService.findUserByResetToken(token);
+        if (validate == null) {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     "该重置请求不存在")
             );
         }
-        if (validateService.validateLimitation(validateDao.getEmail(), Long.MAX_VALUE, 5, token)) {
-            Integer userId = validateDao.getUserId();
+        if (validateService.validateLimitation(validate.getEmail(), Long.MAX_VALUE, 5, token)) {
+            Integer userId = validate.getUserId();
             if (password.equals(confirmPassword)) {
                 userService.updatePasswordByUserId(userId, password);
 

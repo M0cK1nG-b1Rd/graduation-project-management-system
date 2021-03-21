@@ -1,7 +1,7 @@
 package com.gms.gms.service.impl;
 
 import com.gms.gms.dao.ValidateDaoMapper;
-import com.gms.gms.domain.ValidateDao;
+import com.gms.gms.domain.Validate;
 import com.gms.gms.service.ValidateService;
 import com.gms.system.domain.User;
 import org.apache.commons.lang3.time.DateUtils;
@@ -40,28 +40,28 @@ public class ValidateServiceImpl implements ValidateService {
     }
 
     /**
-     * 在pm_validate表中插入一条validate记录，userid，email属性来自pm_user表，token由UUID生成
-     * @param validateDao
+     * 在validate表中插入一条validate记录，userid，email属性来自pm_user表，token由UUID生成
+     * @param validate
      * @param user
      * @param token
      * @return
      */
-    public int insertNewResetRecord(ValidateDao validateDao, User user, String token){
-        validateDao.setUserId(user.getUserId());
-        validateDao.setEmail(user.getMail());
-        validateDao.setResetToken(token);
-        validateDao.setType("passwordReset");
-        validateDao.setGmtCreate(new Date());
-        validateDao.setGmtModified(new Date());
-        return validateDaoMapper.insert(validateDao);
+    public int insertNewResetRecord(Validate validate, User user, String token){
+        validate.setUserId(user.getUserId());
+        validate.setEmail(user.getMail());
+        validate.setResetToken(token);
+        validate.setType("passwordReset");
+        validate.setGmtCreate(new Date());
+        validate.setGmtModified(new Date());
+        return validateDaoMapper.insert(validate);
     }
 
     /**
-     * pm_validate表中，通过token查找重置申请记录
+     * validate表中，通过token查找重置申请记录
      * @param token
      * @return
      */
-    public ValidateDao findUserByResetToken(String token){
+    public Validate findUserByResetToken(String token){
         return validateDaoMapper.selectByToken(token);
     }
 
@@ -73,14 +73,14 @@ public class ValidateServiceImpl implements ValidateService {
      * @return
      */
     public boolean sendValidateLimitation(String email, long requestPerDay, long interval){
-        List<ValidateDao> validateDaoList = validateDaoMapper.selectByEmail(email);
+        List<Validate> validateList = validateDaoMapper.selectByEmail(email);
         // 若查无记录，意味着第一次申请，直接放行
-        if (validateDaoList.isEmpty()) {
+        if (validateList.isEmpty()) {
             return true;
         }
         // 有记录，则判定是否频繁申请以及是否达到日均请求上线
-        long countTodayValidation = validateDaoList.stream().filter(x-> DateUtils.isSameDay(x.getGmtModified(), new Date())).count();
-        Optional validate = validateDaoList.stream().map(ValidateDao::getGmtModified).max(Date::compareTo);
+        long countTodayValidation = validateList.stream().filter(x-> DateUtils.isSameDay(x.getGmtModified(), new Date())).count();
+        Optional validate = validateList.stream().map(Validate::getGmtModified).max(Date::compareTo);
         Date dateOfLastRequest = new Date();
         if (validate.isPresent()) dateOfLastRequest = (Date) validate.get();
         long intervalForLastRequest = new Date().getTime() - dateOfLastRequest.getTime();
@@ -96,14 +96,14 @@ public class ValidateServiceImpl implements ValidateService {
      * @return
      */
     public boolean validateLimitation(String email, long requestPerDay, long interval, String token){
-        List<ValidateDao> validateDaoList = validateDaoMapper.selectByEmail(email);
+        List<Validate> validateList = validateDaoMapper.selectByEmail(email);
         // 有记录才会调用该函数，只需判断是否超时
-        Optional validate = validateDaoList.stream().map(ValidateDao::getGmtModified).max(Date::compareTo);
+        Optional validate = validateList.stream().map(Validate::getGmtModified).max(Date::compareTo);
         Date dateOfLastRequest = new Date();
         if (validate.isPresent()) dateOfLastRequest = (Date) validate.get();
         long intervalForLastRequest = new Date().getTime() - dateOfLastRequest.getTime();
 
-        Optional lastRequestToken = validateDaoList.stream().filter(x-> x.getResetToken().equals(token)).map(ValidateDao::getGmtModified).findAny();
+        Optional lastRequestToken = validateList.stream().filter(x-> x.getResetToken().equals(token)).map(Validate::getGmtModified).findAny();
         Date dateOfLastRequestToken = new Date();
         if (lastRequestToken.isPresent()) {
             dateOfLastRequestToken = (Date) lastRequestToken.get();

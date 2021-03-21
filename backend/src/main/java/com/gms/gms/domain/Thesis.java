@@ -45,4 +45,6 @@ public class Thesis implements Serializable {
 
     //文件信息
     private transient List<FileStorage> fileStorages;
+    //学生信息
+    private transient Student student;
 }

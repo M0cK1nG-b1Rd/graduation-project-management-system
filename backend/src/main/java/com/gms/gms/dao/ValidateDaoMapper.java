@@ -1,13 +1,13 @@
 package com.gms.gms.dao;
 
-import com.gms.gms.domain.ValidateDao;
+import com.gms.gms.domain.Validate;
 
 import java.util.List;
 
 public interface ValidateDaoMapper {
-    int insert(ValidateDao validateDao);
+    int insert(Validate validate);
 
-    ValidateDao selectByToken(String token);
+    Validate selectByToken(String token);
 
-    List<ValidateDao> selectByEmail(String email);
+    List<Validate> selectByEmail(String email);
 }
