@@ -69,6 +69,20 @@ public class AppliedSubjectController {
         }
     }
 
+    //查看教师带的所有学生
+    @GetMapping("students/all")
+    public GmsResponse getStudentsOfTeacher(String subId) throws GmsException {
+        try {
+            List<Student> subjects = appliedSubjectService.getStudentsOfTeacher(subId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+
     @PostMapping("apply")
     public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {

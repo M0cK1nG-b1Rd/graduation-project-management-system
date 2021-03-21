@@ -67,5 +67,11 @@ public class AppliedSubjectServiceImpl extends ServiceImpl<AppliedSubjectMapper,
         return this.baseMapper.getStudentsInSubject(subId);
     }
 
+    @Override
+    public List<Student> getStudentsOfTeacher(String subId) throws GmsException {
+        Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
+        return this.baseMapper.getStudentsOfTeacher(subId,teacherId);
+    }
+
 
 }
