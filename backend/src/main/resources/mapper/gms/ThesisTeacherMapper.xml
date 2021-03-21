@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.ThesisTeacherMapper">
+
+    <select id="selectThesisIdAndTeacherId" resultType="com.gms.gms.domain.Thesis">
+        SELECT
+            thesis.THESIS_ID,
+            `subject`.POSE_BY AS teacherId
+        FROM
+            thesis
+                JOIN applied_subject ON thesis.STU_ID = applied_subject.STU_ID
+                JOIN `subject` ON applied_subject.SUB_ID = `subject`.SUB_ID
+        WHERE
+            applied_subject.`STATUS` = 'YTG'
+            AND `subject`.`STATUS` = 'YTG'
+    </select>
+</mapper>
