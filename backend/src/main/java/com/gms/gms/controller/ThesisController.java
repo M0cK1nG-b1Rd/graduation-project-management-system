@@ -69,8 +69,14 @@ public class ThesisController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询论文成功"), thesis);
-        } catch (Exception e) {
-            String message = "查询论文成功";
+        } catch (GmsException e) {
+            String message = "查询论文失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
+            String message = "查询论文失败";
             log.error(message, e);
             throw new GmsException(message);
         }

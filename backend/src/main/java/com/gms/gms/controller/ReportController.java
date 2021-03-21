@@ -88,7 +88,13 @@ public class ReportController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "提交报告成功"),docId);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "提交报告失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "提交报告失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -108,7 +114,13 @@ public class ReportController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "审核信息提交成功"));
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "审题信息提交失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "审核信息提交失败";
             log.error(message, e);
             throw new GmsException(message);

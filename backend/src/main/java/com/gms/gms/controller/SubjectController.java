@@ -62,7 +62,13 @@ public class SubjectController {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
             Subject subject = subjectService.getStudentPassedSubject(stuId);
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subject);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -135,7 +141,13 @@ public class SubjectController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "新建课题成功"),docId);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "新建课题失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "新建课题失败";
             log.error(message, e);
             throw new GmsException(message);

@@ -51,6 +51,11 @@ spring:
       max-request-size: 50MB
       max-file-size: 50MB
 
+  mail:
+    host: smtp.126.com
+    username: suncaper@126.com
+    password: JVIUCELIFASWSAXU
+
 #文件上传路径，如D:\fileuploadtest（Windows）
 file:
   dir_path: D:\fileuploadtest

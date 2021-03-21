@@ -38,17 +38,17 @@ public class AppliedSubjectController {
     //不同角色调用同一接口将返回不同结果
 
     @GetMapping("apply")
-    public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException{
+    public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException {
         try {
             //默认使用第一个角色，即取第一个角色的名字
             String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
 
-            IPage<AppliedSubject> applyList = appliedSubjectService.selectWithCondition(appliedSubject,roleName);
+            IPage<AppliedSubject> applyList = appliedSubjectService.selectWithCondition(appliedSubject, roleName);
 
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),applyList);
+                    "查询成功"), applyList);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -70,31 +70,36 @@ public class AppliedSubjectController {
     }
 
     @PostMapping("apply")
-    public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
+    public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
             appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
             appliedSubject.setApplyTime(new Date());
-            String docId=FileStorageUtil.getDocId();
+            String docId = FileStorageUtil.getDocId();
             appliedSubject.setDocId(docId);
             appliedSubjectService.addAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "选题申请提交成功"),docId);
+                    "选题申请提交成功"), docId);
+        } catch (GmsException e) {
+            String message = "选题申请提交失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
         } catch (Exception e) {
             String message = "选题申请提交失败";
-            log.error(message, e);
             throw new GmsException(message);
         }
     }
 
     @PutMapping("apply")
-    public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
+    public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
-            if("YTG".equals(appliedSubject.getStatus())&&
-               appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
-                                                .eq(AppliedSubject::getStudentId,appliedSubject.getStudentId())
-                                                .eq(AppliedSubject::getStatus,"YTG"))>0){
+            if ("YTG".equals(appliedSubject.getStatus()) &&
+                    appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
+                            .eq(AppliedSubject::getStudentId, appliedSubject.getStudentId())
+                            .eq(AppliedSubject::getStatus, "YTG")) > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),

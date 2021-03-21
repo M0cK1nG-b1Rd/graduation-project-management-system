@@ -58,6 +58,12 @@ public class StatisticsController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"),map);
+        }catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -85,7 +91,13 @@ public class StatisticsController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"),map);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -104,7 +116,13 @@ public class StatisticsController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"),statistics);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -121,7 +139,13 @@ public class StatisticsController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"),score);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
