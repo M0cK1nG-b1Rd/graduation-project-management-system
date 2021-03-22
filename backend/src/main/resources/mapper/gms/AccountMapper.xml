@@ -18,9 +18,7 @@
         <collection property="students" column="{id=GROUP_ID,stage=STAGE}"
                     select="com.gms.gms.dao.AccountMapper.selectStudentByGroupId"/>
     </resultMap>
-    
     <resultMap id="stu" type="com.gms.gms.domain.Student">
-
     </resultMap>
 
     <select id="getTeacherByUserId" resultType="com.gms.gms.domain.Teacher">
