@@ -1,6 +1,7 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
@@ -69,4 +70,42 @@ public class ThesisTeacherController {
         }
     }
 
+    /**
+     * 一键自动删除分组，无需传参，若发布后删除相关人员会接收通知
+     */
+    @DeleteMapping()
+    public GmsResponse deleteThesisGroupStage() throws GmsException {
+        try {
+            thesisTeacherService.remove(new QueryWrapper<ThesisTeacher>());
+            thesisService.update(null,new LambdaUpdateWrapper<Thesis>().set(Thesis::getStatus,"DFZ"));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "论文交叉互评安排删除成功！"));
+        } catch (Exception e) {
+            String message = "论文交叉互评安排删除失败！";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    /**
+     * 教研办查看答辩交叉互评结果，需要传入分页参数，问号形式
+     * page:
+     * size:
+     */
+    /*@GetMapping()
+    public GmsResponse selectThesisGroupStage() throws GmsException {
+        try {
+
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "论文交叉互评安排删除成功！"));
+        } catch (Exception e) {
+            String message = "论文交叉互评安排删除失败！";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }*/
 }
