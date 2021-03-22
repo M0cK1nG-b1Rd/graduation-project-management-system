@@ -32,7 +32,7 @@ public class CreatNewMessage {
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         for (Integer i : userList) {
             Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
-                    .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t\t您有新的答辩安排，请前往答辩安排处查看。</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                    .setDetail("<p><strong>尊敬的用户：</strong></p><p></p><p>\t\t您有新的答辩安排，请前往答辩安排处查看。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
                      .setMessageId(FileStorageUtil.getDocId());
             messages.add(message);
         }
@@ -47,7 +47,7 @@ public class CreatNewMessage {
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         for (Integer i : userList) {
             Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
-                    .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                    .setDetail("<p><strong>尊敬的用户：</strong></p><p></p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
                     .setMessageId(FileStorageUtil.getDocId());
             messages.add(message);
         }
@@ -58,9 +58,37 @@ public class CreatNewMessage {
         Integer userId = messageService.getUserIdByStuId(studentId);
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         Message message = new Message().setTitle("选题结果通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
-                .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t\t您的选题申请状态已经更新，请前往相关页面进行查看。</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setDetail("<p><strong>尊敬的用户：</strong></p><p></p><p>\t\t您的选题申请状态已经更新，请前往相关页面进行查看。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
                 .setMessageId(FileStorageUtil.getDocId());
         creatNewMessage(message);
+    }
+
+    public void afterUpdateThesisGroupStage() {
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        List<Integer> userList = messageService.getAllTeacherUserId();
+        List<Message> messages = new ArrayList<>();
+        for (Integer i : userList) {
+            Message message = new Message().setTitle("论文互评通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                    .setDetail("<p><strong>尊敬的老师：</strong></p><p></p><p>\t\t您的论文互评安排已经发布，请及时前往相关页面进行互评打分。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                    .setMessageId(FileStorageUtil.getDocId());
+            messages.add(message);
+        }
+        creatNewMessage2(messages);
+    }
+
+    public void beforeDeleteThesisGroupStage() {
+        if(messageService.countThesisGroupIsRelease()>0){
+            Integer fromId = GmsUtil.getCurrentUser().getUserId();
+            List<Integer> userList = messageService.getTeacherUserIdThesis();
+            List<Message> messages = new ArrayList<>();
+            for (Integer i : userList) {
+                Message message = new Message().setTitle("论文互评通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                        .setDetail("<p><strong>尊敬的老师：</strong></p><p></p><p>\t\t之前的论文互拼安排已经撤回取消，给您带来的不便十分抱歉，请以之后的安排为准。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                        .setMessageId(FileStorageUtil.getDocId());
+                messages.add(message);
+            }
+            creatNewMessage2(messages);
+        }
     }
 
     /*public void creatNewAuditReport(Integer id) {

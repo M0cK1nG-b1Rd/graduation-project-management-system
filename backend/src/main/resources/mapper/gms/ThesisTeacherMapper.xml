@@ -42,8 +42,9 @@
                 JOIN college ON teacher.COLLEGE_ID = college.COLLEGE_ID
         WHERE teacher.TEACHER_ID = #{teacherId}
     </select>
-    <select id="getThesis" resultMap="com.gms.gms.dao.ThesisMapper.ZJYSB">
+    <select id="getThesis" resultMap="com.gms.gms.dao.ThesisMapper.ZJYSB2">
         SELECT
+            thesis.STU_ID,
             thesis.THESIS_ID,
             thesis.DOC_ID,
             thesis.`STATUS`,

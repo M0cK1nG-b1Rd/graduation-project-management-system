@@ -40,4 +40,19 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public Integer getUserIdByStuId(Integer studentId) {
         return this.baseMapper.getUserIdByStuId(studentId);
     }
+
+    @Override
+    public List<Integer> getAllTeacherUserId() {
+        return this.baseMapper.getAllTeacherUserId();
+    }
+
+    @Override
+    public Integer countThesisGroupIsRelease() {
+        return this.baseMapper.countThesisGroupIsRelease();
+    }
+
+    @Override
+    public List<Integer> getTeacherUserIdThesis() {
+        return this.baseMapper.getTeacherUserIdThesis();
+    }
 }

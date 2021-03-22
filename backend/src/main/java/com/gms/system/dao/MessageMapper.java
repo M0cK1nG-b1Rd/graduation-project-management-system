@@ -23,4 +23,10 @@ public interface MessageMapper extends BaseMapper<Message> {
     Integer getSecretaryUserId(String stage);
 
     Integer getUserIdByStuId(Integer id);
+
+    List<Integer> getAllTeacherUserId();
+
+    Integer countThesisGroupIsRelease();
+
+    List<Integer> getTeacherUserIdThesis();
 }
