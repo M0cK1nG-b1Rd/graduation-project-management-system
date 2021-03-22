@@ -5,7 +5,7 @@
           <my-sider @MenuCollapse="toggleCollapse"></my-sider>
     </el-aside>
     <el-container>
-      <el-header :height="'40px'" class="header_box">
+      <el-header :height="'30px'" class="header_box">
         <my-header></my-header>
       </el-header>
       <!--    页面主区域-->
@@ -61,7 +61,7 @@ export default {
 
 .el-header {
   border-radius: 2px;
-  background-color: #e9ebec;
+  background-color: #ffffff !important;
   /*display: flex;*/
   /*justify-content: flex-end;*/
   padding-left: 0px;

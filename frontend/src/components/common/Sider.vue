@@ -3,7 +3,7 @@
     <!--        顶部标题及Logo区-->
     <div id="sider_title_logo_zone">
 <!--      logo-->
-      <img src="../../assets/imgs/login_logo.jpg" alt="" class="sider_logo">
+      <img src="../../assets/imgs/login_logo.jpg" alt="" class="sider_logo" @click="gotoHompage">
 <!--      系统名-->
       <span class="sider_title" v-if="!isCollapsed">快乐毕设系统</span>
 <!--      收起、关闭菜单图标-->
@@ -70,6 +70,10 @@ export default {
     this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
+    // 回到主页
+    gotoHompage() {
+      this.$router.push('/welcome')
+    },
     // 获取所有的菜单
     async getMeunList() {
       // TODO 后期需要将admin换为当前用户的用户名

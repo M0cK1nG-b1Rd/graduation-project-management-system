@@ -11,19 +11,58 @@
       <!--      页面标题-->
       <el-row type="flex" justify="center" class="page_title">统计数据</el-row>
       <el-divider></el-divider>
-<!--      任务总数-->
-<!--      任务通过率-->
-      <dv-decoration-9
-          style="width:150px;height:150px;font-size: 25px">
-          {{statisticsInfo.passRatio}}%
-    </dv-decoration-9>
-<!--      任务通过次数-->
-<!--      任务驳回次数-->
-<!--      平均得分-->
-      <dv-water-level-pond :config="swtconfig" style="width:150px;height:200px" />
-      <dv-percent-pond :config="jdcconfig" style="width:200px;height:100px;" />
-      <dv-capsule-chart :config="jnztconfig" style="width:300px;height:200px;color: #393e46" />
-      <dv-conical-column-chart :config="zxztconfig" style="width:400px;height:200px;"/>
+      <el-row>
+        <!--      任务总数-->
+        <el-col :span="8">
+          <el-card style="width: 90%; height: 300px">
+            <el-row class="card_title">您的任务总数</el-row>
+            <el-divider></el-divider>
+            <el-row class="card_body">
+              截至当前，您一共收到的阶段任务个数为：
+            </el-row>
+            <el-row type="flex" justify="center">
+              <a-progress :strokeWidth="7"
+                          type="circle" :percent="100"
+                          :format="() => `${statisticsInfo.totalTask} 个`"
+              />
+            </el-row>
+          </el-card>
+        </el-col>
+        <!--      通过任务数-->
+        <el-col :span="8">
+          <el-card style="width: 90%; height: 300px">
+            <el-row class="card_title">通过验收任务数</el-row>
+            <el-divider></el-divider>
+            <el-row class="card_body">
+              截至当前，您已通过验收的阶段任务个数为：
+            </el-row>
+            <el-row type="flex" justify="center">
+              <a-progress :strokeWidth="7"
+                          type="circle" :percent="statisticsInfo.passRatio"
+                          :format="() => `${statisticsInfo.passedTask} 个`"
+              />
+            </el-row>
+          </el-card>
+        </el-col>
+        <!--      未通过提交次数-->
+        <el-col :span="8">
+          <el-card style="width: 90%; height: 300px">
+            <el-row class="card_title">未通过提交次数</el-row>
+            <el-divider></el-divider>
+            <el-row class="card_body">
+              截至当前，您的阶段任务提交一共被导师驳回次数为：
+            </el-row>
+            <el-row type="flex" justify="center">
+              <a-progress :strokeWidth="7"
+                          status="exception"
+                          type="circle"
+                          :percent="statisticsInfo.rejectRatio"
+                          :format="() => `${statisticsInfo.rejectTimes} 次`"
+              />
+            </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
     </el-card>
   </div>
 </template>
@@ -41,80 +80,8 @@ export default {
         totalTask: Number, // 总共的任务数量
         passedTask: Number, // 通过的任务数
         rejectTimes: Number, // 被驳回的次数
-        passRatio: Number // 通过率
-      },
-      // 水位图
-      swtconfig: {
-        data: [55],
-        shape: 'round'
-      },
-      // 进度池
-      jdcconfig: {
-        value: 66,
-        borderWidth: 5,
-        borderRadius: 10,
-        borderGap: 5
-      },
-      // 胶囊柱图
-      jnztconfig: {
-        data: [
-          {
-            name: '南阳',
-            value: 167
-          },
-          {
-            name: '周口',
-            value: 67
-          },
-          {
-            name: '漯河',
-            value: 123
-          },
-          {
-            name: '郑州',
-            value: 55
-          },
-          {
-            name: '西峡',
-            value: 98
-          }
-        ]
-      },
-      // 锥型柱图
-      zxztconfig: {
-        data: [
-          {
-            name: '周口',
-            value: 55
-          },
-          {
-            name: '南阳',
-            value: 120
-          },
-          {
-            name: '西峡',
-            value: 71
-          },
-          {
-            name: '驻马店',
-            value: 66
-          },
-          {
-            name: '新乡',
-            value: 80
-          },
-          {
-            name: '信阳',
-            value: 35
-          },
-          {
-            name: '漯河',
-            value: 15
-          }
-        ],
-        showValue: true,
-        textColor: '#000',
-        fontSize: 15
+        passRatio: Number, // 通过率
+        rejectRatio: Number // 驳回率
       }
     }
   },
@@ -125,6 +92,7 @@ export default {
         this.statisticsInfo = res.data
         this.statisticsInfo.passRatio = this.statisticsInfo.passedTask / (this.statisticsInfo.rejectTimes + this.statisticsInfo.passedTask)
         this.statisticsInfo.passRatio *= 100
+        this.statisticsInfo.rejectRatio = 100 - this.statisticsInfo.passRatio
       } else {
         this.$message.error(res.meta.message)
       }
@@ -147,5 +115,19 @@ export default {
 /*自定义分割线*/
 .divider{
   height: 12px;
+}
+/*卡片标题*/
+.card_title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+/*卡片内容*/
+.card_body{
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 16px;
 }
 </style>
