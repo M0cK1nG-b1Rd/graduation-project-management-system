@@ -27,7 +27,7 @@
         <!--          课题名称-->
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="subjectName"
+          prop="subName"
           label="课题名称"
           width="300">
         </el-table-column>
@@ -35,7 +35,7 @@
         <el-table-column
           sortable
           :show-overflow-tooltip="true"
-          prop="create_time"
+          prop="poseTime"
           label="申请日期"
           width="110">
         </el-table-column>
@@ -50,7 +50,7 @@
         <!--        课题类型-->
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="type"
+          prop="zone"
           label="课题类型"
           width="100"
           :filters="[{ text: '学业通知', value: 1 }, { text: '答辩安排', value: 2 }, { text: '工作安排', value: 3 }]"
@@ -108,7 +108,7 @@
       </el-pagination>
     </el-row>
   </el-card>
-  <!--    查看公告详情对话框-->
+  <!--    查看详情对话框-->
   <el-dialog
     :visible.sync="viewPageVisible"
     width="60%">
@@ -116,7 +116,7 @@
       <el-row>
         <el-col :span="10">
           <el-form-item label="课题名称">
-            <el-input v-model="currentSubjectInfo.subjectName" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.subName" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="7">
@@ -128,13 +128,13 @@
       <el-row>
         <el-col :span="10">
           <el-form-item label="题目类型">
-            <el-input v-model="currentSubjectInfo.type" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.zone" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="申报时间">
             <el-row>
-              <el-input v-model="currentSubjectInfo.create_time" disabled></el-input>
+              <el-input v-model="currentSubjectInfo.poseTime" disabled></el-input>
             </el-row>
           </el-form-item>
         </el-col>
@@ -147,12 +147,12 @@
         </el-col>
         <el-col :span="7">
           <el-form-item label="导师电话">
-            <el-input v-model="currentSubjectInfo.mobile" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.tel" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="7">
           <el-form-item label="导师邮箱">
-            <el-input v-model="currentSubjectInfo.email" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.mail" disabled></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -164,7 +164,7 @@
         </el-col>
         <el-col :span="20">
           <el-form-item label="课题要求">
-            <el-input type="textarea" v-model="currentSubjectInfo.require" disabled></el-input>
+            <el-input type="textarea" v-model="currentSubjectInfo.requirement" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="20">
@@ -186,7 +186,7 @@
       <el-row>
         <el-col :span="10">
           <el-form-item label="课题名称">
-            <el-input v-model="currentSubjectInfo.subjectName" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.subName" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="7">
@@ -198,13 +198,13 @@
       <el-row>
         <el-col :span="10">
           <el-form-item label="题目类型">
-            <el-input v-model="currentSubjectInfo.type" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.zone" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="10">
           <el-form-item label="申报时间">
             <el-row>
-              <el-input v-model="currentSubjectInfo.create_time" disabled></el-input>
+              <el-input v-model="currentSubjectInfo.poseTime" disabled></el-input>
             </el-row>
           </el-form-item>
         </el-col>
@@ -217,12 +217,12 @@
         </el-col>
         <el-col :span="7">
           <el-form-item label="导师电话">
-            <el-input v-model="currentSubjectInfo.mobile" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.tel" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="7">
           <el-form-item label="导师邮箱">
-            <el-input v-model="currentSubjectInfo.email" disabled></el-input>
+            <el-input v-model="currentSubjectInfo.mail" disabled></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -234,7 +234,7 @@
         </el-col>
         <el-col :span="20">
           <el-form-item label="课题要求">
-            <el-input type="textarea" v-model="currentSubjectInfo.require" disabled></el-input>
+            <el-input type="textarea" v-model="currentSubjectInfo.requirement" disabled></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="20">
@@ -289,11 +289,11 @@ export default {
   },
   methods: {
     async getSubjectList() {
-      const { data: res } = await this.$http.get('/mock/subjects_list.json', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/all', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.subjectlist = res.data.subjects
+      this.subjectlist = res.data.records
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {

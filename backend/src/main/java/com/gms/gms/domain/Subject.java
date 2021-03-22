@@ -104,7 +104,7 @@ public class Subject implements Serializable {
 
     //分页
     @TableField(exist = false)
-    private Integer current;
+    private Integer page;
     @TableField(exist = false)
     private Integer size;
 }
