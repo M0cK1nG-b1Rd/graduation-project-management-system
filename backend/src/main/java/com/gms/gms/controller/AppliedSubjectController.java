@@ -71,9 +71,9 @@ public class AppliedSubjectController {
 
     //查看教师带的所有学生
     @GetMapping("students/all")
-    public GmsResponse getStudentsOfTeacher(String subId) throws GmsException {
+    public GmsResponse getStudentsOfTeacher() throws GmsException {
         try {
-            List<Student> subjects = appliedSubjectService.getStudentsOfTeacher(subId);
+            List<Student> subjects = appliedSubjectService.getStudentsOfTeacher();
             return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
         } catch (Exception e) {
             String message = "查询失败";
