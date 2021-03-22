@@ -23,4 +23,6 @@ public interface ThesisTeacherMapper extends BaseMapper<ThesisTeacher> {
     Thesis getThesis(Integer teacherId);
 
     List<Thesis> selectThesisGroupStageTeacher(Integer teacherId);
+
+    void inserts(List<ThesisTeacher> helpList);
 }

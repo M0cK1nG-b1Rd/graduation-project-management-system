@@ -103,9 +103,10 @@
     </select>
     <insert id="addTeacherTeam">
         INSERT INTO acceptance_team ( SEC_ID, STAGE )
-        VALUES(
-            #{team.secId},
-            #{team.stage})
+        VALUES
+        <foreach collection="teams" item="item" separator=",">
+            (#{item.secId},#{item.stage})
+        </foreach>
     </insert>
     <select id="selectTeacherTeamId" resultType="java.lang.Integer">
         SELECT
@@ -117,10 +118,10 @@
     </select>
     <insert id="addTeacherTeamMember">
         INSERT INTO acceptance_teacher ( TEACHER_ID, TEAM_ID, IS_LEADER )
-        VALUES(
-            #{id},
-            #{group},
-            #{b})
+        VALUES
+        <foreach collection="teamHelps" item="item" separator=",">
+            (#{item.teacherId},#{item.teamId},#{item.isLeader})
+        </foreach>
     </insert>
     <select id="selectStageInTeam" resultType="java.lang.Integer">
         SELECT
@@ -196,7 +197,9 @@
     <insert id="addStudentGroup">
         INSERT INTO stu_group ( GROUP_ID, STU_ID, STAGE )
         VALUES
-            (#{gro.groupId},#{gro.stuId},#{gro.stage})
+        <foreach collection="gro" item="item" separator=",">
+            (#{item.groupId},#{item.stuId},#{item.stage})
+        </foreach>
     </insert>
     <select id="getStudentGroup" resultMap="ACC">
         SELECT DISTINCT

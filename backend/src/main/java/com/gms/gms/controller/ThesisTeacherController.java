@@ -39,7 +39,7 @@ public class ThesisTeacherController {
     @PostMapping()
     public GmsResponse groupTeacherAuto() throws GmsException {
         try {
-            if(thesisTeacherService.count()>0){
+            if (thesisTeacherService.count() > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
@@ -63,8 +63,8 @@ public class ThesisTeacherController {
     @PutMapping()
     public GmsResponse updateThesisGroupStage() throws GmsException {
         try {
-            thesisTeacherService.update(null,new LambdaUpdateWrapper<ThesisTeacher>().set(ThesisTeacher::getIsRelease,true));
-            thesisService.update(null,new LambdaUpdateWrapper<Thesis>().set(Thesis::getStatus,"YFZ"));
+            thesisTeacherService.update(null, new LambdaUpdateWrapper<ThesisTeacher>().set(ThesisTeacher::getIsRelease, true));
+            thesisService.update(null, new LambdaUpdateWrapper<Thesis>().set(Thesis::getStatus, "YFZ"));
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -83,7 +83,7 @@ public class ThesisTeacherController {
     public GmsResponse deleteThesisGroupStage() throws GmsException {
         try {
             thesisTeacherService.remove(new QueryWrapper<ThesisTeacher>());
-            thesisService.update(null,new LambdaUpdateWrapper<Thesis>().set(Thesis::getStatus,"DFZ"));
+            thesisService.update(null, new LambdaUpdateWrapper<Thesis>().set(Thesis::getStatus, "DFZ"));
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -101,13 +101,13 @@ public class ThesisTeacherController {
      * size:
      */
     @GetMapping()
-    public GmsResponse selectThesisGroupStage(Integer page,Integer size) throws GmsException {
+    public GmsResponse selectThesisGroupStage(Integer page, Integer size) throws GmsException {
         try {
-            Page<ThesisHelp> teacherPage = thesisTeacherService.selectThesisGroupStage(page,size);
+            Page<ThesisHelp> teacherPage = thesisTeacherService.selectThesisGroupStage(page, size);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询论文交叉互评安排成功！"),teacherPage);
+                    "查询论文交叉互评安排成功！"), teacherPage);
         } catch (Exception e) {
             String message = "查询论文交叉互评安排失败！";
             log.error(message, e);
@@ -121,14 +121,14 @@ public class ThesisTeacherController {
     @GetMapping("/teacher")
     public GmsResponse selectThesisGroupStageTeacher() throws GmsException {
         try {
-            Integer teacherId= AccountUtil.getCurrentTeacher().getTeacherId();
+            Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
             List<Thesis> thesis = thesisTeacherService.selectThesisGroupStageTeacher(teacherId);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询论文交叉互评安排成功！"),thesis);
+                    "查询论文交叉互评成功！"), thesis);
         } catch (Exception e) {
-            String message = "查询论文交叉互评安排失败！";
+            String message = "查询论文交叉互评失败！";
             log.error(message, e);
             throw new GmsException(message);
         }
@@ -142,9 +142,9 @@ public class ThesisTeacherController {
     @PutMapping("/teacher")
     public GmsResponse scoreThesisGroupStage(@RequestBody ThesisTeacher thesisTeacher) throws GmsException {
         try {
-            if(thesisTeacherService.count(new QueryWrapper<ThesisTeacher>().lambda()
-                                                .eq(ThesisTeacher::getId,thesisTeacher.getId())
-                                                .eq(ThesisTeacher::getScore,-1))==0){
+            if (thesisTeacherService.count(new QueryWrapper<ThesisTeacher>().lambda()
+                    .eq(ThesisTeacher::getId, thesisTeacher.getId())
+                    .eq(ThesisTeacher::getScore, -1)) == 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),

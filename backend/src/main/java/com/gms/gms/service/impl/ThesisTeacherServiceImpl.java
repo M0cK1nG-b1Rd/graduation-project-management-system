@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -30,18 +31,20 @@ public class ThesisTeacherServiceImpl extends ServiceImpl<ThesisTeacherMapper, T
         int tIdSize = teacherId.size();
         int i = 0;
         ThesisTeacher help;
+        List<ThesisTeacher> helpList = new ArrayList<>();
         for (Thesis t : thesis) {
-            for (int n=0;n<3;n++){
+            for (int n = 0; n < 3; n++) {
                 if (t.getTeacherId() == teacherId.get(i)) {
                     i = (i + 1) % tIdSize;
                 }
                 help = new ThesisTeacher().setTime(new Date())
                         .setTeacherId(teacherId.get(i))
                         .setThesisId(t.getThesisId());
-                this.baseMapper.insert(help);
+                helpList.add(help);
                 i = (i + 1) % tIdSize;
             }
         }
+        this.baseMapper.inserts(helpList);
     }
 
     @Override
