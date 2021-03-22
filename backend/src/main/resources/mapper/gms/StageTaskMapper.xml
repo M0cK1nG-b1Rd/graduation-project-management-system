@@ -7,6 +7,8 @@
                st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
                st.TEACHER_ID,
                u1.REAL_NAME AS TEACHER_NAME,
                st.STU_ID,
@@ -31,6 +33,8 @@
             st.TASK_NAME,
             st.SUB_ID,
             st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
             st.TEACHER_ID,
             u1.REAL_NAME AS TEACHER_NAME,
             st.STU_ID,
@@ -60,6 +64,8 @@
         SELECT st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
+               st.STAGE,
+               st.STATUS,
                st.TEACHER_ID,
                u1.REAL_NAME AS TEACHER_NAME,
                st.STU_ID,
@@ -76,6 +82,7 @@
                  JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
                  LEFT JOIN file_storage f ON (
             f.DOC_ID = st.DOC_ID)
+        WHERE s.STU_ID=#{studentId}
     </select>
 
 
@@ -84,6 +91,8 @@
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
         <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
         <result column="STU_ID" property="stuId" jdbcType="INTEGER"/>
@@ -94,6 +103,35 @@
             <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
             <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="StageTaskMapWithResult" type="com.gms.gms.domain.StageTask">
+        <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
+        <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
+        <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
+        <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
+        <result column="STU_ID" property="stuId" jdbcType="INTEGER"/>
+        <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
+        <result column="START_TIME" property="startTime" jdbcType="DATE"/>
+        <result column="END_TIME" property="endTime" jdbcType="DATE"/>
+        <collection property="resultList" ofType="com.gms.gms.domain.StageTaskResult">
+            <result column="RETRIES" property="retries" jdbcType="INTEGER"/>
+            <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
+            <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
+            <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+            <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
+            <result column="SCORE" property="score" jdbcType="INTEGER"/>
+            <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
+                <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
+                <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+                <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+            </collection>
         </collection>
     </resultMap>
 </mapper>

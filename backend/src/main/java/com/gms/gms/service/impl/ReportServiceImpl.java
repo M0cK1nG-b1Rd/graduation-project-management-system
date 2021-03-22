@@ -7,6 +7,7 @@ import com.gms.common.exception.GmsException;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Report;
 import com.gms.gms.dao.ReportMapper;
+import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.ReportService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.gms.utils.AccountUtil;
@@ -22,7 +23,9 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
 
     @Override
     public IPage<Report> selectReport(Report report, String roleName) throws GmsException {
-        Page<Report> page = new Page<>(report==null?report.getPage():1,  report==null?report.getSize():Integer.MAX_VALUE);
+        Integer inPage = report.getPage();
+        Integer inSize = report.getSize();
+        Page<Report> page = new Page<>(inPage==null?1:inPage,inSize==null?Integer.MAX_VALUE:inSize);
         Page<Report> appliedSubjectPage;
 
         //区分不同角色并调用不同的方法

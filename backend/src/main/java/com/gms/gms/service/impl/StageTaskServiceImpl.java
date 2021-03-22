@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.exception.GmsException;
 import com.gms.gms.domain.StageTask;
 import com.gms.gms.dao.StageTaskMapper;
+import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.gms.utils.AccountUtil;
@@ -23,8 +24,9 @@ public class StageTaskServiceImpl extends ServiceImpl<StageTaskMapper, StageTask
 
     @Override
     public IPage<StageTask> getStageTask(StageTask task, String roleName) throws GmsException {
-        // TODO: 2021/3/18 增加权限校验
-        Page<StageTask> page = new Page<>(task==null?task.getPage():1,task==null?task.getSize():Integer.MAX_VALUE);
+        Integer inPage = task.getPage();
+        Integer inSize = task.getSize();
+        Page<StageTask> page = new Page<>(inPage==null?1:inPage,inSize==null?Integer.MAX_VALUE:inSize);
         Page<StageTask> stageTaskPage;
 
         //区分不同角色并调用不同的方法

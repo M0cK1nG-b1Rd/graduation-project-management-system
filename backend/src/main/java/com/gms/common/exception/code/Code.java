@@ -884,11 +884,11 @@ public enum Code {
     /**
      * Code 状态码
      */
-    private Integer code;
+    private final Integer code;
     /**
      * desc 描述
      */
-    private String desc;
+    private final String desc;
 
     Code(Integer code, String desc) {
         this.code = code;

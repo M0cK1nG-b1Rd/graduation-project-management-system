@@ -12,6 +12,7 @@ import com.gms.gms.domain.Report;
 import com.gms.gms.service.AccountService;
 import com.gms.gms.service.ReportService;
 import com.gms.gms.utils.AccountUtil;
+import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -78,14 +79,22 @@ public class ReportController {
     @PostMapping
     public GmsResponse addReport(@RequestBody Report report) throws GmsException {
         try {
+            String docId = FileStorageUtil.getDocId();
+            report.setDocId(docId);
             report.setPoseBy(AccountUtil.getCurrentStudent().getStuId());
             report.setPoseTime(new Date());
             reportService.addReport(report);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "提交报告成功"));
-        } catch (Exception e) {
+                    "提交报告成功"),docId);
+        } catch (GmsException e) {
+            String message = "提交报告失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "提交报告失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -105,7 +114,13 @@ public class ReportController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "审核信息提交成功"));
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "审题信息提交失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "审核信息提交失败";
             log.error(message, e);
             throw new GmsException(message);

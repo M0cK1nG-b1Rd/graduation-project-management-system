@@ -7,7 +7,7 @@
         WHERE ID = #{appliedSubject.id}
           AND STU_ID = #{appliedSubject.studentId}
           AND SUB_ID = #{appliedSubject.subId}
-          AND `STATUS` = "WSH";
+          AND `STATUS` = 'WSH';
     </update>
 
 
@@ -107,9 +107,31 @@
                 JOIN major m ON s.MAJOR_ID = m.MAJOR_ID
                 JOIN class cl ON s.CLASS_ID = cl.CLASS_ID
         WHERE
-                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE `STATUS` = "YTG" AND SUB_ID = 1 )
+                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE `STATUS` = 'YTG' AND SUB_ID = #{subId} )
     </select>
-
+    <select id="getStudentsOfTeacher" resultType="com.gms.gms.domain.Student">
+        SELECT
+            s.STU_ID,
+            sub.SUB_NAME,
+            u.USER_ID,
+            u.REAL_NAME,
+            u.GENDER,
+            u.TEL,
+            u.MAIL,
+            co.COLLEGE_NAME,
+            m.MAJOR_NAME,
+            cl.CLASS_NAME
+        FROM
+            student s
+                JOIN applied_subject a ON(a.STU_ID = s.STU_ID AND a.`STATUS` = 'YTG')
+                JOIN `subject` sub ON(a.SUB_ID=sub.SUB_ID)
+                JOIN `user` u ON ( u.USER_ID = s.USER_ID )
+                JOIN college co ON s.COLLEGE_ID = co.COLLEGE_ID
+                JOIN major m ON s.MAJOR_ID = m.MAJOR_ID
+                JOIN class cl ON s.CLASS_ID = cl.CLASS_ID
+        WHERE
+            sub.POSE_BY=#{teacherId}
+    </select>
 
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">

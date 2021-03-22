@@ -122,6 +122,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+        LambdaQueryWrapper<User> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(User::getMail, email);
+        return this.baseMapper.selectOne(mapper);
+    }
+
+    @Override
+    public void updatePasswordByUserId(Integer userId, String password) {
+        //找到该用户的用户名，密码加密时使用
+        LambdaQueryWrapper<User> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(User::getUserId, userId);
+        User newUser = this.baseMapper.selectOne(mapper);
+        newUser.setPassword(MD5Util.encrypt(newUser.getUsername(), password));
+        this.updateById(newUser);
+    }
+
     private void setUserRoles(User user, String[] roles) {
         Arrays.stream(roles).forEach(roleId -> {
             UserRole ur = new UserRole();

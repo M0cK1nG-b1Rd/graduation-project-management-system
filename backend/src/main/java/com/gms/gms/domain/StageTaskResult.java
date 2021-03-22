@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import io.swagger.models.auth.In;
@@ -34,7 +35,7 @@ public class StageTaskResult implements Serializable {
     private String summary;
 
     @TableField("DOC_ID")
-    private Integer docId;
+    private String docId;
 
     @TableField("FEEDBACK")
     private String feedback;
@@ -43,7 +44,7 @@ public class StageTaskResult implements Serializable {
     private String status;
 
     @TableField("AUDIT_TIME")
-    private LocalDateTime auditTime;
+    private Date auditTime;
 
     @TableField("SCORE")
     private String score;
@@ -54,6 +55,15 @@ public class StageTaskResult implements Serializable {
     @TableField(exist = false)
     private Integer size;
 
+    //详细信息
+    @TableField(exist = false)
+    private String teacherName;
+    @TableField(exist = false)
+    private String  studentName;
+    @TableField(exist = false)
+    private String taskName;
+    @TableField(exist = false)
+    private String  description;
 
     @TableField(exist = false)
     private List<FileStorage> fileStorage;

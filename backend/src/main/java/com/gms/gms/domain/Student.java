@@ -43,4 +43,9 @@ public class Student extends User implements Serializable {
     @TableField(exist = false)
     private String collegeName, majorName, className;
 
+    @TableField(exist = false)
+    private String subId;
+    @TableField(exist = false)
+    private String subName;
+
 }

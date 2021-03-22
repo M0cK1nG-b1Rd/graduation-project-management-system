@@ -34,6 +34,8 @@ public class StageTaskController {
     @PostMapping
     public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {
+            Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
+            task.setTeacherId(teacherId);
             String docId = FileStorageUtil.getDocId();
             task.setDocId(docId);
             stageTaskService.addStageTask(task);
@@ -41,7 +43,13 @@ public class StageTaskController {
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "布置阶段任务成功"),docId);
-        } catch (Exception e) {
+        } catch (GmsException e) {
+            String message = "布置阶段任务失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        }catch (Exception e) {
             String message = "布置阶段任务失败";
             log.error(message, e);
             throw new GmsException(message);

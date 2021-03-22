@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.gms.domain.*;
 import com.gms.system.domain.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface AccountMapper extends BaseMapper<User> {
 
     Teacher getTeacherByUserId(Integer userId);
@@ -26,11 +28,11 @@ public interface AccountMapper extends BaseMapper<User> {
 
     List<Integer> selectAllSecretaryId();
 
-    void addTeacherTeam(@Param("team") TeacherTeam teacherTeam);
+    void addTeacherTeam(@Param("teams") List<TeacherTeam> teacherTeams);
 
     List<Integer> selectTeacherTeamId(@Param("stage") String stage);
 
-    void addTeacherTeamMember(@Param("id") int integer, @Param("group") int maxGroup, boolean b);
+    void addTeacherTeamMember(List<TeacherTeamHelp> teamHelps);
 
     int selectStageInTeam(String stage, String tableName);
 
@@ -47,7 +49,7 @@ public interface AccountMapper extends BaseMapper<User> {
     //传参暂时没有使用，但便于以后修改不移除
     List<Integer> getStudentNum2(@Param("stage") String stage);
 
-    void addStudentGroup(@Param("gro") StuGroup stuGroup);
+    void addStudentGroup(@Param("gro") List<StuGroup> stuGroups);
 
     Page<StuGroup> getStudentGroup(Page<StuGroup> stuGroupPage, @Param("stage") String stage);
 

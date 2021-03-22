@@ -6,14 +6,20 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.gms.domain.StageTask;
+import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.StageTaskResult;
 import com.gms.gms.service.StageTaskResultService;
 import com.gms.gms.service.StageTaskService;
+import com.gms.gms.utils.AccountUtil;
+import com.gms.gms.utils.FileStorageUtil;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 /**
  * @author MrBird
@@ -25,16 +31,27 @@ import org.springframework.web.bind.annotation.*;
 public class StageTaskResultController {
 
     @Autowired
-    StageTaskResultService service;
+    StageTaskResultService stageTaskResultService;
+
+    @Autowired
+    StageTaskService stageTaskService;
 
     @PostMapping
-    public GmsResponse giveStageTaskResult(StageTaskResult result) throws GmsException {
+    public GmsResponse giveStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
-            service.giveStageTaskResult(result);
+            String docId = FileStorageUtil.getDocId();
+            result.setDocId(docId);
+
+            Integer currRetries = stageTaskResultService.getRetriesTime(result.getTaskId());
+            // 重复次数加1
+            result.setRetries(currRetries + 1);
+            stageTaskResultService.giveStageTaskResult(result);
+            //更新状态为待审核
+            stageTaskResultService.changeStatus(result.getTaskId(),"DSH");
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "提交阶段任务成果成功"));
+                    "提交阶段任务成果成功"),docId);
         } catch (Exception e) {
             String message = "提交阶段任务成果失败";
             log.error(message, e);
@@ -43,10 +60,13 @@ public class StageTaskResultController {
     }
 
 
+    //学生查看自己的阶段任务提交和评分
     @GetMapping
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {
-            IPage<StageTaskResult> stageTaskList =  service.getStageTaskResult(result);
+            //默认使用第一个角色，即取第一个角色的名字
+            String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
+            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getStageTaskResult(result,roleName);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -58,27 +78,12 @@ public class StageTaskResultController {
         }
     }
 
-    // TODO: 2021/3/19  
-//    @GetMapping("statistics")
-//    public GmsResponse getStageTaskResultStatistics(StageTaskResult result) throws GmsException {
-//        try {
-//            IPage<StageTaskResult> stageTaskList =  service.getStageTaskResultStatistics(result);
-//            return new GmsResponse().addCodeMessage(new Meta(
-//                    Code.C200.getCode(),
-//                    Code.C200.getDesc(),
-//                    "查询成功"),stageTaskList);
-//        } catch (Exception e) {
-//            String message = "查询失败";
-//            log.error(message, e);
-//            throw new GmsException(message);
-//        }
-//    }
 
     // TODO: 2021/3/18 测试
     @PutMapping
-    public GmsResponse modifyStageTaskResult(StageTaskResult result) throws GmsException {
+    public GmsResponse modifyStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
-            service.modifyStageTaskResult(result);
+            stageTaskResultService.modifyStageTaskResult(result);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -91,9 +96,11 @@ public class StageTaskResultController {
     }
 
     @PutMapping("score")
-    public GmsResponse giveStageTaskScore(StageTaskResult result) throws GmsException {
+    public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {
-            service.giveStageTaskScore(result);
+            result.setAuditTime(new Date());
+            stageTaskResultService.giveStageTaskScore(result);
+            stageTaskResultService.changeStatus(result.getTaskId(),result.getStatus());
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

@@ -480,6 +480,27 @@
       ]
     },
     {
+      "name": "成绩管理",
+      "id": 2183,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-s-claim",
+      "path": "/score",
+      "component": "",
+      "children": [
+        {
+          "name": "权重配置",
+          "id": 2184,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-brush",
+          "path": "/score/weight",
+          "component": "",
+          "children": []
+        }
+      ]
+    },
+    {
       "name": "统计报表",
       "id": 218,
       "disable": false,

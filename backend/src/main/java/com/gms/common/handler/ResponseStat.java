@@ -3,7 +3,7 @@ package com.gms.common.handler;
 public enum ResponseStat {
     SUCCESS("success"),
     ERROR("error");
-    private String text;
+    private final String text;
     ResponseStat(String text){
         this.text=text;
     }
