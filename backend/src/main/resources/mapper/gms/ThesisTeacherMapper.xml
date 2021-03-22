@@ -68,4 +68,12 @@
             thesis_teacher.TEACHER_ID = #{teacherId}
             AND thesis_teacher.SCORE = '-1'
     </select>
+
+    <insert id="inserts">
+        INSERT INTO thesis_teacher ( TEACHER_ID, THESIS_ID, TIME )
+        VALUES
+        <foreach collection="helpList" item="item" separator=",">
+            (#{item.teacherId},#{item.thesisId},#{item.time})
+        </foreach>
+    </insert>
 </mapper>
