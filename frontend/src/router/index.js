@@ -34,6 +34,11 @@ import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
 import applyClosing from '@/components/finishSubject/applyClosing'
 import MyScore from '@/components/scoreManage/MyScore'
 import StuScoreList from '@/components/scoreManage/StuScoreList'
+import CheckFinishSubjects from '@/components/finishSubject/CheckFinishSubjects'
+import FinishPreScore from '@/components/finishSubject/FinishPreScore'
+import MidPreScore from '@/components/midSubject/MidPreScore'
+import CrossJudgeList from '@/components/finishSubject/CrossJudgeList'
+import CrossJudgeArrange from '@/components/finishSubject/CrossJudgeArrange'
 
 Vue.use(VueRouter)
 
@@ -182,10 +187,40 @@ const routes = [
         path: '/middle/midCheck',
         component: CheckMidSubjects
       },
+      // 中期--秘书中期答辩评分
+      {
+        path: '/middle/score',
+        component: MidPreScore
+      },
       // 结题--学生结题申请
       {
         path: '/finish/apply',
         component: applyClosing
+      },
+      // 结题--教师审核结题申请
+      {
+        path: '/finish/finishCheck',
+        component: CheckFinishSubjects
+      },
+      // 结题--学生查看结题状态
+      {
+        path: '/finish/myApplyList',
+        component: MyRecord
+      },
+      // 结题--秘书结题答辩评分
+      {
+        path: '/finish/score',
+        component: FinishPreScore
+      },
+      // 结题--教办安排论文交叉评审
+      {
+        path: '/finish/crossJudgeArrange',
+        component: CrossJudgeArrange
+      },
+      // 结题--教师查看交叉评审名单
+      {
+        path: '/finish/crossJudge',
+        component: CrossJudgeList
       },
       // 过程监督--教师布置任务
       {

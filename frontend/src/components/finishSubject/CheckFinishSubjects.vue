@@ -3,8 +3,8 @@
     <!--    面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>开题管理</el-breadcrumb-item>
-      <el-breadcrumb-item>开题审核</el-breadcrumb-item>
+      <el-breadcrumb-item>结题管理</el-breadcrumb-item>
+      <el-breadcrumb-item>结题申请审核</el-breadcrumb-item>
     </el-breadcrumb>
     <!--卡片视图区-->
     <el-card class="el-card">
