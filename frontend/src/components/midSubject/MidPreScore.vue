@@ -14,9 +14,15 @@
         <el-row type="flex" justify="center">
           <el-card class="pre_detail" style="width: 80%">
             <!--        课题名称-->
-            <el-row>
+            <el-row type="flex" align="middle">
               <el-col :span="8">
-                答辩时间：<a-tag color="blue" style="font-size: 15px">{{currentPreInfo.startTime}}</a-tag>
+                <el-row>
+                  开始时间：<a-tag color="blue" style="font-size: 15px">{{currentPreInfo.startTime}}</a-tag>
+                </el-row>
+                <div style="height: 5px"></div>
+                <el-row>
+                  结束时间：<a-tag color="red" style="font-size: 15px">{{currentPreInfo.endTime}}</a-tag>
+                </el-row>
               </el-col>
               <el-col :span="8">
                 答辩地点：<a-tag color="green">{{currentPreInfo.classroomName}}</a-tag>
@@ -37,7 +43,7 @@
                     <el-table-column
                       prop="realName"
                       label="学生名单"
-                      width="180">
+                      width="160">
                     </el-table-column>
                     <el-table-column
                       prop="collegeName"
@@ -311,7 +317,7 @@ export default {
         score: 0,
         feedback: '',
         isPassed: true,
-        stage: 'KT'
+        stage: 'ZQ'
       },
       viewPageVisible: false,
       viewReportVisible: false,
@@ -327,7 +333,7 @@ export default {
   },
   methods: {
     async getcurrentPreInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: 'XT' } })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: 'ZQ' } })
       if (res.meta.code !== 200) {
         this.$message.error('获取答辩安排信息失败')
       }

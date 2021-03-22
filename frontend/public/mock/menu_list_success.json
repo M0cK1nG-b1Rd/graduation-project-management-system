@@ -103,57 +103,6 @@
       ]
     },
     {
-      "name": "校外毕设",
-      "id": 10,
-      "disable": false,
-      "order": "",
-      "icon": "el-icon-school",
-      "path": "/offschool",
-      "component": "",
-      "children": [
-        {
-          "name": "提交申请",
-          "id": 11,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-document",
-          "path": "/offschool/request",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "教师初审核",
-          "id": 121,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-check",
-          "path": "/offschool/judge/teacher",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "教研室终审",
-          "id": 13,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-circle-check",
-          "path": "/offschool/judge/final",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "审核结果",
-          "id": 131,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-postcard",
-          "path": "/offschool/result",
-          "component": "",
-          "children": []
-        }
-      ]
-    },
-    {
       "name": "过程监督",
       "id": 28,
       "disable": false,
@@ -234,26 +183,6 @@
           "children": []
         },
         {
-          "name": "自拟课题",
-          "id": 16,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-user",
-          "path": "/subject/apply/stu",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "教师审题",
-          "id": 17,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-check",
-          "path": "/subject/judge/teacher",
-          "component": "",
-          "children": []
-        },
-        {
           "name": "教研室审题",
           "id": 18,
           "disable": false,
@@ -295,32 +224,12 @@
           "children": []
         },
         {
-          "name": "学生选题申请",
-          "id": 21,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-edit-outline",
-          "path": "/subject/select/apply",
-          "component": "",
-          "children": []
-        },
-        {
           "name": "教师审核",
           "id": 22,
           "disable": false,
           "order": "",
           "icon": "el-icon-check",
           "path": "/subject/select/judge/teacher",
-          "component": "",
-          "children": []
-        },
-        {
-          "name": "教研室审核",
-          "id": 23,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-circle-check",
-          "path": "/subject/select/judge/final",
           "component": "",
           "children": []
         },
@@ -375,16 +284,9 @@
           "component": "",
           "children": []
         },
+
         {
-          "name": "答辩评分",
-          "id": 29,
-          "disable": false,
-          "order": "",
-          "icon": "el-icon-finished",
-          "path": "/initial/score"
-        },
-        {
-          "name": "答辩安排",
+          "name": "安排答辩",
           "id": 11,
           "disable": false,
           "order": "",
@@ -392,6 +294,24 @@
           "path": "/initial/arrange",
           "component": "",
           "children": []
+        },
+        {
+          "name": "我的答辩安排",
+          "id": 11212121,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/initial/arrange/my",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "答辩评分",
+          "id": 2339,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-finished",
+          "path": "/initial/score"
         }
       ]
     },
@@ -435,8 +355,28 @@
           "children": []
         },
         {
+          "name": "安排答辩",
+          "id": 11000000,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/middle/arrange",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "我的答辩安排",
+          "id": 112121,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/middle/arrange/my",
+          "component": "",
+          "children": []
+        },
+        {
           "name": "答辩评分",
-          "id": 29,
+          "id": 2019,
           "disable": false,
           "order": "",
           "icon": "el-icon-finished",
@@ -484,8 +424,28 @@
           "children": []
         },
         {
+          "name": "安排答辩",
+          "id": 101901,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/finish/arrange",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "我的答辩安排",
+          "id": 11212121,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-set-up",
+          "path": "/finish/arrange/my",
+          "component": "",
+          "children": []
+        },
+        {
           "name": "答辩评分",
-          "id": 29,
+          "id": 1129,
           "disable": false,
           "order": "",
           "icon": "el-icon-finished",
@@ -493,7 +453,7 @@
         },
         {
           "name": "评审安排",
-          "id": 29,
+          "id": 20979,
           "disable": false,
           "order": "",
           "icon": "el-icon-files",
@@ -501,7 +461,7 @@
         },
         {
           "name": "交叉评审",
-          "id": 29,
+          "id": 212139,
           "disable": false,
           "order": "",
           "icon": "el-icon-document-checked",
@@ -511,11 +471,11 @@
     },
     {
       "name": "成绩管理",
-      "id": 2183,
+      "id": 218,
       "disable": false,
       "order": "",
-      "icon": "el-icon-s-claim",
-      "path": "/score",
+      "icon": "el-icon-s-platform",
+      "path": "/scoreManage",
       "component": "",
       "children": [
         {
@@ -527,28 +487,7 @@
           "path": "/score/weight",
           "component": "",
           "children": []
-        }
-      ]
-    },
-    {
-      "name": "统计报表",
-      "id": 218,
-      "disable": false,
-      "order": "",
-      "icon": "el-icon-data-line",
-      "path": "/statics",
-      "component": "",
-      "children": []
-    },
-    {
-      "name": "成绩管理",
-      "id": 218,
-      "disable": false,
-      "order": "",
-      "icon": "el-icon-s-platform",
-      "path": "/scoreManage",
-      "component": "",
-      "children": [
+        },
         {
           "name": "我的成绩",
           "id": 41,

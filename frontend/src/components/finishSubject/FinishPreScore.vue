@@ -9,14 +9,20 @@
     <!--      题目信息展示区-->
     <el-row>
       <el-col>
-          <div class="card_header">开题答辩安排信息</div>
+          <div class="card_header">结题答辩安排信息</div>
           <!--    答辩相情卡片-->
           <el-row type="flex" justify="center">
             <el-card class="pre_detail" style="width: 80%">
               <!--        课题名称-->
-              <el-row>
+              <el-row type="flex" align="middle">
                 <el-col :span="8">
-                答辩时间：<a-tag color="blue" style="font-size: 15px">{{currentPreInfo.startTime}}</a-tag>
+                  <el-row>
+                    开始时间：<a-tag color="blue" style="font-size: 15px">{{currentPreInfo.startTime}}</a-tag>
+                  </el-row>
+                  <div style="height: 5px"></div>
+                  <el-row>
+                    结束时间：<a-tag color="red" style="font-size: 15px">{{currentPreInfo.endTime}}</a-tag>
+                  </el-row>
                 </el-col>
                 <el-col :span="8">
                   答辩地点：<a-tag color="green">{{currentPreInfo.classroomName}}</a-tag>
@@ -37,7 +43,7 @@
                       <el-table-column
                         prop="realName"
                         label="学生名单"
-                        width="180">
+                        width="160">
                       </el-table-column>
                       <el-table-column
                         prop="collegeName"
@@ -47,10 +53,6 @@
                     </el-table>
                   </el-card>
                 </el-col>
-<!--                 &lt;!&ndash;         占位符       &ndash;&gt;-->
-<!--                <el-col :span="4">-->
-<!--                  <el-divider direction="vertical"></el-divider>-->
-<!--                </el-col>-->
                 <!--          答辩老师参与名单-->
                 <el-col :span="14">
                   <el-card class="box-teacher" style="margin-left: 20%; margin-top: 5px">
@@ -134,8 +136,6 @@
               </el-row>
             </el-card>
           </el-row>
-      </el-col>
-      <el-col>
       </el-col>
     </el-row>
     <!--    查看课题详情对话框-->
@@ -311,7 +311,7 @@ export default {
         score: 0,
         feedback: '',
         isPassed: true,
-        stage: 'KT'
+        stage: 'JT'
       },
       viewPageVisible: false,
       viewReportVisible: false,
@@ -327,7 +327,7 @@ export default {
   },
   methods: {
     async getcurrentPreInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: 'XT' } })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: 'JT' } })
       if (res.meta.code !== 200) {
         this.$message.error('获取答辩安排信息失败')
       }
@@ -343,7 +343,7 @@ export default {
       this.currentSubjectInfo = res.data // 与后端对接
     },
     async getReportInfo(row) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'KT' } })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'JT' } })
       if (res.meta.code !== 200) {
         this.$message.error('获取开题报告信息失败')
       }

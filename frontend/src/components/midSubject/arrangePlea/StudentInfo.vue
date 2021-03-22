@@ -86,7 +86,7 @@ export default {
       queryInfo: {
         page: 1, // 当前页号
         size: 10, // 页面大小
-        stage: 'KT' // 阶段
+        stage: 'ZQ' // 阶段
       },
       // 学生总数
       stuNum: 0

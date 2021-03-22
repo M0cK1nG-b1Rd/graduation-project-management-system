@@ -1,38 +1,31 @@
 <template>
   <div>
-<!--    学生人数-->
+    <!--    学生人数-->
     <el-row>
       <el-col :span="2" :offset="2">
         <a-tag color="#CCFFFF" style="color: #000000; font-size: 14px">
-          学生总数: {{stuNum}}人
+          专家总数: {{tutorNum}}人
         </a-tag>
       </el-col>
     </el-row>
-<!--    表格-->
+    <!--    表格-->
     <el-row>
-      <el-table :data="stuInfo"
+      <el-table :data="tutorInfo"
                 size="medium"
                 stripe>
-        <!--      学生姓名-->
+        <!--      老师姓名-->
         <el-table-column
           :show-overflow-tooltip="true"
           label = "姓名"
           width="100px"
           prop="realName">
         </el-table-column>
-        <!--      专业-->
+        <!--      职称-->
         <el-table-column
           :show-overflow-tooltip="true"
-          label = "专业"
-          width="120px"
-          prop="majorName">
-        </el-table-column>
-        <!--      班级-->
-        <el-table-column
-          :show-overflow-tooltip="true"
-          label = "班级"
-          width="120px"
-          prop="className">
+          label = "职称"
+          width="140px"
+          prop="title">
         </el-table-column>
         <!--      学院-->
         <el-table-column
@@ -41,23 +34,32 @@
           width="120px"
           prop="collegeName">
         </el-table-column>
-        <!--      联系邮箱-->
+        <!--      邮箱-->
         <el-table-column
           :show-overflow-tooltip="true"
-          label = "联系邮箱"
+          label = "邮箱"
           width="160px"
           prop="mail">
         </el-table-column>
-        <!--      联系电话-->
+        <!--      电话-->
         <el-table-column
           :show-overflow-tooltip="true"
-          label = "联系电话"
-          width="120px"
+          label = "电话"
+          width="160px"
           prop="tel">
+        </el-table-column>
+        <!--      主页-->
+        <el-table-column
+          :show-overflow-tooltip="true"
+          label = "主页"
+          width="100px">
+          <a-tag color="green">
+            个人主页
+          </a-tag>
         </el-table-column>
       </el-table>
     </el-row>
-<!--    分页-->
+    <!--    分页-->
     <el-row type="flex" justify="center" style="margin-top: 10px">
       <el-pagination
         @size-change="handleSizeChange"
@@ -66,7 +68,7 @@
         :page-sizes="[5, 10, 20, 50]"
         :page-size="queryInfo.size"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="stuNum">
+        :total="tutorNum">
       </el-pagination>
     </el-row>
   </div>
@@ -74,31 +76,32 @@
 
 <script>
 export default {
-  name: 'StudentInfo',
+  name: 'TutorInfo',
   mounted() {
-    this.getStuInfo()
+    this.getTutorInfo()
   },
   data() {
     return {
       // 参加答辩的学生信息
-      stuInfo: [],
+      tutorInfo: [],
       // 查询参数
       queryInfo: {
         page: 1, // 当前页号
-        size: 10, // 页面大小
-        stage: 'KT' // 阶段
+        size: 10 // 页面大小
       },
-      // 学生总数
-      stuNum: 0
+      // 总页数
+      totalPageNum: 0,
+      // 专家导师总数
+      tutorNum: 0
     }
   },
   methods: {
-    // 获取学生信息
-    async getStuInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/student', { params: this.queryInfo })
-      if (res.meta.code !== 200) return this.$notify.error('获取答辩学生信息失败！')
-      this.stuInfo = res.data.records
-      this.stuNum = res.data.total
+    // 获取专家老师信息
+    async getTutorInfo() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: this.queryInfo })
+      if (res.meta.code !== 200) return this.$notify.error('获取专家老师信息失败！')
+      this.tutorInfo = res.data.records
+      this.tutorNum = res.data.total
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {

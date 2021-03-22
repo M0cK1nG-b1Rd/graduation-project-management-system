@@ -48,7 +48,7 @@ public class PleaController {
                         Code.C500.getDesc(),
                         "没有选择学生组"));
             }
-            if(plea.getTeacherTeam()==null){
+            if(plea.getAcceptanceTeamId()==null){
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
