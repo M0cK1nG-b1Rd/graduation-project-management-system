@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.gms.domain.*;
 import com.gms.system.domain.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface AccountMapper extends BaseMapper<User> {
 
     Teacher getTeacherByUserId(Integer userId);
@@ -58,4 +60,6 @@ public interface AccountMapper extends BaseMapper<User> {
     void deleteTeacherInTeam(@Param("groupId") List<Integer> groupId);
 
     void deleteTeacherTeam(@Param("stage") String stage);
+
+    Integer selectMaxId();
 }

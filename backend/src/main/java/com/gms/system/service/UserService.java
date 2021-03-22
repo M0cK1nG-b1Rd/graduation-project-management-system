@@ -4,6 +4,7 @@ import com.gms.common.domain.QueryRequest;
 import com.gms.system.domain.User;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -57,4 +58,7 @@ public interface UserService extends IService<User> {
      */
     void resetPassword(String[] usernames) throws Exception;
 
+    User findUserByEmail(String email);
+
+    void updatePasswordByUserId(Integer userId,String password);
 }

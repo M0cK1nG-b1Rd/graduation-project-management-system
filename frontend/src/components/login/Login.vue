@@ -31,6 +31,7 @@
               v-model="loginForm.password"
               show-password
               placeholder="请输入密码"
+              @keyup.enter.native="login"
               prefix-icon="iconfont icon-3702mima">
             </el-input>
           </el-form-item>

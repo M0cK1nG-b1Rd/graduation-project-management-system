@@ -26,4 +26,6 @@ public interface AppliedSubjectService extends IService<AppliedSubject> {
     void auditAppliedSubject(AppliedSubject appliedSubject);
 
     List<Student> getStudentsInSubject(String subId);
+
+    List<Student> getStudentsOfTeacher(String subId) throws GmsException;
 }

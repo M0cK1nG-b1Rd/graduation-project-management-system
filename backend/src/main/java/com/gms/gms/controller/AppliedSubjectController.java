@@ -1,6 +1,7 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
@@ -37,17 +38,17 @@ public class AppliedSubjectController {
     //不同角色调用同一接口将返回不同结果
 
     @GetMapping("apply")
-    public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException{
+    public GmsResponse getAppliedSubject(AppliedSubject appliedSubject) throws GmsException {
         try {
             //默认使用第一个角色，即取第一个角色的名字
             String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
 
-            IPage<AppliedSubject> applyList = appliedSubjectService.selectWithCondition(appliedSubject,roleName);
+            IPage<AppliedSubject> applyList = appliedSubjectService.selectWithCondition(appliedSubject, roleName);
 
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),applyList);
+                    "查询成功"), applyList);
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -68,33 +69,58 @@ public class AppliedSubjectController {
         }
     }
 
-    @PostMapping("apply")
-    public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
+    //查看教师带的所有学生
+    @GetMapping("students/all")
+    public GmsResponse getStudentsOfTeacher(String subId) throws GmsException {
         try {
-            appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
-            appliedSubject.setApplyTime(new Date());
-            String docId=FileStorageUtil.getDocId();
-            appliedSubject.setDocId(docId);
-            appliedSubjectService.addAppliedSubject(appliedSubject);
-            return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "选题申请提交成功"),docId);
+            List<Student> subjects = appliedSubjectService.getStudentsOfTeacher(subId);
+            return new GmsResponse().addCodeMessage(new Meta(Code.C200.getCode(), Code.C200.getDesc(), "查询成功"), subjects);
         } catch (Exception e) {
-            String message = "选题申请提交失败";
+            String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
     }
 
-    @PutMapping("apply")
-    public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException{
+
+    @PostMapping("apply")
+    public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
-            // TODO: 2021/3/17 查看是否有成功通过的申请，如果有则不让其提交
-            
+            appliedSubject.setStuId(AccountUtil.getCurrentStudent().getStuId());
+            appliedSubject.setApplyTime(new Date());
+            String docId = FileStorageUtil.getDocId();
+            appliedSubject.setDocId(docId);
+            appliedSubjectService.addAppliedSubject(appliedSubject);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "选题申请提交成功"), docId);
+        } catch (GmsException e) {
+            String message = "选题申请提交失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e));
+        } catch (Exception e) {
+            String message = "选题申请提交失败";
+            throw new GmsException(message);
+        }
+    }
+
+    @PutMapping("apply")
+    public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
+        try {
+            if ("YTG".equals(appliedSubject.getStatus()) &&
+                    appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
+                            .eq(AppliedSubject::getStudentId, appliedSubject.getStudentId())
+                            .eq(AppliedSubject::getStatus, "YTG")) > 0) {
+                return new GmsResponse().addCodeMessage(new Meta(
+                        Code.C500.getCode(),
+                        Code.C500.getDesc(),
+                        "该学生已经有通过课题，请驳回该申请"));
+            }
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
-
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),

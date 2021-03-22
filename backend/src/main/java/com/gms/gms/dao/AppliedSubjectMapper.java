@@ -23,4 +23,6 @@ public interface AppliedSubjectMapper extends BaseMapper<AppliedSubject> {
     Page<AppliedSubject> selectWithConditionAsStudent(Page<AppliedSubject> page, AppliedSubject appliedSubject, Integer studentId);
 
     List<Student> getStudentsInSubject(String subId);
+
+    List<Student> getStudentsOfTeacher(String subId,Integer teacherId);
 }

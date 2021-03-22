@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gms.gms.dao.TotalScoreMapper">
+
+
+    <select id="getAllScore" resultType="com.gms.gms.domain.TotalScore">
+        SELECT
+            * , (w.START_STAGE*START_SCORE+w.MIDDLE_STAGE*MIDDLE_SCORE+w.END_STAGE*END_SCORE+w.STAGE_TASK*PROCEDURE_SCORE)/100 AS TOTAL_SCORE
+        FROM
+            ( SELECT SCORE AS START_MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) sms,
+            ( SELECT SCORE AS MIDDLE_MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) mms,
+            ( SELECT SCORE AS END_MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} ) ems,
+            ( SELECT SCORE AS START_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) sps,
+            ( SELECT SCORE AS MIDDLE_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) mps,
+            ( SELECT SCORE AS END_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) eps,
+            (
+                SELECT
+                    ( START_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * START_PLEA )/ 100 AS START_SCORE
+                FROM
+                    ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) ms,
+                    ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) ps,
+                    ( SELECT START_MATERIAL, START_PLEA FROM weight ) mp
+            ) ss,
+            (
+                SELECT
+                    ( MIDDLE_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * MIDDLE_PLEA )/ 100 AS MIDDLE_SCORE
+                FROM
+                    ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) ms,
+                    ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) ps,
+                    ( SELECT MIDDLE_MATERIAL, MIDDLE_PLEA FROM weight ) mp
+            ) ms,
+            (
+                SELECT
+                    ( END_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * END_PLEA )/ 100 AS END_SCORE
+                FROM
+                        ( SELECT SCORE AS MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF') ms,
+                        ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) ps,
+                        ( SELECT END_MATERIAL, END_PLEA FROM weight ) mp
+            ) es,
+            (
+                SELECT
+                    AVG( str.SCORE ) AS PROCEDURE_SCORE
+                FROM
+                    stage_task_result str
+                        JOIN ( SELECT TASK_ID, MAX( RETRIES ) AS MAX_RETRIES FROM stage_task_result GROUP BY TASK_ID ) mr ON ( mr.TASK_ID = str.TASK_ID AND mr.MAX_RETRIES = str.RETRIES )
+                        JOIN stage_task st ON ( st.TASK_ID = str.TASK_ID )
+                WHERE
+                    st.STU_ID = #{stuId}
+            ) ps,weight w
+
+    </select>
+</mapper>

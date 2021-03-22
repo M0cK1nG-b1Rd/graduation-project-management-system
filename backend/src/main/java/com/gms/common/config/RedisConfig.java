@@ -137,8 +137,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 }
 
 class JacksonRedisSerializer<T> implements RedisSerializer<T> {
-    private Class<T> clazz;
-    private ObjectMapper mapper;
+    private final Class<T> clazz;
+    private final ObjectMapper mapper;
 
     JacksonRedisSerializer(Class<T> clazz) {
         super();
