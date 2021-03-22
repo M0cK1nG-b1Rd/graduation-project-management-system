@@ -39,7 +39,10 @@ public class StatisticsController {
     TotalScoreService totalScoreService;
 
 
-    @GetMapping("score/start")
+    @GetMapping("score/star" +
+            "" +
+            "" +
+            "t")
     public GmsResponse getStartScore() throws GmsException {
         try {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();

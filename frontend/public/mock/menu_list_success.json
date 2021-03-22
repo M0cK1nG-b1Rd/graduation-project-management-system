@@ -433,6 +433,14 @@
           "path": "/middle/midCheck",
           "component": "",
           "children": []
+        },
+        {
+          "name": "答辩评分",
+          "id": 29,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-finished",
+          "path": "/middle/score"
         }
       ]
     },
@@ -442,9 +450,64 @@
       "disable": false,
       "order": "",
       "icon": "el-icon-timer",
-      "path": "/conclusion",
+      "path": "/finish",
       "component": "",
-      "children": []
+      "children": [
+        {
+          "name": "结题申请",
+          "id": 41,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-claim",
+          "path": "/finish/apply",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "申请记录",
+          "id": 27,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-notebook-2",
+          "path": "/finish/myApplyList",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "结题审核",
+          "id": 28,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-s-check",
+          "path": "/finish/finishCheck",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "答辩评分",
+          "id": 29,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-finished",
+          "path": "/finish/score"
+        },
+        {
+          "name": "评审安排",
+          "id": 29,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-files",
+          "path": "/finish/crossJudgeArrange"
+        },
+        {
+          "name": "交叉评审",
+          "id": 29,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-document-checked",
+          "path": "/finish/crossJudge"
+        }
+      ]
     },
     {
       "name": "成绩管理",
@@ -474,8 +537,39 @@
       "order": "",
       "icon": "el-icon-data-line",
       "path": "/statics",
-      "component": "el-icon-data-analysis",
+      "component": "",
       "children": []
+    },
+    {
+      "name": "成绩管理",
+      "id": 218,
+      "disable": false,
+      "order": "",
+      "icon": "el-icon-s-platform",
+      "path": "/scoreManage",
+      "component": "",
+      "children": [
+        {
+          "name": "我的成绩",
+          "id": 41,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-collection",
+          "path": "/scoreManage/myScoreList",
+          "component": "",
+          "children": []
+        },
+        {
+          "name": "成绩列表",
+          "id": 42,
+          "disable": false,
+          "order": "",
+          "icon": "el-icon-document-copy",
+          "path": "/scoreManage/totalList",
+          "component": "",
+          "children": []
+        }
+      ]
     }
   ],
   "meta": {
