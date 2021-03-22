@@ -35,6 +35,7 @@ import MyTask from '@/components/proccessSupervision/student/MyTask'
 import SubmitRecord from '@/components/proccessSupervision/student/SubmitRecord'
 import JudgeTaskSubmit from '@/components/proccessSupervision/teacher/JudgeTaskSubmit'
 import TaskStatistics from '@/components/proccessSupervision/TaskStatistics'
+import Message from '@/components/message/Message'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
       {
         path: '/test',
         component: Test
+      },
+      // 通知箱
+      {
+        path: '/message',
+        component: Message
       },
       // 系统管理-阶段控制
       {

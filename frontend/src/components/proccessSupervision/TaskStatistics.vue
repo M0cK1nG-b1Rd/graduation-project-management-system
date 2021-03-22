@@ -50,7 +50,7 @@
             <el-row class="card_title">未通过提交次数</el-row>
             <el-divider></el-divider>
             <el-row class="card_body">
-              截至当前，您的阶段任务提交一共被导师驳回次数为：
+              截至当前，您一共被导师驳回次数为：
             </el-row>
             <el-row type="flex" justify="center">
               <a-progress :strokeWidth="7"
