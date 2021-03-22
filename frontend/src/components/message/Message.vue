@@ -128,7 +128,7 @@ export default {
         page: 1, // 当前页面
         size: 10 // 页面大小
       },
-      totalPageNum: Number,
+      totalPageNum: 0,
       currentMessageInfo: {},
       detailPageVisivle: false,
       updateingMessageId: []
@@ -192,7 +192,7 @@ export default {
     async deleteMessage(row) {
       this.updateingMessageId = []
       this.updateingMessageId.push(row.messageId)
-      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/message/delete', this.updateingMessageId)
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/message/delete', this.updateingMessageId)
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {

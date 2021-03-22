@@ -6,7 +6,7 @@
     </el-aside>
     <el-container>
       <el-header :height="'30px'" class="header_box">
-        <my-header></my-header>
+        <my-header ref="header"></my-header>
       </el-header>
       <!--    页面主区域-->
       <el-main class="right_zone">
