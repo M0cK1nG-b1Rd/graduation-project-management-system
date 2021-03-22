@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     submitUpload() {
+      alert(token)
       this.$refs.upload.submit()
     }
   }

@@ -101,6 +101,12 @@
 <!--              通知内容-->
               <div class="ql-container ql-snow" style="height: 860px">
                 <div class="notice_content ql-editor" v-html="noticeDetial"></div>
+<!--        相关附件-->
+                <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px; margin-top: 50px">相关附件</el-row>
+                <div class="divider"></div>
+                <el-row type="flex" justify="center">
+                  <Downloader :doc-id="docID"></Downloader>
+                </el-row>
               </div>
           </el-main>
         </el-container>
@@ -110,13 +116,17 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'ViewNotice',
+  components: { Downloader },
   created() {
     this.getNotice()
   },
   data() {
     return {
+      // DocId
+      docID: null,
       // 左侧边框可见性
       Visible: true,
       // 查询分页时，向后端发送的参数信息
@@ -168,6 +178,7 @@ export default {
     viewDetail(row) {
       this.noticeDetial = row.annDetail
       this.noticeTitle = row.annTitle
+      this.docID = row.docId
       this.Visible = false
     }
   }
