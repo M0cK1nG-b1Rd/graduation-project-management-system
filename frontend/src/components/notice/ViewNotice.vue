@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       // DocId
-      docID: null,
+      docID: '',
       // 左侧边框可见性
       Visible: true,
       // 查询分页时，向后端发送的参数信息
@@ -179,6 +179,7 @@ export default {
       this.noticeDetial = row.annDetail
       this.noticeTitle = row.annTitle
       this.docID = row.docId
+      this.$forceUpdate()
       this.Visible = false
     }
   }
