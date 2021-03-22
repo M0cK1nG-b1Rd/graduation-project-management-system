@@ -9,6 +9,7 @@
   <!--卡片视图区-->
   <el-card class="bg-card" style="padding-left: 10px">
     <el-row type="flex" class="bg-gray">
+
       <el-col>
         <div class="bg-white">
           <div class="card_header">教师课题申报表</div>
@@ -30,9 +31,10 @@
                 <el-row>
                   <el-col :span="10">
                     <el-form-item label="题目类型" prop="type">
-                      <el-select style="width: 100%;" v-model="subject.type" placeholder="请选择课题类型">
-                        <el-option label="类型一" value="shanghai"></el-option>
-                        <el-option label="类型二" value="beijing"></el-option>
+                      <el-select style="width: 100%;" v-model="subject.zone" placeholder="请选择课题类型">
+                        <el-option label="科学探索与技术创新" value="KXTS"></el-option>
+                        <el-option label="生命名关怀与社会认知" value="SMGH"></el-option>
+                        <el-option label="哲学智慧与创新思维" value="ZXZH"></el-option>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -117,7 +119,7 @@ export default {
       subject: {
         subName: '',
         teacherName: '',
-        type: '',
+        zone: '',
         date1: '',
         date2: '',
         tel: '',
