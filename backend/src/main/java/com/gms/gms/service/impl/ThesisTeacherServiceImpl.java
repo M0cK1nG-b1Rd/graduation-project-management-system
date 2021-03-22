@@ -13,9 +13,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author MrBird
- */
 @Service
 public class ThesisTeacherServiceImpl extends ServiceImpl<ThesisTeacherMapper, ThesisTeacher> implements ThesisTeacherService {
 
