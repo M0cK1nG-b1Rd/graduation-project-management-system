@@ -24,7 +24,7 @@
             st.STU_ID,
             u2.REAL_NAME AS STUDENT_NAME,
             st.STAGE,
-            str.`STATUS`,
+            st.`STATUS`,
             st.START_TIME,
             st.END_TIME,
             str.RETRIES,
@@ -53,7 +53,7 @@
     <select id="getStageTaskResult" resultType="com.gms.gms.domain.StageTaskResult">
          #好像不用做
     </select>
-    <select id="getStageTaskResultAsTeacher" resultType="com.gms.gms.domain.StageTaskResult">
+    <select id="getStageTaskResultAsTeacher" resultMap="com.gms.gms.dao.StageTaskMapper.StageTaskMapWithResult">
         SELECT
             st.TASK_ID,
             st.SUB_ID,
@@ -65,7 +65,7 @@
             st.STU_ID,
             u2.REAL_NAME AS STUDENT_NAME,
             st.STAGE,
-            str.`STATUS`,
+            st.`STATUS`,
             st.START_TIME,
             st.END_TIME,
             str.RETRIES,
