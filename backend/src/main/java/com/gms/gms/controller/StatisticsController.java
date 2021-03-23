@@ -43,6 +43,7 @@ public class StatisticsController {
     AppliedSubjectService appliedSubjectService;
 
 
+    // TODO: 2021/3/23 返回总分
     @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
         try {
@@ -67,7 +68,7 @@ public class StatisticsController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -100,7 +101,7 @@ public class StatisticsController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -125,7 +126,7 @@ public class StatisticsController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -163,7 +164,7 @@ public class StatisticsController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);

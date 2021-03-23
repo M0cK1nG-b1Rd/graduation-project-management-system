@@ -57,14 +57,14 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
     @Override
     public Report getStartReport(Integer stuId) {
         LambdaQueryWrapper<Report> mapper = new LambdaQueryWrapper<>();
-        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"KT");
+        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"KT").eq(Report::getStatus,"YTG");
         return this.baseMapper.selectOne(mapper);
     }
 
     @Override
     public Report getMidReport(Integer stuId) {
         LambdaQueryWrapper<Report> mapper = new LambdaQueryWrapper<>();
-        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"ZQ");
+        mapper.eq(Report::getPoseBy, stuId).eq(Report::getStage,"ZQ").eq(Report::getStatus,"YTG");
         return this.baseMapper.selectOne(mapper);
     }
 

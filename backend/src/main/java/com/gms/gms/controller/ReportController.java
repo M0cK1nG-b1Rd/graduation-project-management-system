@@ -93,7 +93,7 @@ public class ReportController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "提交报告失败";
             log.error(message, e);
@@ -119,7 +119,7 @@ public class ReportController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "审核信息提交失败";
             log.error(message, e);
