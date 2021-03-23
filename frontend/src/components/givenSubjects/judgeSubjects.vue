@@ -52,14 +52,14 @@
           :show-overflow-tooltip="true"
           prop="zone"
           label="课题类型"
-          width="100"
-          :filters="[{ text: '学业通知', value: 1 }, { text: '答辩安排', value: 2 }, { text: '工作安排', value: 3 }]"
+          width="180"
+          :filters="[{ text: '科学探索与技术创新', value: 'KXTS' }, { text: '生命关怀与社会认知', value: 'SMGH' }, { text: '哲学智慧与创新思维', value: 'ZXZH' }]"
           :filter-method="filterType"
           filter-placement="bottom-end">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.type==1" type="info">类型一</el-tag>
-            <el-tag v-if="scope.row.type==2" type="success">类型二</el-tag>
-            <el-tag v-if="scope.row.type==3" type="primary">类型三</el-tag>
+            <el-tag v-if="scope.row.zone=='KXTS'" type="info">科学探索与技术创新</el-tag>
+            <el-tag v-if="scope.row.zone=='SMGH'" type="success">生命关怀与社会认知</el-tag>
+            <el-tag v-if="scope.row.zone=='ZXZH'" type="primary">哲学智慧与创新思维</el-tag>
           </template>
         </el-table-column>
         <!--         课题状态-->
@@ -67,14 +67,14 @@
           :show-overflow-tooltip="true"
           prop="status"
           width="120"
-          :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+          :filters="[{ text: '未审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
           :filter-method="filterStatus"
           filter-placement="bottom-end"
           label="课题状态">
           <template slot-scope="scope">
-            <el-tag type="success" v-if=" scope.row.status == 2">已通过</el-tag>
-            <el-tag type="warning" v-if=" scope.row.status == 1">待审核</el-tag>
-            <el-tag type="danger" v-if=" scope.row.status == 3">未通过</el-tag>
+            <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
+            <el-tag type="warning" v-if=" scope.row.status == 'WSH'">未审核</el-tag>
+            <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
           </template>
         </el-table-column>
         <!--          操作-->
