@@ -221,9 +221,9 @@ export default {
       applicationForm.applyReason = this.applicationInfo.applyReason
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
       if (res.meta.code !== 200) {
-        this.$message.error('提交选题申请失败！')
+        this.$message.error(res.meta.message)
       } else {
-        this.$message.success('选题申请提交成功！')
+        this.$message.success(res.meta.message)
         this.docId = res.data
       }
     }

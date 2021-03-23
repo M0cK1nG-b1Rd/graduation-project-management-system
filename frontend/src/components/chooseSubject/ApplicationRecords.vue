@@ -33,14 +33,6 @@
                 label="申请日期"
                 width="110">
               </el-table-column>
-              <!--          审核日期-->
-              <el-table-column
-                sortable
-                :show-overflow-tooltip="true"
-                prop="auditTime"
-                label="审核日期"
-                width="110">
-              </el-table-column>
               <!--          申请人-->
               <el-table-column
                 :show-overflow-tooltip="true"
@@ -73,7 +65,7 @@
               <!--              查看详细内容-->
               <el-table-column
                 :show-overflow-tooltip="true"
-                width="100"
+                width="120"
                 label="查看详情">
                 <template slot-scope="scope">
                   <a-tag color="#87d068" @click="viewDetail(scope.row)" style="font-size: 15px">查看详情</a-tag>

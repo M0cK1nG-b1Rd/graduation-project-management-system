@@ -165,10 +165,10 @@ export default {
       this.dialogVisible = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.subject)
       if (res.meta.code !== 200) {
-        this.$message.error('创建新课题失败！')
+        this.$message.error(res.meta.message)
       } else {
         this.docId = res.data
-        this.$message.success('课题申请表提交成功！')
+        this.$message.success(res.meta.message)
       }
     },
     // 重置表单内容

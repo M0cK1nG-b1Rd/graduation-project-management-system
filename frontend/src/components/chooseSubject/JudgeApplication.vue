@@ -218,7 +218,9 @@ export default {
     async updateApplicationRecords() {
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/apply', this.currentApplicationInfo)
       if (res.meta.code !== 200) {
-        this.$message.error('更新记录审核状态失败！')
+        this.$message.error(res.meta.message)
+      } else {
+        this.$message.success(res.meta.message)
       }
     },
     // 当页面大小变化时触发
