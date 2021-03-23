@@ -24,14 +24,14 @@
             st.STU_ID,
             u2.REAL_NAME AS STUDENT_NAME,
             st.STAGE,
-            st.`STATUS`,
+            st.`STATUS` AS TASK_STATUS,
             st.START_TIME,
             st.END_TIME,
             str.RETRIES,
             str.SUMMARY,
             str.DOC_ID,
             str.FEEDBACK,
-            str.`STATUS`,
+            str.`STATUS` AS RESULT_STATUS,
             str.AUDIT_TIME,
             str.SCORE
         FROM
@@ -65,14 +65,14 @@
             st.STU_ID,
             u2.REAL_NAME AS STUDENT_NAME,
             st.STAGE,
-            st.`STATUS`,
+            st.`STATUS` AS TASK_STATUS,
             st.START_TIME,
             st.END_TIME,
             str.RETRIES,
             str.SUMMARY,
             str.DOC_ID,
             str.FEEDBACK,
-            str.`STATUS`,
+            str.`STATUS` AS RESULT_STATUS,
             str.AUDIT_TIME,
             str.SCORE
         FROM
