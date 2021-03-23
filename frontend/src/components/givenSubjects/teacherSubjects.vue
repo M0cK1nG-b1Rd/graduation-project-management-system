@@ -38,14 +38,14 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="12">
+                  <el-col :span="14">
                     <el-form-item label="申报时间">
                       <el-row>
-                        <el-col :span="6">
+                        <el-col :span="7">
                           <el-date-picker type="date" placeholder="选择日期" v-model="subject.date1" style="width: 100%; " value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                         </el-col>
                         <el-col class="line" :span="0.5">---</el-col>
-                        <el-col :span="6">
+                        <el-col :span="7">
                           <el-time-picker placeholder="选择时间" v-model="subject.date2" style="width: 100%;"></el-time-picker>
                         </el-col>
                       </el-row>
@@ -88,7 +88,11 @@
                 </el-row>
                 <el-form-item>
                   <el-button type="primary" @click="dialogVisible=true">立即创建</el-button>
-                  <el-button>取消</el-button>
+                  <el-popconfirm
+                    @confirm="uploaderVisible=true"
+                    title="上传附件前请确认已提交表单！">
+                    <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
+                  </el-popconfirm>
                 </el-form-item>
               </el-form>
             </el-col>
@@ -108,14 +112,28 @@
     <el-button type="primary" @click="subjectSubmit">确 定</el-button>
   </span>
   </el-dialog>
+  <!--    上传附件对话框-->
+  <el-dialog
+    title="上传附件"
+    :visible.sync="uploaderVisible"
+    width="30%">
+    <uploader :doc-id="docId"></uploader>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+  </el-dialog>
 </div>
 </template>
 
 <script>
+import Uploader from '@/plugins/upload-download/Uploader'
 export default {
   name: 'teacherSubjects',
+  components: { Uploader },
   data() {
     return {
+      docId: null,
+      uploaderVisible: false,
       subject: {
         subName: '',
         teacherName: '',
@@ -146,7 +164,12 @@ export default {
     async subjectSubmit() {
       this.dialogVisible = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.subject)
-      if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
+      if (res.meta.code !== 200) {
+        this.$message.error('创建新课题失败！')
+      } else {
+        this.docId = res.data
+        this.$message.success('课题申请表提交成功！')
+      }
     },
     // 重置表单内容
     async resetForm() {
