@@ -1,6 +1,7 @@
 package com.gms.system.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.gms.gms.domain.Thesis;
 import com.gms.system.domain.Message;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,4 +28,12 @@ public interface MessageService extends IService<Message> {
     Integer countThesisGroupIsRelease();
 
     List<Integer> getTeacherUserIdThesis();
+
+    Integer countScore(Integer id);
+
+    void setScore(Integer thesisId);
+
+    Thesis selectThesis(Integer id);
+
+    Integer getUserIdBySubID(String subId);
 }

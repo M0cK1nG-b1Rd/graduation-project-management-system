@@ -2,7 +2,9 @@ package com.gms.system.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gms.gms.domain.AppliedSubject;
+import com.gms.gms.domain.PleaResult;
 import com.gms.gms.domain.Report;
+import com.gms.gms.domain.ThesisTeacher;
 import com.gms.system.utils.CreatNewMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -36,6 +38,13 @@ public class MessageAspect {
         new CreatNewMessage().creatNewPleaTwo(stage);
     }
 
+    /**
+     * 答辩出分通知切点
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.PleaResultController.addNewPleaResult(com.gms.gms.domain.PleaResult)) && args(pleaResult)", argNames = "pleaResult")
+    public void afterAddNewPleaResult(PleaResult pleaResult) {
+        new CreatNewMessage().afterAddNewPleaResult(pleaResult.getUserId(),pleaResult.getStage());
+    }
     /**
      * 学生选题状态更新通知切点
      */
@@ -79,8 +88,16 @@ public class MessageAspect {
     /**
      * 老师论文打分后的自动通知和结果统计
      */
-    /*@AfterReturning(value = "execution(* com.gms.gms.controller.ThesisTeacherController.scoreThesisGroupStage())")
-    public void afterUpdateThesisGroupStage() {
-        new CreatNewMessage().afterUpdateThesisGroupStage();
-    }*/
+    @AfterReturning(value = "execution(* com.gms.gms.controller.ThesisTeacherController.scoreThesisGroupStage(com.gms.gms.domain.ThesisTeacher)) && args(thesisTeacher)", argNames = "thesisTeacher")
+    public void afterScoreThesisGroupStage(ThesisTeacher thesisTeacher) {
+        new CreatNewMessage().afterScoreThesisGroupStage(thesisTeacher.getId());
+    }
+
+    /**
+     * 学生申请课题后向老师发通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.AppliedSubjectController.addAppliedSubject(com.gms.gms.domain.AppliedSubject)) && args(appliedSubject)", argNames = "appliedSubject")
+    public void afterAddAppliedSubject(AppliedSubject appliedSubject) {
+        new CreatNewMessage().afterAddAppliedSubject(appliedSubject.getSubId());
+    }
 }

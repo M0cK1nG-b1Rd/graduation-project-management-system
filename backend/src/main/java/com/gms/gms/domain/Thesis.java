@@ -51,4 +51,7 @@ public class Thesis implements Serializable {
     private transient Integer teacherId;
     //安排id
     private transient Integer id;
+    private transient Integer userId;
+    //课题
+    private transient Subject subject;
 }
