@@ -99,5 +99,50 @@
                 WHERE
                     thesis_teacher.IS_RELEASE = '1')
     </select>
-
+    <select id="countScore" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            thesis_teacher
+        WHERE
+                thesis_teacher.THESIS_ID = ( SELECT thesis_teacher.THESIS_ID FROM thesis_teacher WHERE thesis_teacher.ID = #{id} )
+          AND thesis_teacher.SCORE = '-1'
+    </select>
+    <update id="setScore">
+        UPDATE thesis
+        SET thesis.`STATUS` = 'YCF',
+            thesis.SCORE =(
+                SELECT
+                    AVG( thesis_teacher.SCORE )
+                FROM
+                    thesis_teacher
+                WHERE
+                    thesis_teacher.THESIS_ID = #{thesisId}
+            )
+        WHERE
+            thesis.THESIS_ID = #{thesisId}
+    </update>
+    <select id="selectThesis" resultType="com.gms.gms.domain.Thesis">
+        SELECT
+            thesis.THESIS_ID,
+            student.USER_ID
+        FROM
+            thesis_teacher,
+            thesis,
+            student
+        WHERE
+            thesis_teacher.ID = #{id}
+          AND thesis_teacher.THESIS_ID = thesis.THESIS_ID
+          AND thesis.STU_ID = student.STU_ID
+    </select>
+    <select id="getUserIdBySubID" resultType="java.lang.Integer">
+        SELECT
+            teacher.USER_ID
+        FROM
+            teacher,
+            `subject`
+        WHERE
+            `subject`.SUB_ID = #{subId}
+          AND `subject`.POSE_BY = teacher.TEACHER_ID
+    </select>
 </mapper>
