@@ -23,7 +23,7 @@
             thesis.DOC_ID,
             thesis.`STATUS`,
             thesis.POSE_TIME,
-               thesis.SCORE
+            thesis.SCORE
         FROM
             thesis
         WHERE
@@ -31,6 +31,7 @@
     </select>
     <select id="selectByDocId" resultType="com.gms.gms.domain.FileStorage">
         SELECT
+            file_storage.DOC_ID,
             file_storage.FILE_ID,
             file_storage.FILE_NAME
         FROM

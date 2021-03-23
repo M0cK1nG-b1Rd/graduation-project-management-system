@@ -49,6 +49,7 @@ import FinishArrangePlea from '@/components/finishSubject/arrangePlea/ArrangePle
 import MyInitialPleaArrange from '@/components/startSubject/arrangePlea/MyInitialPleaArrange'
 import MyMiddlePleaArrange from '@/components/midSubject/arrangePlea/MyMiddlePleaArrange'
 import MyFinishPleaArrange from '@/components/finishSubject/arrangePlea/MyFinishPleaArrange'
+import MyFinishRecord from '../components/finishSubject/MyFinishRecord'
 
 Vue.use(VueRouter)
 
@@ -236,7 +237,7 @@ const routes = [
       // 结题--学生查看结题状态
       {
         path: '/finish/myApplyList',
-        component: MyRecord
+        component: MyFinishRecord
       },
       // 结题--教研室进行答辩安排
       {

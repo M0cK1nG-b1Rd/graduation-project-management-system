@@ -14,8 +14,10 @@ import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Student;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.service.AppliedSubjectService;
+import com.gms.gms.service.SubjectService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +36,9 @@ import java.util.List;
 public class AppliedSubjectController {
     @Autowired
     AppliedSubjectService appliedSubjectService;
+
+    @Autowired
+    SubjectService subjectService;
 
     //不同角色调用同一接口将返回不同结果
 
@@ -121,6 +126,13 @@ public class AppliedSubjectController {
                         Code.C500.getDesc(),
                         "该学生已经有通过课题，请驳回该申请"));
             }
+            //人数已满则驳回申请
+
+            // TODO: 2021/3/23
+            Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
+//            subjectService.getBySubId(appliedSubject.getSubId()).setChosen();
+
+
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(

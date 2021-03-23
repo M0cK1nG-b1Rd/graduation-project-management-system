@@ -279,7 +279,8 @@ export default {
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        stage: 'ZQ'
       },
       // 查看分数
       score: {
@@ -324,7 +325,7 @@ export default {
       this.feedBack = res.data.records[0]
     },
     async getScore() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/mid')
       if (res.meta.code !== 200) {
         return this.$message.error('获取反馈失败')
       }
