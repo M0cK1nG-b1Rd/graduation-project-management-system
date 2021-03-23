@@ -169,7 +169,7 @@
         </el-col>
         <el-col :span="20">
           <el-form-item label="审核意见">
-            <el-input type="textarea" v-model="currentSubjectInfo.opinion" disabled></el-input>
+            <el-input type="textarea" v-model="currentSubjectInfo.feedback" disabled></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -239,7 +239,7 @@
         </el-col>
         <el-col :span="20">
           <el-form-item label="审核意见">
-            <el-input type="textarea" v-model="currentSubjectInfo.opinion"></el-input>
+            <el-input type="textarea" v-model="currentSubjectInfo.feedback"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -265,7 +265,9 @@ export default {
   data() {
     return {
       // 查看详情的课题信息
-      currentSubjectInfo: {},
+      currentSubjectInfo: {
+        status: 'YTG'
+      },
       // （符合要求）公告总数
       totalPageNum: 0,
       // 获取课题列表
@@ -325,8 +327,9 @@ export default {
     },
     async submitOpinion() {
       this.viewEditVisible = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject', this.currentSubjectInfo)
-      if (res.meta.code !== 200) return this.$message.error('提交审核意见失败！')
+      this.currentSubjectInfo.status = 'YTG'
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/audit', this.currentSubjectInfo)
+      if (res.meta.code !== 200) this.$message.error('提交审核意见失败！')
     }
   }
 }
