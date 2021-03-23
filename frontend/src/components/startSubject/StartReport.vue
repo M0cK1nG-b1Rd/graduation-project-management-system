@@ -6,9 +6,6 @@
     <el-breadcrumb-item>开题管理</el-breadcrumb-item>
     <el-breadcrumb-item>开题报告</el-breadcrumb-item>
   </el-breadcrumb>
-    <!--      题目信息展示区-->
-  <el-row>
-    <el-col>
       <el-card class="bg-top">
         <div class="card_header">我的课题基本信息</div>
         <!--    课题详情卡片-->
@@ -35,8 +32,6 @@
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</a-tag>
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</a-tag>
               </el-col>
-              <!--          所属专业-->
-              <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
             </el-row>
             <el-divider></el-divider>
             <!--          课题要求-->
@@ -68,15 +63,10 @@
             </el-row>
           </el-card>
         </el-row>
-      </el-card>
-    </el-col>
-  </el-row>
-    <!--      填写开题报告，上传附件区-->
-    <el-card class="bg-bottom">
-  <el-row>
-    <el-col :span="16">
-      <el-card>
+        <!--      填写开题报告，上传附件区-->
         <div class="card_header">填写开题报告基本信息</div>
+        <el-row type="flex" justify="center">
+        <el-card class="subject_detail">
         <el-form ref="form" :model="report" label-width="80px">
           <el-row>
             <el-col :span="20">
@@ -118,24 +108,10 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
+        </el-card>
+        </el-row>
       </el-card>
-    </el-col>
-    <el-col :span="8">
-      <el-card>
-<!--        文件上传-->
-        <el-upload
-          class="upload-demo"
-          drag
-          action="https://jsonplaceholder.typicode.com/posts/"
-          multiple>
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">文件不超过500kb</div>
-        </el-upload>
-      </el-card>
-    </el-col>
-  </el-row>
-    </el-card>
+    <!--        文件上传-->
     <!--      符文本编辑器对话框-->
     <el-dialog
       title="请输入研究意义"
@@ -209,13 +185,6 @@ export default {
         plan: '',
         stage: 'KT'
       },
-      fileList: [{
-        name: 'food.jpeg',
-        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-      }, {
-        name: 'food2.jpeg',
-        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-      }],
       // 富文本编辑器可见性
       quillEditor1Visible: false,
       quillEditor2Visible: false,
