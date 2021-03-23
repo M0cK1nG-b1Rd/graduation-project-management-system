@@ -11,7 +11,7 @@
       <!--      搜索框及发布公告按钮-->
       <el-row>
         <!--      搜索框-->
-        <el-col :span="12">
+        <el-col :span="12" :offset="1">
           <el-input placeholder="输入关键字查询相关公告"
                     v-model="queryInfo.keyWord" @change="getNotice"
                     class="input-with-select">
@@ -24,88 +24,92 @@
         </el-col>
       </el-row>
       <!--      表格区-->
-      <el-row>
-        <el-table
-          border
-          :highlight-current-row="true"
-          :data="noticeList"
-          size="medium "
-          :default-sort = "{prop: 'date', order: 'descending'}"
-          style="width: 100%; font-size: 15px">
-          <!--          标题-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="annTitle"
-            label="标题"
-            width="300">
-          </el-table-column>
-          <!--          日期-->
-          <el-table-column
-            sortable
-            :show-overflow-tooltip="true"
-            prop="createTime"
-            label="修改时间"
-            width="110">
-          </el-table-column>
-          <!--          类型-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="type"
-            label="公告类型"
-            width="100"
-            :filters="[{ text: '学业通知', value: 1 }, { text: '答辩安排', value: 2 }, { text: '工作安排', value: 3 }]"
-            :filter-method="filterType"
-            filter-placement="bottom-end">
-            <template slot-scope="scope">
-              <el-tag v-if="scope.row.type==1" type="info">学业通知</el-tag>
-              <el-tag v-if="scope.row.type==2" type="success">答辩安排</el-tag>
-              <el-tag v-if="scope.row.type==3" type="primary">工作安排</el-tag>
-            </template>
-          </el-table-column>
-          <!--          状态-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="status"
-            width="120"
-            :filters="[{ text: '草稿箱', value: 'WFB' }, { text: '已发布', value: 'YFB' }, { text: '回收站', value: 'YSC' }]"
-            :filter-method="filterStatus"
-            filter-placement="bottom-end"
-            label="发布状态">
-            <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == 'YFB'">已发布</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == 'WFB'">待发布</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == 'YSC'">已撤回</el-tag>
-            </template>
-          </el-table-column>
-          <!--          操作-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            width="200"
-            label="操作">
-            <template slot-scope="scope">
-<!--              查看详细内容-->
-              <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
-                <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewNotice(scope.row)"></el-button>
-              </el-tooltip>
-<!--              编辑通知-->
-              <el-tooltip class="item" effect="dark" content="编辑通知" placement="top" :enterable="false">
-                <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="editNotice(scope.row)"></el-button>
-              </el-tooltip>
-<!--              删除通知-->
-              <el-tooltip class="item" effect="dark" content="删除通知" placement="top" :enterable="false">
-                <el-popconfirm
-                  @confirm="deleteNotice(scope.row)"
-                  style="margin-left: 9px"
-                  title="确定要撤回该公告吗？">
-                  <el-button slot="reference" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-                </el-popconfirm>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-row type="flex" justify="center">
+        <el-card>
+          <el-table
+            border
+            :highlight-current-row="true"
+            :data="noticeList"
+            size="medium "
+            :default-sort = "{prop: 'date', order: 'descending'}"
+            style="width: 100%; font-size: 15px">
+            <!--          标题-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="annTitle"
+              label="标题"
+              width="300">
+            </el-table-column>
+            <!--          日期-->
+            <el-table-column
+              sortable
+              :show-overflow-tooltip="true"
+              prop="createTime"
+              label="修改时间"
+              width="110">
+            </el-table-column>
+            <!--          类型-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="type"
+              label="公告类型"
+              width="100"
+              :filters="[{ text: '学业通知', value: 1 }, { text: '答辩安排', value: 2 }, { text: '工作安排', value: 3 }]"
+              :filter-method="filterType"
+              filter-placement="bottom-end">
+              <template slot-scope="scope">
+                <el-tag v-if="scope.row.type==1" type="info">学业通知</el-tag>
+                <el-tag v-if="scope.row.type==2" type="success">答辩安排</el-tag>
+                <el-tag v-if="scope.row.type==3" type="primary">工作安排</el-tag>
+              </template>
+            </el-table-column>
+            <!--          状态-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="status"
+              width="120"
+              :filters="[{ text: '草稿箱', value: 'WFB' }, { text: '已发布', value: 'YFB' }, { text: '回收站', value: 'YSC' }]"
+              :filter-method="filterStatus"
+              filter-placement="bottom-end"
+              label="发布状态">
+              <template slot-scope="scope">
+                <el-tag type="success" v-if=" scope.row.status == 'YFB'">已发布</el-tag>
+                <el-tag type="warning" v-if=" scope.row.status == 'WFB'">待发布</el-tag>
+                <el-tag type="danger" v-if=" scope.row.status == 'YSC'">已撤回</el-tag>
+              </template>
+            </el-table-column>
+            <!--          操作-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              width="200"
+              label="操作">
+              <template slot-scope="scope">
+                <!--              查看详细内容-->
+                <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
+                  <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewNotice(scope.row)"></el-button>
+                </el-tooltip>
+                <!--              编辑通知-->
+                <el-tooltip class="item" effect="dark" content="编辑通知" placement="top" :enterable="false">
+                  <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="editNotice(scope.row)"></el-button>
+                </el-tooltip>
+                <!--              删除通知-->
+                <el-tooltip class="item" effect="dark" content="删除通知" placement="top" :enterable="false">
+                  <el-popconfirm
+                    @confirm="deleteNotice(scope.row)"
+                    style="margin-left: 9px"
+                    title="确定要撤回该公告吗？">
+                    <el-button slot="reference" type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+                  </el-popconfirm>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-row>
       <!--      分页区-->
-      <el-row type="flex" style="margin-top: 20px; margin-left: 20px">
+      <el-row type="flex"
+              style="margin-top: 20px"
+              justify="center">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -142,7 +146,9 @@
       <el-row>
         <quill-editor ref="quillEditor"></quill-editor>
       </el-row>
-      <!--      操作按钮区-->
+      <el-row type="flex" justify="center">
+      </el-row>
+<!--      操作按钮区-->
       <el-row type="flex" justify="center" style="margin-top: 80px">
         <!--      返回通知栏首页按钮链接-->
         <el-popconfirm
@@ -170,6 +176,12 @@
           title="确定删除本次编辑吗？">
           <el-button type="danger" plain slot="reference">删除本次编辑</el-button>
         </el-popconfirm>
+        <!--        上传附件-->
+        <el-popconfirm
+          @confirm="uploaderVisible=true"
+          title="上传附件前请确认已发布阶段任务！">
+          <el-button slot="reference" type="primary" plain>上传附件</el-button>
+        </el-popconfirm>
       </el-row>
     </el-card>
     <!--    查看公告详情对话框-->
@@ -179,6 +191,12 @@
       <div class="ql-container ql-snow" style="height: 860px">
         <div class="dialog_content ql-editor" v-html="currentNoticeInfo.annDetail"></div>
       </div>
+      <!--        相关附件-->
+      <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px; margin-top: 80px">相关附件</el-row>
+      <div class="divider"></div>
+      <el-row type="flex" justify="center">
+        <Downloader :doc-id="docID"></Downloader>
+      </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
@@ -240,22 +258,35 @@
           </el-popconfirm>
         </el-row>
     </el-dialog>
+    <!--    上传附件对话框-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="uploaderVisible"
+      width="30%">
+      <uploader :doc-id="docID"></uploader>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
-
+import Uploader from '@/plugins/upload-download/Uploader'
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'ManageNotice',
   components: {
-    quillEditor
+    quillEditor, Uploader, Downloader
   },
   mounted() {
     this.getNotice()
   },
   data() {
     return {
+      // DocId
+      docID: null,
       // （符合要求）公告总数
       totalPageNum: 0,
       // 所有状态的通知信息
@@ -283,7 +314,9 @@ export default {
         signature: '', // 信息laiyuan(发布者)
         status: 'WFB', // 公告状态
         type: '' // 公告类型
-      }
+      },
+      // 上传附件对话框可见性
+      uploaderVisible: false
     }
   },
   methods: {
@@ -298,12 +331,14 @@ export default {
     async updateNotice() {
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/announcement', this.currentNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('更新公告信息失败！')
+      this.docID = res.data
       await this.getNotice()
     },
     // 将新增的公告发送到后端(发布公告)
     async submitNewNotice() {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/announcement', this.newNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('操作失败!')
+      this.docID = res.data
       this.$message.success('操作成功!')
       await this.getNotice()
     },
@@ -333,6 +368,7 @@ export default {
     viewNotice(row) {
       this.viewPageVisible = true
       this.currentNoticeInfo = row
+      this.docID = row.docId
     },
     // 编辑公告
     editNotice(row) {
@@ -351,19 +387,16 @@ export default {
       this.newNoticeInfo.status = 'YFB'
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
       await this.submitNewNotice()
-      this.addNewNoticePageVisible = false
     },
     // 将本次编辑内容存入草稿箱
     async saveAsDraft() {
       this.newNoticeInfo.status = 'WFB'
       this.newNoticeInfo.annDetail = this.$refs.quillEditor.returnContent()
       await this.submitNewNotice()
-      this.addNewNoticePageVisible = false
     },
     // 取消本次编辑
     cancelNotice() {
       this.$refs.quillEditor.reset()
-      this.addNewNoticePageVisible = false
     },
     // !!!!!!!下面是编辑公告页面的操作
     // 提交公告编辑结果
@@ -391,5 +424,9 @@ export default {
 }
 .dialog_content::-webkit-scrollbar{
   width:0;
+}
+/*自定义分割线*/
+.divider{
+  height: 12px;
 }
 </style>

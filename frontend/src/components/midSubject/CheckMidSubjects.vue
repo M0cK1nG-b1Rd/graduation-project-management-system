@@ -78,7 +78,7 @@
               </el-tooltip>
               <!-- 给学生反馈信息-->
               <el-tooltip class="item" effect="dark" content="给学生反馈信息" placement="top" :enterable="false">
-                <el-button type="info" icon="el-icon-chat-line-square" circle size="mini" @click="editFeedback(scope.row)"></el-button>
+                <el-button type="info" icon="el-icon-chat-line-square" circle size="mini" @click="editfeedback(scope.row)"></el-button>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -202,17 +202,17 @@
       size="50%">
       <el-row class="drawer-bg">
         <!--      富文本编辑器输入框-->
-        <el-form ref="form" :model="feedBack" label-width="80px">
+        <el-form ref="form" :model="feedback" label-width="80px">
           <el-row>
             <el-col style="padding: 40px">
-              <el-card class="feedBackCard">
+              <el-card class="feedbackCard">
                 <el-row>
                   <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
                   <el-col :span="24" style="margin-bottom: 10px">
                     <div class="ql-container ql-snow">
                       <div class="notice_content ql-editor"
                            @click="useQuillEditor"
-                           v-html="feedBack.comment">
+                           v-html="feedback.comment">
                       </div>
                     </div>
                   </el-col>
@@ -221,14 +221,14 @@
                 <el-col>
                   <div class="block">
                     <el-slider
-                      v-model="feedBack.score"
+                      v-model="feedback.score"
                       show-input>
                     </el-slider>
                   </div>
                 </el-col>
                 <el-col>
                   <el-form-item label="开题结果">
-                    <el-radio-group v-model="feedBack.status">
+                    <el-radio-group v-model="feedback.status">
                       <el-radio label="2">通过审核</el-radio>
                       <el-radio label="3">未通过</el-radio>
                     </el-radio-group>
@@ -238,7 +238,7 @@
             </el-col>
           </el-row>
           <el-form-item>
-            <el-button type="success" @click="feedBackSubmit(scope.row)">立即提交</el-button>
+            <el-button type="success" @click="feedbackSubmit">立即提交</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
@@ -251,7 +251,7 @@
       :before-close="resetQuillEditorContent"
       width="75%">
       <quill-editor ref="quillEditor"
-                    :init-content="feedBack.comment">
+                    :init-content="feedback.comment">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
@@ -279,14 +279,15 @@ export default {
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        stage: 'ZQ'
       },
       reportlist: [], // 开题报告列表信息
       total: 0,
-      feedBack: {
+      feedback: {
         comment: '',
         score: 0,
-        status: '',
+        stage: 'ZQ',
         id: 0
       },
       // 查看课题详情对话框可见性
@@ -306,7 +307,7 @@ export default {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        return this.$message.error('获取中期报告列表失败')
       }
       this.reportlist = res.data.records // 与后端对接
     },
@@ -320,9 +321,11 @@ export default {
       this.currentSubjectInfo = res.data[0] // 与后端对接
     },
     // 提交表单
-    async feedBackSubmit() {
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedBack)
-      if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
+    async feedbackSubmit() {
+      this.drawer = false
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
+      if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
+      else this.$message.success('提交反馈信息成功！')
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -349,14 +352,14 @@ export default {
       this.currentSubjectInfo = row
       console.log(this.currentSubjectInfo)
     },
-    // 查看学生开题报告详情
+    // 查看学生中期报告详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentSubjectInfo = row
       console.log(this.currentSubjectInfo)
     },
-    editFeedback(row) {
-      this.feedBack.id = row.id
+    editfeedback(row) {
+      this.feedback.id = row.id
       this.drawer = true
     },
     // 调用富文本编辑器
@@ -366,12 +369,12 @@ export default {
     // 重置富文本编辑框
     resetQuillEditorContent() {
       this.$refs.quillEditor.reset()
-      this.feedBack.comment = '请输入反馈信息'
+      this.feedback.comment = '请输入反馈信息'
       this.quillEditorVisible = false
     },
     // 提交（采用）富文本编辑器框
     submitQuillEditorContent() {
-      this.feedBack.comment = this.$refs.quillEditor.returnContent()
+      this.feedback.comment = this.$refs.quillEditor.returnContent()
       this.quillEditorVisible = false
     }
   }
@@ -397,7 +400,7 @@ export default {
   box-shadow:  20px 20px 32px #959595,
     -20px -20px 32px #ffffff;
 }
-.feedBackCard{
+.feedbackCard{
   display: flex;
   justify-content: center;
 }

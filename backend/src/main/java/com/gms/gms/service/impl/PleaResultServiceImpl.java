@@ -31,4 +31,11 @@ public class PleaResultServiceImpl extends ServiceImpl<PleaResultMapper, PleaRes
         mapper.eq(PleaResult::getStuId, stuId).eq(PleaResult::getStage,"ZQ");
         return this.baseMapper.selectOne(mapper);
     }
+
+    @Override
+    public PleaResult getFinResult(Integer stuId) {
+        LambdaQueryWrapper<PleaResult> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(PleaResult::getStuId, stuId).eq(PleaResult::getStage,"JT");
+        return this.baseMapper.selectOne(mapper);
+    }
 }

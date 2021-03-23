@@ -65,6 +65,12 @@ public class Report implements Serializable {
     @TableField("POST_PLAN")
     private String postPlan;
 
+    /**
+     * 属于结题
+     */
+    @TableField("APPLY_REASON")
+    private String applyReason;
+
     @TableField("POSE_BY")
     private Integer poseBy;
 

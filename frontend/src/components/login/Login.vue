@@ -7,7 +7,7 @@
       <div class="login_box">
         <!--      登陆表框头像Logo区域-->
         <div class="avatar_box">
-          <img src="../../assets/imgs/login_logo.jpg" alt="">
+          <img src="../../assets/imgs/new_logo.png" alt="">
         </div>
         <!--        登陆表单系统名称-->
         <div class="login_title">
@@ -114,7 +114,7 @@ export default {
 .login_container {
   /* 设置背景图片，并铺满整个页面*/
   /* 参看网址： https://www.php.cn/css-tutorial-410405.html*/
-  background-image: url("../../assets/imgs/login_backgrond_01.jpg");
+  background-image: url("../../assets/imgs/welcome/img2.png");
   background-repeat: no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
@@ -147,11 +147,11 @@ export default {
 }
 
 .avatar_box {
-  height: 110px;
-  width: 110px;
+  height: 105px;
+  width: 105px;
   border: 1px solid #eee;
   border-radius: 50%;
-  padding: 10px;
+  padding: 6px;
   box-shadow: 0 0 10px;
   position: absolute;
   left: 50%;

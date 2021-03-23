@@ -263,7 +263,7 @@ export default {
   methods: {
     // 回到上一页
     returnPrevPage() {
-      this.$router.push('/process/teacher/give')
+      this.$router.push('/process/teacher/manage')
     },
     // 布置新任务
     viewNewTaskDrawer(row) {

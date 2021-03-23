@@ -23,6 +23,7 @@ public class ReportServiceImpl extends ServiceImpl<ReportMapper, Report> impleme
 
     @Override
     public IPage<Report> selectReport(Report report, String roleName) throws GmsException {
+        // TODO: 2021/3/23 检查所有分页
         Integer inPage = report.getPage();
         Integer inSize = report.getSize();
         Page<Report> page = new Page<>(inPage==null?1:inPage,inSize==null?Integer.MAX_VALUE:inSize);

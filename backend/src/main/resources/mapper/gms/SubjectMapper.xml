@@ -12,6 +12,7 @@
     <select id="getPassedSubject" resultMap="SubjectMapper">
         SELECT s.SUB_ID ,
         s.SUB_NAME,
+        s.DOC_ID,
         s.REQUIREMENT,
         s.DESCRIPTION,
         s.ZONE,
@@ -23,7 +24,6 @@
         s.CAPACITY,
         s.CHOSEN,
         f.FILE_NAME,
-        f.DOC_ID,
         f.FILE_ID
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
@@ -49,6 +49,7 @@
                s.REQUIREMENT,
                s.DESCRIPTION,
                s.STATUS,
+               s.DOC_ID,
                s.ZONE,
                s.DOC_ID,
                s.FEEDBACK,
@@ -72,6 +73,7 @@
         s.DESCRIPTION,
         s.ZONE,
                s.STATUS,
+        s.DOC_ID,
         u.REAL_NAME AS TEACHER_NAME,
         u.TEL,
         u.MAIL,
@@ -82,7 +84,6 @@
         s.CAPACITY,
         s.CHOSEN,
         f.FILE_NAME,
-        f.DOC_ID,
         f.FILE_ID
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
@@ -104,6 +105,7 @@
     <select id="getStudentPassedSubject" resultMap="SubjectMapper">
         SELECT s.SUB_ID,
                s.SUB_NAME,
+               s.DOC_ID,
                s.REQUIREMENT,
                s.DESCRIPTION,
                s.ZONE,
@@ -117,7 +119,6 @@
                s.CAPACITY,
               s.CHOSEN,
                f.FILE_NAME,
-               f.DOC_ID,
                f.FILE_ID
         FROM `subject` s
                  JOIN applied_subject a ON (a.SUB_ID = s.SUB_ID)
@@ -133,6 +134,7 @@
     <resultMap id="SubjectMapper" type="com.gms.gms.domain.Subject">
         <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="REQUIREMENT" property="requirement" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
@@ -148,7 +150,6 @@
         <result column="CAPACITY" property="capacity" jdbcType="INTEGER"/>
         <result column="CHOSEN" property="chosen" jdbcType="INTEGER"/>
         <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
             <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
             <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
         </collection>

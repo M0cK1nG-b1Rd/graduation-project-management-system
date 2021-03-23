@@ -207,7 +207,7 @@
       size="50%">
       <el-row class="drawer-bg">
       <!--      富文本编辑器输入框-->
-      <el-form ref="form" :model="feedBack" label-width="80px">
+      <el-form ref="form" :model="feedback" label-width="80px">
       <el-row>
         <el-col style="padding: 40px">
         <el-card class="feedBackCard">
@@ -217,7 +217,7 @@
             <div class="ql-container ql-snow">
               <div class="notice_content ql-editor"
                    @click="useQuillEditor"
-                   v-html="feedBack.comment">
+                   v-html="feedback.comment">
               </div>
             </div>
           </el-col>
@@ -226,14 +226,14 @@
         <el-col>
           <div class="block">
             <el-slider
-              v-model="feedBack.fileScore"
+              v-model="feedback.fileScore"
               show-input>
             </el-slider>
           </div>
         </el-col>
         <el-col>
           <el-form-item label="开题结果">
-            <el-radio-group v-model="feedBack.status">
+            <el-radio-group v-model="feedback.status">
               <el-radio label="2">通过审核</el-radio>
               <el-radio label="3">未通过</el-radio>
             </el-radio-group>
@@ -256,7 +256,7 @@
       :before-close="resetQuillEditorContent"
       width="75%">
       <quill-editor ref="quillEditor"
-                    :init-content="feedBack.comment">
+                    :init-content="feedback.comment">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
@@ -284,14 +284,15 @@ export default {
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        stage: 'KT'
       },
       reportlist: [], // 开题报告列表信息
       total: 0,
-      feedBack: {
+      feedback: {
         comment: '',
         fileScore: 0,
-        status: '',
+        stage: 'KT',
         id: 0
       },
       // 查看课题详情对话框可见性
@@ -318,7 +319,7 @@ export default {
     async getSubjectInfo(row) {
       console.log(row)
       console.log(row.subId)
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { subId: row.subId } })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { page: this.queryInfo.page, size: this.queryInfo.size, subId: row.subId } })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
@@ -327,7 +328,7 @@ export default {
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedBack)
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
       if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
       else this.$message.success('提交反馈信息成功！')
     },
@@ -364,7 +365,7 @@ export default {
     },
     // 编辑反馈表单
     editFeedback(row) {
-      this.feedBack.id = row.id
+      this.feedback.id = row.id
       this.drawer = true
     },
     // 调用富文本编辑器
@@ -374,12 +375,12 @@ export default {
     // 重置富文本编辑框
     resetQuillEditorContent() {
       this.$refs.quillEditor.reset()
-      this.feedBack.comment = '请输入反馈信息'
+      this.feedback.comment = '请输入反馈信息'
       this.quillEditorVisible = false
     },
     // 提交（采用）富文本编辑器框
     submitQuillEditorContent() {
-      this.feedBack.comment = this.$refs.quillEditor.returnContent()
+      this.feedback.comment = this.$refs.quillEditor.returnContent()
       this.quillEditorVisible = false
     }
   }

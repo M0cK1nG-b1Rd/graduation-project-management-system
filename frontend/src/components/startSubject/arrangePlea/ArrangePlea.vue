@@ -401,10 +401,9 @@ export default {
       hasDivideArranged: false,
       // 是否已有答辩安排
       hasPleaArranged: false,
-      // 分组参数 TODO 后期改为KT阶段
       arrangeInfo: {
         teamNum: '', // 答辩小组个数
-        stage: 'JT' // 答辩安排所属阶段--此处未开题
+        stage: 'KT' // 答辩安排所属阶段--此处未开题
       },
       // 答辩安排结果
       pleaArrangeInfo: [],
@@ -414,16 +413,14 @@ export default {
       queryInfo: {
         page: 1, // 当前页号
         size: 1000, // 页面大小
-        // TODO 后期改为KT阶段
-        stage: 'JT' // 阶段
+        stage: 'KT' // 阶段
       },
       // 学生答辩分组结果
       studentPleaTeams: [],
       // 老师答辩分组结果
       tutorPleaTeams: [],
       // 当前阶段
-      // TODO 后期改为KT阶段
-      stage: 'JT',
+      stage: 'KT',
       // 学生小组信息对话框可见性
       stuGroupInfoVisible: false,
       // 导师小组信息对话框可见性
@@ -441,8 +438,7 @@ export default {
         stuGroupId: '',
         acceptanceTeamId: '',
         classroomId: '',
-        // TODO 后面要改为KT
-        stage: 'JT'
+        stage: 'KT'
       }
     }
   },
@@ -550,8 +546,7 @@ export default {
     },
     // 发布所有小组的答辩安排
     async releaseAllArrange() {
-      // TODO 后期改为KT阶段
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/true', { stage: 'JT' })
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/true', { stage: 'KT' })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -561,8 +556,7 @@ export default {
     },
     // 撤回所有小组的答辩安排
     async withdrawAllArrange() {
-      // TODO 后期改为KT阶段
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/false', { stage: 'JT' })
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/false', { stage: 'KT' })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -572,8 +566,7 @@ export default {
     },
     // 删除所有已有的答辩安排
     async deleteAllArrange() {
-      // TODO 后期改为KT阶段
-      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/plea', { params: { stage: 'JT' } })
+      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/plea', { params: { stage: 'KT' } })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {

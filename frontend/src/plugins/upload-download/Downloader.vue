@@ -4,7 +4,8 @@
                :key="index"
                :file-name="item.fileName"
                :file-id="item.fileId"
-               :doc-id="docId"></file-item>
+               :doc-id="docId">
+    </file-item>
   </div>
 </template>
 
