@@ -1,19 +1,15 @@
 package com.gms.system.aspect;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gms.gms.domain.AppliedSubject;
-import com.gms.gms.domain.PleaResult;
-import com.gms.gms.domain.Report;
-import com.gms.gms.domain.ThesisTeacher;
+import com.gms.gms.domain.*;
 import com.gms.system.utils.CreatNewMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 
 @Slf4j
 @Aspect
@@ -43,8 +39,9 @@ public class MessageAspect {
      */
     @AfterReturning(value = "execution(* com.gms.gms.controller.PleaResultController.addNewPleaResult(com.gms.gms.domain.PleaResult)) && args(pleaResult)", argNames = "pleaResult")
     public void afterAddNewPleaResult(PleaResult pleaResult) {
-        new CreatNewMessage().afterAddNewPleaResult(pleaResult.getUserId(),pleaResult.getStage());
+        new CreatNewMessage().afterAddNewPleaResult(pleaResult.getUserId(), pleaResult.getStage());
     }
+
     /**
      * 学生选题状态更新通知切点
      */
@@ -56,18 +53,18 @@ public class MessageAspect {
     /**
      * 老师的课题申请状态更新切点
      */
-    /*@AfterReturning(value = "execution(* com.gms.gms.controller.SubjectController.auditSubject(java.util.LinkedHashMap)) && args(opinion)",argNames = "opinion")
-    public void afterAuditSubject(LinkedHashMap<String,String> opinion) {
-        new CreatNewMessage().creatNewAuditSubject(opinion.get("subId"));
-    }*/
+    @AfterReturning(value = "execution(* com.gms.gms.controller.SubjectController.auditSubject(com.gms.gms.domain.Subject)) && args(opinion)", argNames = "opinion")
+    public void afterAuditSubject(Subject opinion) {
+        new CreatNewMessage().afterAuditSubject(opinion.getSubId());
+    }
 
     /**
-     *开题和中期阶段成果打分后的自动通知信息
+     * 开题和中期阶段成果打分后的自动通知信息
      */
-    /*@AfterReturning(value = "execution(* com.gms.gms.controller.ReportController.auditReport(com.gms.gms.domain.Report)) && args(report)",argNames = "report")
+    @AfterReturning(value = "execution(* com.gms.gms.controller.ReportController.auditReport(com.gms.gms.domain.Report)) && args(report)", argNames = "report")
     public void afterAuditReport(Report report) {
-        new CreatNewMessage().creatNewAuditReport(report.getId());
-    }*/
+        new CreatNewMessage().afterAuditReport(report.getId());
+    }
 
     /**
      * 论文安排发布后的自动通知
@@ -99,5 +96,15 @@ public class MessageAspect {
     @AfterReturning(value = "execution(* com.gms.gms.controller.AppliedSubjectController.addAppliedSubject(com.gms.gms.domain.AppliedSubject)) && args(appliedSubject)", argNames = "appliedSubject")
     public void afterAddAppliedSubject(AppliedSubject appliedSubject) {
         new CreatNewMessage().afterAddAppliedSubject(appliedSubject.getSubId());
+    }
+
+    /**
+     * 系统阶段变更时向所有用户发送通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.SystemStageController.updateSystemStage(java.util.List)) && args(currStageIds)", argNames = "currStageIds")
+    public void afterUpdateSystemStage(List<Integer> currStageIds) {
+        if (currStageIds.size() > 0) {
+            new CreatNewMessage().afterUpdateSystemStage(currStageIds);
+        }
     }
 }

@@ -31,6 +31,9 @@
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
                 LEFT JOIN file_storage f ON(f.DOC_ID)
+        <if test="report.stage != null and report.stage != ''">
+                AND r.STAGE=#{report.stage}
+        </if>
     </select>
     <select id="selectReportAsTeacher" resultMap="ReportMapper">
         SELECT
@@ -61,6 +64,9 @@
                 JOIN teacher t ON(t.TEACHER_ID=s.POSE_BY)
                 LEFT JOIN file_storage f ON(f.DOC_ID)
         WHERE t.TEACHER_ID=#{teacherId}
+        <if test="report.stage != null and report.stage != ''">
+            AND r.STAGE=#{report.stage}
+        </if>
     </select>
     <select id="selectReportAsStudent" resultMap="ReportMapper">
         SELECT

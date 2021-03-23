@@ -12,4 +12,6 @@ public interface PleaResultService extends IService<PleaResult> {
     PleaResult getStartPleaResult(Integer stuId);
 
     PleaResult getMidPleaResult(Integer stuId);
+
+    PleaResult getFinResult(Integer stuId);
 }

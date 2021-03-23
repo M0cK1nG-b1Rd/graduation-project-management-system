@@ -8,7 +8,6 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
-import com.gms.common.utils.GmsUtil;
 import com.gms.gms.domain.Thesis;
 import com.gms.gms.domain.ThesisHelp;
 import com.gms.gms.domain.ThesisTeacher;
@@ -117,6 +116,7 @@ public class ThesisTeacherController {
 
     /**
      * 老师查看自己要评的的答辩交叉互评，无需传参，打过分的论文不会显示
+     * TODO 有时间可以进行返回值的优化
      */
     @GetMapping("/teacher")
     public GmsResponse selectThesisGroupStageTeacher() throws GmsException {

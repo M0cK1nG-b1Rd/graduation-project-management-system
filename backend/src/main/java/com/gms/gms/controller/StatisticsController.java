@@ -41,12 +41,15 @@ public class StatisticsController {
     TotalScoreService totalScoreService;
     @Autowired
     AppliedSubjectService appliedSubjectService;
+    @Autowired
+    WeightService weightService;
+    @Autowired
+    ThesisService thesisService;
 
-
-    // TODO: 2021/3/23 返回总分
     @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
         try {
+            Weight weight = weightService.getWeight();
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
             Report applyList = reportService.getStartReport(stuId);
             PleaResult result = pleaResultService.getStartPleaResult(stuId);
@@ -55,20 +58,29 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+            Double startScore = (weight.getStartMaterial() * fileScore + weight.getStartPlea() * defenseScore)/100;
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
             map.put("defenseFeedback", defenseFeedback);
+            map.put("startScore", startScore);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "查询成功"), map);
+
         } catch (GmsException e) {
             String message = "查询失败";
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message + " : " + e.getMessage()));
+        } catch (NullPointerException e) {
+            String message = "暂未出分";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message));
         } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -76,10 +88,10 @@ public class StatisticsController {
         }
     }
 
-    // TODO: 2021/3/23 返回总分
     @GetMapping("score/mid")
-    public GmsResponse getReportScore() throws GmsException {
+    public GmsResponse getMiddleScore() throws GmsException {
         try {
+            Weight weight = weightService.getWeight();
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
 
             Report applyList = reportService.getMidReport(stuId);
@@ -89,10 +101,12 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+            Double midScore = (weight.getMiddleMaterial() * fileScore + weight.getMiddlePlea() * defenseScore)/100;
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
             map.put("defenseFeedback", defenseFeedback);
+            map.put("midScore", midScore);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -103,15 +117,57 @@ public class StatisticsController {
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message + " : " + e.getMessage()));
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            String message = "暂未出分";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message));
+        }  catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
     }
 
-// TODO: 2021/3/23 提交结题申请 ,applyReason
-    //返回分数和总分
+    @GetMapping("score/fin")
+    public GmsResponse getFinishScore() throws GmsException {
+        try {
+            Weight weight = weightService.getWeight();
+            Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+            Thesis thesis = thesisService.getMyThesis(stuId);
+            PleaResult result = pleaResultService.getFinResult(stuId);
+            Integer thesisScore = thesis.getScore();
+            Integer defenseScore = result.getScore();
+            String defenseFeedback = result.getFeedback();
+            LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+            Double finScore = (weight.getEndMaterial() * thesisScore + weight.getEndPlea() * defenseScore)/100;
+            map.put("thesisScore", thesisScore);
+            map.put("defenseScore", defenseScore);
+            map.put("defenseFeedback", defenseFeedback);
+            map.put("finScore", finScore);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), map);
+        } catch (GmsException e) {
+            String message = "查询失败";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message + " : " + e.getMessage()));
+        } catch (NullPointerException e) {
+            String message = "暂未出分";
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    message));
+        }  catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
 
 
     @GetMapping("stageTask")

@@ -44,6 +44,7 @@ public class ReportController {
             //默认使用第一个角色，即取第一个角色的名字
             String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
 
+            // 需要传参课题的阶段，进行筛选
             IPage<Report> applyList = reportService.selectReport(report,roleName);
 
             return new GmsResponse().addCodeMessage(new Meta(
