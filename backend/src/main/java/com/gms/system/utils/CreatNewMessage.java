@@ -2,12 +2,10 @@ package com.gms.system.utils;
 
 import com.gms.common.utils.GmsUtil;
 import com.gms.common.utils.SpringContextUtil;
-import com.gms.gms.domain.PleaResult;
 import com.gms.gms.domain.Thesis;
 import com.gms.gms.utils.FileStorageUtil;
 import com.gms.system.domain.Message;
 import com.gms.system.service.MessageService;
-import io.swagger.models.auth.In;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -126,6 +124,15 @@ public class CreatNewMessage {
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         Message message = new Message().setTitle("选题通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
                 .setDetail("<p><strong>尊敬的老师：</strong></p><p></p><p>\t\t您的课题有学生进行了选择，请及时前往相关页面进行审核。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterAuditSubject(String subId) {
+        Integer userId=messageService.getUserIdBySubID(subId);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("课题审核通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p></p><p>\t\t您的课题出题状态已经更新，请及时前往相关页面进行查看。</p><p></p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
                 .setMessageId(FileStorageUtil.getDocId());
         creatNewMessage(message);
     }

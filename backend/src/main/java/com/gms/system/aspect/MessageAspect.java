@@ -3,14 +3,12 @@ package com.gms.system.aspect;
 import com.alibaba.fastjson.JSONObject;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.PleaResult;
-import com.gms.gms.domain.Report;
 import com.gms.gms.domain.ThesisTeacher;
 import com.gms.system.utils.CreatNewMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
@@ -56,10 +54,10 @@ public class MessageAspect {
     /**
      * 老师的课题申请状态更新切点
      */
-    /*@AfterReturning(value = "execution(* com.gms.gms.controller.SubjectController.auditSubject(java.util.LinkedHashMap)) && args(opinion)",argNames = "opinion")
+    @AfterReturning(value = "execution(* com.gms.gms.controller.SubjectController.auditSubject(java.util.LinkedHashMap)) && args(opinion)",argNames = "opinion")
     public void afterAuditSubject(LinkedHashMap<String,String> opinion) {
-        new CreatNewMessage().creatNewAuditSubject(opinion.get("subId"));
-    }*/
+        new CreatNewMessage().afterAuditSubject(opinion.get("subId"));
+    }
 
     /**
      *开题和中期阶段成果打分后的自动通知信息
