@@ -8,15 +8,6 @@
       </el-breadcrumb>
   <!--卡片视图区-->
   <el-card class="el-card">
-    <!--搜索区-->
-    <el-row :gutter="20">
-      <el-col :span="7">
-        <el-input placeholder="请输入关键词查询课题信息">
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </el-col>
-      <el-col :span="4"></el-col>
-    </el-row>
     <!--      表格区-->
     <el-row>
       <el-table
@@ -90,18 +81,6 @@
           </template>
         </el-table-column>
       </el-table>
-    </el-row>
-    <!--      分页区-->
-    <el-row>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="queryInfo.page"
-        :page-sizes="[5, 10, 20]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalPageNum">
-      </el-pagination>
     </el-row>
   </el-card>
       <!--    查看课题详情对话框-->
@@ -205,11 +184,8 @@ export default {
       totalPageNum: 0,
       // 获取课题列表
       queryInfo: {
-        status: '', // 需要查询的通知记录状态（1-待审核，2-已通过，3-未通过）, 不发送则返回所有类型
-        keyWord: '', // 关键词
         page: 1, // 当前页号
-        size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        size: 5 // 页面大小
       },
       subjectlist: [],
       total: 0,
@@ -227,20 +203,11 @@ export default {
         this.$message.error('获取课题列表失败')
       } else {
         this.subjectlist = res.data
+        this.totalPageNum = this.subjectlist.length
         for (let i = 0; i < this.subjectlist.length; i++) {
           this.subjectlist[i].zoneName = dataDict.getValueByKey(this.zoneDict, this.subjectlist[i].zone)
         }
       }
-    },
-    // 当页面大小变化时触发
-    handleSizeChange(newSize) {
-      this.queryInfo.size = newSize
-      this.getSubjectList()
-    },
-    // 当页面编号变化时触发
-    handleCurrentChange(newPage) {
-      this.queryInfo.page = newPage
-      this.getSubjectList()
     },
     // 筛选课题类型
     filterType(value, row) {
@@ -254,6 +221,7 @@ export default {
     viewSubject(row) {
       this.viewPageVisible = true
       this.currentSubjectInfo = row
+      this.docId = row.docId
     }
   }
 }
