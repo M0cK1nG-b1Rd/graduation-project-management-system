@@ -114,7 +114,7 @@ export default {
 .login_container {
   /* 设置背景图片，并铺满整个页面*/
   /* 参看网址： https://www.php.cn/css-tutorial-410405.html*/
-  background-image: url("../../assets/imgs/login_backgrond_01.jpg");
+  background-image: url("../../assets/imgs/welcome/img2.png");
   background-repeat: no-repeat;
   background-size: cover;
   -webkit-background-size: cover;

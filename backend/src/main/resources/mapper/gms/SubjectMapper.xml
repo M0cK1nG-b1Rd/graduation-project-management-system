@@ -51,6 +51,7 @@
                s.REQUIREMENT,
                s.DESCRIPTION,
                s.STATUS,
+               s.DOC_ID,
                s.ZONE,
                u.REAL_NAME AS TEACHER_NAME,
                u.TEL,
