@@ -34,7 +34,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#f8d802', to: '#e85a50'}"
-              :percent="weightSetting.startStage"
+              :percent="parseInt(weightSetting.startStage)"
               status="active"/>
           </el-col>
         </el-row>
@@ -48,7 +48,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#f8d802', to: '#e85a50'}"
-              :percent="weightSetting.middleStage"
+              :percent="parseInt(weightSetting.middleStage)"
               status="active"/>
           </el-col>
         </el-row>
@@ -62,7 +62,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#f8d802', to: '#e85a50'}"
-              :percent="weightSetting.endStage"
+              :percent="parseInt(weightSetting.endStage)"
               status="active"/>
           </el-col>
         </el-row>
@@ -76,7 +76,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#f8d802', to: '#e85a50'}"
-              :percent="weightSetting.stageTask"
+              :percent="parseInt(weightSetting.stageTask)"
               status="active"/>
           </el-col>
         </el-row>
@@ -106,7 +106,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.startMaterial"
+              :percent="parseInt(weightSetting.startMaterial)"
               status="active"/>
           </el-col>
         </el-row>
@@ -120,7 +120,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.startPlea"
+              :percent="parseInt(weightSetting.startPlea)"
               status="active"/>
           </el-col>
         </el-row>
@@ -135,7 +135,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.middleMaterial"
+              :percent="parseInt(weightSetting.middleMaterial)"
               status="active"/>
           </el-col>
         </el-row>
@@ -149,7 +149,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.middlePlea"
+              :percent="parseInt(weightSetting.middlePlea)"
               status="active"/>
           </el-col>
         </el-row>
@@ -164,7 +164,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.endMaterial"
+              :percent="parseInt(weightSetting.endMaterial)"
               status="active"/>
           </el-col>
         </el-row>
@@ -178,7 +178,7 @@
           <el-col :span="18">
             <a-progress
               :stroke-color="{from: '#ffc900', to: '#ff3c00'}"
-              :percent="weightSetting.endPlea"
+              :percent="parseInt(weightSetting.endPlea)"
               status="active"/>
           </el-col>
         </el-row>

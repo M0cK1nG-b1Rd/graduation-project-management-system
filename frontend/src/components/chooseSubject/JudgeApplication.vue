@@ -129,7 +129,7 @@
           <el-col :span="3" class="item_label">申请理由：</el-col>
           <el-col :span="21">
             <div class="ql-container ql-snow">
-              <div class="ql-editor" v-html="currentApplicationInfo.applyReason"></div>
+              <div class="ql-editor" v-html="currentApplicationInfo.applyReason" style="font-size: 15px"></div>
             </div>
           </el-col>
         </el-row>
@@ -138,6 +138,9 @@
         <el-row type="flex" align="center">
           <el-col :span="3" class="item_label"><span>相关附件：</span></el-col>
           <el-col :span="21">
+            <el-row type="flex" justify="center">
+              <Downloader :doc-id="docId"></Downloader>
+            </el-row>
           </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -165,13 +168,15 @@
       title="请输入申请理由"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor"
                     :init-content="currentApplicationInfo.feedback">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 40px">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
+        </el-row>
         </span>
     </el-dialog>
   </div>
@@ -179,15 +184,16 @@
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
-
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'JudgeApplication',
-  components: { quillEditor },
+  components: { quillEditor, Downloader },
   mounted() {
     this.getApplicationRecords()
   },
   data() {
     return {
+      docId: '',
       // 查询参数
       queryInfo: {
         keyWord: '', // 关键词
@@ -235,6 +241,9 @@ export default {
     },
     // 查看申请记录详情
     beginJudge(row) {
+      if (row.fileStorage !== undefined) {
+        this.docId = row.fileStorage[0].docId
+      }
       this.beginJudgePageVisible = true
       this.currentApplicationInfo = row
     },

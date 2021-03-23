@@ -102,8 +102,8 @@ public class MessageController {
         }
     }
     //删除通知，真删除，JSON
-    @DeleteMapping("/delete")
-    public GmsResponse deleteMessage(List<String> list) throws GmsException {
+    @PutMapping("/delete")
+    public GmsResponse deleteMessage(@RequestBody List<String> list) throws GmsException {
         try {
             //调用mybatisPlus提供的方法
             messageService.removeByIds(list);

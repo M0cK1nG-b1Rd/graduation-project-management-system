@@ -51,6 +51,11 @@
 <!--        附件-->
         <el-row type="flex" align="center">
           <el-col :span="4" class="item_label">附件下载：</el-col>
+          <el-col :span="16">
+            <el-row type="flex" justify="center">
+              <Downloader :doc-id="docId"></Downloader>
+            </el-row>
+          </el-col>
         </el-row>
       </el-card>
     </el-row>
@@ -65,13 +70,19 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'ViewSubjectDetail',
-  mounted() {
+  components: { Downloader },
+  created() {
     this.currentSubjectInfo = this.$route.params
+    if (this.currentSubjectInfo.fileStorage !== undefined) {
+      this.docId = this.currentSubjectInfo.fileStorage[0].docId
+    }
   },
   data() {
     return {
+      docId: '',
       // 当前课题信息
       currentSubjectInfo: {}
     }

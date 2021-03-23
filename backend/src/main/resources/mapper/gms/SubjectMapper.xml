@@ -49,6 +49,7 @@
                s.REQUIREMENT,
                s.DESCRIPTION,
                s.STATUS,
+               s.DOC_ID,
                s.ZONE,
                s.DOC_ID,
                s.FEEDBACK,

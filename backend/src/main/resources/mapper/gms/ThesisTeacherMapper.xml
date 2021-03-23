@@ -8,6 +8,10 @@
         <collection property="thesisList" column="TEACHER_ID"
                     select="com.gms.gms.dao.ThesisTeacherMapper.getThesis"/>
     </resultMap>
+    <resultMap id="ZJYSB3" type="com.gms.gms.domain.Thesis" extends="com.gms.gms.dao.ThesisMapper.ZJYSB">
+        <association property="subject" column="STU_ID"
+                     select="com.gms.gms.dao.ThesisTeacherMapper.getStudentPassedSubject"/>
+    </resultMap>
     <select id="selectThesisIdAndTeacherId" resultType="com.gms.gms.domain.Thesis">
         SELECT
             thesis.THESIS_ID,
@@ -55,19 +59,38 @@
         WHERE
             thesis_teacher.TEACHER_ID = #{teacherId}
     </select>
-    <select id="selectThesisGroupStageTeacher" resultMap="com.gms.gms.dao.ThesisMapper.ZJYSB">
+    <select id="selectThesisGroupStageTeacher" resultMap="ZJYSB3">
         SELECT
             thesis_teacher.ID,
             thesis.THESIS_ID,
             thesis.DOC_ID,
             thesis.`STATUS`,
-            thesis.POSE_TIME
+            thesis.POSE_TIME,
+            thesis.STU_ID
         FROM
             thesis
                 JOIN thesis_teacher ON thesis.THESIS_ID=thesis_teacher.THESIS_ID
         WHERE
             thesis_teacher.TEACHER_ID = #{teacherId}
             AND thesis_teacher.SCORE = '-1'
+    </select>
+    <select id="getStudentPassedSubject" resultType="com.gms.gms.domain.Subject">
+        SELECT DISTINCT
+            s.SUB_ID,
+            s.SUB_NAME,
+            s.REQUIREMENT,
+            s.DESCRIPTION,
+            s.ZONE,
+            s.POSE_TIME,
+            m.MAJOR_NAME
+        FROM
+            `subject` s
+                JOIN applied_subject a ON ( a.SUB_ID = s.SUB_ID )
+                JOIN major m ON ( m.MAJOR_ID = s.MAJOR_ID )
+        WHERE
+            s.`STATUS` = 'YTG'
+            AND a.`STATUS` = 'YTG'
+            AND a.STU_ID = #{stuId}
     </select>
 
     <insert id="inserts">

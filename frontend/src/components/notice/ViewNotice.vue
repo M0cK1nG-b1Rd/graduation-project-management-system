@@ -27,25 +27,32 @@
           <el-aside width="400px" v-if="Visible">
             <!--            侧边栏轮播图片区-->
             <el-card class="carousel">
-              <el-carousel height="150px" :interval="2000">
+              <el-carousel height="200px" :interval="2000">
                 <!--                  轮播卡片01-->
                 <el-carousel-item class="carousel_box">
                     <!--                    轮播卡片图片-->
-                      <img src="../../assets/imgs/gongGaoLan/lunbotu01.jpg" title="晋校长视察学校食堂，与学生共进午餐" class="carousel_box_img">
+                      <img src="../../assets/imgs/welcome/img1.png" title="晋校长视察学校食堂，与学生共进午餐" class="carousel_box_img">
                     <!--                    轮播卡片描述-->
                     <div class="carousel_box_desc"></div>
                 </el-carousel-item>
                 <!--                  轮播卡片02-->
                 <el-carousel-item class="carousel_box">
                     <!--                    轮播卡片图片-->
-                      <img src="../../assets/imgs/gongGaoLan/lunbotu02.jpg" title="晋校长视察学生机房，与学生一同观看猫和老鼠"  class="carousel_box_img">
+                      <img src="../../assets/imgs/welcome/img2.png" title="晋校长视察学生机房，与学生一同观看猫和老鼠"  class="carousel_box_img">
+                    <!--                    轮播卡片描述-->
+                    <div class="carousel_box_desc"></div>
+                </el-carousel-item>
+                <!--                  轮播卡片03-->
+                <el-carousel-item class="carousel_box">
+                    <!--                    轮播卡片图片-->
+                      <img src="../../assets/imgs/welcome/img3.png" title="晋校长视察学生机房，与学生一同观看猫和老鼠"  class="carousel_box_img">
                     <!--                    轮播卡片描述-->
                     <div class="carousel_box_desc"></div>
                 </el-carousel-item>
               </el-carousel>
             </el-card>
             <!--            侧边栏最新通知及分类区-->
-            <el-card class="classification_zone">
+            <el-card class="classification_zone" style="height: 540px">
               <!--            分类选择按钮-->
               <div style="margin-top: 20px" class="classification_button">
                 <el-radio-group v-model="queryInfo.type" @change="handletypeChange"
@@ -101,6 +108,12 @@
 <!--              通知内容-->
               <div class="ql-container ql-snow" style="height: 860px">
                 <div class="notice_content ql-editor" v-html="noticeDetial"></div>
+<!--        相关附件-->
+                <el-row type="flex" justify="center" style="font-weight: bold; font-size: 20px; margin-top: 50px">相关附件</el-row>
+                <div class="divider"></div>
+                <el-row type="flex" justify="center">
+                  <Downloader :doc-id="docID"></Downloader>
+                </el-row>
               </div>
           </el-main>
         </el-container>
@@ -110,13 +123,17 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'ViewNotice',
+  components: { Downloader },
   created() {
     this.getNotice()
   },
   data() {
     return {
+      // DocId
+      docID: '',
       // 左侧边框可见性
       Visible: true,
       // 查询分页时，向后端发送的参数信息
@@ -168,6 +185,8 @@ export default {
     viewDetail(row) {
       this.noticeDetial = row.annDetail
       this.noticeTitle = row.annTitle
+      this.docID = row.docId
+      this.$forceUpdate()
       this.Visible = false
     }
   }
@@ -221,6 +240,8 @@ export default {
 
 /*轮播卡片*/
 .carousel_box {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

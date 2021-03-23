@@ -148,6 +148,9 @@
         <el-row type="flex" align="center">
           <el-col :span="3" class="item_label"><span>相关附件：</span></el-col>
           <el-col :span="21">
+            <el-row type="flex" justify="center">
+              <Downloader :doc-id="docId"></Downloader>
+            </el-row>
           </el-col>
         </el-row>
       </el-card>
@@ -159,13 +162,16 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'ApplicationRecords',
   mounted() {
     this.getApplicationRecords()
   },
+  components: { Downloader },
   data() {
     return {
+      docId: '',
       // 查询参数
       queryInfo: {
         keyWord: '', // 关键词
@@ -206,6 +212,9 @@ export default {
     },
     // 查看申请记录详情
     viewDetail(row) {
+      if (row.fileStorage !== undefined) {
+        this.docId = row.fileStorage[0].docId
+      }
       this.viewDetailPageVisible = true
       this.currentApplicationInfo = row
     }

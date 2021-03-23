@@ -54,7 +54,7 @@
 import dataDict from '@/assets/js/dataDict'
 
 export default {
-  name: 'GiveTask',
+  name: 'ManageTask',
   async mounted() {
     await this.getDict()
     await this.getAllSubjectInfo()

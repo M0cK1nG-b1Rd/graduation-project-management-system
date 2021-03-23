@@ -60,7 +60,6 @@ public class StageTaskResultController {
     }
 
 
-    //学生查看自己的阶段任务提交和评分
     @GetMapping
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {

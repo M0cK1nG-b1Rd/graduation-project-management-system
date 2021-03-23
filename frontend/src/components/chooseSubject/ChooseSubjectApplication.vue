@@ -95,12 +95,6 @@
           </el-col>
         </el-row>
         <el-divider></el-divider>
-<!--        上传附件-->
-        <el-row type="flex" align="center">
-          <el-col :span="3" class="item_label"><span>上传附件：</span></el-col>
-          <el-col :span="21">
-          </el-col>
-        </el-row>
       </el-card>
     </el-row>
     <!--    操作按钮区-->
@@ -115,35 +109,57 @@
                  @click="submitApplication">
         提交选题申请
       </el-button>
+      <el-popconfirm
+        @confirm="uploaderVisible=true"
+        title="上传附件前请确认已发布阶段任务！">
+        <el-button slot="reference" type="warning" style="margin-left: 10px">上传附件</el-button>
+      </el-popconfirm>
     </el-row>
     <!--      符文本编辑器对话框-->
     <el-dialog
       title="请输入申请理由"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor"
                     :init-content="applicationInfo.applyReason">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 40px">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
+        </el-row>
         </span>
+    </el-dialog>
+<!--    上传附件对话框-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="uploaderVisible"
+      width="30%">
+      <uploader :doc-id="docId"></uploader>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+import Uploader from '@/plugins/upload-download/Uploader'
 export default {
   name: 'ChooseSubjectApplication',
-  components: { quillEditor },
+  components: { quillEditor, Uploader },
   mounted() {
     this.currentSubjectInfo = this.$route.params
     this.applicationInfo.subId = this.currentSubjectInfo.subId
   },
   data() {
     return {
+      // DocId
+      docId: '',
+      // 上传对话框可见性
+      uploaderVisible: false,
       // 当前所选课题基本信息
       currentSubjectInfo: {},
       // 学生申请信息
@@ -185,8 +201,12 @@ export default {
       applicationForm.subId = this.applicationInfo.subId
       applicationForm.applyReason = this.applicationInfo.applyReason
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
-      if (res.meta.code !== 200) return this.$message.error('提交选题申请失败！')
-      this.$message.success('选题申请提交成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error('提交选题申请失败！')
+      } else {
+        this.$message.success('选题申请提交成功！')
+        this.docId = res.data
+      }
     }
   }
 }
