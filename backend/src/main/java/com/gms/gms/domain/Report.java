@@ -1,22 +1,15 @@
 package com.gms.gms.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.io.File;
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import io.swagger.models.auth.In;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * 报告
@@ -112,4 +105,7 @@ public class Report implements Serializable {
     private String  studentName;
     @TableField(exist = false)
     private List<FileStorage> fileStorage;
+
+    //搜索用数据
+    private Integer userId;
 }

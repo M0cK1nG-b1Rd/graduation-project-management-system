@@ -2,6 +2,8 @@ package com.gms.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.gms.domain.Report;
+import com.gms.gms.domain.SystemStage;
 import com.gms.gms.domain.Thesis;
 import com.gms.system.dao.MessageMapper;
 import com.gms.system.domain.Message;
@@ -75,5 +77,20 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     public Integer getUserIdBySubID(String subId) {
         return this.baseMapper.getUserIdBySubID(subId);
+    }
+
+    @Override
+    public Report getMessageReport(Integer id) {
+        return this.baseMapper.getMessageReport(id);
+    }
+
+    @Override
+    public List<SystemStage> selectSystemStage(List<Integer> currStageIds) {
+        return this.baseMapper.selectSystemStage(currStageIds);
+    }
+
+    @Override
+    public List<Integer> selectAllUserButAdmin() {
+        return this.baseMapper.selectAllUserButAdmin();
     }
 }

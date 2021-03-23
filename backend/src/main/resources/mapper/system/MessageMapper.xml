@@ -145,4 +145,37 @@
             `subject`.SUB_ID = #{subId}
           AND `subject`.POSE_BY = teacher.TEACHER_ID
     </select>
+    <select id="getMessageReport" resultType="com.gms.gms.domain.Report">
+        SELECT
+            report.STAGE,
+            student.USER_ID
+        FROM
+            report,
+            student
+        WHERE
+            report.POSE_BY = student.STU_ID
+          AND report.ID = #{id}
+    </select>
+    <select id="selectSystemStage" resultType="com.gms.gms.domain.SystemStage">
+        SELECT
+            system_stage.STAGE_NAME,
+            system_stage.DESCRIPTION
+        FROM
+            system_stage
+        WHERE
+            system_stage.STAGE_ID IN
+        <foreach collection="currStageIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectAllUserButAdmin" resultType="java.lang.Integer">
+        SELECT
+            `user`.USER_ID
+        FROM
+            `user`,
+            user_role
+        WHERE
+            `user`.USER_ID = user_role.USER_ID
+          AND user_role.ROLE_ID != '1'
+    </select>
 </mapper>

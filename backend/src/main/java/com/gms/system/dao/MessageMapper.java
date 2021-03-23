@@ -2,7 +2,8 @@ package com.gms.system.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.gms.gms.domain.Subject;
+import com.gms.gms.domain.Report;
+import com.gms.gms.domain.SystemStage;
 import com.gms.gms.domain.Thesis;
 import com.gms.system.domain.Message;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +40,10 @@ public interface MessageMapper extends BaseMapper<Message> {
     Thesis selectThesis(Integer id);
 
     Integer getUserIdBySubID(String subId);
+
+    Report getMessageReport(Integer id);
+
+    List<SystemStage> selectSystemStage(List<Integer> currStageIds);
+
+    List<Integer> selectAllUserButAdmin();
 }
