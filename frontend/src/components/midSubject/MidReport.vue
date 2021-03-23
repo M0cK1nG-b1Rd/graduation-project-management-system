@@ -7,8 +7,6 @@
       <el-breadcrumb-item>中期报告</el-breadcrumb-item>
     </el-breadcrumb>
     <!--      题目信息展示区-->
-    <el-row>
-      <el-col>
         <el-card class="bg-top">
           <div class="card_header">我的课题基本信息</div>
           <!--    课题详情卡片-->
@@ -31,8 +29,6 @@
                 </el-col>
                 <!--          课题领域-->
                 <el-col :span="8">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
-                <!--          所属专业-->
-                <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
               </el-row>
               <el-divider></el-divider>
               <!--          课题要求-->
@@ -61,15 +57,10 @@
               </el-row>
             </el-card>
           </el-row>
-        </el-card>
-      </el-col>
-    </el-row>
-    <!--      填写开题报告，上传附件区-->
-    <el-card class="bg-bottom">
-      <el-row>
-        <el-col :span="16">
-          <el-card>
-            <div class="card_header">填写中期报告基本信息</div>
+    <!--      填写中期报告，上传附件区-->
+    <div class="card_header">填写中期报告基本信息</div>
+      <el-row type="flex" justify="center">
+          <el-card class="subject_detail">
             <el-form ref="form" :model="report" label-width="80px">
               <el-row>
                 <el-col :span="20">
@@ -101,23 +92,9 @@
               </el-form-item>
             </el-form>
           </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card>
             <!--        文件上传-->
-            <el-upload
-              class="upload-demo"
-              drag
-              action="https://jsonplaceholder.typicode.com/posts/"
-              multiple>
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              <div class="el-upload__tip" slot="tip">文件不超过500kb</div>
-            </el-upload>
-          </el-card>
-        </el-col>
       </el-row>
-    </el-card>
+        </el-card>
     <!--      符文本编辑器对话框-->
     <el-dialog
       title="简述开题以来所作的具体工作和取得进展"
@@ -205,6 +182,7 @@ export default {
         return this.$message.error('获取课题列表失败')
       }
       this.currentSubjectInfo = res.data
+      this.report.subId = res.data.subId
     },
     // 提交表单
     async reportSubmit() {
