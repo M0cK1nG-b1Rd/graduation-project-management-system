@@ -57,12 +57,8 @@ public class Subject implements Serializable {
     @TableField("STATUS")
     private String status;
 
-    @TableField("MAJOR_ID")
-    private Integer majorId;
-
-
     @TableField("AUDIT_BY")
-    private String auditBy;
+    private Integer auditBy;
 
     @TableField("AUDIT_TIME")
     private Date auditTime;
@@ -104,7 +100,7 @@ public class Subject implements Serializable {
 
     //分页
     @TableField(exist = false)
-    private Integer current;
+    private Integer page;
     @TableField(exist = false)
     private Integer size;
 }

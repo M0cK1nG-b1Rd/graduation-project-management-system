@@ -31,8 +31,11 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     }
 
     @Override
-    public void giveOpinion(String subId, String status, String feedback) {
-        this.baseMapper.giveOpinion(subId,status,feedback);
+    public void giveOpinion(Subject opinion) {
+        LambdaQueryWrapper<Subject> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(Subject::getSubId, opinion.getSubId());
+        this.baseMapper.update(opinion, mapper);
+
     }
 
     @Override
@@ -44,16 +47,15 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
 
     @Override
     public IPage<Subject> getPassedSubject(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
+        Page<Subject> page = new Page<>(subject.getPage(),  subject.getSize());
         Page<Subject> returnSubjectPage = this.baseMapper.getPassedSubject(page,subject);
         return returnSubjectPage;
     }
 
     @Override
     public IPage<Subject> getAllSubject(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
-        Page<Subject> returnSubjectPage = this.baseMapper.getAllSubject(page,subject);
-        return returnSubjectPage;
+        Page<Subject> page = new Page<>(subject.getPage(),  subject.getSize());
+        return this.baseMapper.getAllSubject(page,subject);
     }
 
     @Override

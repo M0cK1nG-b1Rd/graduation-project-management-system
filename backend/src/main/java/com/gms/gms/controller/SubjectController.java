@@ -67,7 +67,7 @@ public class SubjectController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -132,8 +132,10 @@ public class SubjectController {
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
+            String subId=FileStorageUtil.getDocId();
             String docId=FileStorageUtil.getDocId();
-            subject.setSubId(docId);
+            subject.setSubId(subId);
+            subject.setDocId(docId);
             subject.setPoseBy(AccountUtil.getCurrentTeacher().getTeacherId());
             subject.setPoseTime(new Date());
             subjectService.save(subject);
@@ -146,7 +148,7 @@ public class SubjectController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "新建课题失败";
             log.error(message, e);
@@ -176,13 +178,12 @@ public class SubjectController {
 
     //教研办审核教师课题
     @PutMapping("audit")
-    public GmsResponse auditSubject(@RequestBody LinkedHashMap<String,String> opinion) throws GmsException {
+    public GmsResponse auditSubject(@RequestBody Subject opinion) throws GmsException {
         try {
-            String subId = opinion.get("subId");
-            //WTG未通过，YTG已通过
-            String status = opinion.get("status");
-            String feedback = opinion.get("feedback");
-            subjectService.giveOpinion(subId, status, feedback);
+            Integer officeId = AccountUtil.getCurrentTeachingOffice().getOfficeId();
+            opinion.setAuditBy(officeId);
+            opinion.setAuditTime(new Date());
+            subjectService.giveOpinion(opinion);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
