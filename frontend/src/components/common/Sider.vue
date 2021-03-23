@@ -3,7 +3,7 @@
     <!--        顶部标题及Logo区-->
     <div id="sider_title_logo_zone">
 <!--      logo-->
-      <img src="../../assets/imgs/login_logo.jpg" alt="" class="sider_logo" @click="gotoHompage">
+      <img src="../../assets/imgs/new_logo.png" alt="" class="sider_logo" @click="gotoHompage">
 <!--      系统名-->
       <span class="sider_title" v-if="!isCollapsed">快乐毕设系统</span>
 <!--      收起、关闭菜单图标-->
@@ -127,7 +127,8 @@ export default {
 }
 /*侧栏顶部logo*/
 .sider_logo {
-  height: 35px;
+  height: 33px;
+  width: 33px;
   border-radius: 50%;
   margin-left: 10px;
   box-shadow: 0 0 2px #ffecec;

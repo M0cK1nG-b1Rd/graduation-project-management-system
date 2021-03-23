@@ -106,12 +106,12 @@ export default {
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
       this.queryInfo.size = newSize
-      this.getStuInfo()
+      this.getTutorInfo()
     },
     // 当页面编号变化时触发
     handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getStuInfo()
+      this.getTutorInfo()
     }
   }
 }
