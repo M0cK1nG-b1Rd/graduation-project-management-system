@@ -88,6 +88,7 @@
 
     <resultMap id="StageTaskResultMapper" type="com.gms.gms.domain.StageTaskResult">
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
+        <result column="DOC_ID" property="docId" jdbcType="INTEGER"/>
         <result column="RETRIES" property="retries" jdbcType="INTEGER"/>
         <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
         <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>

@@ -131,8 +131,8 @@ public class AppliedSubjectController {
                 //更新课题信息，且人数已满则驳回申请
                 Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
                 Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
-                Integer currCount = subject.getChosen();
-                if (currCount + 1 > stuCount) {
+                Integer capacity = subject.getCapacity();
+                if (stuCount + 1 > capacity) {
                     return new GmsResponse().addCodeMessage(new Meta(
                             Code.C500.getCode(),
                             Code.C500.getDesc(),
