@@ -163,12 +163,20 @@
       <el-row>
         <el-col :span="22">
           <el-form-item label="课题内容">
-            <a-input type="textarea" v-model="currentSubjectInfo.description" disabled></a-input>
+            <el-col :span="24">
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="22">
           <el-form-item label="课题要求">
-            <a-input type="textarea" v-model="currentSubjectInfo.requirement" disabled></a-input>
+            <el-col :span="24">
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="22">
@@ -239,12 +247,20 @@
       <el-row>
         <el-col :span="22">
           <el-form-item label="课题内容">
-            <a-input type="textarea" v-model="currentSubjectInfo.description" disabled></a-input>
+            <el-col :span="24">
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="22">
           <el-form-item label="课题要求">
-            <a-input type="textarea" v-model="currentSubjectInfo.requirement" disabled></a-input>
+            <el-col :span="24">
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="22">
