@@ -22,14 +22,11 @@
         t.TITLE,
         c.COLLEGE_NAME,
         s.CAPACITY,
-        s.CHOSEN,
-        f.FILE_NAME,
-        f.FILE_ID
+        s.CHOSEN
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
         JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
         JOIN USER u ON (t.USER_ID = u.USER_ID)
-        LEFT JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
         WHERE s.`STATUS` = 'YTG'
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
@@ -44,22 +41,22 @@
     </select>
     <select id="getMySubjectInfo" resultType="com.gms.gms.domain.Subject">
         SELECT s.SUB_ID,
-               s.SUB_NAME,
-               s.ZONE,
-               s.REQUIREMENT,
-               s.DESCRIPTION,
-               s.STATUS,
-               s.DOC_ID,
-               s.ZONE,
-               s.DOC_ID,
-               s.FEEDBACK,
-               u.REAL_NAME AS TEACHER_NAME,
-               u.TEL,
-               u.MAIL,
-               s.POSE_TIME
+        s.SUB_NAME,
+        s.ZONE,
+        s.REQUIREMENT,
+        s.DESCRIPTION,
+        s.STATUS,
+        s.DOC_ID,
+        s.ZONE,
+        s.DOC_ID,
+        s.FEEDBACK,
+        u.REAL_NAME AS TEACHER_NAME,
+        u.TEL,
+        u.MAIL,
+        s.POSE_TIME
         FROM `subject` s
-                 JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
-                 JOIN USER u ON (t.USER_ID = u.USER_ID)
+        JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
+        JOIN USER u ON (t.USER_ID = u.USER_ID)
         WHERE t.TEACHER_ID = #{teacherId}
         <if test="subId != null and subId != ''">
             AND s.SUB_ID=#{subId}
@@ -72,7 +69,7 @@
         s.REQUIREMENT,
         s.DESCRIPTION,
         s.ZONE,
-               s.STATUS,
+        s.STATUS,
         s.DOC_ID,
         u.REAL_NAME AS TEACHER_NAME,
         u.TEL,
@@ -82,14 +79,11 @@
         t.TITLE,
         c.COLLEGE_NAME,
         s.CAPACITY,
-        s.CHOSEN,
-        f.FILE_NAME,
-        f.FILE_ID
+        s.CHOSEN
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
         JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
         JOIN USER u ON (t.USER_ID = u.USER_ID)
-        LEFT JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
         WHERE 1=1
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
@@ -117,15 +111,12 @@
                u.MAIL,
                c.COLLEGE_NAME,
                s.CAPACITY,
-              s.CHOSEN,
-               f.FILE_NAME,
-               f.FILE_ID
+               s.CHOSEN
         FROM `subject` s
                  JOIN applied_subject a ON (a.SUB_ID = s.SUB_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
                  JOIN USER u ON (t.USER_ID = u.USER_ID)
-                 LEFT JOIN file_storage f ON (s.DOC_ID = f.DOC_ID)
         WHERE s.`STATUS` = 'YTG'
           AND a.`STATUS` = 'YTG'
           AND a.STU_ID = #{stuId}
@@ -149,9 +140,9 @@
         <result column="COLLEGE_NAME" property="collegeName" jdbcType="VARCHAR"/>
         <result column="CAPACITY" property="capacity" jdbcType="INTEGER"/>
         <result column="CHOSEN" property="chosen" jdbcType="INTEGER"/>
-        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        <collection property="fileStorage" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
         </collection>
     </resultMap>
 </mapper>

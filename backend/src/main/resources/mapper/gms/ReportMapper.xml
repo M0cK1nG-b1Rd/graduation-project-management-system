@@ -21,16 +21,12 @@
             r.POSE_TIME,
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
-            r.COMMENT,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            r.COMMENT
         FROM
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
-                LEFT JOIN file_storage f ON(f.DOC_ID)
         <if test="report.stage != null and report.stage != ''">
                 AND r.STAGE=#{report.stage}
         </if>
@@ -52,17 +48,13 @@
             u1.REAL_NAME AS STUDENT_NAME,
             r.`STATUS`,
             r.COMMENT,
-            r.SCORE,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            r.SCORE
         FROM
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
                 JOIN teacher t ON(t.TEACHER_ID=s.POSE_BY)
-                LEFT JOIN file_storage f ON(f.DOC_ID)
         WHERE t.TEACHER_ID=#{teacherId}
         <if test="report.stage != null and report.stage != ''">
             AND r.STAGE=#{report.stage}
@@ -86,16 +78,12 @@
             r.`STATUS`,
             r.COMMENT,
             r.SCORE,
-            r.IS_RELEASED,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            r.IS_RELEASED
         FROM
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
-                LEFT JOIN file_storage f ON(f.DOC_ID)
         WHERE r.POSE_BY=#{studentId}
     </select>
     <select id="selectReportByStuId" resultMap="ReportMapper">
@@ -104,15 +92,11 @@
             r.RESULT,
             r.PLAN,
             r.POSE_TIME,
-            u1.REAL_NAME AS STUDENT_NAME,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            u1.REAL_NAME AS STUDENT_NAME
         FROM
             report r
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON ( stu.USER_ID = u1.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID )
         WHERE
             r.POSE_BY = #{stuId}
           AND r.STAGE = #{stage}
@@ -137,10 +121,9 @@
         <result column="COMMENT" property="comment" jdbcType="VARCHAR"/>
         <result column="SCORE" property="score" jdbcType="INTEGER"/>
         <result column="IS_RELEASED" property="isReleased" jdbcType="BOOLEAN"/>
-        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
-            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        <collection property="fileStorage" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
         </collection>
     </resultMap>
 </mapper>

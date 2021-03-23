@@ -137,7 +137,7 @@ export default {
       // 查询参数（给后端）
       queryInfo: {
         keyWord: '', // 关键词
-        current: 1, // 当前页号
+        page: 1, // 当前页号
         size: 10, // 页面大小
         zone: '', // 课题领域
         teacherName: '' // 指导老师姓名
