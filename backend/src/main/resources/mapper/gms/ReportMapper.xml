@@ -105,7 +105,8 @@
 
     <resultMap id="ReportMapper" type="com.gms.gms.domain.Report">
         <result column="ID" property="id" jdbcType="INTEGER"/>
-        <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
+        <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
