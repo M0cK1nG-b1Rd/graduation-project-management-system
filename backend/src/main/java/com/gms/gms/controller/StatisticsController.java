@@ -171,9 +171,6 @@ public class StatisticsController {
         }
     }
 
-// TODO: 2021/3/23 提交结题申请 ,applyReason
-    //返回分数和总分
-
 
     @GetMapping("stageTask")
     public GmsResponse getStageTaskResultStatistics() throws GmsException {

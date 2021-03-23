@@ -85,6 +85,9 @@
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
                 JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
         WHERE r.POSE_BY=#{studentId}
+        <if test="report.stage != null and report.stage != ''">
+            AND r.STAGE=#{report.stage}
+        </if>
     </select>
     <select id="selectReportByStuId" resultMap="ReportMapper">
         SELECT
@@ -99,7 +102,9 @@
                 JOIN USER u1 ON ( stu.USER_ID = u1.USER_ID )
         WHERE
             r.POSE_BY = #{stuId}
-          AND r.STAGE = #{stage}
+        <if test="report.stage != null and report.stage != ''">
+            AND r.STAGE=#{report.stage}
+        </if>
     </select>
 
 

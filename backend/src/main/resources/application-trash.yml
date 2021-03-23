@@ -18,7 +18,7 @@ spring:
         # 数据源-1，名称为 primary
         primary:
           username: root
-          password: suncaper.NET610
+          password: a709046532
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://localhost:3306/gms?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
   aop:
@@ -50,6 +50,7 @@ spring:
     multipart:
       max-request-size: 50MB
       max-file-size: 50MB
+
 
   mail:
     host: smtp.126.com

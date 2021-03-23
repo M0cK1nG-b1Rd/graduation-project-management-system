@@ -15,6 +15,7 @@
         SELECT a.ID,
                a.SUB_ID,
                a.DOC_ID,
+               a.FEEDBACK,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -37,6 +38,7 @@
         SELECT a.ID,
                a.SUB_ID,
                a.DOC_ID,
+               a.FEEDBACK,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -60,6 +62,7 @@
         SELECT a.ID,
                a.SUB_ID,
                a.DOC_ID,
+               a.FEEDBACK,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -122,12 +125,33 @@
         WHERE
             sub.POSE_BY=#{teacherId}
     </select>
+    <select id="getTotalStudentsInSubject" resultType="com.gms.gms.domain.Student">
+        SELECT
+            s.STU_ID,
+            u.USER_ID,
+            u.REAL_NAME,
+            u.GENDER,
+            u.TEL,
+            u.MAIL,
+            co.COLLEGE_NAME,
+            m.MAJOR_NAME,
+            cl.CLASS_NAME
+        FROM
+            student s
+                JOIN `user` u ON ( u.USER_ID = s.USER_ID )
+                JOIN college co ON s.COLLEGE_ID = co.COLLEGE_ID
+                JOIN major m ON s.MAJOR_ID = m.MAJOR_ID
+                JOIN class cl ON s.CLASS_ID = cl.CLASS_ID
+        WHERE
+                STU_ID IN ( SELECT STU_ID FROM applied_subject WHERE( `STATUS` = 'YTG' OR  `STATUS` = 'WSH')AND SUB_ID = #{subId})
+    </select>
 
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
         <result column="ID" property="id" jdbcType="INTEGER"/>
         <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
         <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
+        <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
