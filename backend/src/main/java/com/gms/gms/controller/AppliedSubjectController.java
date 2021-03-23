@@ -3,13 +3,11 @@ package com.gms.gms.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
-import com.gms.gms.domain.Announcement;
 import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Student;
 import com.gms.gms.domain.Subject;
@@ -17,7 +15,6 @@ import com.gms.gms.service.AppliedSubjectService;
 import com.gms.gms.service.SubjectService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -121,34 +118,29 @@ public class AppliedSubjectController {
                     appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
                             .eq(AppliedSubject::getStuId, appliedSubject.getStuId())
                             .eq(AppliedSubject::getStatus, "YTG")) > 0) {
-                return new GmsResponse().addCodeMessage(new Meta(
-                        Code.C500.getCode(),
-                        Code.C500.getDesc(),
-                        "该学生已经有通过课题，请驳回该申请"));
+                throw new GmsException("该学生已经有通过课题，请驳回该申请");
             }
 
-            if(appliedSubject.getStatus().equals("YTG")) {
+            if (appliedSubject.getStatus().equals("YTG")) {
                 //更新课题信息，且人数已满则驳回申请
-                Integer stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
+                int stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
                 Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
                 Integer capacity = subject.getCapacity();
                 if (stuCount + 1 > capacity) {
-                    return new GmsResponse().addCodeMessage(new Meta(
-                            Code.C500.getCode(),
-                            Code.C500.getDesc(),
-                            "该课题人数已满！"));
+                    throw new GmsException("该课题人数已满！");
                 } else {
                     subject.setChosen(subject.getChosen() + 1);
                     subjectService.updateChosen(subject);
                 }
             }
-
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "审核意见提交成功"));
+        } catch (GmsException e) {
+            throw e;
         } catch (Exception e) {
             String message = "审核意见提交失败";
             log.error(message, e);

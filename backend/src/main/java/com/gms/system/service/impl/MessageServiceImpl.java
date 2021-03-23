@@ -93,4 +93,14 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public List<Integer> selectAllUserButAdmin() {
         return this.baseMapper.selectAllUserButAdmin();
     }
+
+    @Override
+    public Integer getTaskStuUserId(Integer taskId) {
+        return this.baseMapper.getTaskStuUserId(taskId);
+    }
+
+    @Override
+    public Integer getTaskTeaUserId(Integer taskId) {
+        return this.baseMapper.getTaskTeaUserId(taskId);
+    }
 }

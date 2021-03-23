@@ -9,7 +9,8 @@
         <result property="acceptanceTeamId" column="ACCEPTANCE_TEAM_ID"/>
         <result property="classroomId" column="CLASSROOM_ID"/>
         <result property="classroomName" column="CLASSROOM_NAME"/>
-        <result property="time" column="TIME"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
         <result property="isRelease" column="IS_RELEASE"/>
         <association property="stuGroup" column="{id=STU_GROUP_ID,stage=STAGE}"
                      select="com.gms.gms.dao.PleaMapper.getStudentGroup"/>

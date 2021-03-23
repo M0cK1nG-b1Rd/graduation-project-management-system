@@ -44,4 +44,7 @@ public interface MessageService extends IService<Message> {
 
     List<Integer> selectAllUserButAdmin();
 
+    Integer getTaskStuUserId(Integer taskId);
+
+    Integer getTaskTeaUserId(Integer taskId);
 }

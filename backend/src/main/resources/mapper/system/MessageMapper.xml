@@ -178,4 +178,24 @@
             `user`.USER_ID = user_role.USER_ID
           AND user_role.ROLE_ID != '1'
     </select>
+    <select id="getTaskStuUserId" resultType="java.lang.Integer">
+        SELECT
+            student.USER_ID
+        FROM
+            student,
+            stage_task
+        WHERE
+            student.STU_ID = stage_task.STU_ID
+          AND stage_task.TASK_ID = #{userId}
+    </select>
+    <select id="getTaskTeaUserId" resultType="java.lang.Integer">
+        SELECT
+            teacher.USER_ID
+        FROM
+            teacher,
+            stage_task
+        WHERE
+            teacher.TEACHER_ID = stage_task.TEACHER_ID
+          AND stage_task.TASK_ID = #{userId}
+    </select>
 </mapper>

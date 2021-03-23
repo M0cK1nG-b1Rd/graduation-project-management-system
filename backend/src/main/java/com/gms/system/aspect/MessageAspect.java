@@ -107,4 +107,28 @@ public class MessageAspect {
             new CreatNewMessage().afterUpdateSystemStage(currStageIds);
         }
     }
+
+    /**
+     * 老师布置阶段任务时向学生发通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.StageTaskController.giveStageTask(com.gms.gms.domain.StageTask)) && args(task)", argNames = "task")
+    public void afterGiveStageTask(StageTask task) {
+        new CreatNewMessage().afterGiveStageTask(task.getTaskId());
+    }
+
+    /**
+     * 学生提交阶段成果时向老师发送通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.StageTaskResultController.giveStageTaskResult(com.gms.gms.domain.StageTaskResult)) && args(result)", argNames = "result")
+    public void afterGiveStageTaskResult(StageTaskResult result) {
+        new CreatNewMessage().afterGiveStageTaskResult(result.getTaskId());
+    }
+
+    /**
+     * 老师阶段成果批复后向学生发送通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.StageTaskResultController.giveStageTaskScore(com.gms.gms.domain.StageTaskResult)) && args(result)", argNames = "result")
+    public void afterGiveStageTaskScore(StageTaskResult result) {
+        new CreatNewMessage().afterGiveStageTaskScore(result.getTaskId());
+    }
 }

@@ -64,10 +64,10 @@
                 JOIN college ON student.COLLEGE_ID = college.COLLEGE_ID
                 JOIN major ON student.MAJOR_ID = major.MAJOR_ID
                 JOIN class ON student.CLASS_ID = class.CLASS_ID
-                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+                JOIN report ON report.POSE_BY = student.STU_ID
         WHERE
-            plea_application.`STATUS` = 'YTG'
-          AND plea_application.STAGE = #{stage}
+            report.`STATUS` = 'YTG'
+          AND report.STAGE = #{stage}
     </select>
     <select id="selectAllStudent2" resultType="com.gms.gms.domain.Student">
         SELECT
@@ -180,10 +180,10 @@
             student.STU_ID
         FROM
             student
-                JOIN plea_application ON student.STU_ID = plea_application.STU_ID
+                JOIN report ON report.POSE_BY = student.STU_ID
         WHERE
-            plea_application.`STATUS` = 'YTG'
-          AND plea_application.STAGE = #{stage}
+            report.`STATUS` = 'YTG'
+          AND report.STAGE = #{stage}
     </select>
     <select id="getStudentNum2" resultType="java.lang.Integer">
         SELECT
