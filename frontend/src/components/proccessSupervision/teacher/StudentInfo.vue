@@ -22,31 +22,35 @@
             stripe>
             <!--        姓名-->
             <el-table-column
+              :show-overflow-tooltip="true"
               prop="realName"
               label="姓名"
               width="150">
             </el-table-column>
             <!--        专业-->
             <el-table-column
+              :show-overflow-tooltip="true"
               prop="majorName"
               label="专业"
               width="150">
             </el-table-column>
             <!--        班级-->
             <el-table-column
+              :show-overflow-tooltip="true"
               prop="className"
               width="150"
               label="班级">
             </el-table-column>
             <!--        邮箱-->
             <el-table-column
+              :show-overflow-tooltip="true"
               prop="mail"
-              show-overflow-tooltip
               width="180"
               label="邮箱">
             </el-table-column>
             <!--        操作-->
             <el-table-column
+              :show-overflow-tooltip="true"
               width="180"
               label="操作">
               <template slot-scope="scope">
@@ -54,15 +58,6 @@
                 <el-tooltip class="item" effect="dark" :enterable="false" content="给该学生布置新的阶段任务" placement="top">
                   <el-button type="danger" icon="el-icon-edit"
                              circle size="mini" @click="viewNewTaskDrawer(scope.row)"></el-button>
-                </el-tooltip>
-                <!--            查看该学生所有阶段任务-->
-                <el-tooltip class="item" effect="dark" :enterable="false" content="查看该学生的所有阶段任务" placement="top">
-                  <el-button type="primary" icon="el-icon-view"
-                             circle size="mini" @click="viewAllTask(scope.row)"></el-button>
-                </el-tooltip>
-                <!--            查看该学生统计信息-->
-                <el-tooltip class="item" effect="dark" :enterable="false" content="查看该学生完成情况" placement="top">
-                  <el-button type="warning" icon="el-icon-star-off" circle size="mini"></el-button>
                 </el-tooltip>
               </template>
             </el-table-column>

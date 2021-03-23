@@ -159,7 +159,7 @@
     </el-dialog>
     <!--      符文本编辑器对话框-->
     <el-dialog
-      title="请输入申请理由"
+      title="请输入审核意见"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
       width="60%">
@@ -210,9 +210,12 @@ export default {
     // 获取所有申请记录信息
     async getApplicationRecords() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
-      if (res.meta.code !== 200) return this.$message.error('拉取选题申请记录失败！')
-      this.allApplicationInfo = res.data.records
-      this.totalRecordNum = this.allApplicationInfo.length
+      if (res.meta.code !== 200) {
+        this.$message.error('拉取选题申请记录失败！')
+      } else {
+        this.allApplicationInfo = res.data.records
+        this.totalRecordNum = res.data.total
+      }
     },
     // 更新申请记录信息
     async updateApplicationRecords() {
@@ -259,17 +262,17 @@ export default {
       this.quillEditorVisible = false
     },
     // 通过申请
-    passApplication() {
+    async passApplication() {
       this.currentApplicationInfo.status = 'YTG'
-      this.updateApplicationRecords()
-      this.getApplicationRecords()
+      await this.updateApplicationRecords()
+      await this.getApplicationRecords()
       this.beginJudgePageVisible = false
     },
     // 驳回申请
-    rollbackApplication() {
+    async rollbackApplication() {
       this.currentApplicationInfo.status = 'WTG'
-      this.updateApplicationRecords()
-      this.getApplicationRecords()
+      await this.updateApplicationRecords()
+      await this.getApplicationRecords()
       this.beginJudgePageVisible = false
     }
   }

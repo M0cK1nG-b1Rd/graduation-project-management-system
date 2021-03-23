@@ -132,16 +132,6 @@
           </el-col>
         </el-row>
         <div class="divider"></div>
-        <!--          审核意见-->
-        <el-row type="flex" align="center" style="height: auto">
-          <el-col :span="3" class="item_label">审核意见：</el-col>
-          <el-col :span="21">
-            <div class="ql-container ql-snow">
-              <div class="notice_content ql-editor" v-html="currentApplicationInfo.feedback" style="font-size: 15px"></div>
-            </div>
-          </el-col>
-        </el-row>
-        <div class="divider"></div>
         <!--        相关附件-->
         <el-row type="flex" align="center">
           <el-col :span="3" class="item_label"><span>相关附件：</span></el-col>
@@ -149,6 +139,16 @@
             <el-row type="flex" justify="center">
               <Downloader :doc-id="docId"></Downloader>
             </el-row>
+          </el-col>
+        </el-row>
+        <div class="divider"></div>
+        <!--          审核意见-->
+        <el-row type="flex" align="center" style="height: auto">
+          <el-col :span="3" class="item_label">审核意见：</el-col>
+          <el-col :span="21">
+            <div class="ql-container ql-snow">
+              <div class="notice_content ql-editor" v-html="currentApplicationInfo.feedback" style="font-size: 15px"></div>
+            </div>
           </el-col>
         </el-row>
       </el-card>
