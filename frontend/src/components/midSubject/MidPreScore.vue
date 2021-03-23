@@ -260,8 +260,8 @@
                 <el-col>
                   <el-form-item label="开题结果">
                     <el-radio-group v-model="feedBack.isPassed">
-                      <el-radio label="false">通过审核</el-radio>
-                      <el-radio label="true">未通过</el-radio>
+                      <el-radio label="true">通过审核</el-radio>
+                      <el-radio label="false">不通过</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
@@ -280,14 +280,16 @@
       title="请输入反馈信息"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor"
                     :init-content="feedBack.feedback">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
-        </span>
+        </el-row>
+      </span>
     </el-dialog>
   </div>
 </template>

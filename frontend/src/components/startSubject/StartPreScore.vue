@@ -144,13 +144,17 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="课题名称">
               <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8">
             <el-form-item label="题目类型">
               <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
@@ -167,12 +171,16 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -185,6 +193,8 @@
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">开题报告详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentReportInfo" label-width="80px">
         <el-row>
           <el-col :span="7">
@@ -203,17 +213,23 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentReportInfo.meaning"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentReportInfo.result"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentReportInfo.plan"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -256,8 +272,8 @@
                 <el-col>
                   <el-form-item label="开题结果">
                     <el-radio-group v-model="feedBack.isPassed">
-                      <el-radio label="false">通过审核</el-radio>
-                      <el-radio label="true">未通过</el-radio>
+                      <el-radio label="true">通过审核</el-radio>
+                      <el-radio label="false">不通过</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
@@ -276,13 +292,15 @@
       title="请输入反馈信息"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor"
                     :init-content="feedBack.feedback">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
+        </el-row>
         </span>
     </el-dialog>
   </div>
