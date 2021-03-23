@@ -51,6 +51,7 @@
                s.STATUS,
                s.ZONE,
                s.DOC_ID,
+               s.FEEDBACK,
                u.REAL_NAME AS TEACHER_NAME,
                u.TEL,
                u.MAIL,
@@ -64,8 +65,8 @@
         </if>
 
     </select>
-    <select id="getAllSubject" resultType="com.gms.gms.domain.Subject">
-        SELECT s.SUB_ID ,
+    <select id="getAllSubject" resultMap="SubjectMapper">
+        SELECT DISTINCT s.SUB_ID ,
         s.SUB_NAME,
         s.REQUIREMENT,
         s.DESCRIPTION,
@@ -134,6 +135,7 @@
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="REQUIREMENT" property="requirement" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="ZONE" property="zone" jdbcType="VARCHAR"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
         <result column="POSE_TIME" property="poseTime" jdbcType="DATE"/>
