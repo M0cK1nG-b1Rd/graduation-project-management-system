@@ -46,10 +46,9 @@ public class StatisticsController {
     @Autowired
     ThesisService thesisService;
 
-    @GetMapping("score/star" +
-            "" +
-            "" +
-            "t")
+
+    // TODO: 2021/3/23 返回总分
+    @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
         try {
             Weight weight = weightService.getWeight();
@@ -171,6 +170,9 @@ public class StatisticsController {
             throw new GmsException(message);
         }
     }
+
+// TODO: 2021/3/23 提交结题申请 ,applyReason
+    //返回分数和总分
 
 
     @GetMapping("stageTask")
