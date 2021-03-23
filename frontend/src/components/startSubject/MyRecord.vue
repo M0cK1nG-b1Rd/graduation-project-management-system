@@ -220,6 +220,11 @@
               </div>
             </el-form-item>
           </el-col>
+          <el-col :span="20">
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="startReportDocId"></Downloader>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -275,7 +280,10 @@ export default {
   components: { Downloader },
   data() {
     return {
+      // 课题详情文件ID
       subjectDocId: null,
+      // 开题报告文件ID
+      startReportDocId: null,
       // 查看详情的课题信息
       currentSubjectInfo: {},
       subjectlist: [],
@@ -371,10 +379,11 @@ export default {
       this.viewPageVisible = true
       this.subjectDocId = row.docId
     },
-    // 查看课题详情
+    // 查看课开题报告详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentReportInfo = row
+      this.startReportDocId = row.docId
     },
     // 查看反馈结果
     viewFeedback(row) {
