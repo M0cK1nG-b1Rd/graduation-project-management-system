@@ -1,6 +1,7 @@
 package com.gms.gms.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author MrBird
@@ -37,6 +39,8 @@ public class StatisticsController {
     StageTaskStatisticsService stageTaskStatisticsService;
     @Autowired
     TotalScoreService totalScoreService;
+    @Autowired
+    AppliedSubjectService appliedSubjectService;
 
 
     @GetMapping("score/star" +
@@ -49,19 +53,19 @@ public class StatisticsController {
             Report applyList = reportService.getStartReport(stuId);
             PleaResult result = pleaResultService.getStartPleaResult(stuId);
             Integer fileScore = applyList.getScore();
-            String fileFeedback=applyList.getComment();
+            String fileFeedback = applyList.getComment();
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            map.put("fileScore",fileScore);
-            map.put("fileFeedback",fileFeedback);
-            map.put("defenseScore",defenseScore);
-            map.put("defenseFeedback",defenseFeedback);
+            map.put("fileScore", fileScore);
+            map.put("fileFeedback", fileFeedback);
+            map.put("defenseScore", defenseScore);
+            map.put("defenseFeedback", defenseFeedback);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),map);
-        }catch (GmsException e) {
+                    "查询成功"), map);
+        } catch (GmsException e) {
             String message = "查询失败";
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
@@ -82,25 +86,25 @@ public class StatisticsController {
             Report applyList = reportService.getMidReport(stuId);
             PleaResult result = pleaResultService.getMidPleaResult(stuId);
             Integer fileScore = applyList.getScore();
-            String fileFeedback=applyList.getComment();
+            String fileFeedback = applyList.getComment();
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            map.put("fileScore",fileScore);
-            map.put("fileFeedback",fileFeedback);
-            map.put("defenseScore",defenseScore);
-            map.put("defenseFeedback",defenseFeedback);
+            map.put("fileScore", fileScore);
+            map.put("fileFeedback", fileFeedback);
+            map.put("defenseScore", defenseScore);
+            map.put("defenseFeedback", defenseFeedback);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),map);
+                    "查询成功"), map);
         } catch (GmsException e) {
             String message = "查询失败";
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message + " : " + e));
-        }catch (Exception e) {
+        } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -108,7 +112,7 @@ public class StatisticsController {
     }
 
 
-        @GetMapping("stageTask")
+    @GetMapping("stageTask")
     public GmsResponse getStageTaskResultStatistics() throws GmsException {
         try {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
@@ -118,14 +122,14 @@ public class StatisticsController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),statistics);
+                    "查询成功"), statistics);
         } catch (GmsException e) {
             String message = "查询失败";
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message + " : " + e));
-        }catch (Exception e) {
+        } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -133,24 +137,74 @@ public class StatisticsController {
     }
 
 
-    @GetMapping("allScore")
-    public GmsResponse getAllScore() throws GmsException {
+    @GetMapping("student/allScore")
+    public GmsResponse getStudentAllScore() throws GmsException {
         try {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
-            TotalScore score = totalScoreService.getAllScore(stuId);
+            TotalScore score = totalScoreService.getAllScoreAsStudent(stuId);
 
+            Float finalScore = score.getTotalScore();
+            if (finalScore == null) {
+                score.setRank("总成绩暂未出分！");
+            }
+            if (finalScore < 60) {
+                score.setRank("不及格");
+            } else if (finalScore < 70) {
+                score.setRank("一般");
+            } else if (finalScore < 80) {
+                score.setRank("良好");
+            } else if (finalScore < 90) {
+                score.setRank("优秀");
+            }
 
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
-                    "查询成功"),score);
+                    "查询成功"), score);
         } catch (GmsException e) {
             String message = "查询失败";
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message + " : " + e));
-        }catch (Exception e) {
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+    @GetMapping("teacher/allScore")
+    public GmsResponse getTeacherAllScore(Integer page, Integer size) throws GmsException {
+        try {
+            // TODO: 2021/3/22 权限
+            List<Student> students = appliedSubjectService.getStudentsOfTeacher();
+            List<Integer> stuIds = students.stream().map(Student::getStuId).collect(Collectors.toList());
+            IPage<TotalScore> scores = totalScoreService.getAllScoreAsTeacher(page, size, stuIds);
+
+            List<TotalScore> scoreList = scores.getRecords();
+            for (TotalScore score : scoreList) {
+                Float finalScore = score.getTotalScore();
+                if (finalScore == null) {
+                    score.setRank("总成绩暂未出分！");
+                } else if (finalScore < 60) {
+                    score.setRank("不及格");
+                } else if (finalScore < 70) {
+                    score.setRank("一般");
+                } else if (finalScore < 80) {
+                    score.setRank("良好");
+                } else if (finalScore < 90) {
+                    score.setRank("优秀");
+                }
+            }
+            scores.setRecords(scoreList);
+
+
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"), scores);
+        } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);

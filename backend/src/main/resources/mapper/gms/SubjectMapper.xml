@@ -81,7 +81,7 @@
         p.CHOSEN,
         f.FILE_NAME,
         f.DOC_ID,
-        f.FILE_ID,
+        f.FILE_ID
         FROM `subject` s
         JOIN passed_subject p ON (p.SUB_ID = s.SUB_ID)
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)

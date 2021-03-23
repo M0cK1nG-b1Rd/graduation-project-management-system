@@ -3,50 +3,123 @@
 <mapper namespace="com.gms.gms.dao.TotalScoreMapper">
 
 
-    <select id="getAllScore" resultType="com.gms.gms.domain.TotalScore">
-        SELECT
-            * , (w.START_STAGE*START_SCORE+w.MIDDLE_STAGE*MIDDLE_SCORE+w.END_STAGE*END_SCORE+w.STAGE_TASK*PROCEDURE_SCORE)/100 AS TOTAL_SCORE
-        FROM
-            ( SELECT SCORE AS START_MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) sms,
-            ( SELECT SCORE AS MIDDLE_MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) mms,
-            ( SELECT SCORE AS END_MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} ) ems,
-            ( SELECT SCORE AS START_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) sps,
-            ( SELECT SCORE AS MIDDLE_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) mps,
-            ( SELECT SCORE AS END_PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) eps,
+    <select id="getAllScoreAsStudent" resultType="com.gms.gms.domain.TotalScore">
+        SELECT #{stuId}                                                                 STU_ID,
+               s.STU_NAME,
+               s.SUB_NAME,
+               s.ZONE,
+               (SELECT SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT')     START_MATERIAL_SCORE,
+               (SELECT SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ')     MIDDLE_MATERIAL_SCORE,
+               (SELECT SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF')  END_MATERIAL_SCORE,
+               (SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT') START_PLEA_SCORE,
+               (SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ') MIDDLE_PLEA_SCORE,
+               (SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT') END_PLEA_SCORE,
+               (
+                   SELECT (w.START_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.START_PLEA) / 100
+                   FROM (SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT') ms
+                            JOIN (SELECT SCORE AS PLEA_SCORE
+                                  FROM plea_result
+                                  WHERE STU_ID = #{stuId} AND STAGE = 'KT') ps
+               )                                                                        START_SCORE,
+               (
+                   SELECT (w.MIDDLE_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.MIDDLE_PLEA) / 100
+                   FROM (SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ') ms
+                            JOIN (SELECT SCORE AS PLEA_SCORE
+                                  FROM plea_result
+                                  WHERE STU_ID = #{stuId} AND STAGE = 'ZQ') ps
+               )                                                                        MIDDLE_SCORE,
+               (
+                   SELECT (w.END_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.END_PLEA) / 100
+                   FROM (SELECT SCORE AS MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF') ms
+                            JOIN (SELECT SCORE AS PLEA_SCORE
+                                  FROM plea_result
+                                  WHERE STU_ID = #{stuId} AND STAGE = 'JT') ps
+               )                                                                        END_SCORE,
+               (
+                   SELECT AVG(str.SCORE)
+                   FROM stage_task_result str
+                            JOIN (SELECT TASK_ID, MAX(RETRIES) AS MAX_RETRIES
+                                  FROM stage_task_result
+                                  GROUP BY TASK_ID) mr ON (mr.TASK_ID = str.TASK_ID AND mr.MAX_RETRIES = str.RETRIES)
+                            JOIN stage_task st ON (st.TASK_ID = str.TASK_ID)
+                   WHERE st.STU_ID = #{stuId}
+               )                                                                        PROCEDURE_SCORE,
+               (
+                   SELECT (w.START_STAGE * START_SCORE + w.MIDDLE_STAGE * MIDDLE_SCORE + w.END_STAGE * END_SCORE +
+                           w.STAGE_TASK * PROCEDURE_SCORE) / 100
+               )                                                                        TOTAL_SCORE
+        FROM weight w,
+             (
+                 SELECT u.REAL_NAME AS STU_NAME,
+                        s.SUB_NAME,
+                        s.ZONE
+                 FROM applied_subject a
+                          JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
+                          JOIN student stu ON (stu.STU_ID = a.STU_ID)
+                          JOIN `user` u ON (stu.USER_ID = u.USER_ID)
+                 WHERE a.`STATUS` = 'YTG'
+                   AND a.STU_ID = #{stuId}
+             ) s
+    </select>
+    <select id="getAllScoreAsTeacher" resultType="com.gms.gms.domain.TotalScore">
+        <foreach collection="stuIds" item="stuId" separator="union">
+            SELECT #{stuId} STU_ID,s.STU_NAME,s.SUB_NAME,s.ZONE,
+            ( SELECT SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) START_MATERIAL_SCORE,
+            ( SELECT SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) MIDDLE_MATERIAL_SCORE,
+            ( SELECT SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF' ) END_MATERIAL_SCORE,
+            ( SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) START_PLEA_SCORE,
+            ( SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) MIDDLE_PLEA_SCORE,
+            ( SELECT SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) END_PLEA_SCORE,
             (
-                SELECT
-                    ( START_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * START_PLEA )/ 100 AS START_SCORE
-                FROM
-                    ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) ms,
-                    ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) ps,
-                    ( SELECT START_MATERIAL, START_PLEA FROM weight ) mp
-            ) ss,
+            SELECT
+            ( w.START_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.START_PLEA )/ 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' ) ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT' ) ps
+            ) START_SCORE,
             (
-                SELECT
-                    ( MIDDLE_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * MIDDLE_PLEA )/ 100 AS MIDDLE_SCORE
-                FROM
-                    ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) ms,
-                    ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) ps,
-                    ( SELECT MIDDLE_MATERIAL, MIDDLE_PLEA FROM weight ) mp
-            ) ms,
+            SELECT
+            ( w.MIDDLE_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.MIDDLE_PLEA )/ 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' ) ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) ps
+            ) MIDDLE_SCORE,
             (
-                SELECT
-                    ( END_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * END_PLEA )/ 100 AS END_SCORE
-                FROM
-                        ( SELECT SCORE AS MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF') ms,
-                        ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) ps,
-                        ( SELECT END_MATERIAL, END_PLEA FROM weight ) mp
-            ) es,
+            SELECT
+            ( w.END_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.END_PLEA )/ 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF' ) ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT' ) ps
+            ) END_SCORE,
             (
-                SELECT
-                    AVG( str.SCORE ) AS PROCEDURE_SCORE
-                FROM
-                    stage_task_result str
-                        JOIN ( SELECT TASK_ID, MAX( RETRIES ) AS MAX_RETRIES FROM stage_task_result GROUP BY TASK_ID ) mr ON ( mr.TASK_ID = str.TASK_ID AND mr.MAX_RETRIES = str.RETRIES )
-                        JOIN stage_task st ON ( st.TASK_ID = str.TASK_ID )
-                WHERE
-                    st.STU_ID = #{stuId}
-            ) ps,weight w
-
+            SELECT
+            AVG( str.SCORE )
+            FROM
+            stage_task_result str
+            JOIN ( SELECT TASK_ID, MAX( RETRIES ) AS MAX_RETRIES FROM stage_task_result GROUP BY TASK_ID ) mr ON (
+            mr.TASK_ID = str.TASK_ID AND mr.MAX_RETRIES = str.RETRIES )
+            JOIN stage_task st ON ( st.TASK_ID = str.TASK_ID )
+            WHERE
+            st.STU_ID = #{stuId}
+            ) PROCEDURE_SCORE,
+            (
+            SELECT
+            ( w.START_STAGE * START_SCORE + w.MIDDLE_STAGE * MIDDLE_SCORE + w.END_STAGE * END_SCORE + w.STAGE_TASK *
+            PROCEDURE_SCORE )/ 100
+            ) TOTAL_SCORE
+            FROM
+            weight w,(
+            SELECT
+            u.REAL_NAME AS STU_NAME,s.SUB_NAME,s.ZONE
+            FROM
+            applied_subject a
+            JOIN `subject` s ON ( a.SUB_ID = s.SUB_ID )
+            JOIN student stu ON ( stu.STU_ID = a.STU_ID )
+            JOIN `user` u ON ( stu.USER_ID = u.USER_ID )
+            WHERE
+            a.`STATUS` = 'YTG'
+            AND a.STU_ID = #{stuId}
+            ) s
+        </foreach>
     </select>
 </mapper>
