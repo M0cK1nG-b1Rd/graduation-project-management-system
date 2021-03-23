@@ -21,7 +21,7 @@ public class AccountUtil {
         AccountService accountService = SpringContextUtil.getBean(AccountService.class);
         Teacher teacher =accountService.getTeacherByUserId(userId);
         if (teacher==null) {
-            throw new GmsException("该用户不是老师！");
+            throw new GmsException("该用户不是老师，无权进行操作！");
         }
         return teacher;
     }
@@ -31,7 +31,7 @@ public class AccountUtil {
         AccountService accountService = SpringContextUtil.getBean(AccountService.class);
         Student student =accountService.getStudentByUserId(userId);
         if (student==null) {
-            throw new GmsException("该用户不是学生！");
+            throw new GmsException("该用户不是学生，无权进行操作！");
         }
         return student;
     }
@@ -41,7 +41,7 @@ public class AccountUtil {
         AccountService accountService = SpringContextUtil.getBean(AccountService.class);
         TeachingOffice teachingOffice =accountService.getTeachingOfficeByUserId(userId);
         if (teachingOffice==null) {
-            throw new GmsException("该用户不是教研办！");
+            throw new GmsException("该用户不是教研办，无权进行操作！");
         }
         return teachingOffice;
     }
@@ -51,7 +51,7 @@ public class AccountUtil {
         AccountService accountService = SpringContextUtil.getBean(AccountService.class);
         Secretary secretary =accountService.getSecretaryByUserId(userId);
         if (secretary==null) {
-            throw new GmsException("该用户不是答辩秘书！");
+            throw new GmsException("该用户不是答辩秘书，无权进行操作！");
         }
         return secretary;
     }

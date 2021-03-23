@@ -41,7 +41,7 @@
         <!--        课题类型-->
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="type"
+          prop="zone"
           label="课题类型"
           width="170"
           :filters="[{ text: '科学探索与技术创新', value: 'KXTS' }, { text: '生命关怀与社会认知', value: 'SMGH' }, { text: '哲学智慧与创新思维', value: 'ZXZH' }]"
