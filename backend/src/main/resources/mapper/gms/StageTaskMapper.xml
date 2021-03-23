@@ -102,7 +102,7 @@
         <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
         <result column="STAGE" property="stage" jdbcType="VARCHAR"/>
-        <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+        <result column="TASK_STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>
         <result column="STU_ID" property="stuId" jdbcType="INTEGER"/>
@@ -113,7 +113,7 @@
             <result column="RETRIES" property="retries" jdbcType="INTEGER"/>
             <result column="SUMMARY" property="summary" jdbcType="VARCHAR"/>
             <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
-            <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+            <result column="RESULT_STATUS" property="status" jdbcType="VARCHAR"/>
             <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
             <result column="SCORE" property="score" jdbcType="INTEGER"/>
             <collection property="fileStorage" column="DOC_ID"
