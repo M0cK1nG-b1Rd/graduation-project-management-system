@@ -16,7 +16,7 @@ public interface ReportMapper extends BaseMapper<Report> {
 
     Page<Report> selectReportAsTeacher(Page<Report> page, @Param("report") Report report, Integer teacherId);
 
-    Page<Report> selectReportAsStudent(Page<Report> page, Report report, Integer studentId);
+    Page<Report> selectReportAsStudent(Page<Report> page, @Param("report") Report report, Integer studentId);
 
     void auditReport(Report report);
 

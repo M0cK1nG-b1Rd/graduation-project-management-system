@@ -168,6 +168,11 @@
               <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="20">
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="subjectDocId"></Downloader>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -264,10 +269,13 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'MyRecord',
+  components: { Downloader },
   data() {
     return {
+      subjectDocId: null,
       // 查看详情的课题信息
       currentSubjectInfo: {},
       subjectlist: [],
@@ -285,7 +293,8 @@ export default {
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        stage: 'KT'
       },
       // 查看分数
       score: {
@@ -357,9 +366,10 @@ export default {
       return row.status === value
     },
     // 查看课题详情
-    viewSubject() {
+    viewSubject(row) {
       this.getSubjectInfo()
       this.viewPageVisible = true
+      this.subjectDocId = row.docId
     },
     // 查看课题详情
     viewReport(row) {
