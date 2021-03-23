@@ -56,11 +56,6 @@
                 </div>
               </el-col>
             </el-row>
-            <el-divider></el-divider>
-            <!--        附件-->
-            <el-row type="flex" align="center">
-              <el-col :span="4" class="item_label">附件下载：</el-col>
-            </el-row>
           </el-card>
         </el-row>
         <div class="card_header">结题答辩申请</div>
@@ -126,7 +121,12 @@
             <el-divider></el-divider>
             <!--        附件-->
             <el-row type="flex" align="center">
-              <el-col :span="4" class="item_label">附件上传：</el-col>
+              <el-col :span="3" class="item_label">附件上传：</el-col>
+              <el-popconfirm
+                @confirm="uploaderVisible=true"
+                title="上传附件前请确认已提交结题答辩申请！">
+                <el-button size="mini" slot="reference" type="primary" style="margin-left: 1px">上传附件</el-button>
+              </el-popconfirm>
             </el-row>
           </el-card>
         </el-row>
@@ -155,16 +155,29 @@
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
         </span>
   </el-dialog>
+  <!--    上传附件对话框-->
+  <el-dialog
+    title="上传附件"
+    :visible.sync="uploaderVisible"
+    width="30%">
+    <uploader :doc-id="docId"></uploader>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+  </el-dialog>
 </div>
 </template>
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+import Uploader from '@/plugins/upload-download/Uploader'
 export default {
   name: 'applyClosing',
-  components: { quillEditor },
+  components: { quillEditor, Uploader },
   data() {
     return {
+      docId: null,
+      uploaderVisible: false,
       // 当前选中的课题信息
       currentSubjectInfo: {
         subId: '',
@@ -206,7 +219,12 @@ export default {
     // 提交表单
     async reportSubmit() {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
-      if (res.meta.code === 200) this.$message.success('提交开题报告成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error('答辩申请提交失败！')
+      } else {
+        this.docId = res.data
+        this.$message.success('答辩申请提交成功！')
+      }
     },
     // 调用富文本编辑器
     useQuillEditor() {

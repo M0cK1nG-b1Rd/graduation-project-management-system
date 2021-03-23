@@ -53,14 +53,6 @@
                 </div>
               </el-col>
             </el-row>
-            <el-divider></el-divider>
-            <!--        附件-->
-            <el-row type="flex" align="center">
-              <el-col :span="4" class="item_label">附件下载：</el-col>
-              <el-col :span="20">
-                <Downloader :doc-id="subjectDocId"></Downloader>
-              </el-col>
-            </el-row>
           </el-card>
         </el-row>
         <!--      填写开题报告，上传附件区-->
@@ -105,6 +97,11 @@
           </el-row>
           <el-form-item>
             <el-button type="primary" @click="reportSubmit">立即提交</el-button>
+            <el-popconfirm
+              @confirm="uploaderVisible=true"
+              title="上传附件前请确认已提交表单！">
+              <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
+            </el-popconfirm>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
@@ -152,17 +149,29 @@
           <el-button type="primary" @click="submitQuillEditor3Content">确 定</el-button>
         </span>
     </el-dialog>
+    <!--    上传附件对话框-->
+    <el-dialog
+      title="上传附件"
+      :visible.sync="uploaderVisible"
+      width="30%">
+      <uploader :doc-id="docId"></uploader>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" plain @click="uploaderVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
-import Downloader from '@/plugins/upload-download/Downloader'
+import Uploader from '@/plugins/upload-download/Uploader'
 export default {
   name: 'StartReport',
-  components: { quillEditor, Downloader },
+  components: { quillEditor, Uploader },
   data() {
     return {
+      docId: null,
+      uploaderVisible: false,
       subjectDocId: '',
       reportDocId: '',
       // 查看学生的课题信息
@@ -207,7 +216,12 @@ export default {
     // 提交表单
     async reportSubmit() {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
-      if (res.meta.code === 200) this.$message.success('提交开题报告成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error('开题报告提交失败！')
+      } else {
+        this.docId = res.data
+        this.$message.success('开题报告提交成功！')
+      }
     },
     // 调用富文本编辑器
     useQuillEditor1() {
