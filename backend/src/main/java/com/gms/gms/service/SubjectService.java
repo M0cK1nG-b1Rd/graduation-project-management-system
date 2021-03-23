@@ -28,4 +28,6 @@ public interface SubjectService extends IService<Subject> {
 
     Subject getBySubId(String subId);
 
+    void updateChosen(Subject subject);
+
 }

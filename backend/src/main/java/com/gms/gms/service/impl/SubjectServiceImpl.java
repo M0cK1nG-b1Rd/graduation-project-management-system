@@ -70,4 +70,9 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
         return this.baseMapper.selectOne(map);
     }
 
+    @Override
+    public void updateChosen(Subject subject) {
+        this.updateById(subject);
+    }
+
 }
