@@ -62,7 +62,7 @@ public class Subject implements Serializable {
 
 
     @TableField("AUDIT_BY")
-    private String auditBy;
+    private Integer auditBy;
 
     @TableField("AUDIT_TIME")
     private Date auditTime;
