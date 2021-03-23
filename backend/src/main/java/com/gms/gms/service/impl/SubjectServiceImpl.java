@@ -47,14 +47,14 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
 
     @Override
     public IPage<Subject> getPassedSubject(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
+        Page<Subject> page = new Page<>(subject.getPage(),  subject.getSize());
         Page<Subject> returnSubjectPage = this.baseMapper.getPassedSubject(page,subject);
         return returnSubjectPage;
     }
 
     @Override
     public IPage<Subject> getAllSubject(Subject subject) {
-        Page<Subject> page = new Page<>(subject.getCurrent(),  subject.getSize());
+        Page<Subject> page = new Page<>(subject.getPage(),  subject.getSize());
         return this.baseMapper.getAllSubject(page,subject);
     }
 
