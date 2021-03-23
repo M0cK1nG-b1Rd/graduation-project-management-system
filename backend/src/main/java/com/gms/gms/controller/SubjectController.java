@@ -179,13 +179,12 @@ public class SubjectController {
     // TODO: 2021/3/23 增加poseBy和poseTime 
     //教研办审核教师课题
     @PutMapping("audit")
-    public GmsResponse auditSubject(@RequestBody LinkedHashMap<String,String> opinion) throws GmsException {
+    public GmsResponse auditSubject(@RequestBody Subject opinion) throws GmsException {
         try {
-            String subId = opinion.get("subId");
-            //WTG未通过，YTG已通过
-            String status = opinion.get("status");
-            String feedback = opinion.get("feedback");
-            subjectService.giveOpinion(subId, status, feedback);
+            Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
+            opinion.setAuditBy(teacherId);
+            opinion.setAuditTime(new Date());
+            subjectService.giveOpinion(opinion);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
