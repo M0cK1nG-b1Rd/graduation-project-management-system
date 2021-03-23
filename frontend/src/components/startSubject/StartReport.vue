@@ -96,13 +96,18 @@
             </el-col>
           </el-row>
           <el-form-item>
-            <el-button type="primary" @click="reportSubmit">立即提交</el-button>
-            <el-popconfirm
-              @confirm="uploaderVisible=true"
-              title="上传附件前请确认已提交表单！">
-              <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
-            </el-popconfirm>
-            <el-button>取消</el-button>
+            <el-row style="padding-left: 130px">
+              <el-popconfirm
+                @confirm="reportSubmit"
+                title="确认提交开题报告吗?">
+                <el-button slot="reference" type="primary">立即提交</el-button>
+              </el-popconfirm>
+              <el-popconfirm
+                @confirm="uploaderVisible=true"
+                title="上传附件前请确认已提交表单！">
+                <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
+              </el-popconfirm>
+            </el-row>
           </el-form-item>
         </el-form>
         </el-card>
