@@ -22,7 +22,8 @@
             thesis.THESIS_ID,
             thesis.DOC_ID,
             thesis.`STATUS`,
-            thesis.POSE_TIME
+            thesis.POSE_TIME,
+               thesis.SCORE
         FROM
             thesis
         WHERE
