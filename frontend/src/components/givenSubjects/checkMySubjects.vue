@@ -92,25 +92,25 @@
             <el-row>
               <el-col :span="10">
                 <el-form-item label="课题名称">
-                  <el-input v-model="currentSubjectInfo.subName"></el-input>
+                  <a-input v-model="currentSubjectInfo.subName"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
                 <el-form-item label="申报人">
-                  <el-input v-model="currentSubjectInfo.teacherName"></el-input>
+                  <a-input v-model="currentSubjectInfo.teacherName"></a-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="10">
                 <el-form-item label="题目类型">
-                  <el-input v-model="currentSubjectInfo.zoneName"></el-input>
+                  <a-input v-model="currentSubjectInfo.zoneName"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
                 <el-form-item label="申报时间">
                   <el-row>
-                    <el-input v-model="currentSubjectInfo.poseTime"></el-input>
+                    <a-input v-model="currentSubjectInfo.poseTime"></a-input>
                   </el-row>
                 </el-form-item>
               </el-col>
@@ -118,29 +118,29 @@
             <el-row>
               <el-col :span="6">
                 <el-form-item label="指导教师">
-                  <el-input v-model="currentSubjectInfo.teacherName"></el-input>
+                  <a-input v-model="currentSubjectInfo.teacherName"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="7">
                 <el-form-item label="导师电话">
-                  <el-input v-model="currentSubjectInfo.tel"></el-input>
+                  <a-input v-model="currentSubjectInfo.tel"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="7">
                 <el-form-item label="导师邮箱">
-                  <el-input v-model="currentSubjectInfo.mail"></el-input>
+                  <a-input v-model="currentSubjectInfo.mail"></a-input>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="20">
                 <el-form-item label="课题内容">
-                  <el-input type="textarea" v-model="currentSubjectInfo.description"></el-input>
+                  <a-input type="textarea" v-model="currentSubjectInfo.description"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
                 <el-form-item label="课题要求">
-                  <el-input type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+                  <a-input type="textarea" v-model="currentSubjectInfo.requirement"></a-input>
                 </el-form-item>
               </el-col>
               <el-col :span="20">
@@ -150,7 +150,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item label="审核意见">
-                  <el-input type="textarea" v-model="currentSubjectInfo.opinion" disabled></el-input>
+                  <a-input type="textarea" v-model="currentSubjectInfo.opinion" disabled></a-input>
                 </el-form-item>
               </el-col>
             </el-row>
