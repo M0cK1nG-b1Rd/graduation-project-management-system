@@ -76,6 +76,7 @@
 
     <resultMap id="StageTaskMap" type="com.gms.gms.domain.StageTask">
         <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
         <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
@@ -96,6 +97,7 @@
 
     <resultMap id="StageTaskMapWithResult" type="com.gms.gms.domain.StageTask">
         <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
         <result column="TASK_NAME" property="taskName" jdbcType="VARCHAR"/>
         <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>

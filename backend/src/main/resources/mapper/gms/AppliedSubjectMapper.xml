@@ -126,7 +126,8 @@
 
     <resultMap id="AppliedSubjectMapper" type="com.gms.gms.domain.AppliedSubject">
         <result column="ID" property="id" jdbcType="INTEGER"/>
-        <result column="SUB_ID" property="subId" jdbcType="INTEGER"/>
+        <result column="SUB_ID" property="subId" jdbcType="VARCHAR"/>
+        <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
         <result column="SUB_NAME" property="subName" jdbcType="VARCHAR"/>
         <result column="TEACHER_ID" property="teacherId" jdbcType="INTEGER"/>
         <result column="TEACHER_NAME" property="teacherName" jdbcType="VARCHAR"/>

@@ -67,9 +67,9 @@ public class Subject implements Serializable {
     private String feedback;
 
     //详情字段
-    @TableField(exist = false)
+    @TableField("CAPACITY")
     private Integer capacity;
-    @TableField(exist = false)
+    @TableField("CHOSEN")
     private Integer chosen;
     @TableField(exist = false)
     private String teacherName;
