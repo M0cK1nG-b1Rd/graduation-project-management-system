@@ -25,7 +25,6 @@ Vue.use(Viser)
 Vue.use(Antd)
 Vue.use(dataV)
 Vue.use(dataDict)
-
 Vue.use(VueQuillEditor)
 
 // TODO 这里可以替换为后端的API根路径
