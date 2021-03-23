@@ -108,7 +108,7 @@
             <div>总分</div>
             <a-progress
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="85"
+              :percent="score.midScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
@@ -285,7 +285,7 @@ export default {
       score: {
         fileScore: 0, // 材料分数
         defenseScore: 0, // 答辩分数
-        total: 0 // 总分
+        midScore: 0 // 总分
       },
       // 查看课题详情对话框可见性
       viewPageVisible: false,

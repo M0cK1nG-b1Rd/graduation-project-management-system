@@ -70,7 +70,7 @@
         <el-col :span="16">
           <el-card>
             <div class="card_header">填写中期报告基本信息</div>
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="report" label-width="80px">
               <el-row>
                 <el-col :span="20">
                   <el-col :span="3" class="item_label"><span>研究进展</span></el-col>
@@ -89,14 +89,14 @@
                     <div class="ql-container ql-snow">
                       <div class="notice_content ql-editor"
                            @click="useQuillEditor2"
-                           v-html="report.followPlan">
+                           v-html="report.postPlan">
                       </div>
                     </div>
                   </el-col>
                 </el-col>
               </el-row>
               <el-form-item>
-                <el-button type="primary" @click="dialogVisible=true">立即创建</el-button>
+                <el-button type="primary" @click="reportSubmit">立即创建</el-button>
                 <el-button>取消</el-button>
               </el-form-item>
             </el-form>
@@ -138,7 +138,7 @@
       :before-close="resetQuillEditor2Content"
       width="75%">
       <quill-editor ref="quillEditor2"
-                    :init-content="report.followPlan">
+                    :init-content="report.postPlan">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
           <el-button @click="resetQuillEditor2Content">清 空</el-button>
@@ -168,8 +168,10 @@ export default {
         teacherHomePage: ''
       },
       report: {
+        subId: '',
         progress: '',
-        followPlan: '',
+        postPlan: '',
+        stage: 'ZQ',
         fileList: [{
           name: 'food.jpeg',
           url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
@@ -198,11 +200,17 @@ export default {
     // }
     // 获取课题信息
     async getCurrentSubjectInfo() {
-      const { data: res } = await this.$http.get('/mock/mySubjects.json')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.currentSubjectInfo = res.data.MySubject
+      this.currentSubjectInfo = res.data
+    },
+    // 提交表单
+    async reportSubmit() {
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
+      if (res.meta.code !== 200) this.$message.error('提交中期信息失败！')
+      else this.$message.success('提交中期信息成功！')
     },
     // 调用富文本编辑器
     useQuillEditor1() {
@@ -219,7 +227,7 @@ export default {
     },
     resetQuillEditor2Content() {
       this.$refs.quillEditor.reset()
-      this.report.followPlan = '请简述下一步的主要工作'
+      this.report.postPlan = '请简述下一步的主要工作'
       this.quillEditor2Visible = false
     },
     // 提交（采用）富文本编辑器框
@@ -228,7 +236,7 @@ export default {
       this.quillEditor1Visible = false
     },
     submitQuillEditor2Content() {
-      this.report.followPlan = this.$refs.quillEditor2.returnContent()
+      this.report.postPlan = this.$refs.quillEditor2.returnContent()
       this.quillEditor2Visible = false
     }
   }

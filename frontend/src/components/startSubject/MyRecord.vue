@@ -108,7 +108,7 @@
             <div>总分</div>
             <a-progress
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="85"
+              :percent="score.startScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
@@ -285,6 +285,7 @@ export default {
       score: {
         fileScore: 0, // 材料分数
         defenseScore: 0, // 答辩分数
+        startScore: 0,
         total: 0 // 总分
       },
       // 查看课题详情对话框可见性
@@ -326,7 +327,7 @@ export default {
     async getScore() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取反馈失败')
+        return this.$message.error('获取成绩失败')
       }
       this.score = res.data
       this.feedBack.secretatryComment = res.data.defenseFeedback

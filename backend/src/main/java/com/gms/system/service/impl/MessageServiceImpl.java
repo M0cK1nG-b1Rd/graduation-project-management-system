@@ -2,6 +2,7 @@ package com.gms.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gms.gms.domain.Thesis;
 import com.gms.system.dao.MessageMapper;
 import com.gms.system.domain.Message;
 import com.gms.system.service.MessageService;
@@ -54,5 +55,25 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     public List<Integer> getTeacherUserIdThesis() {
         return this.baseMapper.getTeacherUserIdThesis();
+    }
+
+    @Override
+    public Integer countScore(Integer id) {
+        return this.baseMapper.countScore(id);
+    }
+
+    @Override
+    public void setScore(Integer thesisId) {
+        this.baseMapper.setScore(thesisId);
+    }
+
+    @Override
+    public Thesis selectThesis(Integer id) {
+        return this.baseMapper.selectThesis(id);
+    }
+
+    @Override
+    public Integer getUserIdBySubID(String subId) {
+        return this.baseMapper.getUserIdBySubID(subId);
     }
 }

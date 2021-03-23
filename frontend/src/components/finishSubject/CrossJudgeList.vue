@@ -29,22 +29,23 @@
             </el-table-column>
             <!--          课题名称-->
             <el-table-column
-              prop="studentName"
+              prop="subject.subName"
               label="课题名称"
               width="200">
             </el-table-column>e
             <!--         评审状态-->
             <el-table-column
               :show-overflow-tooltip="true"
-              prop="status"
+              prop="subject"
               width="180"
-              :filters="[{ text: '待评审', value: 1 }, { text: '已评审', value: 2 }]"
+              :filters="[{ text: '科学探索与技术创新', value: 'KXTS' }, { text: '生命关怀与社会认知', value: 'SMGH' }, { text: '哲学智慧与创新思维', value: 'ZXZH' }]"
               :filter-method="filterStatus"
               filter-placement="bottom-end"
               label="评审状态">
               <template slot-scope="scope">
-                <el-tag type="success" v-if=" scope.row.status == 'YTG'">待评审</el-tag>
-                <el-tag type="warning" v-if=" scope.row.status == 'WSH'">已评审</el-tag>
+                <el-tag type="success" v-if=" scope.row.subject.zone == 'KXTS'">科学探索与技术创新</el-tag>
+                <el-tag type="warning" v-if=" scope.row.subject.zone == 'SMGH'">生命关怀与社会认知</el-tag>
+                <el-tag type="danger" v-if=" scope.row.subject.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
               </template>
             </el-table-column>
             <!--          操作-->
@@ -80,32 +81,22 @@
       </el-card>
     </el-row>
     <!--    给学生反馈信息抽屉-->
-    <el-drawer
-      title="开题信息反馈及评分"
+    <el-dialog
+      title="毕业设计论文评分"
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
-        <!--      富文本编辑器输入框-->
         <el-form ref="form" :model="feedBack" label-width="80px">
           <el-row>
             <el-col style="padding: 40px">
               <el-card class="feedBackCard">
                 <el-row>
-                  <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
-                  <el-col :span="24" style="margin-bottom: 10px">
-                    <div class="ql-container ql-snow">
-                      <div class="notice_content ql-editor"
-                           @click="useQuillEditor"
-                           v-html="feedBack.comment">
-                      </div>
-                    </div>
-                  </el-col>
+                  <el-col :span="10" class="item_label"><span class="card_header">评审打分表</span></el-col>
                 </el-row>
-                <el-divider></el-divider>
                 <el-col>
                   <div class="block">
                     <el-slider
-                      v-model="feedBack.fileScore"
+                      v-model="feedBack.score"
                       show-input>
                     </el-slider>
                   </div>
@@ -131,29 +122,29 @@
           </el-form-item>
         </el-form>
       </el-row>
-    </el-drawer>
-    <!--      符文本编辑器对话框-->
-    <el-dialog
-      title="请输入反馈信息"
-      :visible.sync="quillEditorVisible"
-      :before-close="resetQuillEditorContent"
-      width="75%">
-      <quill-editor ref="quillEditor"
-                    :init-content="feedBack.comment">
-      </quill-editor>
-      <span slot="footer" class="dialog-footer">
-          <el-button @click="resetQuillEditorContent">清 空</el-button>
-          <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
-        </span>
     </el-dialog>
+    <!--      符文本编辑器对话框-->
+    <!--<el-dialog-->
+      <!--title="请输入反馈信息"-->
+      <!--:visible.sync="quillEditorVisible"-->
+      <!--:before-close="resetQuillEditorContent"-->
+      <!--width="75%">-->
+      <!--<quill-editor ref="quillEditor"-->
+                    <!--:init-content="feedBack.comment">-->
+      <!--</quill-editor>-->
+      <!--<span slot="footer" class="dialog-footer">-->
+          <!--<el-button @click="resetQuillEditorContent">清 空</el-button>-->
+          <!--<el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>-->
+        <!--</span>-->
+    <!--</el-dialog>-->
   </div>
 </template>
 
 <script>
-import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+// import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'CrossJudgeList',
-  components: { quillEditor },
+  // components: { quillEditor },
   data() {
     return {
       // （符合要求）课题总数
@@ -170,14 +161,14 @@ export default {
       total: 0,
       feedBack: {
         comment: '',
-        fileScore: 0,
+        score: 0,
         status: '',
         id: 0
       },
       // 反馈抽屉可见性
-      drawer: false,
+      drawer: false
       // 富文本编辑器可见性
-      quillEditorVisible: false
+      // quillEditorVisible: false
     }
   },
   created() {
@@ -193,8 +184,8 @@ export default {
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedBack)
-      if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
+      const { data: res } = await this.$http.put('http://127.0.0.1:9528/thesisGroup/teacher', this.feedBack)
+      if (res.meta.code !== 200) this.$message.error('提交打分信息失败，请勿重复打分！')
       else this.$message.success('提交反馈信息成功！')
     },
     // 当页面大小变化时触发
@@ -219,22 +210,22 @@ export default {
     editFeedback(row) {
       this.feedBack.id = row.id
       this.drawer = true
-    },
-    // 调用富文本编辑器
-    useQuillEditor() {
-      this.quillEditorVisible = true
-    },
-    // 重置富文本编辑框
-    resetQuillEditorContent() {
-      this.$refs.quillEditor.reset()
-      this.feedBack.comment = '请输入反馈信息'
-      this.quillEditorVisible = false
-    },
-    // 提交（采用）富文本编辑器框
-    submitQuillEditorContent() {
-      this.feedBack.comment = this.$refs.quillEditor.returnContent()
-      this.quillEditorVisible = false
     }
+    // // 调用富文本编辑器
+    // useQuillEditor() {
+    //   this.quillEditorVisible = true
+    // },
+    // // 重置富文本编辑框
+    // resetQuillEditorContent() {
+    //   this.$refs.quillEditor.reset()
+    //   this.feedBack.comment = '请输入反馈信息'
+    //   this.quillEditorVisible = false
+    // },
+    // // 提交（采用）富文本编辑器框
+    // submitQuillEditorContent() {
+    //   this.feedBack.comment = this.$refs.quillEditor.returnContent()
+    //   this.quillEditorVisible = false
+    // }
   }
 }
 </script>
