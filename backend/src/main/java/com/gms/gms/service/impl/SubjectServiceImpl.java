@@ -31,8 +31,11 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
     }
 
     @Override
-    public void giveOpinion(String subId, String status, String feedback) {
-        this.baseMapper.giveOpinion(subId,status,feedback);
+    public void giveOpinion(Subject opinion) {
+        LambdaQueryWrapper<Subject> mapper = new LambdaQueryWrapper<>();
+        mapper.eq(Subject::getSubId, opinion.getSubId());
+        this.baseMapper.update(opinion, mapper);
+
     }
 
     @Override
