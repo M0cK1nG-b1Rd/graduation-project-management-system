@@ -31,6 +31,7 @@
     </select>
     <select id="selectByDocId" resultType="com.gms.gms.domain.FileStorage">
         SELECT
+            file_storage.DOC_ID,
             file_storage.FILE_ID,
             file_storage.FILE_NAME
         FROM

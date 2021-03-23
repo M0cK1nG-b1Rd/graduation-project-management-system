@@ -14,8 +14,10 @@ import com.gms.gms.domain.AppliedSubject;
 import com.gms.gms.domain.Student;
 import com.gms.gms.domain.Subject;
 import com.gms.gms.service.AppliedSubjectService;
+import com.gms.gms.service.SubjectService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +36,9 @@ import java.util.List;
 public class AppliedSubjectController {
     @Autowired
     AppliedSubjectService appliedSubjectService;
+
+    @Autowired
+    SubjectService subjectService;
 
     //不同角色调用同一接口将返回不同结果
 
@@ -107,20 +112,37 @@ public class AppliedSubjectController {
         }
     }
 
-    // 教师通过或驳回学生的选题申请
-    // TODO: 2021/3/23 选题通过则增加选课人数
+
     @PutMapping("apply")
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
+            appliedSubject.setStuId(appliedSubject.getStudentId());
             if ("YTG".equals(appliedSubject.getStatus()) &&
                     appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
-                            .eq(AppliedSubject::getStudentId, appliedSubject.getStudentId())
+                            .eq(AppliedSubject::getStuId, appliedSubject.getStuId())
                             .eq(AppliedSubject::getStatus, "YTG")) > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
                         "该学生已经有通过课题，请驳回该申请"));
             }
+
+            if(appliedSubject.getStatus().equals("YTG")) {
+                //更新课题信息，且人数已满则驳回申请
+                Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
+                Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
+                Integer currCount = subject.getChosen();
+                if (currCount + 1 > stuCount) {
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "该课题人数已满！"));
+                } else {
+                    subject.setChosen(subject.getChosen() + 1);
+                    subjectService.updateChosen(subject);
+                }
+            }
+
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(

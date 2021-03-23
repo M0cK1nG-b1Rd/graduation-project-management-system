@@ -16,6 +16,7 @@
         SELECT
             st.TASK_ID,
             st.SUB_ID,
+               st.DOC_ID,
             st.TASK_NAME,
             st.DESCRIPTION,
             st.TEACHER_ID,
@@ -32,10 +33,7 @@
             str.FEEDBACK,
             str.`STATUS`,
             str.AUDIT_TIME,
-            str.SCORE,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            str.SCORE
         FROM
             stage_task st
                 JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
@@ -43,7 +41,6 @@
                 JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
                 JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID = str.DOC_ID )
         WHERE
             st.STU_ID = #{stuId}
     </select>
@@ -60,6 +57,7 @@
         SELECT
             st.TASK_ID,
             st.SUB_ID,
+            st.DOC_ID,
             st.TASK_NAME,
             st.DESCRIPTION,
             st.TEACHER_ID,
@@ -76,10 +74,7 @@
             str.FEEDBACK,
             str.`STATUS`,
             str.AUDIT_TIME,
-            str.SCORE,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            str.SCORE
         FROM
             stage_task st
                 JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
@@ -87,7 +82,6 @@
                 JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
                 JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
-                LEFT JOIN file_storage f ON ( f.DOC_ID = str.DOC_ID )
         WHERE
         st.TEACHER_ID = #{teacherId}
     </select>
@@ -100,10 +94,9 @@
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
         <result column="SCORE" property="score" jdbcType="INTEGER"/>
-        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
-            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        <collection property="fileStorage" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
         </collection>
     </resultMap>
 </mapper>

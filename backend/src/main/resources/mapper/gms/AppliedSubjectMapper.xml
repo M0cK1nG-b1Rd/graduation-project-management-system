@@ -14,6 +14,7 @@
     <select id="selectWithCondition" resultMap="AppliedSubjectMapper">
         SELECT a.ID,
                a.SUB_ID,
+               a.DOC_ID,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -23,10 +24,7 @@
                a.APPLY_REASON,
                a.`STATUS`,
                a.FEEDBACK,
-               a.AUDIT_TIME,
-               f.DOC_ID,
-               f.FILE_ID,
-               f.FILE_NAME
+               a.AUDIT_TIME
 
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
@@ -34,12 +32,11 @@
                  JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
-                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
-# 需要加上hadninId，对接时解决
     </select>
     <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
         SELECT a.ID,
                a.SUB_ID,
+               a.DOC_ID,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -49,10 +46,7 @@
                a.APPLY_REASON,
                a.`STATUS`,
                a.FEEDBACK,
-               a.AUDIT_TIME,
-               f.DOC_ID,
-               f.FILE_ID,
-               f.FILE_NAME
+               a.AUDIT_TIME
 
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
@@ -60,12 +54,12 @@
                  JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
-                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
         WHERE s.POSE_BY = #{teacherId}
     </select>
     <select id="selectWithConditionAsStudent" resultMap="AppliedSubjectMapper">
         SELECT a.ID,
                a.SUB_ID,
+               a.DOC_ID,
                s.SUB_NAME,
                s.POSE_BY    AS TEACHER_ID,
                u2.REAL_NAME AS TEACHER_NAME,
@@ -75,10 +69,7 @@
                a.APPLY_REASON,
                a.`STATUS`,
                a.FEEDBACK,
-               a.AUDIT_TIME,
-               f.DOC_ID,
-               f.FILE_ID,
-               f.FILE_NAME
+               a.AUDIT_TIME
 
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
@@ -86,7 +77,6 @@
                  JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
-                 LEFT JOIN file_storage f ON (f.DOC_ID = a.DOC_ID)
         WHERE a.STU_ID = #{studentId}
     </select>
     <select id="getStudentsInSubject" resultType="com.gms.gms.domain.Student">
@@ -147,10 +137,9 @@
         <result column="STATUS" property="status" jdbcType="VARCHAR"/>
         <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR"/>
         <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
-        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
-            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        <collection property="fileStorage" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
         </collection>
     </resultMap>
 </mapper>

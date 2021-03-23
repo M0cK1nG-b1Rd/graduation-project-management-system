@@ -4,6 +4,7 @@
 
     <select id="getStageTask" resultMap="StageTaskMap">
         SELECT st.SUB_ID,
+               st.DOC_ID,
                st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
@@ -14,22 +15,18 @@
                st.STU_ID,
                u2.REAL_NAME AS STUDENT_NAME,
                st.START_TIME,
-               st.END_TIME,
-               f.DOC_ID,
-               f.FILE_ID,
-               f.FILE_NAME
+               st.END_TIME
         FROM stage_task st
                  JOIN teacher t ON (t.TEACHER_ID = st.TEACHER_ID)
                  JOIN USER u1 ON (u1.USER_ID = t.USER_ID)
                  JOIN student s ON (s.STU_ID = st.STU_ID)
                  JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
-                 LEFT JOIN file_storage f ON (
-            f.DOC_ID = st.DOC_ID)
 
     </select>
     <select id="getStageTaskAsTeacher" resultType="com.gms.gms.domain.StageTask">
         SELECT
             st.TASK_ID,
+        st.DOC_ID,
             st.TASK_NAME,
             st.SUB_ID,
             st.DESCRIPTION,
@@ -40,18 +37,13 @@
             st.STU_ID,
             u2.REAL_NAME AS STUDENT_NAME,
             st.START_TIME,
-            st.END_TIME,
-            f.DOC_ID,
-            f.FILE_ID,
-            f.FILE_NAME
+            st.END_TIME
         FROM
             stage_task st
                 JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
                 JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
                 JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
-                LEFT JOIN file_storage f ON (
-                f.DOC_ID = st.DOC_ID)
         WHERE t.TEACHER_ID=#{teacherId}
         <if test="task.subId != null and task.subId != ''">
             AND st.SUB_ID=#{task.subId}
@@ -62,6 +54,7 @@
     </select>
     <select id="getStageTaskAsStudent" resultType="com.gms.gms.domain.StageTask">
         SELECT st.TASK_ID,
+               st.DOC_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
                st.STAGE,
@@ -71,17 +64,12 @@
                st.STU_ID,
                u2.REAL_NAME AS STUDENT_NAME,
                st.START_TIME,
-               st.END_TIME,
-               f.DOC_ID,
-               f.FILE_ID,
-               f.FILE_NAME
+               st.END_TIME
         FROM stage_task st
                  JOIN teacher t ON (t.TEACHER_ID = st.TEACHER_ID)
                  JOIN USER u1 ON (u1.USER_ID = t.USER_ID)
                  JOIN student s ON (s.STU_ID = st.STU_ID)
                  JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
-                 LEFT JOIN file_storage f ON (
-            f.DOC_ID = st.DOC_ID)
         WHERE s.STU_ID=#{studentId}
     </select>
 
@@ -99,10 +87,9 @@
         <result column="STUDENT_NAME" property="studentName" jdbcType="VARCHAR"/>
         <result column="START_TIME" property="startTime" jdbcType="DATE"/>
         <result column="END_TIME" property="endTime" jdbcType="DATE"/>
-        <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-            <result column="DOC_ID" property="docId"/>
-            <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-            <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+        <collection property="fileStorage" column="DOC_ID"
+                    select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
         </collection>
     </resultMap>
 
@@ -127,10 +114,9 @@
             <result column="STATUS" property="status" jdbcType="VARCHAR"/>
             <result column="AUDIT_TIME" property="auditTime" jdbcType="DATE"/>
             <result column="SCORE" property="score" jdbcType="INTEGER"/>
-            <collection property="fileStorage" ofType="com.gms.gms.domain.FileStorage">
-                <result column="DOC_ID" property="docId" jdbcType="VARCHAR"/>
-                <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
-                <result column="FILE_ID" property="fileId" jdbcType="INTEGER"/>
+            <collection property="fileStorage" column="DOC_ID"
+                        select="com.gms.gms.dao.ThesisMapper.selectByDocId">
+
             </collection>
         </collection>
     </resultMap>
