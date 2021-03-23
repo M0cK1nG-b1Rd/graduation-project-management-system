@@ -65,7 +65,7 @@
                 WHERE
                     a.`STATUS` = 'YTG'
                   AND a.STU_ID = #{stuId}
-            ) s;
+            ) s
     </select>
     <select id="getAllScoreAsTeacher" resultType="com.gms.gms.domain.TotalScore">
         <foreach collection="stuIds" item="stuId" separator="union">
@@ -130,7 +130,7 @@
             WHERE
             a.`STATUS` = 'YTG'
             AND a.STU_ID = #{stuId}
-            ) s;
+            ) s
         </foreach>
     </select>
 </mapper>
