@@ -17,15 +17,15 @@
 <!--          指导老师-->
           <el-col :span="8">指导老师：
             <a-tag color="cyan">
-              <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank">
+              <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank" style="font-size: 15px;">
                 {{currentSubjectInfo.teacherName+' '}}<i class="el-icon-view"></i>
               </el-link>
             </a-tag>
           </el-col>
 <!--          课题领域-->
-          <el-col :span="8">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+          <el-col :span="8">课题领域：<a-tag color="cyan" style="font-size: 15px; color: #333333">{{currentSubjectInfo.zone}}</a-tag></el-col>
 <!--          所属专业-->
-          <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
+          <el-col :span="8">所属学院：<a-tag color="#87d068" style="font-size: 15px;">{{currentSubjectInfo.collegeName}}</a-tag></el-col>
         </el-row>
         <el-divider></el-divider>
 <!--          课题要求-->
@@ -33,7 +33,7 @@
           <el-col :span="4" class="item_label">选题要求：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
-              <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              <div class="ql-editor" v-html="currentSubjectInfo.requirement" style="font-size: 15px"></div>
             </div>
           </el-col>
         </el-row>
@@ -43,7 +43,7 @@
           <el-col :span="4" class="item_label">课题内容：</el-col>
           <el-col :span="20">
             <div class="ql-container ql-snow">
-              <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              <div class="ql-editor" v-html="currentSubjectInfo.description" style="font-size: 15px"></div>
             </div>
           </el-col>
         </el-row>
@@ -76,9 +76,7 @@ export default {
   components: { Downloader },
   created() {
     this.currentSubjectInfo = this.$route.params
-    if (this.currentSubjectInfo.fileStorage !== undefined) {
-      this.docId = this.currentSubjectInfo.fileStorage[0].docId
-    }
+    this.docId = this.currentSubjectInfo.docId
   },
   data() {
     return {

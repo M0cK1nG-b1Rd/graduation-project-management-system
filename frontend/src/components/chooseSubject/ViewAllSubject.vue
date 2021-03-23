@@ -61,13 +61,13 @@
             <!--            指导老师-->
             <el-row>
               <el-col>指导老师：
-                <a-tag color="#87d068" size="mini">{{ item.teacherName }}</a-tag>
+                <a-tag color="blue" size="mini" style="font-size: 15px; color: #333333">{{ item.teacherName }}</a-tag>
               </el-col>
             </el-row>
             <!--            课题领域-->
             <el-row>
               <el-col>课题领域：
-                <a-tag size="mini" color="#2db7f5"> {{ item.zone }} </a-tag>
+                <a-tag size="mini" color="blue" style="font-size: 15px; color: #333333"> {{ item.zone }} </a-tag>
               </el-col>
             </el-row>
             <!--            课题简介-->
@@ -79,18 +79,18 @@
             <el-row type="flex" align="middle" justify="space-between">
               <!--              人数情况-->
               <el-col :span="8">
-                <a-tag size="mini" color="orange">已选{{item.chosen}}人/限选{{item.capacity}}人</a-tag>
+                <a-tag size="mini" color="red">已选{{item.chosen}}人/限选{{item.capacity}}人</a-tag>
               </el-col>
               <!--              查看详情-->
               <el-col :span="6" :offset="2">
-                <a-tag color="green" size="mini" @click="viewSubjectDetail(index)"
+                <a-tag color="cyan" size="mini" @click="viewSubjectDetail(index)"
                        style="cursor: pointer;">
                   查看详情
                 </a-tag>
               </el-col>
               <!--              选题操作-->
               <el-col :span="6">
-                <a-tag color="cyan" size="mini" @click="chooseSubject(index)"
+                <a-tag color="green" size="mini" @click="chooseSubject(index)"
                        style="cursor: pointer;">
                   选择此题
                 </a-tag>
@@ -104,7 +104,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="queryInfo.current"
+          :current-page="queryInfo.page"
           :page-sizes="[5, 10, 20, 50]"
           :page-size="queryInfo.size"
           layout="sizes, prev, pager, next, jumper">
@@ -181,6 +181,7 @@ export default {
     // 跳到选题申请页面
     chooseSubject(index) {
       this.currentSubjectInfo = this.allSubjectInfo[index]
+      console.log(this.currentSubjectInfo)
       this.$router.push({ name: 'chooseSubjectApplication', params: this.currentSubjectInfo })
     },
     // 当页面大小变化时触发

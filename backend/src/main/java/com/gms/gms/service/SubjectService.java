@@ -26,6 +26,6 @@ public interface SubjectService extends IService<Subject> {
 
     Subject getStudentPassedSubject(Integer stuId);
 
-    Subject getBySubId((String subId);
+    Subject getBySubId(String subId);
 
 }
