@@ -97,18 +97,18 @@
               status="active"
               :format="percent => `${percent} 分`"
             />
-            <div>开题材料</div>
+            <div>结题材料</div>
             <a-progress
               style="margin-bottom: 10px"
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="score.fileScore"
+              :percent="score.thesisScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
             <div>总分</div>
             <a-progress
               :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="85"
+              :percent="score.finScore"
               status="active"
               :format="percent => `${percent} 分`"
             />
@@ -220,7 +220,7 @@
       title="开题报告意见"
       :with-header="false"
       :visible.sync="drawer">
-      <div class="card_header">开题报告意见</div>
+      <div class="card_header">结题报告意见</div>
       <el-form ref="subject" :model="currentReportInfo" label-width="80px">
         <el-row>
           <el-col :span="20">
@@ -279,13 +279,14 @@ export default {
         keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
+        stage: 'JT'
       },
       // 查看分数
       score: {
-        fileScore: 0, // 材料分数
+        thesisScore: 0, // 材料分数
         defenseScore: 0, // 答辩分数
-        total: 0 // 总分
+        finScore: 0 // 总分
       },
       // 查看课题详情对话框可见性
       viewPageVisible: false,
@@ -324,7 +325,7 @@ export default {
       this.feedBack = res.data.records[0]
     },
     async getScore() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/fin')
       if (res.meta.code !== 200) {
         return this.$message.error('获取反馈失败')
       }
