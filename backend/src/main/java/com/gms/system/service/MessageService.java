@@ -21,4 +21,10 @@ public interface MessageService extends IService<Message> {
     Integer getSecretaryUserId(String stage);
 
     Integer getUserIdByStuId(Integer studentId);
+
+    List<Integer> getAllTeacherUserId();
+
+    Integer countThesisGroupIsRelease();
+
+    List<Integer> getTeacherUserIdThesis();
 }

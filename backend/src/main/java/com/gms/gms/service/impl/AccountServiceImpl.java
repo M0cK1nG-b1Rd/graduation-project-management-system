@@ -11,6 +11,7 @@ import com.gms.gms.service.AccountService;
 import com.gms.system.domain.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,19 +58,24 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
         }
         Collections.shuffle(teacherIds);
         Collections.shuffle(secretaryIds);
-        TeacherTeam teacherTeam = new TeacherTeam();
+        List<TeacherTeam> teacherTeams = new ArrayList<>();
         List<Integer> groupId;
         for (int i = 0, j = 0; i < teamNum; i++, j++) {
-            teacherTeam.setSecId(secretaryIds.get(j)).setStage(stage);
-            this.baseMapper.addTeacherTeam(teacherTeam);
+            TeacherTeam teacherTeam = new TeacherTeam().setSecId(secretaryIds.get(j)).setStage(stage);
+            teacherTeams.add(teacherTeam);
         }
+        this.baseMapper.addTeacherTeam(teacherTeams);
         groupId = this.baseMapper.selectTeacherTeamId(stage);
+        List<TeacherTeamHelp> teamHelps = new ArrayList<>();
         for (int i = 0; i < teamNum; i++) {
-            this.baseMapper.addTeacherTeamMember(teacherIds.get(i), groupId.get(i), true);
+            TeacherTeamHelp help = new TeacherTeamHelp().setTeacherId(teacherIds.get(i)).setTeamId(groupId.get(i)).setLeader(true);
+            teamHelps.add(help);
         }
         for (int i = teamNum; i < teacherIds.size(); i++) {
-            this.baseMapper.addTeacherTeamMember(teacherIds.get(i), groupId.get(i % teamNum), false);
+            TeacherTeamHelp help = new TeacherTeamHelp().setTeacherId(teacherIds.get(i)).setTeamId(groupId.get(i % teamNum)).setLeader(false);
+            teamHelps.add(help);
         }
+        this.baseMapper.addTeacherTeamMember(teamHelps);
         return true;
     }
 
@@ -99,13 +105,14 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
             return false;
         }
         Collections.shuffle(studentIds);
-        StuGroup stuGroup = new StuGroup();
+        List<StuGroup> stuGroups = new ArrayList<>();
         Integer groupId = this.baseMapper.selectMaxId();
         if(groupId==null){groupId=0;}
         for (int i=0,j=groupId;i<studentIds.size();i++,j=((j-groupId+1)%teamNum)+groupId){
-            stuGroup.setGroupId(j).setStuId(studentIds.get(i)).setStage(stage);
-            this.baseMapper.addStudentGroup(stuGroup);
+            StuGroup stuGroup = new StuGroup().setGroupId(j).setStuId(studentIds.get(i)).setStage(stage);
+            stuGroups.add(stuGroup);
         }
+        this.baseMapper.addStudentGroup(stuGroups);
         return true;
     }
 

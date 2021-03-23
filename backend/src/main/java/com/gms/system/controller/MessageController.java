@@ -86,6 +86,21 @@ public class MessageController {
         }
     }
 
+    @PutMapping("/unread")
+    public GmsResponse updateMessageUnRead(@RequestBody List<String> list) throws GmsException {
+        try {
+            //调用mybatisPlus提供的方法
+            messageService.update(new UpdateWrapper<Message>().lambda().set(Message::getType,"WCK").in(Message::getMessageId,list));
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "修改通知状态成功"));
+        } catch (Exception e) {
+            String message1 = "修改通知状态失败";
+            log.error(message1, e);
+            throw new GmsException(message1);
+        }
+    }
     //删除通知，真删除，JSON
     @DeleteMapping("/delete")
     public GmsResponse deleteMessage(List<String> list) throws GmsException {

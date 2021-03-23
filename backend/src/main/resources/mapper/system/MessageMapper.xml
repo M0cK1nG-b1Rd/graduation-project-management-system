@@ -71,4 +71,33 @@
         WHERE
             STU_ID = #{id}
     </select>
+    <select id="getAllTeacherUserId" resultType="java.lang.Integer">
+        SELECT
+            teacher.USER_ID
+        FROM
+            teacher
+    </select>
+    <select id="countThesisGroupIsRelease" resultType="java.lang.Integer">
+        SELECT
+            COUNT(thesis_teacher.IS_RELEASE)
+        FROM
+            thesis_teacher
+        WHERE
+            thesis_teacher.IS_RELEASE = '1'
+    </select>
+    <select id="getTeacherUserIdThesis" resultType="java.lang.Integer">
+        SELECT
+            teacher.USER_ID
+        FROM
+            teacher
+        WHERE
+                teacher.TEACHER_ID IN (
+                SELECT DISTINCT
+                    thesis_teacher.TEACHER_ID
+                FROM
+                    thesis_teacher
+                WHERE
+                    thesis_teacher.IS_RELEASE = '1')
+    </select>
+
 </mapper>

@@ -12,11 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * 
- *
- * @author MrBird
- */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
@@ -40,6 +36,5 @@ public class ThesisTeacher implements Serializable {
 
     @TableField("TIME")
     private Date time;
-
 
 }

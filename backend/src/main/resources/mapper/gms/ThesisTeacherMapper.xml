@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.gms.dao.ThesisTeacherMapper">
 
+    <resultMap id="TTMAP" type="com.gms.gms.domain.ThesisHelp">
+        <association property="teacher" column="TEACHER_ID"
+                     select="com.gms.gms.dao.ThesisTeacherMapper.selectTeacherByTeacherId"/>
+        <collection property="thesisList" column="TEACHER_ID"
+                    select="com.gms.gms.dao.ThesisTeacherMapper.getThesis"/>
+    </resultMap>
     <select id="selectThesisIdAndTeacherId" resultType="com.gms.gms.domain.Thesis">
         SELECT
             thesis.THESIS_ID,
@@ -14,4 +20,61 @@
             applied_subject.`STATUS` = 'YTG'
             AND `subject`.`STATUS` = 'YTG'
     </select>
+    <select id="selectThesisGroupStage" resultMap="TTMAP">
+        SELECT DISTINCT
+            thesis_teacher.TEACHER_ID
+        FROM
+            thesis_teacher
+    </select>
+    <select id="selectTeacherByTeacherId" resultType="com.gms.gms.domain.Teacher">
+        SELECT
+            `user`.USER_ID,
+            `user`.REAL_NAME,
+            `user`.GENDER,
+            `user`.TEL,
+            `user`.MAIL,
+            teacher.TITLE,
+            college.COLLEGE_NAME,
+            teacher.HOME_PAGE
+        FROM
+            teacher
+                JOIN `user` ON teacher.USER_ID = `user`.USER_ID
+                JOIN college ON teacher.COLLEGE_ID = college.COLLEGE_ID
+        WHERE teacher.TEACHER_ID = #{teacherId}
+    </select>
+    <select id="getThesis" resultMap="com.gms.gms.dao.ThesisMapper.ZJYSB2">
+        SELECT
+            thesis.STU_ID,
+            thesis.THESIS_ID,
+            thesis.DOC_ID,
+            thesis.`STATUS`,
+            thesis.POSE_TIME
+        FROM
+            thesis
+                JOIN thesis_teacher ON thesis.THESIS_ID=thesis_teacher.THESIS_ID
+        WHERE
+            thesis_teacher.TEACHER_ID = #{teacherId}
+    </select>
+    <select id="selectThesisGroupStageTeacher" resultMap="com.gms.gms.dao.ThesisMapper.ZJYSB">
+        SELECT
+            thesis_teacher.ID,
+            thesis.THESIS_ID,
+            thesis.DOC_ID,
+            thesis.`STATUS`,
+            thesis.POSE_TIME
+        FROM
+            thesis
+                JOIN thesis_teacher ON thesis.THESIS_ID=thesis_teacher.THESIS_ID
+        WHERE
+            thesis_teacher.TEACHER_ID = #{teacherId}
+            AND thesis_teacher.SCORE = '-1'
+    </select>
+
+    <insert id="inserts">
+        INSERT INTO thesis_teacher ( TEACHER_ID, THESIS_ID, TIME )
+        VALUES
+        <foreach collection="helpList" item="item" separator=",">
+            (#{item.teacherId},#{item.thesisId},#{item.time})
+        </foreach>
+    </insert>
 </mapper>
