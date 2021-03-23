@@ -31,9 +31,6 @@ public class Student extends User implements Serializable {
     @TableField("COLLEGE_ID")
     private Integer collegeId;
 
-    @TableField("MAJOR_ID")
-    private Integer majorId;
-
     @TableField("CLASS_ID")
     private Integer classId;
 

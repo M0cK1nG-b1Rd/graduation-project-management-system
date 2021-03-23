@@ -76,6 +76,7 @@ public class StatisticsController {
         }
     }
 
+    // TODO: 2021/3/23 返回总分
     @GetMapping("score/mid")
     public GmsResponse getReportScore() throws GmsException {
         try {
@@ -108,6 +109,9 @@ public class StatisticsController {
             throw new GmsException(message);
         }
     }
+
+// TODO: 2021/3/23 提交结题申请 ,applyReason
+    //返回分数和总分
 
 
     @GetMapping("stageTask")
