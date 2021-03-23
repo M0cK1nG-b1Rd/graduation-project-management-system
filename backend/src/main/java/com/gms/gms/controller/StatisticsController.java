@@ -58,7 +58,7 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double startScore = weight.getStartMaterial() * fileScore + weight.getStartPlea() * defenseScore;
+            Double startScore = (weight.getStartMaterial() * fileScore + weight.getStartPlea() * defenseScore)/100;
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
@@ -101,7 +101,7 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double midScore = weight.getMiddleMaterial() * fileScore + weight.getMiddlePlea() * defenseScore;
+            Double midScore = (weight.getMiddleMaterial() * fileScore + weight.getMiddlePlea() * defenseScore)/100;
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
@@ -141,7 +141,7 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double finScore = weight.getEndMaterial() * thesisScore + weight.getMiddlePlea() * defenseScore;
+            Double finScore = (weight.getEndMaterial() * thesisScore + weight.getMiddlePlea() * defenseScore)/100;
             map.put("thesisScore", thesisScore);
             map.put("defenseScore", defenseScore);
             map.put("defenseFeedback", defenseFeedback);
