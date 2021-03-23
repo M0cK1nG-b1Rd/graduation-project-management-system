@@ -57,10 +57,6 @@ public class Subject implements Serializable {
     @TableField("STATUS")
     private String status;
 
-    @TableField("MAJOR_ID")
-    private Integer majorId;
-
-
     @TableField("AUDIT_BY")
     private Integer auditBy;
 

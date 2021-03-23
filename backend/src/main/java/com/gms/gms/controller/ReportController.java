@@ -44,6 +44,7 @@ public class ReportController {
             //默认使用第一个角色，即取第一个角色的名字
             String roleName = GmsUtil.getUserRoles().get(0).getRoleName();
 
+            // 需要传参课题的阶段，进行筛选
             IPage<Report> applyList = reportService.selectReport(report,roleName);
 
             return new GmsResponse().addCodeMessage(new Meta(
@@ -93,7 +94,7 @@ public class ReportController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "提交报告失败";
             log.error(message, e);
@@ -119,7 +120,7 @@ public class ReportController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "审核信息提交失败";
             log.error(message, e);

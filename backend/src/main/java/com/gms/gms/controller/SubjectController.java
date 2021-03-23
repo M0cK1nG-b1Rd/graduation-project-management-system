@@ -67,7 +67,7 @@ public class SubjectController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
@@ -148,7 +148,7 @@ public class SubjectController {
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
-                    message + " : " + e));
+                    message + " : " + e.getMessage()));
         }catch (Exception e) {
             String message = "新建课题失败";
             log.error(message, e);
@@ -176,13 +176,12 @@ public class SubjectController {
         }
     }
 
-    // TODO: 2021/3/23 增加poseBy和poseTime 
     //教研办审核教师课题
     @PutMapping("audit")
     public GmsResponse auditSubject(@RequestBody Subject opinion) throws GmsException {
         try {
-            Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
-            opinion.setAuditBy(teacherId);
+            Integer officeId = AccountUtil.getCurrentTeachingOffice().getOfficeId();
+            opinion.setAuditBy(officeId);
             opinion.setAuditTime(new Date());
             subjectService.giveOpinion(opinion);
             return new GmsResponse().addCodeMessage(new Meta(
