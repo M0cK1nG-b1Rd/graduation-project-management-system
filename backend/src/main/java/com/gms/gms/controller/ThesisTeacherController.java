@@ -116,7 +116,6 @@ public class ThesisTeacherController {
 
     /**
      * 老师查看自己要评的的答辩交叉互评，无需传参，打过分的论文不会显示
-     * TODO 有时间可以进行返回值的优化
      */
     @GetMapping("/teacher")
     public GmsResponse selectThesisGroupStageTeacher() throws GmsException {

@@ -10,11 +10,9 @@ import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
 import com.gms.common.utils.GmsUtil;
-import com.gms.gms.domain.Classroom;
 import com.gms.gms.domain.Plea;
 import com.gms.gms.service.PleaService;
 import com.gms.system.domain.Role;
-import com.gms.system.utils.CreatNewMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -175,7 +173,6 @@ public class PleaController {
         try {
             String stage=jsonObject.getString("stage");
             pleaService.update(null,new LambdaUpdateWrapper<Plea>().set(Plea::getIsRelease,false).eq(Plea::getStage,stage));
-            //TODO 发布通知预留地
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
