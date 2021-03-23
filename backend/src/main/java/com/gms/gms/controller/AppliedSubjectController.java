@@ -108,7 +108,7 @@ public class AppliedSubjectController {
     }
 
     // 教师通过或驳回学生的选题申请
-    // TODO: 2021/3/23 选题通过则增加选课人数  
+    // TODO: 2021/3/23 选题通过则增加选课人数
     @PutMapping("apply")
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
