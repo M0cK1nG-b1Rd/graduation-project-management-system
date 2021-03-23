@@ -239,7 +239,6 @@ export default {
     },
     // 查看申请记录详情
     beginJudge(row) {
-      console.log(row)
       this.docId = row.docId
       this.beginJudgePageVisible = true
       this.currentApplicationInfo = row
