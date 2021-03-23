@@ -53,7 +53,7 @@
           prop="zone"
           label="课题类型"
           width="100"
-          :filters="[{ text: '学业通知', value: 1 }, { text: '答辩安排', value: 2 }, { text: '工作安排', value: 3 }]"
+          :filters="[{ text: '科学探索与技术创新', value: 1 }, { text: '生命关怀与社会认知', value: 2 }, { text: '工作安排', value: 3 }]"
           :filter-method="filterType"
           filter-placement="bottom-end">
           <template slot-scope="scope">

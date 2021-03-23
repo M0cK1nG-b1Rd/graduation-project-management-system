@@ -244,7 +244,7 @@ export default {
     // 提交表单
     async reportSubmit() {
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
-      if (res.meta.code !== 200) return this.$message.error('修改阶段信息失败！')
+      if (res.meta.code === 200) return this.$message.success('提交开题报告成功！')
     },
     // 调用富文本编辑器
     useQuillEditor1() {
