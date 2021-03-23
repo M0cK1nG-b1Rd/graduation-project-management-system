@@ -73,8 +73,6 @@
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</a-tag>
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</a-tag>
               </el-col>
-              <!--          所属专业-->
-              <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
             </el-row>
             <el-divider></el-divider>
 <!--            表单部分-->
@@ -197,6 +195,7 @@ export default {
         stuMajorName: '', // 学生专业名称
         stuClass: '', // 学生班级
         sid: '', // 学号
+        stage: 'JT',
         applyReason: '（请输入申请原因）本人保证：所提交论文完全为个人工作成果，所用资料、实验结果及计算数。（通过查阅文献和阅读相关资料，严格按照毕业论文的格式和要求，完成论文的撰写工作。经过指导教师审核检查、评阅教师审核，所写论文已经达到了本科生毕业论文要求，特申请进行毕业论文答辩。' // 申请理由
       },
       // 富文本编辑器可见性
@@ -214,7 +213,7 @@ export default {
         return this.$message.error('获取课题列表失败')
       }
       this.currentSubjectInfo = res.data
-      this.report.subId = res.data.subId
+      this.applicationInfo.subId = res.data.subId
     },
     // 提交表单
     async reportSubmit() {
@@ -246,9 +245,10 @@ export default {
       const applicationForm = {}
       applicationForm.subId = this.applicationInfo.subId
       applicationForm.applyReason = this.applicationInfo.applyReason
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
-      if (res.meta.code !== 200) return this.$message.error('提交选题申请失败！')
-      this.$message.success('选题申请提交成功！')
+      applicationForm.stage = 'JT'
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', applicationForm)
+      if (res.meta.code !== 200) return this.$message.error('提交答辩申请失败！')
+      this.$message.success('答辩申请提交成功！')
     }
   }
 }
