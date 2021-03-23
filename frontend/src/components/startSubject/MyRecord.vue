@@ -32,7 +32,7 @@
             :show-overflow-tooltip="true"
             prop="poseTime"
             label="提交日期"
-            width="200">
+            width="150">
           </el-table-column>
           <!--         报告状态-->
           <el-table-column
@@ -78,7 +78,7 @@
           @current-change="handleCurrentChange"
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 20]"
-          :page-size="100"
+          :page-size="queryInfo.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalPageNum">
         </el-pagination>
@@ -196,17 +196,23 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
+              <div class="ql-container ql-snow" style="height: 80%">
+                <div class="ql-editor" v-html="currentReportInfo.meaning"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
+              <div class="ql-container ql-snow" style="height: 80%">
+                <div class="ql-editor" v-html="currentReportInfo.result"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
+              <div class="ql-container ql-snow" style="height: 80%">
+                <div class="ql-editor" v-html="currentReportInfo.plan"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>

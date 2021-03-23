@@ -8,90 +8,83 @@
     </el-breadcrumb>
     <!--卡片视图区-->
     <el-card class="el-card">
-      <!--搜索区-->
-      <el-row :gutter="20">
-        <el-col :span="7">
-          <el-input placeholder="请输入关键词查询课题信息">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </el-col>
-        <el-col :span="4"></el-col>
-      </el-row>
       <!--      表格区-->
-      <el-row>
-        <el-table
-          :data="reportlist"
-          size="medium "
-          :default-sort = "{prop: 'date', order: 'descending'}"
-          style="width: 100%; font-size: 15px">
-          <!--          课题名称-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="subName"
-            label="课题名称"
-            width="300">
-          </el-table-column>
-          <!--          申请日期-->
-          <el-table-column
-            sortable
-            :show-overflow-tooltip="true"
-            prop="poseTime"
-            label="提交日期"
-            width="110">
-          </el-table-column>
-          <!--          申请人-->
-          <el-table-column
-            sortable
-            :show-overflow-tooltip="true"
-            prop="studentName"
-            label="报告人"
-            width="110">
-          </el-table-column>
-          <!--         课题状态-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="status"
-            width="120"
-            :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
-            :filter-method="filterStatus"
-            filter-placement="bottom-end"
-            label="报告状态">
-            <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == 'WSH'">待审核</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
-            </template>
-          </el-table-column>
-          <!--          操作-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            width="200"
-            label="操作">
-            <template slot-scope="scope">
-              <!--              查看详细内容-->
-              <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
-                <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
-              </el-tooltip>
-              <!--              查看开题阶段内容-->
-              <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
-                <el-button type="danger" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
-              </el-tooltip>
-              <!-- 给学生反馈信息-->
-              <el-tooltip class="item" effect="dark" content="给学生反馈信息" placement="top" :enterable="false">
-                <el-button type="info" icon="el-icon-chat-line-square" circle size="mini" @click="editFeedback(scope.row)"></el-button>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-row type="flex" justify="center">
+        <el-card>
+          <el-table
+            :data="reportlist"
+            size="medium "
+            :default-sort = "{prop: 'date', order: 'descending'}"
+            style="width: 100%; font-size: 15px">
+            <!--          课题名称-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="subName"
+              label="课题名称"
+              width="250">
+            </el-table-column>
+            <!--          申请日期-->
+            <el-table-column
+              sortable
+              :show-overflow-tooltip="true"
+              prop="poseTime"
+              label="提交日期"
+              width="140">
+            </el-table-column>
+            <!--          申请人-->
+            <el-table-column
+              sortable
+              :show-overflow-tooltip="true"
+              prop="studentName"
+              label="报告人"
+              width="110">
+            </el-table-column>
+            <!--         课题状态-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="status"
+              width="120"
+              :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+              :filter-method="filterStatus"
+              filter-placement="bottom-end"
+              label="报告状态">
+              <template slot-scope="scope">
+                <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
+                <el-tag type="warning" v-if=" scope.row.status == 'WSH'">待审核</el-tag>
+                <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
+              </template>
+            </el-table-column>
+            <!--          操作-->
+            <el-table-column
+              :show-overflow-tooltip="true"
+              width="200"
+              label="操作">
+              <template slot-scope="scope">
+                <!--              查看详细内容-->
+                <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
+                  <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
+                </el-tooltip>
+                <!--              查看开题阶段内容-->
+                <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
+                  <el-button type="danger" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
+                </el-tooltip>
+                <!-- 给学生反馈信息-->
+                <el-tooltip class="item" effect="dark" content="给学生反馈信息" placement="top" :enterable="false">
+                  <el-button type="info" icon="el-icon-chat-line-square" circle size="mini" @click="editFeedback(scope.row)"></el-button>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-row>
       <!--      分页区-->
-      <el-row>
+      <el-row type="flex" justify="center" style="margin-top: 30px">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryInfo.page"
           :page-sizes="[5, 10, 20]"
-          :page-size="100"
+          :page-size="queryInfo.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="totalPageNum">
         </el-pagination>
@@ -145,12 +138,16 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -181,17 +178,23 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.meaning"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.meaning"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.result"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.result"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.plan"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.plan"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -232,10 +235,10 @@
           </div>
         </el-col>
         <el-col>
-          <el-form-item label="开题结果">
+          <el-form-item label="审核意见">
             <el-radio-group v-model="feedback.status">
-              <el-radio label="2">通过审核</el-radio>
-              <el-radio label="3">未通过</el-radio>
+              <el-radio label="'YTG'">通过审核</el-radio>
+              <el-radio label="'WTG'">驳回申请</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -254,14 +257,16 @@
       title="请输入反馈信息"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
-      width="75%">
+      width="55%">
       <quill-editor ref="quillEditor"
                     :init-content="feedback.comment">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditorContent">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>
-        </span>
+        </el-row>
+      </span>
     </el-dialog>
 
   </div>
@@ -329,8 +334,8 @@ export default {
     async feedBackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
-      if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
-      else this.$message.success('提交反馈信息成功！')
+      if (res.meta.code !== 200) this.$message.error(res.meta.message)
+      else this.$message.success(res.meta.message)
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -355,13 +360,11 @@ export default {
       this.getSubjectInfo(row)
       this.viewPageVisible = true
       this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
     },
     // 查看学生开题报告详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
     },
     // 编辑反馈表单
     editFeedback(row) {
