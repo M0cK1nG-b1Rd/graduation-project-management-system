@@ -71,6 +71,7 @@
         s.REQUIREMENT,
         s.DESCRIPTION,
         s.ZONE,
+               s.STATUS,
         u.REAL_NAME AS TEACHER_NAME,
         u.TEL,
         u.MAIL,
