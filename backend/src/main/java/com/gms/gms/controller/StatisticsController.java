@@ -143,7 +143,7 @@ public class StatisticsController {
             Integer defenseScore = result.getScore();
             String defenseFeedback = result.getFeedback();
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double finScore = (weight.getEndMaterial() * thesisScore + weight.getMiddlePlea() * defenseScore)/100;
+            Double finScore = (weight.getEndMaterial() * thesisScore + weight.getEndPlea() * defenseScore)/100;
             map.put("thesisScore", thesisScore);
             map.put("defenseScore", defenseScore);
             map.put("defenseFeedback", defenseFeedback);
