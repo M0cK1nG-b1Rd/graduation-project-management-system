@@ -46,4 +46,8 @@ public interface MessageMapper extends BaseMapper<Message> {
     List<SystemStage> selectSystemStage(List<Integer> currStageIds);
 
     List<Integer> selectAllUserButAdmin();
+
+    Integer getTaskStuUserId(Integer taskId);
+
+    Integer getTaskTeaUserId(Integer taskId);
 }

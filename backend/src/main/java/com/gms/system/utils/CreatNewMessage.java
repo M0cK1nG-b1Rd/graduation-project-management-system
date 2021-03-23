@@ -172,4 +172,31 @@ public class CreatNewMessage {
         }
         creatNewMessage2(messages);
     }
+
+    public void afterGiveStageTask(Integer taskId) {
+        Integer userId = messageService.getTaskStuUserId(taskId);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("阶段任务通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
+                .setDetail("<p><strong>同学您好：</strong></p><p>\t</p><p>\t\t您有新的阶段任务，请及时前往相关页面进行查看。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterGiveStageTaskResult(Integer taskId) {
+        Integer userId=messageService.getTaskTeaUserId(taskId);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("阶段任务通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p>\t</p><p>\t\t您有学生提交了阶段任务成果，请及时前往相关页面进行查看评分。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterGiveStageTaskScore(Integer taskId) {
+        Integer userId = messageService.getTaskStuUserId(taskId);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("阶段任务通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
+                .setDetail("<p><strong>同学您好：</strong></p><p>\t</p><p>\t\t您的阶段任务提交已经被老师批复，请及时前往相关页面进行查看。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
 }

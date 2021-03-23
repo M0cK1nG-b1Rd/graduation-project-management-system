@@ -144,16 +144,15 @@ public class ThesisTeacherController {
             if (thesisTeacherService.count(new QueryWrapper<ThesisTeacher>().lambda()
                     .eq(ThesisTeacher::getId, thesisTeacher.getId())
                     .eq(ThesisTeacher::getScore, -1)) == 0) {
-                return new GmsResponse().addCodeMessage(new Meta(
-                        Code.C500.getCode(),
-                        Code.C500.getDesc(),
-                        "该论文已打分！"));
+                throw new GmsException("该论文已打分！");
             }
             thesisTeacherService.updateById(thesisTeacher);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
                     "打分成功"));
+        } catch (GmsException e) {
+            throw e;
         } catch (Exception e) {
             String message = "打分失败";
             log.error(message, e);
