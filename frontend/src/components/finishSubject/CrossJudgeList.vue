@@ -29,7 +29,7 @@
             </el-table-column>
             <!--          课题名称-->
             <el-table-column
-              prop="studentName"
+              prop="subName"
               label="课题名称"
               width="200">
             </el-table-column>e

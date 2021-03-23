@@ -35,8 +35,6 @@
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</a-tag>
                 <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</a-tag>
               </el-col>
-              <!--          所属专业-->
-              <el-col :span="8">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
             </el-row>
             <el-divider></el-divider>
             <!--          课题要求-->
@@ -192,7 +190,24 @@ export default {
       quillEditorVisible: false
     }
   },
+  created() {
+    this.getCurrentSubjectInfo()
+  },
   methods: {
+    // 获取课题信息
+    async getCurrentSubjectInfo() {
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
+      if (res.meta.code !== 200) {
+        return this.$message.error('获取课题列表失败')
+      }
+      this.currentSubjectInfo = res.data
+      this.report.subId = res.data.subId
+    },
+    // 提交表单
+    async reportSubmit() {
+      const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
+      if (res.meta.code === 200) this.$message.success('提交开题报告成功！')
+    },
     // 调用富文本编辑器
     useQuillEditor() {
       this.quillEditorVisible = true
