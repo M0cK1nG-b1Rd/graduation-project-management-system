@@ -329,41 +329,46 @@ export default {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取开题报告列表失败')
+        this.$message.error('获取开题报告列表失败')
+      } else {
+        this.subjectlist = res.data.records
       }
-      this.subjectlist = res.data.records
     },
     async getSubjectInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题信息失败')
+        this.$message.error('获取课题信息失败')
+      } else {
+        this.currentSubjectInfo = res.data
+        this.subjectDocId = res.data.docId
       }
-      this.currentSubjectInfo = res.data
     },
     async getFeedBackInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取反馈失败')
+        this.$message.error('获取反馈失败')
+      } else {
+        this.feedBack = res.data.records[0]
       }
-      this.feedBack = res.data.records[0]
     },
     async getScore() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取成绩失败')
+        this.$message.error('获取成绩失败')
+      } else {
+        this.score = res.data
+        this.feedBack.secretatryComment = res.data.defenseFeedback
       }
-      this.score = res.data
-      this.feedBack.secretatryComment = res.data.defenseFeedback
     },
     // 当页面大小变化时触发
-    handleSizeChange(newSize) {
+    async handleSizeChange(newSize) {
       this.queryInfo.size = newSize
-      this.getSubjectList()
+      await this.getSubjectList()
     },
     // 当页面编号变化时触发
-    handleCurrentChange(newPage) {
+    async handleCurrentChange(newPage) {
       this.queryInfo.page = newPage
-      this.getSubjectList()
+      await this.getSubjectList()
     },
     // 筛选课题类型
     filterType(value, row) {
@@ -374,21 +379,20 @@ export default {
       return row.status === value
     },
     // 查看课题详情
-    viewSubject(row) {
-      this.getSubjectInfo()
+    async viewSubject() {
+      await this.getSubjectInfo()
       this.viewPageVisible = true
-      this.subjectDocId = row.docId
     },
     // 查看课开题报告详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentReportInfo = row
       this.startReportDocId = row.docId
+      console.log(this.startReportDocId)
     },
     // 查看反馈结果
     viewFeedback(row) {
       this.feedBack.teacherComment = row.comment
-      console.log(row)
       this.drawer = true
     }
   }
