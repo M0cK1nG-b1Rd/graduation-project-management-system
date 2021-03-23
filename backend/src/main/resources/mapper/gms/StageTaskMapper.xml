@@ -4,6 +4,7 @@
 
     <select id="getStageTask" resultMap="StageTaskMap">
         SELECT st.SUB_ID,
+               st.DOC_ID,
                st.TASK_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
@@ -25,6 +26,7 @@
     <select id="getStageTaskAsTeacher" resultType="com.gms.gms.domain.StageTask">
         SELECT
             st.TASK_ID,
+        st.DOC_ID,
             st.TASK_NAME,
             st.SUB_ID,
             st.DESCRIPTION,
@@ -52,6 +54,7 @@
     </select>
     <select id="getStageTaskAsStudent" resultType="com.gms.gms.domain.StageTask">
         SELECT st.TASK_ID,
+               st.DOC_ID,
                st.TASK_NAME,
                st.DESCRIPTION,
                st.STAGE,

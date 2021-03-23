@@ -112,26 +112,36 @@ public class AppliedSubjectController {
         }
     }
 
-    // 教师通过或驳回学生的选题申请
-    // TODO: 2021/3/23 选题通过则增加选课人数
+
     @PutMapping("apply")
     public GmsResponse auditAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {
+            appliedSubject.setStuId(appliedSubject.getStudentId());
             if ("YTG".equals(appliedSubject.getStatus()) &&
                     appliedSubjectService.count(new QueryWrapper<AppliedSubject>().lambda()
-                            .eq(AppliedSubject::getStudentId, appliedSubject.getStudentId())
+                            .eq(AppliedSubject::getStuId, appliedSubject.getStuId())
                             .eq(AppliedSubject::getStatus, "YTG")) > 0) {
                 return new GmsResponse().addCodeMessage(new Meta(
                         Code.C500.getCode(),
                         Code.C500.getDesc(),
                         "该学生已经有通过课题，请驳回该申请"));
             }
-            //人数已满则驳回申请
 
-            // TODO: 2021/3/23
-            Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
-//            subjectService.getBySubId(appliedSubject.getSubId()).setChosen();
-
+            if(appliedSubject.getStatus().equals("YTG")) {
+                //更新课题信息，且人数已满则驳回申请
+                Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
+                Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
+                Integer currCount = subject.getChosen();
+                if (currCount + 1 > stuCount) {
+                    return new GmsResponse().addCodeMessage(new Meta(
+                            Code.C500.getCode(),
+                            Code.C500.getDesc(),
+                            "该课题人数已满！"));
+                } else {
+                    subject.setChosen(subject.getChosen() + 1);
+                    subjectService.updateChosen(subject);
+                }
+            }
 
             appliedSubject.setAuditTime(new Date());
             appliedSubjectService.auditAppliedSubject(appliedSubject);

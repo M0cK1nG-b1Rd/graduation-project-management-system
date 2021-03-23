@@ -16,6 +16,7 @@
         SELECT
             st.TASK_ID,
             st.SUB_ID,
+               st.DOC_ID,
             st.TASK_NAME,
             st.DESCRIPTION,
             st.TEACHER_ID,
@@ -56,6 +57,7 @@
         SELECT
             st.TASK_ID,
             st.SUB_ID,
+            st.DOC_ID,
             st.TASK_NAME,
             st.DESCRIPTION,
             st.TEACHER_ID,
