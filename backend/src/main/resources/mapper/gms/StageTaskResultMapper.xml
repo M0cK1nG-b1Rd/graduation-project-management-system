@@ -8,7 +8,7 @@
     </update>
     <update id="giveStageTaskScore">
         UPDATE stage_task_result
-        SET FEEDBACK = #{task.feedback}, `STATUS` =#{task.status},SCORE = #{task.score}
+        SET FEEDBACK = #{task.feedback}, `STATUS` =#{task.status},SCORE = #{task.score},AUDIT_TIME=#{task.auditTime}
         WHERE TASK_ID = #{task.taskId} AND RETRIES =#{task.retries}
     </update>
 
