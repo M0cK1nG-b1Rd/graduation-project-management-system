@@ -62,6 +62,9 @@
             <!--        附件-->
             <el-row type="flex" align="center">
               <el-col :span="4" class="item_label">附件下载：</el-col>
+              <el-col :span="20">
+                <Downloader :doc-id="subjectDocId"></Downloader>
+              </el-col>
             </el-row>
           </el-card>
         </el-row>
@@ -77,9 +80,6 @@
         <el-form ref="form" :model="report" label-width="80px">
           <el-row>
             <el-col :span="20">
-<!--              <el-form-item label="研究意义" prop="description">-->
-<!--                <el-input type="textarea" v-model="report.meaning"></el-input>-->
-<!--              </el-form-item>-->
               <el-col :span="3" class="item_label"><span>研究意义</span></el-col>
               <el-col :span="21" style="margin-bottom: 10px">
                 <div class="ql-container ql-snow">
@@ -181,11 +181,14 @@
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'StartReport',
-  components: { quillEditor },
+  components: { quillEditor, Downloader },
   data() {
     return {
+      subjectDocId: '',
+      reportDocId: '',
       // 查看学生的课题信息
       // 当前选中的课题信息
       currentSubjectInfo: {
@@ -223,15 +226,6 @@ export default {
     this.getCurrentSubjectInfo()
   },
   methods: {
-    // submitUpload() {
-    //   this.$refs.upload.submit()
-    // },
-    // handleRemove(file, fileList) {
-    //   console.log(file, fileList)
-    // },
-    // handlePreview(file) {
-    //   console.log(file)
-    // }
     // 获取课题信息
     async getCurrentSubjectInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
