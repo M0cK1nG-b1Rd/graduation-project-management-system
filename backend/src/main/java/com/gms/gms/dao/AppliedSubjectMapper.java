@@ -25,4 +25,6 @@ public interface AppliedSubjectMapper extends BaseMapper<AppliedSubject> {
     List<Student> getStudentsInSubject(String subId);
 
     List<Student> getStudentsOfTeacher(Integer teacherId);
+
+    List<Student> getTotalStudentsInSubject(String subId);
 }
