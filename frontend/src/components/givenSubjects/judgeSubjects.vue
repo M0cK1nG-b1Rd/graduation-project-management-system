@@ -216,7 +216,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="题目类型">
-            <a-input v-model="currentSubjectInfo.zone" disabled></a-input>
+            <a-input v-model="currentSubjectInfo.zoneName" disabled></a-input>
           </el-form-item>
         </el-col>
         <el-col :span="10">

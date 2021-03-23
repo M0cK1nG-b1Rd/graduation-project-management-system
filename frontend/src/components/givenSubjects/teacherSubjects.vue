@@ -17,19 +17,19 @@
             <el-col class="formbox">
               <el-form ref="subject" :model="subject" :rules="addFormRules" label-width="80px">
                 <el-row>
-                  <el-col :span="16">
+                  <el-col :span="10">
                     <el-form-item label="课题名称" prop="subName">
                       <el-input v-model="subject.subName"></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="6">
+                  <el-col :span="12">
                     <el-form-item label="申报人" prop="teacherName">
                       <el-input v-model="subject.teacherName"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="16">
+                  <el-col :span="10">
                     <el-form-item label="题目类型" prop="type">
                       <el-select style="width: 100%;" v-model="subject.zone" placeholder="请选择课题类型">
                         <el-option label="科学探索与技术创新" value="KXTS"></el-option>
@@ -38,14 +38,13 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="6">
+                  <el-col :span="12">
                     <el-form-item label="申报时间">
                       <el-row>
-                        <el-col :span="11">
+                        <el-col :span="12">
                           <el-date-picker type="date" placeholder="选择日期" v-model="subject.date1" style="width: 100%; " value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                         </el-col>
-                        <el-col class="line" :span="0.5">---</el-col>
-                        <el-col :span="11">
+                        <el-col :span="12">
                           <el-time-picker placeholder="选择时间" v-model="subject.date2" style="width: 100%;"></el-time-picker>
                         </el-col>
                       </el-row>
