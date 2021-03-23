@@ -129,7 +129,7 @@ public class AppliedSubjectController {
 
             if(appliedSubject.getStatus().equals("YTG")) {
                 //更新课题信息，且人数已满则驳回申请
-                Integer stuCount = appliedSubjectService.getStudentsInSubject(appliedSubject.getSubId()).size();
+                Integer stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
                 Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
                 Integer capacity = subject.getCapacity();
                 if (stuCount + 1 > capacity) {

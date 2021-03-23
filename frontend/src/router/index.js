@@ -27,15 +27,9 @@ import MidReport from '@/components/midSubject/MidReport'
 import MidRecord from '@/components/midSubject/MidRecord'
 import CheckMidSubjects from '@/components/midSubject/CheckMidSubjects'
 import StartPreScore from '@/components/startSubject/StartPreScore'
-import InitialArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
+import ArrangePlea from '@/components/startSubject/arrangePlea/ArrangePlea'
 import GiveTask from '@/components/proccessSupervision/teacher/ManageTask'
 import StudentInfo from '@/components/proccessSupervision/teacher/StudentInfo'
-import SetWeight from '@/components/scoreManage/SetWeight'
-import MyTask from '@/components/proccessSupervision/student/MyTask'
-import SubmitRecord from '@/components/proccessSupervision/student/SubmitRecord'
-import JudgeTaskSubmit from '@/components/proccessSupervision/teacher/JudgeTaskSubmit'
-import TaskStatistics from '@/components/proccessSupervision/TaskStatistics'
-import Message from '@/components/message/Message'
 import applyClosing from '@/components/finishSubject/applyClosing'
 import MyScore from '@/components/scoreManage/MyScore'
 import StuScoreList from '@/components/scoreManage/StuScoreList'
@@ -44,12 +38,11 @@ import FinishPreScore from '@/components/finishSubject/FinishPreScore'
 import MidPreScore from '@/components/midSubject/MidPreScore'
 import CrossJudgeList from '@/components/finishSubject/CrossJudgeList'
 import CrossJudgeArrange from '@/components/finishSubject/CrossJudgeArrange'
-import MiddleArrangePlea from '@/components/midSubject/arrangePlea/ArrangePlea'
-import FinishArrangePlea from '@/components/finishSubject/arrangePlea/ArrangePlea'
-import MyInitialPleaArrange from '@/components/startSubject/arrangePlea/MyInitialPleaArrange'
-import MyMiddlePleaArrange from '@/components/midSubject/arrangePlea/MyMiddlePleaArrange'
-import MyFinishPleaArrange from '@/components/finishSubject/arrangePlea/MyFinishPleaArrange'
-import MyFinishRecord from '../components/finishSubject/MyFinishRecord'
+import SetWeight from '@/components/scoreManage/SetWeight'
+import MyTask from '@/components/proccessSupervision/student/MyTask'
+import SubmitRecord from '@/components/proccessSupervision/student/SubmitRecord'
+import JudgeTaskSubmit from '@/components/proccessSupervision/teacher/JudgeTaskSubmit'
+import TaskStatistics from '@/components/proccessSupervision/TaskStatistics'
 
 Vue.use(VueRouter)
 
@@ -84,11 +77,6 @@ const routes = [
       {
         path: '/test',
         component: Test
-      },
-      // 通知箱
-      {
-        path: '/message',
-        component: Message
       },
       // 系统管理-阶段控制
       {
@@ -187,12 +175,7 @@ const routes = [
       // 开题--教研室进行答辩安排
       {
         path: '/initial/arrange',
-        component: InitialArrangePlea
-      },
-      // 开题--学生、老师、答辩秘书查看自己的答辩安排
-      {
-        path: '/initial/arrange/my',
-        component: MyInitialPleaArrange
+        component: ArrangePlea
       },
       // 中期--学生上传中期报告
       {
@@ -208,16 +191,6 @@ const routes = [
       {
         path: '/middle/midCheck',
         component: CheckMidSubjects
-      },
-      // 中期--教研室进行答辩安排
-      {
-        path: '/middle/arrange',
-        component: MiddleArrangePlea
-      },
-      // 中期--学生、老师、答辩秘书查看自己的答辩安排
-      {
-        path: '/middle/arrange/my',
-        component: MyMiddlePleaArrange
       },
       // 中期--秘书中期答辩评分
       {
@@ -237,17 +210,7 @@ const routes = [
       // 结题--学生查看结题状态
       {
         path: '/finish/myApplyList',
-        component: MyFinishRecord
-      },
-      // 结题--教研室进行答辩安排
-      {
-        path: '/finish/arrange',
-        component: FinishArrangePlea
-      },
-      // 结题--学生、老师、答辩秘书查看自己的答辩安排
-      {
-        path: '/finish/arrange/my',
-        component: MyFinishPleaArrange
+        component: MyRecord
       },
       // 结题--秘书结题答辩评分
       {
@@ -296,11 +259,6 @@ const routes = [
         component: TaskStatistics,
         name: TaskStatistics
       },
-      // 成绩管理--权重配置
-      {
-        path: '/score/weight',
-        component: SetWeight
-      },
       // 成绩管理--学生查看自己各个阶段成绩
       {
         path: '/scoreManage/myScoreList',
@@ -310,6 +268,11 @@ const routes = [
       {
         path: '/scoreManage/totalList',
         component: StuScoreList
+      },
+      // 成绩管理--权重配置
+      {
+        path: '/score/weight',
+        component: SetWeight
       }
     ]
   }

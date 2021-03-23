@@ -27,6 +27,9 @@ public interface AppliedSubjectService extends IService<AppliedSubject> {
 
     List<Student> getStudentsInSubject(String subId);
 
+    //包括已通过和未审核
+    List<Student> getTotalStudentsInSubject(String subId);
+
     List<Student> getStudentsOfTeacher() throws GmsException;
 
 }
