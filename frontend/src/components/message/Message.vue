@@ -137,7 +137,7 @@ export default {
   methods: {
     // 获得消息内容
     async getMessageInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/message/all', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/message/all', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.messageInfo = res.data.records
         this.totalPageNum = res.data.total
@@ -168,7 +168,7 @@ export default {
     async noteAsRead(row) {
       this.updateingMessageId = []
       this.updateingMessageId.push(row.messageId)
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/message/read', this.updateingMessageId)
+      const { data: res } = await this.$http.put('/message/read', this.updateingMessageId)
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -180,7 +180,7 @@ export default {
     async noteAsUnread(row) {
       this.updateingMessageId = []
       this.updateingMessageId.push(row.messageId)
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/message/unread', this.updateingMessageId)
+      const { data: res } = await this.$http.put('/message/unread', this.updateingMessageId)
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -192,7 +192,7 @@ export default {
     async deleteMessage(row) {
       this.updateingMessageId = []
       this.updateingMessageId.push(row.messageId)
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/message/delete', this.updateingMessageId)
+      const { data: res } = await this.$http.put('/message/delete', this.updateingMessageId)
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {

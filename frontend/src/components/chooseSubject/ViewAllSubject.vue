@@ -121,7 +121,7 @@ export default {
   async mounted() {
     const fullDict = JSON.parse(window.sessionStorage.getItem('dict'))
     this.zoneDict = dataDict.getDict(fullDict, 6)
-    const { data: teachers } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacher', { params: { page: 1, size: 10000 } })
+    const { data: teachers } = await this.$http.get('/account/plea/teacher', { params: { page: 1, size: 10000 } })
     if (teachers.meta.code !== 200) return this.$message.error('获取教师信息失败！')
     this.teacherInfo = teachers.data.records
     await this.getAllSubjectInfo()
@@ -163,7 +163,7 @@ export default {
   methods: {
     // 获取所有课题信息
     async getAllSubjectInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/subject', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.allSubjectInfo = res.data.records
         for (let i = 0; i < this.allSubjectInfo.length; i++) {

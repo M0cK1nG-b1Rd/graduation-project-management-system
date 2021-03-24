@@ -174,7 +174,7 @@ export default {
   methods: {
     // 获取所有提交记录（按任务分组）
     async getTaskSubmitRecords() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task/result', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/stage/task/result', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.taskSubmitRecords = res.data.records
       } else {

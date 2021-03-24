@@ -26,7 +26,7 @@ export default {
   methods: {
     // 根据docId获取文件信息列表
     async getFileInfo() {
-      const { data: res } = await this.$http.get(`http://127.0.0.1:9528/file/files/${this.docId}`)
+      const { data: res } = await this.$http.get(`/file/files/${this.docId}`)
       if (res.meta.code === 200) {
         this.fileInfo = res.data
       } else {

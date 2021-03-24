@@ -144,7 +144,7 @@ export default {
     async startArrange() {
       this.dialogVisible1 = true
       // 获取安排信息，提示安排成功，成功则跳转下一界面
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/thesisGroup')
+      const { data: res } = await this.$http.post('/thesisGroup')
       if (res.meta.code === 200) {
         this.$message.success('评审安排成功！')
       } else {
@@ -154,7 +154,7 @@ export default {
     },
     async viewArrangeInfo() {
       this.dialogVisible1 = false
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/thesisGroup', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/thesisGroup', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.allArrangeInfo = res.data.records
         this.$message.success('获取答辩安排信息成功！')
@@ -166,7 +166,7 @@ export default {
     },
     async publishArrange() {
       this.dialogVisible2 = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/thesisGroup')
+      const { data: res } = await this.$http.put('/thesisGroup')
       if (res.meta.code === 200) {
         this.$message.success('论文交叉互评安排发布成功！')
       } else {

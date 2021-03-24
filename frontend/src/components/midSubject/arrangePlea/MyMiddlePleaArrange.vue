@@ -100,7 +100,7 @@ export default {
   methods: {
     // 获取我的答辩安排信息
     async getMyPleaArrange() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: this.stage } })
+      const { data: res } = await this.$http.get('/plea/user', { params: { stage: this.stage } })
       if (res.meta.code === 200) {
         this.myPleaArrange = res.data[0]
       } else {

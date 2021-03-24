@@ -18,9 +18,9 @@
                st.END_TIME
         FROM stage_task st
                  JOIN teacher t ON (t.TEACHER_ID = st.TEACHER_ID)
-                 JOIN USER u1 ON (u1.USER_ID = t.USER_ID)
+                 JOIN `user` u1 ON (u1.USER_ID = t.USER_ID)
                  JOIN student s ON (s.STU_ID = st.STU_ID)
-                 JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
+                 JOIN `user` u2 ON (u2.USER_ID = s.USER_ID)
 
     </select>
     <select id="getStageTaskAsTeacher" resultType="com.gms.gms.domain.StageTask">
@@ -41,9 +41,9 @@
         FROM
             stage_task st
                 JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
-                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN `user` u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
-                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                JOIN `user` u2 ON ( u2.USER_ID = s.USER_ID )
         WHERE t.TEACHER_ID=#{teacherId}
         <if test="task.subId != null and task.subId != ''">
             AND st.SUB_ID=#{task.subId}
@@ -67,9 +67,9 @@
                st.END_TIME
         FROM stage_task st
                  JOIN teacher t ON (t.TEACHER_ID = st.TEACHER_ID)
-                 JOIN USER u1 ON (u1.USER_ID = t.USER_ID)
+                 JOIN `user` u1 ON (u1.USER_ID = t.USER_ID)
                  JOIN student s ON (s.STU_ID = st.STU_ID)
-                 JOIN USER u2 ON (u2.USER_ID = s.USER_ID)
+                 JOIN `user` u2 ON (u2.USER_ID = s.USER_ID)
         WHERE s.STU_ID=#{studentId}
     </select>
 

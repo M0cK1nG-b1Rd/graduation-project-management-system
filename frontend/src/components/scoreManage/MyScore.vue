@@ -354,7 +354,7 @@ export default {
   methods: {
     // 获取成绩信息
     async getMyScoreInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/student/allScore')
+      const { data: res } = await this.$http.get('/statistics/student/allScore')
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {

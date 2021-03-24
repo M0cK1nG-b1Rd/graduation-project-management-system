@@ -188,7 +188,7 @@ export default {
   methods: {
     // 获取所有申请记录信息
     async getApplicationRecords() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/subject/apply', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$message.error('拉取选题申请记录失败！')
       this.allApplicationInfo = res.data.records
       this.totalRecordNum = this.allApplicationInfo.length

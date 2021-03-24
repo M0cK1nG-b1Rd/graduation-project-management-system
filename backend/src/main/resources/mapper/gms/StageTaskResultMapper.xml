@@ -38,9 +38,9 @@
             stage_task st
                 JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
                 JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
-                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN `user` u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
-                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                JOIN `user` u2 ON ( u2.USER_ID = s.USER_ID )
         WHERE
             st.STU_ID = #{stuId}
     </select>
@@ -79,9 +79,9 @@
             stage_task st
                 JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
                 JOIN teacher t ON ( t.TEACHER_ID = st.TEACHER_ID )
-                JOIN USER u1 ON ( u1.USER_ID = t.USER_ID )
+                JOIN `user` u1 ON ( u1.USER_ID = t.USER_ID )
                 JOIN student s ON ( s.STU_ID = st.STU_ID )
-                JOIN USER u2 ON ( u2.USER_ID = s.USER_ID )
+                JOIN `user` u2 ON ( u2.USER_ID = s.USER_ID )
         WHERE
         st.TEACHER_ID = #{teacherId}
     </select>

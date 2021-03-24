@@ -288,7 +288,7 @@ export default {
   },
   methods: {
     async getcurrentPreInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea/user', { params: { stage: 'JT' } })
+      const { data: res } = await this.$http.get('/plea/user', { params: { stage: 'JT' } })
       if (res.meta.code !== 200) {
         this.$message.error('获取答辩安排信息失败')
       }
@@ -297,14 +297,14 @@ export default {
       // console.log(this.feedBack.pleaId)
     },
     async getSubjectInfo(row) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/userId', { params: { userId: row.userId } })
+      const { data: res } = await this.$http.get('/subject/userId', { params: { userId: row.userId } })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题信息失败')
       }
       this.currentSubjectInfo = res.data // 与后端对接
     },
     async getReportInfo(row) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'JT' } })
+      const { data: res } = await this.$http.get('/report/user', { params: { userId: row.userId, stage: 'JT' } })
       if (res.meta.code !== 200) {
         this.$message.error('获取结题报告信息失败')
       }
@@ -313,7 +313,7 @@ export default {
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/pleaResult', this.feedBack)
+      const { data: res } = await this.$http.post('/pleaResult', this.feedBack)
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {

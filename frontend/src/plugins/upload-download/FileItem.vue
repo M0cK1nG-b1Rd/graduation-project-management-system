@@ -20,7 +20,7 @@ export default {
     // 下载请求
     async submitDownload() {
       // eslint-disable-next-line no-unused-vars
-      const { data: res } = await this.$http.get(`http://127.0.0.1:9528/file/download/${this.docId}/${this.fileId}`, {
+      const { data: res } = await this.$http.get(`/file/download/${this.docId}/${this.fileId}`, {
         responseType: 'blob',
         headers: { Authentication: token }
       }).then(res => {

@@ -446,8 +446,8 @@ export default {
     // 开始随机分组
     async startRandomDivide() {
       this.arrangeInfo.teamNum = parseInt(this.arrangeInfo.teamNum)
-      const { data: res1 } = await this.$http.post('http://127.0.0.1:9528/account/plea/teacher', this.arrangeInfo)
-      const { data: res2 } = await this.$http.post('http://127.0.0.1:9528/account/plea/student', this.arrangeInfo)
+      const { data: res1 } = await this.$http.post('/account/plea/teacher', this.arrangeInfo)
+      const { data: res2 } = await this.$http.post('/account/plea/student', this.arrangeInfo)
       if (res1.meta.code === 200) {
         this.$message.success('教师答辩分组安排成功！')
       } else {
@@ -464,9 +464,9 @@ export default {
     },
     // 获取分组安排结果
     async getArrangeResult() {
-      const { data: teacherRes } = await this.$http.get('http://127.0.0.1:9528/account/plea/teacherTeam', { params: this.queryInfo })
+      const { data: teacherRes } = await this.$http.get('/account/plea/teacherTeam', { params: this.queryInfo })
       this.tutorPleaTeams = teacherRes.data.records
-      const { data: studentRes } = await this.$http.get('http://127.0.0.1:9528/account/plea/studentGroup', { params: this.queryInfo })
+      const { data: studentRes } = await this.$http.get('/account/plea/studentGroup', { params: this.queryInfo })
       this.studentPleaTeams = studentRes.data.records
       if (undefined === teacherRes.data.records) {
         this.hasDivideArranged = false
@@ -484,7 +484,7 @@ export default {
     },
     // 获取答辩安排结果
     async getPleaArrangeResult() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/plea', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/plea', { params: this.queryInfo })
       if (res.meta.code === 200) {
         if (res.data.total === 0 || !res.data.records[0].isRelease) {
           this.hasPleaArranged = false
@@ -501,7 +501,7 @@ export default {
     },
     // 删除已分组信息
     async deleteArrangeResult() {
-      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/account/plea/delete', { params: { stage: this.stage } })
+      const { data: res } = await this.$http.delete('/account/plea/delete', { params: { stage: this.stage } })
       if (res.meta.code === 200) {
         this.$message.success('成功撤销答辩分组结果！')
       } else {
@@ -511,7 +511,7 @@ export default {
     },
     // 获取教室信息
     async getClassroomInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/classroom')
+      const { data: res } = await this.$http.get('/account/plea/classroom')
       if (res.meta.code === 200) {
         this.classroomInfo = res.data
       } else {
@@ -525,7 +525,7 @@ export default {
       this.currentGroupArrangeInfo.classroomId = this.studentPleaTeams[index].classroomId
       this.currentGroupArrangeInfo.startTime = this.studentPleaTeams[index].time[0]
       this.currentGroupArrangeInfo.endTime = this.studentPleaTeams[index].time[1]
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/plea', this.currentGroupArrangeInfo)
+      const { data: res } = await this.$http.post('/plea', this.currentGroupArrangeInfo)
       if (res.meta.code !== 200) this.$message.error(res.meta.message)
       else {
         this.$message.success(res.meta.message)
@@ -538,7 +538,7 @@ export default {
       this.currentGroupArrangeInfo.classroomId = this.studentPleaTeams[index].classroomId
       this.currentGroupArrangeInfo.startTime = this.studentPleaTeams[index].time[0]
       this.currentGroupArrangeInfo.endTime = this.studentPleaTeams[index].time[1]
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea', this.currentGroupArrangeInfo)
+      const { data: res } = await this.$http.put('/plea', this.currentGroupArrangeInfo)
       if (res.meta.code !== 200) this.$message.error(res.meta.message)
       else {
         this.$message.success(res.meta.message)
@@ -546,7 +546,7 @@ export default {
     },
     // 发布所有小组的答辩安排
     async releaseAllArrange() {
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/true', { stage: 'KT' })
+      const { data: res } = await this.$http.put('/plea/true', { stage: 'KT' })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -556,7 +556,7 @@ export default {
     },
     // 撤回所有小组的答辩安排
     async withdrawAllArrange() {
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/plea/false', { stage: 'KT' })
+      const { data: res } = await this.$http.put('/plea/false', { stage: 'KT' })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {
@@ -566,7 +566,7 @@ export default {
     },
     // 删除所有已有的答辩安排
     async deleteAllArrange() {
-      const { data: res } = await this.$http.delete('http://127.0.0.1:9528/plea', { params: { stage: 'KT' } })
+      const { data: res } = await this.$http.delete('/plea', { params: { stage: 'KT' } })
       if (res.meta.code === 200) {
         this.$message.success(res.meta.message)
       } else {

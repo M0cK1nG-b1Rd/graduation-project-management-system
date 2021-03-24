@@ -306,7 +306,7 @@ export default {
   },
   methods: {
     async getReportList() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         this.$message.error('获取开题报告列表失败')
       } else {
@@ -315,7 +315,7 @@ export default {
       }
     },
     async getSubjectInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
+      const { data: res } = await this.$http.get('/subject/student/my')
       if (res.meta.code !== 200) {
         this.$message.error('获取课题信息失败')
       } else {
@@ -323,7 +323,7 @@ export default {
       }
     },
     async getScore() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/fin')
+      const { data: res } = await this.$http.get('/statistics/score/fin')
       if (res.meta.code !== 200) {
         return this.$message.error('获取反馈失败')
       }

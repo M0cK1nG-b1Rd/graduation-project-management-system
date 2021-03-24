@@ -319,7 +319,7 @@ export default {
   },
   methods: {
     async getReportList() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题列表失败')
       } else {
@@ -328,7 +328,7 @@ export default {
       }
     },
     async getSubjectInfo(row) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { page: this.queryInfo.page, size: this.queryInfo.size, subId: row.subId } })
+      const { data: res } = await this.$http.get('/subject/teacher/my', { params: { page: this.queryInfo.page, size: this.queryInfo.size, subId: row.subId } })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题列表失败')
       } else {
@@ -338,7 +338,7 @@ export default {
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
+      const { data: res } = await this.$http.put('/report', this.feedback)
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {

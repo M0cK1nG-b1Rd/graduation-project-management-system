@@ -77,7 +77,7 @@ export default {
     },
     // 获取所有课题信息
     async getAllSubjectInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my')
+      const { data: res } = await this.$http.get('/subject/teacher/my')
       if (res.meta.code === 200) {
         this.allSubjectInfo = res.data
         for (let i = 0; i < this.allSubjectInfo.length; i++) {
@@ -89,7 +89,7 @@ export default {
     },
     // 获取该课题学生信息
     async getStuInfo(subId) {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/students/', { params: { subId: subId } })
+      const { data: res } = await this.$http.get('/subject/students/', { params: { subId: subId } })
       if (res.meta.code === 200) {
         this.stuInfo = res.data
       } else {

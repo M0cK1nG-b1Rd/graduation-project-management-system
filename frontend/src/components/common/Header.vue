@@ -118,7 +118,7 @@ export default {
     },
     // 获得当前未读消息数
     async getUnreadMessageNum() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/message')
+      const { data: res } = await this.$http.get('/message')
       if (res.meta.code === 200) {
         this.unreadMessageNum = res.data
       } else {

@@ -26,7 +26,7 @@
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
         JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
-        JOIN USER u ON (t.USER_ID = u.USER_ID)
+        JOIN `user` u ON (t.USER_ID = u.USER_ID)
         WHERE s.`STATUS` = 'YTG'
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
@@ -56,7 +56,7 @@
         s.POSE_TIME
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
-        JOIN USER u ON (t.USER_ID = u.USER_ID)
+        JOIN `user` u ON (t.USER_ID = u.USER_ID)
         WHERE t.TEACHER_ID = #{teacherId}
         <if test="subId != null and subId != ''">
             AND s.SUB_ID=#{subId}
@@ -83,7 +83,7 @@
         FROM `subject` s
         JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
         JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
-        JOIN USER u ON (t.USER_ID = u.USER_ID)
+        JOIN `user` u ON (t.USER_ID = u.USER_ID)
         WHERE 1=1
         <if test="subject.teacherName != null and subject.teacherName != ''">
             AND u.REAL_NAME=#{subject.teacherName}
@@ -116,7 +116,7 @@
                  JOIN applied_subject a ON (a.SUB_ID = s.SUB_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
                  JOIN college c ON (c.COLLEGE_ID = t.COLLEGE_ID)
-                 JOIN USER u ON (t.USER_ID = u.USER_ID)
+                 JOIN `user` u ON (t.USER_ID = u.USER_ID)
         WHERE s.`STATUS` = 'YTG'
           AND a.`STATUS` = 'YTG'
           AND a.STU_ID = #{stuId}

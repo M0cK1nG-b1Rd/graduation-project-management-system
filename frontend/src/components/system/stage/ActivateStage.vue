@@ -50,7 +50,7 @@ export default {
   methods: {
     // 获取所有阶段信息
     async getAllStageInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/system')
+      const { data: res } = await this.$http.get('/stage/system')
       if (res.meta.code !== 200) return this.$message.error('请求阶段信息失败！')
       this.allStageInfo = res.data.allStage
       this.currentStageId = res.data.currentStageId
@@ -59,7 +59,7 @@ export default {
     // 提交激活请求
     async submitActivateRequest() {
       this.dialogVisible = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/stage/system/activate', this.activatingStageId)
+      const { data: res } = await this.$http.put('/stage/system/activate', this.activatingStageId)
       if (res.meta.code !== 200) return this.$message.error('激活请求失败！')
       this.$message.success('阶段激活成功！')
     },

@@ -211,7 +211,7 @@ export default {
     // 提交表单
     async subjectSubmit() {
       this.dialogVisible = false
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.subject)
+      const { data: res } = await this.$http.post('/subject', this.subject)
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {

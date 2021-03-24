@@ -209,7 +209,7 @@ export default {
   methods: {
     // 获取所有申请记录信息
     async getApplicationRecords() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/subject/apply', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         this.$message.error('拉取选题申请记录失败！')
       } else {
@@ -219,7 +219,7 @@ export default {
     },
     // 更新申请记录信息
     async updateApplicationRecords() {
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/apply', this.currentApplicationInfo)
+      const { data: res } = await this.$http.put('/subject/apply', this.currentApplicationInfo)
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {

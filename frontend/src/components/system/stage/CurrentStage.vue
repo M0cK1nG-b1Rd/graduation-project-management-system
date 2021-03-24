@@ -54,7 +54,7 @@ export default {
   methods: {
     // 获取所有阶段信息
     async getAllStageInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/system')
+      const { data: res } = await this.$http.get('/stage/system')
       if (res.meta.code !== 200) return this.$message.error('请求阶段信息失败！')
       this.allStageInfo = res.data.allStage
       this.currentStageId = res.data.currentStageId

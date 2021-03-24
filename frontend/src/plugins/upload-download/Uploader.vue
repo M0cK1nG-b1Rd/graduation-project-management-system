@@ -5,7 +5,7 @@
       :headers="myHeaders"
       ref="upload"
       multiple
-      :action="'http://127.0.0.1:9528/file/upload/' + docId"
+      :action="'/file/upload/' + docId"
       :file-list="fileList"
       :auto-upload="false">
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>

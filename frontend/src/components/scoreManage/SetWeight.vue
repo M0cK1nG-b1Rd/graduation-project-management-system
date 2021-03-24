@@ -241,7 +241,7 @@ export default {
         return this.$message.warning('结题材料及结题答辩权重之和不为100%，请检查！')
       }
       // 校验通过后发送到后端
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/score/weight', this.weightSetting)
+      const { data: res } = await this.$http.put('/score/weight', this.weightSetting)
       if (res.meta.code === 200) {
         this.$notify.success('配置打分权重成功！')
       } else {
@@ -250,7 +250,7 @@ export default {
     },
     // 获取权重设置
     async getWeightSetting() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/score/weight')
+      const { data: res } = await this.$http.get('/score/weight')
       if (res.meta.code === 200) {
         this.weightSetting = res.data
       } else {

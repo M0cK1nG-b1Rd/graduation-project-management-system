@@ -273,7 +273,7 @@ export default {
       this.newTaskInfo.endTime = this.newTaskInfo.time[1]
       // 删除多余时间属性
       delete this.newTaskInfo.time
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task', this.newTaskInfo)
+      const { data: res } = await this.$http.post('/stage/task', this.newTaskInfo)
       if (res.meta.code === 200) {
         this.$notify.success(res.meta.message)
         this.newTaskDocId = res.data
@@ -300,7 +300,7 @@ export default {
         subId: subId,
         stuId: stuId
       }
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: queryInfo })
+      const { data: res } = await this.$http.get('/stage/task', { params: queryInfo })
       if (res.meta.code === 200) {
       } else {
         this.$message.error('获取该学生阶段任务信息失败！')

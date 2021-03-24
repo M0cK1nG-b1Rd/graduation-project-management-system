@@ -95,7 +95,7 @@ export default {
   methods: {
     // 获取学生信息
     async getStuInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/account/plea/student', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/account/plea/student', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$notify.error('获取答辩学生信息失败！')
       this.stuInfo = res.data.records
       this.stuNum = res.data.total

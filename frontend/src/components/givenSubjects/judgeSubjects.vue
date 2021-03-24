@@ -335,7 +335,7 @@ export default {
   },
   methods: {
     async getSubjectList() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/all', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/subject/all', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题列表失败')
       } else {
@@ -379,7 +379,7 @@ export default {
       this.viewEditVisible = false
       this.currentSubjectInfo.status = status
       delete this.currentSubjectInfo.zoneName
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/audit', this.currentSubjectInfo)
+      const { data: res } = await this.$http.put('/subject/audit', this.currentSubjectInfo)
       if (res.meta.code !== 200) this.$message.error('提交审核意见失败！')
     }
   }

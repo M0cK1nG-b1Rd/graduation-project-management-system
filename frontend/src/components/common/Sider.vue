@@ -76,7 +76,7 @@ export default {
     },
     // 获取所有的菜单
     async getMeunList() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/menu')
+      const { data: res } = await this.$http.get('/menu')
       // const { data: res } = await this.$http.get('/mock/menu_list_success.json')
       if (res.meta.code !== 200) return this.$message.error(res.meta.msg)
       this.menuList = res.data

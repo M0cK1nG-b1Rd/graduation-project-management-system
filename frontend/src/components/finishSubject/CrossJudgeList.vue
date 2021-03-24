@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     async getPaperList() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/thesisGroup/teacher')
+      const { data: res } = await this.$http.get('/thesisGroup/teacher')
       if (res.meta.code !== 200) {
         this.$message.error('获取评审列表失败')
       } else {
@@ -190,7 +190,7 @@ export default {
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/thesisGroup/teacher', this.feedBack)
+      const { data: res } = await this.$http.put('/thesisGroup/teacher', this.feedBack)
       if (res.meta.code !== 200) this.$message.error('提交打分信息失败，请勿重复打分！')
       else this.$message.success('提交反馈信息成功！')
     },

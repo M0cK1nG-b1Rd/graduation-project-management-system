@@ -277,7 +277,7 @@ export default {
   methods: {
     // 获取阶段任务
     async getTaskInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/stage/task', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.taskInfo = res.data.records
         this.totalPageNum = res.data.total
@@ -310,7 +310,7 @@ export default {
     },
     // 提交任务表单上传
     async submitTaskForm() {
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/stage/task/result', this.taskSubmitInfo)
+      const { data: res } = await this.$http.post('/stage/task/result', this.taskSubmitInfo)
       if (res.meta.code === 200) {
         this.$notify.success(res.meta.message)
         // 更新docId

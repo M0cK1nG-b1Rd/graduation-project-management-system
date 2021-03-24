@@ -27,7 +27,7 @@
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
-                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                JOIN `user` u1 ON (stu.USER_ID = u1.USER_ID)
         <if test="report.stage != null and report.stage != ''">
                 AND r.STAGE=#{report.stage}
         </if>
@@ -55,7 +55,7 @@
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
-                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                JOIN `user` u1 ON (stu.USER_ID = u1.USER_ID)
                 JOIN teacher t ON(t.TEACHER_ID=s.POSE_BY)
         WHERE t.TEACHER_ID=#{teacherId}
         <if test="report.stage != null and report.stage != ''">
@@ -86,7 +86,7 @@
             report r
                 JOIN `subject` s ON ( r.SUB_ID = s.SUB_ID )
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
-                JOIN USER u1 ON (stu.USER_ID = u1.USER_ID)
+                JOIN `user` u1 ON (stu.USER_ID = u1.USER_ID)
         WHERE r.POSE_BY=#{studentId}
         <if test="report.stage != null and report.stage != ''">
             AND r.STAGE=#{report.stage}
@@ -102,7 +102,7 @@
         FROM
             report r
                 JOIN student stu ON ( stu.STU_ID = r.POSE_BY )
-                JOIN USER u1 ON ( stu.USER_ID = u1.USER_ID )
+                JOIN `user` u1 ON ( stu.USER_ID = u1.USER_ID )
         WHERE
             r.POSE_BY = #{stuId}
         <if test="report.stage != null and report.stage != ''">

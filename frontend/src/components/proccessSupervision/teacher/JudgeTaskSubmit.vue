@@ -224,7 +224,7 @@ export default {
   methods: {
     // 获取学生提交信息
     async getSubmitInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task/handin', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/stage/task/handin', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.totalPageNum = res.data.total
         this.submitInfo = res.data.records
@@ -256,7 +256,7 @@ export default {
       submitData.score = this.currentSubmitInfo.score
       submitData.status = this.currentSubmitInfo.status
       submitData.retries = this.currentSubmitInfo.retries
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/stage/task/result/score', submitData)
+      const { data: res } = await this.$http.put('/stage/task/result/score', submitData)
       if (res.meta.code === 200) {
         this.$message.success('提交反馈成功！')
         await this.getSubmitInfo()

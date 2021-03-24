@@ -322,21 +322,21 @@ export default {
   methods: {
     // 获取通知信息
     async getNotice() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/announcement', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('/announcement', { params: this.queryInfo })
       if (res.meta.code !== 200) return this.$message.error('获取公告信息失败！')
       this.noticeList = res.data.records
       this.totalPageNum = res.data.total
     },
     // 将前端的更新传到后台(包括：编辑、删除)
     async updateNotice() {
-      const { data: res } = await this.$http.put('http://127.0.0.1:9528/announcement', this.currentNoticeInfo)
+      const { data: res } = await this.$http.put('/announcement', this.currentNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('更新公告信息失败！')
       this.docID = res.data
       await this.getNotice()
     },
     // 将新增的公告发送到后端(发布公告)
     async submitNewNotice() {
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/announcement', this.newNoticeInfo)
+      const { data: res } = await this.$http.post('/announcement', this.newNoticeInfo)
       if (res.meta.code !== 200) return this.$message.error('操作失败!')
       this.docID = res.data
       this.$message.success('操作成功!')

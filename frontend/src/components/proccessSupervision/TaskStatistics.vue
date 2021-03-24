@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     async getStatistics() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/stageTask')
+      const { data: res } = await this.$http.get('/statistics/stageTask')
       if (res.meta.code === 200) {
         this.statisticsInfo = res.data
         this.statisticsInfo.passRatio = this.statisticsInfo.passedTask / (this.statisticsInfo.rejectTimes + this.statisticsInfo.passedTask)

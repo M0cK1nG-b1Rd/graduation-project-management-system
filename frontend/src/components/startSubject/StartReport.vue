@@ -218,7 +218,7 @@ export default {
   methods: {
     // 获取课题信息
     async getCurrentSubjectInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
+      const { data: res } = await this.$http.get('/subject/student/my')
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
@@ -227,7 +227,7 @@ export default {
     },
     // 提交表单
     async reportSubmit() {
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/report', this.report)
+      const { data: res } = await this.$http.post('/report', this.report)
       if (res.meta.code !== 200) {
         this.$message.error('开题报告提交失败！')
       } else {

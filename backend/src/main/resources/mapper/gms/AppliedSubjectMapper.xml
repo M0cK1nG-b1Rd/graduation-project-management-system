@@ -32,9 +32,9 @@
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
                  JOIN student stu ON (stu.STU_ID = a.STU_ID)
-                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN `user` u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
-                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 JOIN `user` u2 ON (u2.USER_ID = t.USER_ID)
     </select>
     <select id="selectWithConditionAsTeacher" resultMap="AppliedSubjectMapper">
         SELECT a.ID,
@@ -55,9 +55,9 @@
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
                  JOIN student stu ON (stu.STU_ID = a.STU_ID)
-                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN `user` u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
-                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 JOIN `user` u2 ON (u2.USER_ID = t.USER_ID)
         WHERE s.POSE_BY = #{teacherId}
     </select>
     <select id="selectWithConditionAsStudent" resultMap="AppliedSubjectMapper">
@@ -79,9 +79,9 @@
         FROM applied_subject a
                  JOIN `subject` s ON (a.SUB_ID = s.SUB_ID)
                  JOIN student stu ON (stu.STU_ID = a.STU_ID)
-                 JOIN USER u1 ON (u1.USER_ID = stu.USER_ID)
+                 JOIN `user` u1 ON (u1.USER_ID = stu.USER_ID)
                  JOIN teacher t ON (t.TEACHER_ID = s.POSE_BY)
-                 JOIN USER u2 ON (u2.USER_ID = t.USER_ID)
+                 JOIN `user` u2 ON (u2.USER_ID = t.USER_ID)
         WHERE a.STU_ID = #{studentId}
     </select>
     <select id="getStudentsInSubject" resultType="com.gms.gms.domain.Student">

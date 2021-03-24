@@ -87,7 +87,7 @@ export default {
         const EntropyForm = { username: '', password: '' }
         EntropyForm.password = aesEncrypt.encrypt(this.loginForm.password)
         EntropyForm.username = this.loginForm.username
-        const { data: res } = await this.$http.post('http://127.0.0.1:9528/login', qs.stringify(EntropyForm))
+        const { data: res } = await this.$http.post('/login', qs.stringify(EntropyForm))
         if (res.meta.code !== 200) return this.$message.error('登录失败, 请重试！')
         this.$message.success('欢迎登录“快乐毕设系统“ 祝您顺利毕业！')
         // 1. 将登录成功之后的token保存到客户端的sessionStorage中
@@ -99,7 +99,7 @@ export default {
         userInfo.roles = res.data.roles
         window.sessionStorage.setItem('userInfo', JSON.stringify(userInfo))
         // 存数据字典
-        const { data: resp } = await this.$http.get('http://127.0.0.1:9528/dict/all')
+        const { data: resp } = await this.$http.get('/dict/all')
         if (resp.meta.code !== 200) return this.$message.error('获取数据字典失败！')
         window.sessionStorage.setItem('dict', JSON.stringify(resp.data))
         // 2. 通过编程式导航跳转到后台主页， 路由地址是 /home

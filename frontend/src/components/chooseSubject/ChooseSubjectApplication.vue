@@ -219,7 +219,7 @@ export default {
       const applicationForm = {}
       applicationForm.subId = this.applicationInfo.subId
       applicationForm.applyReason = this.applicationInfo.applyReason
-      const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
+      const { data: res } = await this.$http.post('/subject/apply', applicationForm)
       if (res.meta.code !== 200) {
         this.$message.error(res.meta.message)
       } else {
