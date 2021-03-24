@@ -204,7 +204,6 @@
     </el-dialog>
     <!--    给学生反馈信息抽屉-->
     <el-drawer
-      title="开题信息反馈及评分"
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
@@ -213,8 +212,9 @@
           <el-row>
             <el-col style="padding: 40px">
               <el-card class="feedbackCard">
+                <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">开题信息反馈及评分</el-row>
+                <div style="height: 10px"></div>
                 <el-row>
-                  <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
                   <el-col :span="24" style="margin-bottom: 10px">
                     <div class="ql-container ql-snow">
                       <div class="notice_content ql-editor"
@@ -224,7 +224,7 @@
                     </div>
                   </el-col>
                 </el-row>
-                <el-divider></el-divider>
+                <el-divider>中期报告评分</el-divider>
                 <el-col>
                   <div class="block">
                     <el-slider
@@ -237,17 +237,16 @@
                   <el-form-item label="中期结果">
                     <el-radio-group v-model="feedback.status">
                       <el-radio label="YTG">通过审核</el-radio>
-                      <el-radio label="WTG">未通过</el-radio>
+                      <el-radio label="WTG">不通过</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
               </el-card>
             </el-col>
           </el-row>
-          <el-form-item>
-            <el-button type="success" @click="feedbackSubmit">立即提交</el-button>
-            <el-button>取消</el-button>
-          </el-form-item>
+          <el-row type="flex" justify="center">
+            <el-button type="success" icon="el-icon-upload" @click="feedbackSubmit">提交审核意见</el-button>
+          </el-row>
         </el-form>
       </el-row>
     </el-drawer>
@@ -314,27 +313,30 @@ export default {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取中期报告列表失败')
+        this.$message.error('获取中期报告列表失败')
       } else {
         this.reportlist = res.data.records // 与后端对接
         this.totalPageNum = res.data.total
       }
     },
     async getSubjectInfo(row) {
-      console.log(row)
-      console.log(row.subId)
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { subId: row.subId } })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        this.$message.error('获取课题列表失败')
+      } else {
+        this.currentSubjectInfo = res.data[0] // 与后端对接
       }
-      this.currentSubjectInfo = res.data[0] // 与后端对接
     },
     // 提交表单
     async feedbackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
-      if (res.meta.code !== 200) this.$message.error('提交反馈信息失败！')
-      else this.$message.success('提交反馈信息成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error('提交反馈信息失败！')
+      } else {
+        this.$message.success('提交反馈信息成功！')
+        await this.getReportList()
+      }
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {

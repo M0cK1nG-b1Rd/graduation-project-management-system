@@ -9,7 +9,7 @@
 <!--    查看我的开题报告提交记录列表区-->
     <!--卡片视图区-->
     <el-card class="el-card">
-      <el-row>
+      <el-row type="flex" align="middle">
         <el-col :span="18">
     <!--  表格卡片-->
       <el-card>
@@ -85,33 +85,60 @@
       </el-row>
     </el-card>
         </el-col>
-      <!--      评分区-->
+      <!--      得分区-->
         <el-col :span="6">
           <el-card style="margin-left: 10px">
             <div class="card_header">我的开题成绩</div>
-            <div>答辩表现</div>
-            <a-progress
-              style="margin-bottom: 10px"
-              :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="score.defenseScore"
-              status="active"
-              :format="percent => `${percent} 分`"
-            />
-            <div>开题材料</div>
-            <a-progress
-              style="margin-bottom: 10px"
-              :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="score.fileScore"
-              status="active"
-              :format="percent => `${percent} 分`"
-            />
-            <div>总分</div>
-            <a-progress
-              :stroke-color="{from: '#108ee9',to: '#87d068',}"
-              :percent="score.startScore"
-              status="active"
-              :format="percent => `${percent} 分`"
-            />
+            <div style="text-align: center">答辩表现</div>
+<!--            答辩暂无分数-->
+            <el-row type="flex" justify="center" v-if="score.defenseScore == -1">
+              <el-tag type="info">
+                答辩得分暂未发布
+                <a-icon type="exclamation" />
+              </el-tag>
+            </el-row>
+<!--            答辩已有分数-->
+            <el-row v-else>
+              <a-progress
+                style="margin-bottom: 10px"
+                :stroke-color="{from: '#108ee9',to: '#87d068',}"
+                :percent="score.defenseScore"
+                status="active"
+                :format="percent => `${percent} 分`"/>
+            </el-row>
+            <div style="text-align: center">开题材料</div>
+<!--            报告暂无得分-->
+            <el-row type="flex" justify="center" v-if="score.fileScore == -1">
+              <el-tag type="info">
+                开题报告得分暂未发布
+                <a-icon type="exclamation" />
+              </el-tag>
+            </el-row>
+<!--            报告已有分数-->
+            <el-row v-else>
+              <a-progress
+                style="margin-bottom: 10px"
+                :stroke-color="{from: '#108ee9',to: '#87d068',}"
+                :percent="score.fileScore"
+                status="active"
+                :format="percent => `${percent} 分`"/>
+            </el-row>
+            <div style="text-align: center">总分</div>
+<!--            总分暂无-->
+            <el-row type="flex" justify="center" v-if="score.startScore == -1">
+              <el-tag type="info">
+                开题阶段总成绩暂未发布
+                <a-icon type="exclamation" />
+              </el-tag>
+            </el-row>
+<!--            总分已发布-->
+            <el-row v-else>
+              <a-progress
+                :stroke-color="{from: '#108ee9',to: '#87d068',}"
+                :percent="score.startScore"
+                status="active"
+                :format="percent => `${percent} 分`"/>
+            </el-row>
           </el-card>
         </el-col>
       </el-row>
@@ -249,13 +276,13 @@
           <el-col :span="22" class="feedback">
             <div class="fankui">导师反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
-              <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
+              <div class="ql-editor" v-html="score.fileFeedback" ></div>
             </div>
           </el-col>
           <el-col :span="22" class="feedback">
             <div class="fankui">答辩反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
-              <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
+              <div class="ql-editor" v-html="score.defenseFeedback" ></div>
             </div>
           </el-col>
         </el-row>
@@ -300,9 +327,6 @@ export default {
       },
       // 查看分数
       score: {
-        fileScore: 0, // 材料分数
-        defenseScore: 0, // 答辩分数
-        startScore: 0
       },
       // 查看课题详情对话框可见性
       viewPageVisible: false,

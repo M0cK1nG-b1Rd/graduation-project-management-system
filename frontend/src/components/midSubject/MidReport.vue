@@ -37,8 +37,8 @@
               <el-divider></el-divider>
               <!--          课题要求-->
               <el-row type="flex" align="center">
-                <el-col :span="4" class="item_label">课题要求：</el-col>
-                <el-col :span="20">
+                <el-col :span="3" class="item_label">课题要求：</el-col>
+                <el-col :span="21">
                   <div class="ql-container ql-snow">
                     <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
                   </div>
@@ -47,8 +47,8 @@
               <el-divider></el-divider>
               <!--          课题描述-->
               <el-row type="flex" align="center">
-                <el-col :span="4" class="item_label">课题内容：</el-col>
-                <el-col :span="20">
+                <el-col :span="3" class="item_label">课题内容：</el-col>
+                <el-col :span="21">
                   <div class="ql-container ql-snow">
                     <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
                   </div>
