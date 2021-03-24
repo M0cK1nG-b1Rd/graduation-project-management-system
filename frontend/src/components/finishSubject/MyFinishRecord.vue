@@ -61,7 +61,7 @@
                   <el-button type="success" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
                 </el-tooltip>
                 <!--              下载毕业论文-->
-                <el-tooltip class="item" effect="dark" content="下载毕业论文" placement="top" :enterable="false">
+                <el-tooltip class="item" effect="dark" content="查看答辩申请及毕业论文" placement="top" :enterable="false">
                   <el-button type="warning" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
                 </el-tooltip>
                 <!--              查看反馈结果-->
@@ -208,12 +208,26 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    下载毕业论文对话框-->
+    <!--    申请及毕业论文对话框-->
     <el-dialog
       :visible.sync="viewReportVisible"
-      width="40%">
-      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">下载毕业论文</el-row>
+      width="50%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold; margin-bottom: 20px">答辩申请及毕业论文</el-row>
+      <el-divider>学生信息</el-divider>
+      <el-row style="font-size: 15px">
+        <el-col :span="3" :offset="2">申请人:</el-col>
+        <el-col :span="5">{{currentReportInfo.studentName}}</el-col>
+        <el-col :span="3" :offset="1">申请时间:</el-col>
+        <el-col :span="8">{{currentReportInfo.poseTime}}</el-col>
+      </el-row>
+      <el-divider>答辩申请内容</el-divider>
       <el-row>
+        <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+          <div class="ql-editor" v-html="currentReportInfo.applyReason"></div>
+        </div>
+      </el-row>
+      <el-divider>毕业论文</el-divider>
+      <el-row type="flex" justify="center">
         <Downloader :doc-id="docId"></Downloader>
       </el-row>
       <span slot="footer" class="dialog-footer">

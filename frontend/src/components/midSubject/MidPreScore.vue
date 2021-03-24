@@ -3,13 +3,13 @@
     <!--    面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>开题管理</el-breadcrumb-item>
+      <el-breadcrumb-item>中期管理</el-breadcrumb-item>
       <el-breadcrumb-item>答辩评分</el-breadcrumb-item>
     </el-breadcrumb>
     <!--      题目信息展示区-->
     <el-row>
       <el-col>
-        <div class="card_header">开题答辩安排信息</div>
+        <div class="card_header">中期答辩安排信息</div>
         <!--    答辩相情卡片-->
         <el-row type="flex" justify="center">
           <el-card class="pre_detail" style="width: 80%">
@@ -53,10 +53,6 @@
                   </el-table>
                 </el-card>
               </el-col>
-              <!--                 &lt;!&ndash;         占位符       &ndash;&gt;-->
-              <!--                <el-col :span="4">-->
-              <!--                  <el-divider direction="vertical"></el-divider>-->
-              <!--                </el-col>-->
               <!--          答辩老师参与名单-->
               <el-col :span="14">
                 <el-card class="box-teacher" style="margin-left: 20%; margin-top: 5px">
@@ -78,15 +74,11 @@
               </el-col>
             </el-row>
             <el-divider></el-divider>
-            <!--        答辩信息附件下载区-->
-            <el-row type="flex" align="center">
-              <el-col :span="4" class="item_label">附件下载：</el-col>
-            </el-row>
             <!--         回形针区     -->
             <el-col>
               <a-divider style="height: 1px; background-color: #e8e8e8"><i class="el-icon-s-claim"></i></a-divider>
             </el-col>
-            <div class="card_header">开题答辩成绩登记</div>
+            <div class="card_header">中期答辩成绩登记</div>
             <el-row type="flex" justify="center">
               <!--  表格卡片-->
               <!--      表格区-->
@@ -126,7 +118,7 @@
                         <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
                       </el-tooltip>
                       <!--              编辑反馈结果-->
-                      <el-tooltip class="item" effect="dark" content="编辑开题成绩" placement="top" :enterable="false">
+                      <el-tooltip class="item" effect="dark" content="编辑中期成绩" placement="top" :enterable="false">
                         <el-button type="danger" icon="el-icon-edit" circle size="mini" @click="editFeedback(scope.row)"></el-button>
                       </el-tooltip>
                     </template>
@@ -191,7 +183,7 @@
     </el-dialog>
     <!--    给学生反馈信息抽屉-->
     <el-dialog
-      title="开题信息反馈及评分"
+      title="中期信息反馈及评分"
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
@@ -221,7 +213,7 @@
                   </div>
                 </el-col>
                 <el-col>
-                  <el-form-item label="开题结果">
+                  <el-form-item label="中期结果">
                     <el-radio-group v-model="feedBack.isPassed">
                       <el-radio label="true">通过审核</el-radio>
                       <el-radio label="false">不通过</el-radio>
@@ -281,7 +273,7 @@ export default {
         pleaId: 0,
         score: 0,
         feedback: '',
-        isPassed: true,
+        isPassed: '',
         stage: 'ZQ'
       },
       viewPageVisible: false,
@@ -316,7 +308,7 @@ export default {
     async getReportInfo(row) {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'KT' } })
       if (res.meta.code !== 200) {
-        this.$message.error('获取开题报告信息失败')
+        this.$message.error('获取中期报告信息失败')
       }
       this.currentReportInfo = res.data[0] // 与后端对接
     },
@@ -334,7 +326,7 @@ export default {
       this.currentSubjectInfo = row
       // console.log(this.currentSubjectInfo)
     },
-    // 查看学生开题报告详情
+    // 查看学生中期报告详情
     viewReport(row) {
       this.getReportInfo(row)
       this.viewReportVisible = true

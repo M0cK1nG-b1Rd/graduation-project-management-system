@@ -74,10 +74,6 @@
                 </el-col>
               </el-row>
               <el-divider></el-divider>
-              <!--        答辩信息附件下载区-->
-              <el-row type="flex" align="center">
-                <el-col :span="4" class="item_label">附件下载：</el-col>
-              </el-row>
               <!--         回形针区     -->
               <el-col>
                 <a-divider style="height: 1px; background-color: #e8e8e8"><i class="el-icon-s-claim"></i></a-divider>
@@ -277,7 +273,7 @@ export default {
         pleaId: 0,
         score: 0,
         feedback: '',
-        isPassed: true,
+        isPassed: '',
         stage: 'KT'
       },
       viewPageVisible: false,
@@ -305,15 +301,19 @@ export default {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/userId', { params: { userId: row.userId } })
       if (res.meta.code !== 200) {
         this.$message.error('获取课题信息失败')
+      } else {
+        this.currentSubjectInfo = res.data // 与后端对接
       }
-      this.currentSubjectInfo = res.data // 与后端对接
     },
     // 提交表单
     async feedBackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/pleaResult', this.feedBack)
-      if (res.meta.code !== 200) this.$message.error(res.meta.message)
-      else this.$message.success('提交答辩成绩成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error(res.meta.message)
+      } else {
+        this.$message.success('提交答辩成绩成功！')
+      }
     },
     // 查看课题详情
     viewSubject(row) {

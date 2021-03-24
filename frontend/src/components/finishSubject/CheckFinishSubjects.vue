@@ -61,11 +61,11 @@
               label="操作">
               <template slot-scope="scope">
                 <!--              查看详细内容-->
-                <el-tooltip class="item" effect="dark" content="查看详细内容" placement="top" :enterable="false">
+                <el-tooltip class="item" effect="dark" content="查看课题详细内容" placement="top" :enterable="false">
                   <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
                 </el-tooltip>
                 <!--              查看开题阶段内容-->
-                <el-tooltip class="item" effect="dark" content="查看结题阶段内容" placement="top" :enterable="false">
+                <el-tooltip class="item" effect="dark" content="查看答辩申请及毕业论文" placement="top" :enterable="false">
                   <el-button type="danger" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
                 </el-tooltip>
                 <!-- 给学生反馈信息-->
@@ -153,43 +153,28 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    查看结题材料  注意下载附件-->
+    <!--    查看答辩申请及毕业论文-->
     <el-dialog
       :visible.sync="viewReportVisible"
-      width="60%">
-      <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
-        <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentSubjectInfo.studentName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
-              </el-row>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="20">
-            <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.meaning"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.result"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.plan"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+      width="50%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold; margin-bottom: 20px">答辩申请及毕业论文</el-row>
+      <el-divider>学生信息</el-divider>
+      <el-row style="font-size: 15px">
+        <el-col :span="3" :offset="2">申请人:</el-col>
+        <el-col :span="5">{{currentReportInfo.studentName}}</el-col>
+        <el-col :span="3" :offset="1">申请时间:</el-col>
+        <el-col :span="8">{{currentReportInfo.poseTime}}</el-col>
+      </el-row>
+      <el-divider>答辩申请内容</el-divider>
+      <el-row>
+        <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+          <div class="ql-editor" v-html="currentReportInfo.applyReason"></div>
+        </div>
+      </el-row>
+      <el-divider>毕业论文</el-divider>
+      <el-row type="flex" justify="center">
+        <Downloader :doc-id="docId"></Downloader>
+      </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="viewReportVisible = false">退出查看</el-button>
       </span>
@@ -254,9 +239,10 @@
 
 <script>
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'checkSubjects',
-  components: { quillEditor },
+  components: { quillEditor, Downloader },
   data() {
     return {
       // 查看详情的课题信息
@@ -284,7 +270,9 @@ export default {
       // 反馈抽屉可见性
       drawer: false,
       // 富文本编辑器可见性
-      quillEditorVisible: false
+      quillEditorVisible: false,
+      docId: '',
+      currentReportInfo: ''
     }
   },
   created() {
@@ -341,13 +329,12 @@ export default {
       this.getSubjectInfo(row)
       this.viewPageVisible = true
       this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
     },
     // 查看学生开题报告详情
     viewReport(row) {
       this.viewReportVisible = true
-      this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
+      this.currentReportInfo = row
+      this.docId = row.docId
     },
     // 编辑反馈表单
     editFeedback(row) {
