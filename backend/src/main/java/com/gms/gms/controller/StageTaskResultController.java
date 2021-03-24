@@ -27,7 +27,7 @@ import java.util.Date;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("stage/task/result")
+@RequestMapping("stage/task")
 public class StageTaskResultController {
 
     @Autowired
@@ -36,7 +36,9 @@ public class StageTaskResultController {
     @Autowired
     StageTaskService stageTaskService;
 
-    @PostMapping
+
+
+    @PostMapping("result")
     public GmsResponse giveStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
             String docId = FileStorageUtil.getDocId();
@@ -60,7 +62,7 @@ public class StageTaskResultController {
     }
 
 
-    @GetMapping
+    @GetMapping("result")
     public GmsResponse getStageTaskResult(StageTaskResult result) throws GmsException {
         try {
             //默认使用第一个角色，即取第一个角色的名字
@@ -78,8 +80,25 @@ public class StageTaskResultController {
     }
 
 
+    //老师查看阶段任务总体提交情况
+    @GetMapping("handin")
+    public GmsResponse getGeneralStageTaskResult(StageTaskResult result) throws GmsException {
+        try {
+            IPage<StageTaskResult> stageTaskList =  stageTaskResultService.getGeneralStageTaskResult(result);
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C200.getCode(),
+                    Code.C200.getDesc(),
+                    "查询成功"),stageTaskList);
+        } catch (Exception e) {
+            String message = "查询失败";
+            log.error(message, e);
+            throw new GmsException(message);
+        }
+    }
+
+
     // TODO: 2021/3/18 测试
-    @PutMapping
+    @PutMapping("result")
     public GmsResponse modifyStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
             stageTaskResultService.modifyStageTaskResult(result);
@@ -94,7 +113,7 @@ public class StageTaskResultController {
         }
     }
 
-    @PutMapping("score")
+    @PutMapping("result/score")
     public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {
             result.setAuditTime(new Date());

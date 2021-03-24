@@ -85,6 +85,28 @@
         WHERE
         st.TEACHER_ID = #{teacherId}
     </select>
+    <select id="getGeneralStageTaskResult" resultType="com.gms.gms.domain.StageTaskResult">
+        SELECT
+            st.TASK_NAME,
+            st.TASK_ID,
+            st.STU_ID,
+            u1.REAL_NAME AS STUDENT_NAME,
+            str.RETRIES,
+            str.SUMMARY,
+            str.DOC_ID,
+            str.FEEDBACK,
+            str.`STATUS`,
+            str.AUDIT_TIME,
+            str.SCORE
+        FROM
+            stage_task st
+                JOIN stage_task_result str ON ( st.TASK_ID = str.TASK_ID )
+                JOIN student s ON ( s.STU_ID = st.STU_ID )
+                JOIN USER u1 ON ( u1.USER_ID = s.USER_ID )
+        WHERE
+            st.TEACHER_ID = #{teacherId}
+
+    </select>
 
     <resultMap id="StageTaskResultMapper" type="com.gms.gms.domain.StageTaskResult">
         <result column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
