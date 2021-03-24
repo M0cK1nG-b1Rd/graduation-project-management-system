@@ -94,9 +94,11 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="10">
+          <el-col :span="20">
             <el-form-item label="课题名称">
               <el-input v-model="currentSubjectInfo.subName"></el-input>
             </el-form-item>
@@ -119,19 +121,14 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="6">
+          <el-col :span="10">
             <el-form-item label="指导教师">
               <el-input v-model="currentSubjectInfo.teacherName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="10">
             <el-form-item label="导师电话">
               <el-input v-model="currentSubjectInfo.tel"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师邮箱">
-              <el-input v-model="currentSubjectInfo.mail"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -160,18 +157,22 @@
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">开题报告详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentSubjectInfo.studentName"></el-input>
+          <el-col :span="10">
+            <el-form-item label="学生姓名">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.studentName"></div>
+              </div>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="10">
             <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
-              </el-row>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.poseTime"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
