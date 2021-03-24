@@ -21,4 +21,6 @@ public interface StageTaskResultService extends IService<StageTaskResult> {
     void changeStatus(Integer taskId, String status);
 
     Integer getRetriesTime(Integer taskId);
+
+    IPage<StageTaskResult> getGeneralStageTaskResult(StageTaskResult result) throws GmsException;
 }

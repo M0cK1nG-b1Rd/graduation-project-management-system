@@ -113,7 +113,7 @@ public class LoginController {
         return new GmsResponse().data(data);
     }
 
-    @RequiresPermissions("user:online")
+
     @GetMapping("online")
     public GmsResponse userOnline(String username) throws Exception {
         String now = DateUtil.formatFullTime(LocalDateTime.now());
@@ -134,7 +134,6 @@ public class LoginController {
     }
 
     @DeleteMapping("kickout/{id}")
-    @RequiresPermissions("user:kickout")
     public void kickout(@NotBlank(message = "{required}") @PathVariable String id) throws Exception {
         String now = DateUtil.formatFullTime(LocalDateTime.now());
         Set<String> userOnlineStringSet = redisService.zrangeByScore(GmsConstant.ACTIVE_USERS_ZSET_PREFIX, now, "+inf");

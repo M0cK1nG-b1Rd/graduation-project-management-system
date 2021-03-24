@@ -33,15 +33,15 @@ public class LogController extends BaseController {
     @Autowired
     private LogService logService;
 
-    @GetMapping
-    @RequiresPermissions("log:view")
+//    @GetMapping
+//    @RequiresPermissions("log:view")
     public Map<String, Object> logList(QueryRequest request, SysLog sysLog) {
         return getDataTable(logService.findLogs(request, sysLog));
     }
 
-    @Log("删除系统日志")
-    @DeleteMapping("/{ids}")
-    @RequiresPermissions("log:delete")
+//    @Log("删除系统日志")
+//    @DeleteMapping("/{ids}")
+//    @RequiresPermissions("log:delete")
     public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) throws GmsException {
         try {
             String[] logIds = ids.split(StringPool.COMMA);
@@ -53,8 +53,8 @@ public class LogController extends BaseController {
         }
     }
 
-    @PostMapping("excel")
-    @RequiresPermissions("log:export")
+//    @PostMapping("excel")
+//    @RequiresPermissions("log:export")
     public void export(QueryRequest request, SysLog sysLog, HttpServletResponse response) throws GmsException {
         try {
             if(request.getPageSize()> exportMaxCount) {
