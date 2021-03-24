@@ -22,7 +22,7 @@
                       <el-input v-model="subject.subName"></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="7">
+                  <el-col :span="12">
                     <el-form-item label="申报人" prop="teacherName">
                       <el-input v-model="subject.teacherName"></el-input>
                     </el-form-item>
@@ -38,14 +38,13 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="14">
+                  <el-col :span="12">
                     <el-form-item label="申报时间">
                       <el-row>
-                        <el-col :span="7">
+                        <el-col :span="12">
                           <el-date-picker type="date" placeholder="选择日期" v-model="subject.date1" style="width: 100%; " value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
                         </el-col>
-                        <el-col class="line" :span="0.5">---</el-col>
-                        <el-col :span="7">
+                        <el-col :span="12">
                           <el-time-picker placeholder="选择时间" v-model="subject.date2" style="width: 100%;"></el-time-picker>
                         </el-col>
                       </el-row>
@@ -58,29 +57,43 @@
                       <el-input v-model="subject.teacherName"></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="7">
+                  <el-col :span="8">
                     <el-form-item label="导师电话" prop="tel">
                       <el-input v-model="subject.tel"></el-input>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="7">
+                  <el-col :span="8">
                     <el-form-item label="导师邮箱" prop="mail">
                       <el-input v-model="subject.mail"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="20">
+                  <el-col :span="22">
                     <el-form-item label="课题内容" prop="description">
-                      <el-input type="textarea" v-model="subject.description"></el-input>
+                    <el-col :span="24" style="margin-bottom: 10px">
+                      <div class="ql-container ql-snow">
+                        <div class="notice_content ql-editor"
+                             @click="useQuillEditor1"
+                             v-html="subject.description">
+                        </div>
+                      </div>
+                    </el-col>
                     </el-form-item>
                   </el-col>
-                  <el-col :span="20">
+                  <el-col :span="22">
                     <el-form-item label="课题要求" prop="requirement">
-                      <el-input type="textarea" v-model="subject.requirement"></el-input>
-                    </el-form-item>
+                    <el-col :span="24" style="margin-bottom: 10px">
+                      <div class="ql-container ql-snow">
+                        <div class="notice_content ql-editor"
+                             @click="useQuillEditor2"
+                             v-html="subject.requirement">
+                        </div>
+                      </div>
+                      </el-col>
+                      </el-form-item>
                   </el-col>
-                  <el-col :span="20">
+                  <el-col :span="22">
                     <el-form-item label="审核意见">
                       <el-input type="textarea" v-model="subject.opinion" disabled></el-input>
                     </el-form-item>
@@ -112,6 +125,37 @@
     <el-button type="primary" @click="subjectSubmit">确 定</el-button>
   </span>
   </el-dialog>
+  <!--      符文本编辑器对话框-->
+  <el-dialog
+    title="请输入研究意义"
+    :visible.sync="quillEditor1Visible"
+    :before-close="resetQuillEditor1Content"
+    width="60%">
+    <quill-editor ref="quillEditor1"
+                  :init-content="subject.description">
+    </quill-editor>
+    <span slot="footer" class="dialog-footer">
+      <el-row style="margin-top: 3%">
+          <el-button @click="resetQuillEditor1Content">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditor1Content">确 定</el-button>
+      </el-row>
+        </span>
+  </el-dialog>
+  <el-dialog
+    title="请输入研究意义"
+    :visible.sync="quillEditor2Visible"
+    :before-close="resetQuillEditor2Content"
+    width="60%">
+    <quill-editor ref="quillEditor2"
+                  :init-content="subject.requirement">
+    </quill-editor>
+    <span slot="footer" class="dialog-footer">
+       <el-row style="margin-top: 3%">
+          <el-button @click="resetQuillEditor2Content">清 空</el-button>
+          <el-button type="primary" @click="submitQuillEditor2Content">确 定</el-button>
+      </el-row>
+        </span>
+  </el-dialog>
   <!--    上传附件对话框-->
   <el-dialog
     title="上传附件"
@@ -126,10 +170,11 @@
 </template>
 
 <script>
+import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 import Uploader from '@/plugins/upload-download/Uploader'
 export default {
   name: 'teacherSubjects',
-  components: { Uploader },
+  components: { quillEditor, Uploader },
   data() {
     return {
       docId: null,
@@ -146,6 +191,9 @@ export default {
         requirement: '',
         opinion: ''
       },
+      // 富文本编辑器可见性
+      quillEditor1Visible: false,
+      quillEditor2Visible: false,
       dialogVisible: false,
       // 添加表单的验证规则对象
       addFormRules: {
@@ -165,15 +213,42 @@ export default {
       this.dialogVisible = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject', this.subject)
       if (res.meta.code !== 200) {
-        this.$message.error('创建新课题失败！')
+        this.$message.error(res.meta.message)
       } else {
         this.docId = res.data
-        this.$message.success('课题申请表提交成功！')
+        this.$message.success(res.meta.message)
       }
     },
     // 重置表单内容
     async resetForm() {
       this.dialogVisible = false
+    },
+    // 调用富文本编辑器
+    useQuillEditor1() {
+      this.quillEditor1Visible = true
+    },
+    useQuillEditor2() {
+      this.quillEditor2Visible = true
+    },
+    // 重置富文本编辑框
+    resetQuillEditor1Content() {
+      this.$refs.quillEditor.reset()
+      this.subject.description = '请输入课题内容描述'
+      this.quillEditor1Visible = false
+    },
+    resetQuillEditor2Content() {
+      this.$refs.quillEditor.reset()
+      this.subject.requirement = '请输入课题要求'
+      this.quillEditor2Visible = false
+    },
+    // 提交（采用）富文本编辑器框
+    submitQuillEditor1Content() {
+      this.subject.description = this.$refs.quillEditor1.returnContent()
+      this.quillEditor1Visible = false
+    },
+    submitQuillEditor2Content() {
+      this.subject.requirement = this.$refs.quillEditor2.returnContent()
+      this.quillEditor2Visible = false
     }
   }
 }

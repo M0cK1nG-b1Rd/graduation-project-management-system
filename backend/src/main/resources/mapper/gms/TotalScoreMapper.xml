@@ -133,4 +133,47 @@
             ) s
         </foreach>
     </select>
+    <select id="getScoreStatistics" resultType="com.gms.gms.domain.TotalScoreStatistics">
+        <foreach collection="stuIds" item="stuId" separator="union">
+            SELECT
+            #{stuId} STU_ID,
+            (
+            SELECT
+            ( w.START_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.START_PLEA ) / 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'KT' AND `STATUS`='YTG') ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'KT') ps
+            ) START_SCORE,
+            (
+            SELECT
+            ( w.MIDDLE_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.MIDDLE_PLEA ) / 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM report WHERE POSE_BY = #{stuId} AND STAGE = 'ZQ' AND `STATUS`='YTG' ) ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'ZQ' ) ps
+            ) MIDDLE_SCORE,
+            (
+            SELECT
+            ( w.END_MATERIAL * MATERIAL_SCORE + PLEA_SCORE * w.END_PLEA ) / 100
+            FROM
+            ( SELECT SCORE AS MATERIAL_SCORE FROM thesis WHERE STU_ID = #{stuId} AND `STATUS` = 'YCF' ) ms
+            JOIN ( SELECT SCORE AS PLEA_SCORE FROM plea_result WHERE STU_ID = #{stuId} AND STAGE = 'JT') ps
+            ) END_SCORE,
+            (
+            SELECT
+            AVG( str.SCORE )
+            FROM
+            stage_task_result str
+            JOIN ( SELECT TASK_ID, MAX( RETRIES ) AS MAX_RETRIES FROM stage_task_result GROUP BY TASK_ID ) mr ON ( mr.TASK_ID = str.TASK_ID AND mr.MAX_RETRIES = str.RETRIES )
+            JOIN stage_task st ON ( st.TASK_ID = str.TASK_ID )
+            WHERE
+            st.STU_ID = #{stuId}
+            ) PROCEDURE_SCORE,
+            (
+            SELECT
+            ( w.START_STAGE * START_SCORE + w.MIDDLE_STAGE * MIDDLE_SCORE + w.END_STAGE * END_SCORE + w.STAGE_TASK * PROCEDURE_SCORE ) / 100
+            ) TOTAL_SCORE
+            FROM
+            weight w
+        </foreach>
+    </select>
 </mapper>

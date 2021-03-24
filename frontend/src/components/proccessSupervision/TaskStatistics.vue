@@ -76,12 +76,12 @@ export default {
   data() {
     return {
       statisticsInfo: {
-        avgScore: Number, // 所有任务的平均分
-        totalTask: Number, // 总共的任务数量
-        passedTask: Number, // 通过的任务数
-        rejectTimes: Number, // 被驳回的次数
-        passRatio: Number, // 通过率
-        rejectRatio: Number // 驳回率
+        avgScore: 0, // 所有任务的平均分
+        totalTask: 0, // 总共的任务数量
+        passedTask: 0, // 通过的任务数
+        rejectTimes: 0, // 被驳回的次数
+        passRatio: 0, // 通过率
+        rejectRatio: 0 // 驳回率
       }
     }
   },

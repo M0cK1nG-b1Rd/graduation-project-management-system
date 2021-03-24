@@ -1,6 +1,5 @@
 package com.gms.gms.dao;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gms.gms.domain.StageTaskResult;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -22,4 +21,6 @@ public interface StageTaskResultMapper extends BaseMapper<StageTaskResult> {
     Page<StageTaskResult> getStageTaskResult(Page<StageTaskResult> page, StageTaskResult task);
 
     Page<StageTaskResult> getStageTaskResultAsTeacher(Page<StageTaskResult> page, StageTaskResult task, Integer teacherId);
+
+    Page<StageTaskResult> getGeneralStageTaskResult(Page<StageTaskResult> page, @Param("result") StageTaskResult result, Integer teacherId);
 }

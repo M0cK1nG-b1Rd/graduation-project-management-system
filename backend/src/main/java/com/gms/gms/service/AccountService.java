@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gms.gms.domain.*;
 import com.gms.system.domain.User;
 
+import java.util.List;
+
 public interface AccountService extends IService<User>{
     Teacher getTeacherByUserId(Integer userId);
 
@@ -31,4 +33,6 @@ public interface AccountService extends IService<User>{
     Page<StuGroup> getStudentGroup(int page, int size, String stage);
 
     void deleteGroups(String stage);
+
+    List<Integer> getAllStudentIds();
 }

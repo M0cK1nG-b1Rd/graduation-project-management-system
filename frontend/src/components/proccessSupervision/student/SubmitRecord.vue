@@ -8,7 +8,7 @@
     </el-breadcrumb>
 <!--      页面标题-->
     <el-row type="flex" justify="center" class="page_title">我的提交记录</el-row>
-    <dv-decoration-1 style="width:80%;height:50px;" />
+    <dv-decoration-1 style="width:80%;height:50px;"/>
 <!--    外层卡片区-->
     <el-row class="outer">
 <!--      页面内容-->
@@ -125,6 +125,7 @@
                   :stroke-color="{from: '#e9ba10', to: '#ff4646'}"
                   :percent="parseInt(item.score)"
                   status="active"
+                  :format="() => `${parseInt(item.score)} 分`"
                 />
               </el-col>
             </el-row>

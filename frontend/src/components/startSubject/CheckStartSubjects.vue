@@ -44,14 +44,14 @@
               :show-overflow-tooltip="true"
               prop="status"
               width="120"
-              :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+              :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
               :filter-method="filterStatus"
               filter-placement="bottom-end"
               label="报告状态">
               <template slot-scope="scope">
-                <el-tag type="success" v-if=" scope.row.status == 'YTG'">已通过</el-tag>
-                <el-tag type="warning" v-if=" scope.row.status == 'WSH'">待审核</el-tag>
-                <el-tag type="danger" v-if=" scope.row.status == 'WTG'">未通过</el-tag>
+                <el-tag type="success" v-if=" scope.row.status === 'YTG'">已通过</el-tag>
+                <el-tag type="warning" v-if=" scope.row.status === 'WSH'">待审核</el-tag>
+                <el-tag type="danger" v-if=" scope.row.status === 'WTG'">未通过</el-tag>
               </template>
             </el-table-column>
             <!--          操作-->
@@ -94,9 +94,11 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="10">
+          <el-col :span="20">
             <el-form-item label="课题名称">
               <el-input v-model="currentSubjectInfo.subName"></el-input>
             </el-form-item>
@@ -119,19 +121,14 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="6">
+          <el-col :span="10">
             <el-form-item label="指导教师">
               <el-input v-model="currentSubjectInfo.teacherName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="10">
             <el-form-item label="导师电话">
               <el-input v-model="currentSubjectInfo.tel"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师邮箱">
-              <el-input v-model="currentSubjectInfo.mail"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -160,18 +157,22 @@
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">开题报告详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentSubjectInfo.studentName"></el-input>
+          <el-col :span="10">
+            <el-form-item label="学生姓名">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.studentName"></div>
+              </div>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="10">
             <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
-              </el-row>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.poseTime"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -285,11 +286,8 @@ export default {
       totalPageNum: 0,
       // 获取报告列表
       queryInfo: {
-        status: '', // 需要查询的通知记录状态（1-待审核，2-已通过，3-未通过）, 不发送则返回所有类型
-        keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
         stage: 'KT'
       },
       reportlist: [], // 开题报告列表信息
@@ -317,18 +315,19 @@ export default {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        this.$message.error('获取课题列表失败')
+      } else {
+        this.reportlist = res.data.records // 与后端对接
+        this.totalPageNum = res.data.total
       }
-      this.reportlist = res.data.records // 与后端对接
     },
     async getSubjectInfo(row) {
-      console.log(row)
-      console.log(row.subId)
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/teacher/my', { params: { page: this.queryInfo.page, size: this.queryInfo.size, subId: row.subId } })
       if (res.meta.code !== 200) {
-        return this.$message.error('获取课题列表失败')
+        this.$message.error('获取课题列表失败')
+      } else {
+        this.currentSubjectInfo = res.data[0] // 与后端对接
       }
-      this.currentSubjectInfo = res.data[0] // 与后端对接
     },
     // 提交表单
     async feedBackSubmit() {

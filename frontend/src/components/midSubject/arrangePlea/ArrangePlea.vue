@@ -384,8 +384,8 @@
 </template>
 
 <script>
-import stuInfo from '@/components/startSubject/arrangePlea/StudentInfo'
-import tutorInfo from '@/components/startSubject/arrangePlea/TutorInfo'
+import stuInfo from '@/components/midSubject/arrangePlea/StudentInfo'
+import tutorInfo from '@/components/midSubject/arrangePlea/TutorInfo'
 
 export default {
   name: 'ArrangePlea',

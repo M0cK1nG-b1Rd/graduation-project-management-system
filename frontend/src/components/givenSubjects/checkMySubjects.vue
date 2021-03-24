@@ -150,7 +150,7 @@
               </el-col>
               <el-col :span="20">
                 <el-form-item label="审核意见">
-                  <a-input type="textarea" v-model="currentSubjectInfo.opinion" disabled></a-input>
+                  <a-input type="textarea" v-model="currentSubjectInfo.feedback" disabled></a-input>
                 </el-form-item>
               </el-col>
             </el-row>

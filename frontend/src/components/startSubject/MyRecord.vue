@@ -220,6 +220,11 @@
               </div>
             </el-form-item>
           </el-col>
+          <el-col :span="20">
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="startReportDocId"></Downloader>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -275,7 +280,10 @@ export default {
   components: { Downloader },
   data() {
     return {
+      // 课题详情文件ID
       subjectDocId: null,
+      // 开题报告文件ID
+      startReportDocId: null,
       // 查看详情的课题信息
       currentSubjectInfo: {},
       subjectlist: [],
@@ -335,17 +343,19 @@ export default {
     async getFeedBackInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取反馈失败')
+        this.$message.error('获取反馈失败')
+      } else {
+        this.feedBack = res.data.records[0]
       }
-      this.feedBack = res.data.records[0]
     },
     async getScore() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/start')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取成绩失败')
+        this.$message.error('获取成绩失败')
+      } else {
+        this.score = res.data
+        this.feedBack.secretatryComment = res.data.defenseFeedback
       }
-      this.score = res.data
-      this.feedBack.secretatryComment = res.data.defenseFeedback
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -371,10 +381,11 @@ export default {
       this.viewPageVisible = true
       this.subjectDocId = row.docId
     },
-    // 查看课题详情
+    // 查看课开题报告详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentReportInfo = row
+      this.startReportDocId = row.docId
     },
     // 查看反馈结果
     viewFeedback(row) {

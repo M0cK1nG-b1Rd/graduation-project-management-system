@@ -96,60 +96,72 @@
             </el-col>
           </el-row>
           <el-form-item>
-            <el-button type="primary" @click="reportSubmit">立即提交</el-button>
-            <el-popconfirm
-              @confirm="uploaderVisible=true"
-              title="上传附件前请确认已提交表单！">
-              <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
-            </el-popconfirm>
-            <el-button>取消</el-button>
+            <el-row style="padding-left: 130px">
+              <el-popconfirm
+                @confirm="reportSubmit"
+                title="确认提交开题报告吗?">
+                <el-button slot="reference" type="primary">立即提交</el-button>
+              </el-popconfirm>
+              <el-popconfirm
+                @confirm="uploaderVisible=true"
+                title="上传附件前请确认已提交表单！">
+                <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
+              </el-popconfirm>
+            </el-row>
           </el-form-item>
         </el-form>
         </el-card>
         </el-row>
       </el-card>
     <!--        文件上传-->
-    <!--      符文本编辑器对话框-->
     <el-dialog
       title="请输入研究意义"
       :visible.sync="quillEditor1Visible"
       :before-close="resetQuillEditor1Content"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor1"
                     :init-content="report.meaning">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditor1Content">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditor1Content">确 定</el-button>
+        </el-row>
         </span>
     </el-dialog>
+<!--       调研结果 -->
     <el-dialog
       title="请输入调研结果"
       :visible.sync="quillEditor2Visible"
       :before-close="resetQuillEditor2Content"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor2"
                     :init-content="report.result">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditor2Content">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditor2Content">确 定</el-button>
+        </el-row>
         </span>
     </el-dialog>
+<!--       研究计划 -->
     <el-dialog
       title="请输入研究计划"
       :visible.sync="quillEditor3Visible"
       :before-close="resetQuillEditor3Content"
-      width="75%">
+      width="60%">
       <quill-editor ref="quillEditor3"
                     :init-content="report.plan">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditor3Content">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditor3Content">确 定</el-button>
-        </span>
+        </el-row>
+      </span>
     </el-dialog>
-    <!--    上传附件对话框-->
+<!--       上传附件对话框-->
     <el-dialog
       title="上传附件"
       :visible.sync="uploaderVisible"

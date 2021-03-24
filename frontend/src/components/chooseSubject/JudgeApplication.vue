@@ -9,86 +9,78 @@
     <!--    搜索框、表格、分页-->
     <el-row type="flex" justify="center">
       <el-card class="outer_detail">
-        <!--        搜索筛选框-->
-        <el-row class="search_zone">
-          <el-col :span="10">
-            <el-input placeholder="输入关键词进行筛选"
-                      v-model="queryInfo.keyWord" @change="getApplicationRecords"
-                      class="input-with-select">
-              <el-button slot="append" icon="el-icon-search" type="primary"></el-button>
-            </el-input>
-          </el-col>
-        </el-row>
         <!--        表格区域-->
-        <el-row class="table_zone">
-          <el-table
-            size="small"
-            :highlight-current-row="true"
-            :data="allApplicationInfo"
-            :default-sort = "{prop: 'date', order: 'descending'}"
-            style="width: 100%; font-size: 15px">
-            <!--          标题-->
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="subName"
-              label="课题名称"
-              width="200">
-            </el-table-column>
-            <!--          申请日期-->
-            <el-table-column
-              sortable
-              :show-overflow-tooltip="true"
-              prop="applyTime"
-              label="申请日期"
-              width="110">
-            </el-table-column>
-            <!--          审核日期-->
-            <el-table-column
-              sortable
-              :show-overflow-tooltip="true"
-              prop="auditTime"
-              label="审核日期"
-              width="110">
-            </el-table-column>
-            <!--          申请人-->
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="studentName"
-              label="申请人"
-              width="110">
-            </el-table-column>
-            <!--          审核人-->
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="teacherName"
-              label="审核人"
-              width="110">
-            </el-table-column>
-            <!--          审核状态-->
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="status"
-              label="审核状态"
-              width="100"
-              :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
-              :filter-method="filterStatus"
-              filter-placement="bottom-end">
-              <template slot-scope="scope">
-                <a-tag v-if="scope.row.status=='WSH'" style="font-size: 15px" color="cyan">未审核</a-tag>
-                <a-tag v-if="scope.row.status=='YTG'" style="font-size: 15px" color="green">已通过</a-tag>
-                <a-tag v-if="scope.row.status=='WTG'" style="font-size: 15px" color="red">未通过</a-tag>
-              </template>
-            </el-table-column>
-            <!--              开始审核-->
-            <el-table-column
-              :show-overflow-tooltip="true"
-              width="100"
-              label="开始审核">
-              <template slot-scope="scope">
-                <a-tag color="#87d068" @click="beginJudge(scope.row)" style="font-size: 15px">开始审核</a-tag>
-              </template>
-            </el-table-column>
-          </el-table>
+        <el-row class="table_zone" type="flex" justify="center">
+          <el-card>
+            <el-table
+              size="small"
+              :highlight-current-row="true"
+              :data="allApplicationInfo"
+              :default-sort = "{prop: 'date', order: 'descending'}"
+              style="width: 100%; font-size: 15px">
+              <!--          标题-->
+              <el-table-column
+                :show-overflow-tooltip="true"
+                prop="subName"
+                label="课题名称"
+                width="200">
+              </el-table-column>
+              <!--          申请日期-->
+              <el-table-column
+                sortable
+                :show-overflow-tooltip="true"
+                prop="applyTime"
+                label="申请日期"
+                width="110">
+              </el-table-column>
+              <!--          审核日期-->
+              <el-table-column
+                sortable
+                :show-overflow-tooltip="true"
+                prop="auditTime"
+                label="审核日期"
+                width="110">
+              </el-table-column>
+              <!--          申请人-->
+              <el-table-column
+                :show-overflow-tooltip="true"
+                prop="studentName"
+                label="申请人"
+                width="110">
+              </el-table-column>
+              <!--          审核人-->
+              <el-table-column
+                :show-overflow-tooltip="true"
+                prop="teacherName"
+                label="审核人"
+                width="110">
+              </el-table-column>
+              <!--          审核状态-->
+              <el-table-column
+                :show-overflow-tooltip="true"
+                prop="status"
+                label="审核状态"
+                width="100"
+                :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
+                :filter-method="filterStatus"
+                filter-placement="bottom-end">
+                <template slot-scope="scope">
+                  <a-tag v-if="scope.row.status=='WSH'" style="font-size: 15px" color="cyan">未审核</a-tag>
+                  <a-tag v-if="scope.row.status=='YTG'" style="font-size: 15px" color="green">已通过</a-tag>
+                  <a-tag v-if="scope.row.status=='WTG'" style="font-size: 15px" color="red">未通过</a-tag>
+                </template>
+              </el-table-column>
+              <!--              开始审核-->
+              <el-table-column
+                :show-overflow-tooltip="true"
+                width="110"
+                label="开始审核">
+                <template slot-scope="scope">
+                  <a-tag color="#87d068" @click="beginJudge(scope.row)" style="font-size: 15px">开始审核</a-tag>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-card>
         </el-row>
         <!--         分页区-->
         <el-row type="flex" justify="center" style="margin-top: 20px">
@@ -106,24 +98,25 @@
     </el-row>
     <!--    查看详情对话框-->
     <el-dialog
-      title="审核申请"
       :visible.sync="beginJudgePageVisible"
-      width="70%"
+      width="60%"
       center>
+      <el-row style="font-size: 20px; font-weight: bold" type="flex" justify="center">审核学生选题申请</el-row>
+      <el-divider></el-divider>
       <el-card style="margin: 30px">
         <!--        课题名称-->
         <el-row>
           课题名称：<a-tag color="blue" style="font-size: 15px">{{currentApplicationInfo.subName}}</a-tag>
         </el-row>
-        <el-divider></el-divider>
+        <div class="divider"></div>
         <!--        出题老师、申请学生-->
         <el-row :gutter="20">
           <!--          课题领域-->
-          <el-col :span="12">出题老师：<a-tag color="#2db7f5">{{currentApplicationInfo.teacherName}}</a-tag></el-col>
+          <el-col :span="12">出题老师：<a-tag color="#2db7f5" style="font-size: 15px">{{currentApplicationInfo.teacherName}}</a-tag></el-col>
           <!--          所属专业-->
-          <el-col :span="12">申请学生：<a-tag color="#87d068">{{currentApplicationInfo.studentName}}</a-tag></el-col>
+          <el-col :span="12">申请学生：<a-tag color="#87d068" style="font-size: 15px">{{currentApplicationInfo.studentName}}</a-tag></el-col>
         </el-row>
-        <el-divider></el-divider>
+        <div class="divider"></div>
         <!--          申请理由-->
         <el-row type="flex" align="center">
           <el-col :span="3" class="item_label">申请理由：</el-col>
@@ -133,7 +126,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-divider></el-divider>
+        <div class="divider"></div>
         <!--        相关附件-->
         <el-row type="flex" align="center">
           <el-col :span="3" class="item_label"><span>相关附件：</span></el-col>
@@ -143,13 +136,14 @@
             </el-row>
           </el-col>
         </el-row>
-        <el-divider></el-divider>
+        <div class="divider"></div>
         <!--          审核意见-->
         <el-row type="flex" align="center" style="height: auto">
           <el-col :span="3" class="item_label"><span>审核意见：</span></el-col>
           <el-col :span="21">
             <div class="ql-container ql-snow">
               <div class="ql-editor"
+                   style="font-size: 15px"
                    @click="useQuillEditor"
                    v-html="currentApplicationInfo.feedback">
               </div>
@@ -165,7 +159,7 @@
     </el-dialog>
     <!--      符文本编辑器对话框-->
     <el-dialog
-      title="请输入申请理由"
+      title="请输入审核意见"
       :visible.sync="quillEditorVisible"
       :before-close="resetQuillEditorContent"
       width="60%">
@@ -216,14 +210,21 @@ export default {
     // 获取所有申请记录信息
     async getApplicationRecords() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/apply', { params: this.queryInfo })
-      if (res.meta.code !== 200) return this.$message.error('拉取选题申请记录失败！')
-      this.allApplicationInfo = res.data.records
-      this.totalRecordNum = this.allApplicationInfo.length
+      if (res.meta.code !== 200) {
+        this.$message.error('拉取选题申请记录失败！')
+      } else {
+        this.allApplicationInfo = res.data.records
+        this.totalRecordNum = res.data.total
+      }
     },
     // 更新申请记录信息
     async updateApplicationRecords() {
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/subject/apply', this.currentApplicationInfo)
-      if (res.meta.code !== 200) return this.$message.error('更新记录审核状态失败！')
+      if (res.meta.code !== 200) {
+        this.$message.error(res.meta.message)
+      } else {
+        this.$message.success(res.meta.message)
+      }
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -241,9 +242,7 @@ export default {
     },
     // 查看申请记录详情
     beginJudge(row) {
-      if (row.fileStorage !== undefined) {
-        this.docId = row.fileStorage[0].docId
-      }
+      this.docId = row.docId
       this.beginJudgePageVisible = true
       this.currentApplicationInfo = row
     },
@@ -263,17 +262,17 @@ export default {
       this.quillEditorVisible = false
     },
     // 通过申请
-    passApplication() {
+    async passApplication() {
       this.currentApplicationInfo.status = 'YTG'
-      this.updateApplicationRecords()
-      this.getApplicationRecords()
+      await this.updateApplicationRecords()
+      await this.getApplicationRecords()
       this.beginJudgePageVisible = false
     },
     // 驳回申请
-    rollbackApplication() {
+    async rollbackApplication() {
       this.currentApplicationInfo.status = 'WTG'
-      this.updateApplicationRecords()
-      this.getApplicationRecords()
+      await this.updateApplicationRecords()
+      await this.getApplicationRecords()
       this.beginJudgePageVisible = false
     }
   }
@@ -297,5 +296,9 @@ export default {
 .item_label{
   display: flex;
   align-items: center;
+}
+/*自定义分割线*/
+.divider{
+  height: 8px;
 }
 </style>

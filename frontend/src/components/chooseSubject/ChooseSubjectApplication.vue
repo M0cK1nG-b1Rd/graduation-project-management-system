@@ -9,15 +9,28 @@
       <el-card class="application_form">
         <!--        课题名称-->
         <el-row>
-          课题名称：<a-tag color="blue" style="font-size: 15px">{{currentSubjectInfo.subName}}</a-tag>
+          课题名称：
+          <a-tag color="blue" style="font-size: 15px">
+            {{currentSubjectInfo.subName}}
+          </a-tag>
         </el-row>
         <el-divider></el-divider>
         <!--        课题领域、所属专业-->
         <el-row :gutter="20">
           <!--          课题领域-->
-          <el-col :span="12">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+          <el-col :span="12">
+            课题领域：
+            <a-tag color="blue" style="font-size: 15px">
+              {{currentSubjectInfo.zone}}
+            </a-tag>
+          </el-col>
           <!--          所属专业-->
-          <el-col :span="12">所属专业：<a-tag color="#87d068">{{currentSubjectInfo.majorName}}</a-tag></el-col>
+          <el-col :span="12">
+            所属学院：
+            <a-tag color="#87d068" style="font-size: 15px">
+              {{currentSubjectInfo.collegeName}}
+            </a-tag>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
         <!--        指导老师信息-->
@@ -25,13 +38,19 @@
         <!--        教师名字-->
           <el-col :span="12">老师姓名：
             <a-tag color="blue">
-              <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank">
-                {{currentSubjectInfo.teacherName+' '}}<i class="el-icon-view"></i>
+              <el-link :href="currentSubjectInfo.teacherHomePage" target="_blank" style="font-size: 15px">
+                {{currentSubjectInfo.teacherName+' '}}
+                <i class="el-icon-view"></i>
               </el-link>
             </a-tag>
           </el-col>
         <!--          教师职称-->
-          <el-col :span="12">教师职称：<a-tag color="blue">{{currentSubjectInfo.teacherTitle}}</a-tag></el-col>
+          <el-col :span="12">
+            教师职称：
+            <a-tag color="blue" style="font-size: 15px">
+              {{currentSubjectInfo.teacherTitle}}
+            </a-tag>
+          </el-col>
         </el-row>
         <el-divider></el-divider>
         <!--          课题要求-->
@@ -202,9 +221,9 @@ export default {
       applicationForm.applyReason = this.applicationInfo.applyReason
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/subject/apply', applicationForm)
       if (res.meta.code !== 200) {
-        this.$message.error('提交选题申请失败！')
+        this.$message.error(res.meta.message)
       } else {
-        this.$message.success('选题申请提交成功！')
+        this.$message.success(res.meta.message)
         this.docId = res.data
       }
     }

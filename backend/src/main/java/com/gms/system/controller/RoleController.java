@@ -32,21 +32,21 @@ public class RoleController extends BaseController {
 
     private String message;
 
-    @GetMapping
-    @RequiresPermissions("role:view")
+//    @GetMapping
+//    @RequiresPermissions("role:view")
     public Map<String, Object> roleList(QueryRequest queryRequest, Role role) {
         return getDataTable(roleService.findRoles(role, queryRequest));
     }
 
-    @GetMapping("check/{roleName}")
+//    @GetMapping("check/{roleName}")
     public boolean checkRoleName(@NotBlank(message = "{required}") @PathVariable String roleName) {
         Role result = this.roleService.findByName(roleName);
         return result == null;
     }
 
 
-    @PostMapping("excel")
-    @RequiresPermissions("role:export")
+//    @PostMapping("excel")
+//    @RequiresPermissions("role:export")
     public void export(QueryRequest queryRequest,@RequestBody Role role, HttpServletResponse response) throws GmsException {
         try {
             List<Role> roles = this.roleService.findRoles(role, queryRequest).getRecords();

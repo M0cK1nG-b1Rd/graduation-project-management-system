@@ -14,15 +14,23 @@
   </div>
 </template>
 <script>
-const token = window.sessionStorage.getItem('token')
+// const token = window.sessionStorage.getItem('token')
 export default {
   name: 'Uploader',
   props: ['docId'],
   mounted() {
   },
+  computed: {
+    myHeaders() {
+      return {
+        Authentication: window.sessionStorage.getItem('token')
+      }
+    }
+  },
+
   data() {
     return {
-      myHeaders: { Authentication: token },
+      // myHeaders: { Authentication: token },
       fileList: []
     }
   },

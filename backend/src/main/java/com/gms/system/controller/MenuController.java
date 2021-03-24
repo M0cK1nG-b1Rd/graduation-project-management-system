@@ -6,6 +6,7 @@ import com.gms.common.domain.GmsResponse;
 import com.gms.common.domain.Meta;
 import com.gms.common.exception.GmsException;
 import com.gms.common.exception.code.Code;
+import com.gms.common.utils.GmsUtil;
 import com.gms.system.domain.Menu;
 import com.gms.system.manager.UserManager;
 import com.gms.system.service.MenuService;
@@ -37,9 +38,10 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-    @GetMapping("/{username}")
-    public GmsResponse getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) throws GmsException {
+    @GetMapping()
+    public GmsResponse getUserRouters() throws GmsException {
         try {
+            String username = GmsUtil.getCurrentUser().getUsername();
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -51,15 +53,13 @@ public class MenuController extends BaseController {
         }
     }
 
-    @GetMapping
-    @RequiresPermissions("menu:view")
+//    @GetMapping
     public Map<String, Object> menuList(Menu menu) {
         return this.menuService.findMenus(menu);
     }
 
     @Log("新增菜单/按钮")
     @PostMapping
-    @RequiresPermissions("menu:add")
     public GmsResponse addMenu(@RequestBody @Valid Menu menu) throws GmsException {
         try {
             this.menuService.createMenu(menu);
@@ -101,7 +101,6 @@ public class MenuController extends BaseController {
 //    }
 
     @PostMapping("excel")
-    @RequiresPermissions("menu:export")
     public void export(@RequestBody Menu menu, HttpServletResponse response) throws GmsException {
         try {
             List<Menu> menus = this.menuService.findMenuList(menu);
