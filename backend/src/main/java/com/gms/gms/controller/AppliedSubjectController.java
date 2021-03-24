@@ -142,7 +142,10 @@ public class AppliedSubjectController {
                     Code.C200.getDesc(),
                     "审核意见提交成功"));
         } catch (GmsException e) {
-            throw e;
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    e.getMessage()));
         } catch (Exception e) {
             String message = "审核意见提交失败";
             log.error(message, e);
