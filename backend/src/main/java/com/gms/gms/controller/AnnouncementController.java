@@ -11,6 +11,7 @@ import com.gms.gms.domain.FileStorage;
 import com.gms.gms.service.AnnouncementService;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,7 @@ public class AnnouncementController {
     AnnouncementService announcementService;
 
     //该方法用于普通用户在公告栏查询公告
+    @RequiresPermissions("notice:view")
     @GetMapping
     public GmsResponse getAnnouncement(Announcement ann) throws GmsException {
         try {
@@ -60,7 +62,7 @@ public class AnnouncementController {
             throw new GmsException(message);
         }
     }*/
-
+    @RequiresPermissions("notice:manage")
     @PostMapping
     public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
@@ -77,6 +79,7 @@ public class AnnouncementController {
         }
     }
 
+    @RequiresPermissions("notice:manage")
     @PutMapping
     public GmsResponse updateAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {
@@ -93,6 +96,7 @@ public class AnnouncementController {
 
     }
 
+    @RequiresPermissions("notice:manage")
     @DeleteMapping
     public GmsResponse deleteAnnouncements(List<Integer> annIds) throws GmsException {
         try {

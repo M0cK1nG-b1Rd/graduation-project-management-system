@@ -14,6 +14,7 @@ import com.gms.gms.service.ThesisService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class ThesisController {
      * 新增论文信息，一个学生只能提交一次，JSON传参
      * docId:
      */
+    @RequiresPermissions("fin:apply")
     @PostMapping
     public GmsResponse addNewThesis(@RequestBody Thesis thesis) throws GmsException {
         try {
@@ -60,6 +62,7 @@ public class ThesisController {
     /**
      * 学生查看自己的论文状态
      */
+    @RequiresPermissions("fin:list")
     @GetMapping("/student")
     public GmsResponse getMyThesis() throws GmsException {
         try {
@@ -81,6 +84,7 @@ public class ThesisController {
      * page:
      * size:
      */
+    @RequiresPermissions("fin:check")
     @GetMapping("/teacher")
     public GmsResponse getStuThesis(Thesis thesis) throws GmsException {
         try {

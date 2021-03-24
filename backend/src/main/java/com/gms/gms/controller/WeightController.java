@@ -9,6 +9,8 @@ import com.gms.gms.domain.SystemStage;
 import com.gms.gms.domain.Weight;
 import com.gms.gms.service.WeightService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ public class WeightController {
     @Autowired
     WeightService weightService;
 
+    @RequiresPermissions("score:weight")
     @GetMapping
     public GmsResponse getWeight() throws GmsException {
         try {
@@ -46,6 +49,7 @@ public class WeightController {
         }
     }
 
+    @RequiresPermissions("score:weight")
     @PutMapping
     public GmsResponse putWeight(@RequestBody  Weight weight) throws GmsException {
         try {
