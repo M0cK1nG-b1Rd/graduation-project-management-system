@@ -124,7 +124,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="课题名称">
-              <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
+              <el-tag type="primary"  effect="plain">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -136,7 +136,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="提交时间">
-                <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.poseTime">{{currentSubjectInfo.poseTime}}</el-tag>
+                <el-tag type="primary"  effect="plain">{{currentSubjectInfo.poseTime}}</el-tag>
             </el-form-item>
           </el-col>
         </el-row>
@@ -170,7 +170,6 @@
           </el-col>
           <el-col :span="20">
             <el-form-item label="相关附件">
-              <Downloader :doc-id="subjectDocId"></Downloader>
             </el-form-item>
           </el-col>
         </el-row>
@@ -308,8 +307,7 @@ export default {
       score: {
         fileScore: 0, // 材料分数
         defenseScore: 0, // 答辩分数
-        startScore: 0,
-        total: 0 // 总分
+        startScore: 0
       },
       // 查看课题详情对话框可见性
       viewPageVisible: false,
@@ -319,11 +317,11 @@ export default {
       drawer: false
     }
   },
-  created() {
-    this.getReportList()
-    this.getScore()
-    this.getSubjectInfo()
-    this.getFeedBackInfo()
+  async created() {
+    await this.getReportList()
+    await this.getScore()
+    await this.getSubjectInfo()
+    await this.getFeedBackInfo()
   },
   methods: {
     async getReportList() {
@@ -357,7 +355,6 @@ export default {
         this.$message.error('获取成绩失败')
       } else {
         this.score = res.data
-        this.feedBack.secretatryComment = res.data.defenseFeedback
       }
     },
     // 当页面大小变化时触发
@@ -379,8 +376,8 @@ export default {
       return row.status === value
     },
     // 查看课题详情
-    async viewSubject() {
-      await this.getSubjectInfo()
+    viewSubject() {
+      this.getSubjectInfo()
       this.viewPageVisible = true
     },
     // 查看课开题报告详情
