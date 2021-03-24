@@ -30,7 +30,7 @@ public class CreatNewMessage {
     public void creatNewPleaOne(String stage) {
         List<Integer> userList = messageService.getStudentUserId(stage);
         userList.addAll(messageService.getTeacherUserId(stage));
-        userList.add(messageService.getSecretaryUserId(stage));
+        userList.addAll(messageService.getSecretaryUserId(stage));
         List<Message> messages = new ArrayList<>();
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         for (Integer i : userList) {
@@ -45,7 +45,7 @@ public class CreatNewMessage {
     public void creatNewPleaTwo(String stage) {
         List<Integer> userList = messageService.getStudentUserId(stage);
         userList.addAll(messageService.getTeacherUserId(stage));
-        userList.add(messageService.getSecretaryUserId(stage));
+        userList.addAll(messageService.getSecretaryUserId(stage));
         List<Message> messages = new ArrayList<>();
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         for (Integer i : userList) {
