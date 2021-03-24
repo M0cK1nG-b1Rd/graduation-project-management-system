@@ -39,7 +39,7 @@
             :show-overflow-tooltip="true"
             prop="status"
             width="120"
-            :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+            :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
             :filter-method="filterStatus"
             filter-placement="bottom-end"
             label="报告状态">
@@ -72,7 +72,7 @@
         </el-table>
       </el-row>
       <!--      分页区-->
-      <el-row>
+      <el-row type="flex" style="margin-top: 10px" justify="center">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -120,56 +120,57 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="20">
             <el-form-item label="课题名称">
-              <el-tag type="primary"  effect="plain">{{currentSubjectInfo.subName}}</el-tag>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="题目类型">
-              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
-              <el-tag type="warning" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
-              <el-tag type="danger" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="提交时间">
-                <el-tag type="primary"  effect="plain">{{currentSubjectInfo.poseTime}}</el-tag>
+              <el-input v-model="currentSubjectInfo.subName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="6">
+          <el-col :span="10">
+            <el-form-item label="题目类型">
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="申报时间">
+              <el-row>
+                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
+              </el-row>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
             <el-form-item label="指导教师">
               <el-input v-model="currentSubjectInfo.teacherName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="10">
             <el-form-item label="导师电话">
               <el-input v-model="currentSubjectInfo.tel"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师邮箱">
-              <el-input v-model="currentSubjectInfo.mail"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="相关附件">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -246,10 +247,13 @@
         </el-row>
         <el-row>
           <el-col :span="22" class="feedback">
-<!--            <el-form-item label="反馈内容">-->
-<!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
-<!--            </el-form-item>-->
             <div class="fankui">导师反馈</div>
+            <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+              <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
+            </div>
+          </el-col>
+          <el-col :span="22" class="feedback">
+            <div class="fankui">答辩反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
               <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
             </div>
@@ -321,6 +325,7 @@ export default {
         this.$message.error('获取开题报告列表失败')
       } else {
         this.subjectlist = res.data.records
+        this.totalPageNum = res.data.total
       }
     },
     async getSubjectInfo() {

@@ -125,10 +125,6 @@
                       <el-tooltip class="item" effect="dark" content="查看课题详细内容" placement="top" :enterable="false">
                         <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
                       </el-tooltip>
-                      <!--              查看开题阶段内容-->
-                      <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
-                        <el-button type="success" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
-                      </el-tooltip>
                       <!--              编辑反馈结果-->
                       <el-tooltip class="item" effect="dark" content="编辑开题成绩" placement="top" :enterable="false">
                         <el-button type="danger" icon="el-icon-edit" circle size="mini" @click="editFeedback(scope.row)"></el-button>
@@ -148,13 +144,17 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="课题名称">
               <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8">
             <el-form-item label="题目类型">
               <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
@@ -171,59 +171,22 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
-      </span>
-    </el-dialog>
-    <!--    查看开题详情对话框  注意下载附件-->
-    <el-dialog
-      :visible.sync="viewReportVisible"
-      width="60%">
-      <el-form ref="subject" :model="currentReportInfo" label-width="80px">
-        <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentReportInfo.studentName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentReportInfo.poseTime"></el-input>
-              </el-row>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="20">
-            <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="viewReportVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
     <!--    给学生反馈信息抽屉-->

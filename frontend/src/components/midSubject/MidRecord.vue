@@ -32,14 +32,14 @@
                   :show-overflow-tooltip="true"
                   prop="poseTime"
                   label="提交日期"
-                  width="200">
+                  width="150">
                 </el-table-column>
                 <!--         报告状态-->
                 <el-table-column
                   :show-overflow-tooltip="true"
                   prop="status"
                   width="120"
-                  :filters="[{ text: '待审核', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 3 }]"
+                  :filters="[{ text: '待审核', value: 'WSH' }, { text: '已通过', value: 'YTG' }, { text: '未通过', value: 'WTG' }]"
                   :filter-method="filterStatus"
                   filter-placement="bottom-end"
                   label="报告状态">
@@ -72,13 +72,13 @@
               </el-table>
             </el-row>
             <!--      分页区-->
-            <el-row>
+            <el-row type="flex" style="margin-top: 10px" justify="center">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="queryInfo.page"
                 :page-sizes="[5, 10, 20]"
-                :page-size="100"
+                :page-size="queryInfo.size"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="totalPageNum">
               </el-pagination>
@@ -120,52 +120,57 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="20">
             <el-form-item label="课题名称">
-              <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="题目类型">
-              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
-              <el-tag type="warning" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
-              <el-tag type="danger" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="提交时间">
-              <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.poseTime">{{currentSubjectInfo.poseTime}}</el-tag>
+              <el-input v-model="currentSubjectInfo.subName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="6">
+          <el-col :span="10">
+            <el-form-item label="题目类型">
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</el-tag>
+              <el-tag type="success" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</el-tag>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="申报时间">
+              <el-row>
+                <el-input v-model="currentSubjectInfo.poseTime"></el-input>
+              </el-row>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
             <el-form-item label="指导教师">
               <el-input v-model="currentSubjectInfo.teacherName"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
+          <el-col :span="10">
             <el-form-item label="导师电话">
               <el-input v-model="currentSubjectInfo.tel"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item label="导师邮箱">
-              <el-input v-model="currentSubjectInfo.mail"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -174,39 +179,47 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    查看开题详情对话框-->
+    <!--    查看中期详情对话框-->
     <el-dialog
       :visible.sync="viewReportVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">中期报告详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentReportInfo" label-width="80px">
         <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentReportInfo.studentName"></el-input>
+          <el-col :span="10">
+            <el-form-item label="学生姓名">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentReportInfo.studentName"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentReportInfo.poseTime"></el-input>
-              </el-row>
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentReportInfo.poseTime"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="20">
-            <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
+            <el-form-item label="研究进展">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentReportInfo.progress"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
+            <el-form-item label="后续计划">
+              <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
+                <div class="ql-editor" v-html="currentReportInfo.postPlan"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
-            <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="docId"></Downloader>
             </el-form-item>
           </el-col>
         </el-row>
@@ -231,9 +244,6 @@
         </el-row>
         <el-row>
           <el-col :span="22" class="feedback">
-            <!--            <el-form-item label="反馈内容">-->
-            <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
-            <!--            </el-form-item>-->
             <div class="fankui">报告反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
               <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
@@ -258,8 +268,10 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'MyRecord',
+  components: { Downloader },
   data() {
     return {
       // 查看详情的课题信息
@@ -293,7 +305,8 @@ export default {
       // 查看开题详情对话框可见性
       viewReportVisible: false,
       // 查看反馈抽屉可见性
-      drawer: false
+      drawer: false,
+      docId: ''
     }
   },
   async created() {
@@ -309,6 +322,7 @@ export default {
         return this.$message.error('获取开题报告列表失败')
       } else {
         this.subjectlist = res.data.records
+        this.totalPageNum = res.data.total
       }
     },
     async getSubjectInfo() {
@@ -363,11 +377,12 @@ export default {
     viewReport(row) {
       this.viewReportVisible = true
       this.currentReportInfo = row
+      this.docId = row.docId
     },
     // 查看反馈结果
     viewFeedback(row) {
+      this.getSubjectInfo()
       this.feedBack.teacherComment = row.comment
-      console.log(row)
       this.drawer = true
     }
   }

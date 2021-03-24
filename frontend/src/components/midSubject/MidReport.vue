@@ -28,7 +28,11 @@
                   </a-tag>
                 </el-col>
                 <!--          课题领域-->
-                <el-col :span="8">课题领域：<a-tag color="orange">{{currentSubjectInfo.zone}}</a-tag></el-col>
+                <el-col :span="8">课题领域：
+                  <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</a-tag>
+                  <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'SMGH'">生命关怀与社会认知</a-tag>
+                  <a-tag color="orange" v-if=" currentSubjectInfo.zone == 'ZXZH'">哲学智慧与创新思维</a-tag>
+                </el-col>
               </el-row>
               <el-divider></el-divider>
               <!--          课题要求-->
@@ -81,46 +85,48 @@
                   </el-col>
                 </el-col>
               </el-row>
-              <el-form-item>
+              <el-form-item style="padding-left: 130px">
                 <el-button type="primary" @click="reportSubmit">立即创建</el-button>
                 <el-popconfirm
                   @confirm="uploaderVisible=true"
                   title="上传附件前请确认已提交表单！">
                   <el-button slot="reference" type="success" style="margin-left: 5px">上传附件</el-button>
                 </el-popconfirm>
-                <el-button>取消</el-button>
               </el-form-item>
             </el-form>
           </el-card>
-            <!--        文件上传-->
       </el-row>
         </el-card>
     <!--      符文本编辑器对话框-->
     <el-dialog
-      title="简述开题以来所作的具体工作和取得进展"
       :visible.sync="quillEditor1Visible"
       :before-close="resetQuillEditor1Content"
-      width="75%">
+      width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px;font-weight: bold">简述目前取得的进展</el-row>
       <quill-editor ref="quillEditor1"
                     :init-content="report.progress">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row style="margin-top: 30px">
           <el-button @click="resetQuillEditor1Content">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditor1Content">确 定</el-button>
-        </span>
+        </el-row>
+      </span>
     </el-dialog>
     <el-dialog
-      title="请简述下一步的主要工作"
       :visible.sync="quillEditor2Visible"
       :before-close="resetQuillEditor2Content"
-      width="75%">
+      width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px;font-weight: bold">请描述后续计划</el-row>
       <quill-editor ref="quillEditor2"
                     :init-content="report.postPlan">
       </quill-editor>
       <span slot="footer" class="dialog-footer">
+        <el-row  style="margin-top: 30px">
           <el-button @click="resetQuillEditor2Content">清 空</el-button>
           <el-button type="primary" @click="submitQuillEditor2Content">确 定</el-button>
-        </span>
+        </el-row>
+      </span>
     </el-dialog>
     <!--    上传附件对话框-->
     <el-dialog

@@ -6,7 +6,7 @@
     <el-breadcrumb-item>开题管理</el-breadcrumb-item>
     <el-breadcrumb-item>报告记录</el-breadcrumb-item>
   </el-breadcrumb>
-<!--    查看我的开题报告提交记录列表区-->
+<!--    查看我的报告提交记录列表区-->
     <!--卡片视图区-->
     <el-card class="el-card">
       <el-row>

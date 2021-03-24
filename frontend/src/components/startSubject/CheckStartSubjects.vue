@@ -198,6 +198,11 @@
               </div>
             </el-form-item>
           </el-col>
+          <el-col :span="20">
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="docId"></Downloader>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -274,12 +279,14 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'checkSubjects',
-  components: { quillEditor },
+  components: { quillEditor, Downloader },
   data() {
     return {
+      docId: '',
       // 查看详情的课题信息
       currentSubjectInfo: {},
       // （符合要求）课题总数
@@ -364,6 +371,7 @@ export default {
     viewReport(row) {
       this.viewReportVisible = true
       this.currentSubjectInfo = row
+      this.docId = row.docId
     },
     // 编辑反馈表单
     editFeedback(row) {
