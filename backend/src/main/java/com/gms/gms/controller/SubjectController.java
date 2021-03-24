@@ -114,7 +114,7 @@ public class SubjectController {
     }
 
     //教研办审核用
-    @GetMapping(" apply:office")
+    @GetMapping("all")
     public GmsResponse getAllSubject(Subject subject) throws GmsException{
         try {
             IPage<Subject> applyList = subjectService.getAllSubject(subject);
