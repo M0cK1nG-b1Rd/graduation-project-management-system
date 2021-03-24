@@ -32,7 +32,6 @@ public class WeightController {
     @Autowired
     WeightService weightService;
 
-    @RequiresPermissions("score:weight")
     @GetMapping
     public GmsResponse getWeight() throws GmsException {
         try {
@@ -49,7 +48,6 @@ public class WeightController {
         }
     }
 
-    @RequiresPermissions("score:weight")
     @PutMapping
     public GmsResponse putWeight(@RequestBody  Weight weight) throws GmsException {
         try {

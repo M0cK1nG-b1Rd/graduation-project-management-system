@@ -40,7 +40,6 @@ public class StageTaskResultController {
 
 
 
-    @RequiresPermissions(" process:my")
     @PostMapping("result")
     public GmsResponse giveStageTaskResult(@RequestBody StageTaskResult result) throws GmsException {
         try {
@@ -115,7 +114,6 @@ public class StageTaskResultController {
 //        }
 //    }
 
-    @RequiresPermissions("process:judge")
     @PutMapping("result/score")
     public GmsResponse giveStageTaskScore(@RequestBody StageTaskResult result) throws GmsException {
         try {

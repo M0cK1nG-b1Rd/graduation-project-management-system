@@ -30,7 +30,6 @@ public class AccountController {
     ClassroomService classroomService;
 
     //进行答辩分组前查询返回所有的老师，所有时期共用
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @GetMapping("/plea/teacher")
     public GmsResponse searchTeacherInfo(int page, int size) throws GmsException {
         try {
@@ -47,7 +46,6 @@ public class AccountController {
     }
 
     //进行答辩分组前返回所有的有资格学生，所有时期共用
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @GetMapping("/plea/student")
     public GmsResponse searchStudentInfo(int page, int size, String stage) throws GmsException {
         try {
@@ -75,7 +73,6 @@ public class AccountController {
     }
 
     //老师的自动分组，传入总组数和时期
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @PostMapping("/plea/teacher")
     public GmsResponse groupTeacherAuto(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
@@ -105,7 +102,6 @@ public class AccountController {
     }
 
     //返回老师的分组结果，支持分页，需要传参阶段
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @GetMapping("/plea/teacherTeam")
     public GmsResponse searchTeacherTeamInfo(int page, int size, String stage) throws GmsException {
         try {
@@ -122,7 +118,6 @@ public class AccountController {
     }
 
     //学生的自动分组，传参仿照老师，仍然进行时期选择，不进行组数检测
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @PostMapping("/plea/student")
     public GmsResponse groupStudentAuto(@RequestBody JSONObject jsonObject) throws GmsException {
         try {
@@ -152,7 +147,6 @@ public class AccountController {
     }
 
     //返回相应时期的学生分组结果
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @GetMapping("/plea/studentGroup")
     public GmsResponse searchStudentGroupInfo(int page, int size, String stage) throws GmsException {
         try {
@@ -169,7 +163,6 @@ public class AccountController {
     }
 
     //删除相应时期的分组结果，以便重新分组
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @DeleteMapping("/plea/delete")
     public GmsResponse deleteAllGroup(String stage) throws GmsException{
         try {
@@ -186,7 +179,6 @@ public class AccountController {
     }
 
     //返回教室信息
-    @RequiresPermissions(value = {"init:arrange","mid:arrange","fin:arrange"},logical = Logical.OR)
     @GetMapping("/plea/classroom")
     public GmsResponse searchClassroom() throws GmsException {
         try {

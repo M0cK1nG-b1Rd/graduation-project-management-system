@@ -97,7 +97,6 @@ public class SubjectController {
     //学生查看选题信息，包括详情
     //passed是指教师通过的课题而不是学生通过的课题
     //筛选 搜索关键字、课题领域、老师名字
-    @RequiresPermissions("select:view")
     @GetMapping
     public GmsResponse getPassedSubject(Subject subject) throws GmsException{
         try {
@@ -133,7 +132,6 @@ public class SubjectController {
 
 
     //教师出题
-    @RequiresPermissions("apply:teacher")
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -162,7 +160,6 @@ public class SubjectController {
     }
 
     //教师课题被驳回后修改课题
-    @RequiresPermissions("apply:teacher")
     @PostMapping("modify")
     public GmsResponse modifySubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -183,7 +180,6 @@ public class SubjectController {
     }
 
     //教研办审核教师课题
-    @RequiresPermissions("apply:office")
     @PutMapping("audit")
     public GmsResponse auditSubject(@RequestBody Subject opinion) throws GmsException {
         try {

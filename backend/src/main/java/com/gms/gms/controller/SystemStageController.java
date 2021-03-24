@@ -34,7 +34,6 @@ public class SystemStageController {
     SystemStageService systemStageService;
 
 
-    @RequiresPermissions("sys:stage")
     @GetMapping()
     public GmsResponse getSystemStage() throws GmsException {
         try {
@@ -57,7 +56,6 @@ public class SystemStageController {
         }
     }
 
-    @RequiresPermissions("sys:stage")
     @PutMapping
     public GmsResponse updateSystemStage(@RequestBody SystemStage currStage) throws GmsException {
         try {
@@ -73,7 +71,6 @@ public class SystemStageController {
         }
     }
 
-    @RequiresPermissions("sys:stage")
     @PutMapping("activate")
     public GmsResponse updateSystemStage(@RequestBody List<Integer> currStageIds) throws GmsException {
         try {

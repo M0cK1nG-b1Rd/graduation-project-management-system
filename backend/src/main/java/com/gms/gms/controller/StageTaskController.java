@@ -31,8 +31,7 @@ public class StageTaskController {
 
     @Autowired
     StageTaskService stageTaskService;
-
-    @RequiresPermissions("process:manage")
+    )
     @PostMapping
     public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {

@@ -36,8 +36,7 @@ public class ThesisTeacherController {
     /**
      * 一键自动分组，无需传参，生成后需要删除后方能重新分组
      */
-    @RequiresPermissions("fin:cross")
-    @PostMapping()
+    @PostMapping
     public GmsResponse groupTeacherAuto() throws GmsException {
         try {
             if (thesisTeacherService.count() > 0) {
@@ -61,7 +60,6 @@ public class ThesisTeacherController {
     /**
      * 一键自动发布分组，无需传参，发布后相关人员即可查看相应通知
      */
-    @RequiresPermissions("fin:cross")
     @PutMapping()
     public GmsResponse updateThesisGroupStage() throws GmsException {
         try {
@@ -81,7 +79,6 @@ public class ThesisTeacherController {
     /**
      * 一键自动删除分组，无需传参，若发布后删除相关人员会接收通知
      */
-    @RequiresPermissions("fin:cross")
     @DeleteMapping()
     public GmsResponse deleteThesisGroupStage() throws GmsException {
         try {
@@ -103,7 +100,6 @@ public class ThesisTeacherController {
      * page:
      * size:
      */
-    @RequiresPermissions("fin:cross")
     @GetMapping()
     public GmsResponse selectThesisGroupStage(Integer page, Integer size) throws GmsException {
         try {
@@ -122,7 +118,6 @@ public class ThesisTeacherController {
     /**
      * 老师查看自己要评的的答辩交叉互评，无需传参，打过分的论文不会显示
      */
-    @RequiresPermissions("fin:judge")
     @GetMapping("/teacher")
     public GmsResponse selectThesisGroupStageTeacher() throws GmsException {
         try {
@@ -144,7 +139,6 @@ public class ThesisTeacherController {
      * id:答辩安排的id
      * score:得分
      */
-    @RequiresPermissions("fin:judge")
     @PutMapping("/teacher")
     public GmsResponse scoreThesisGroupStage(@RequestBody ThesisTeacher thesisTeacher) throws GmsException {
         try {
