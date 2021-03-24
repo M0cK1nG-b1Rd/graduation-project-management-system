@@ -23,7 +23,7 @@ public interface MessageMapper extends BaseMapper<Message> {
 
     List<Integer> getTeacherUserId(String stage);
 
-    Integer getSecretaryUserId(String stage);
+    List<Integer> getSecretaryUserId(String stage);
 
     Integer getUserIdByStuId(Integer id);
 
