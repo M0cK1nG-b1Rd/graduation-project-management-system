@@ -85,6 +85,7 @@ public class AppliedSubjectController {
     }
 
 
+    //学生申请提交
     @PostMapping("apply")
     public GmsResponse addAppliedSubject(@RequestBody AppliedSubject appliedSubject) throws GmsException {
         try {

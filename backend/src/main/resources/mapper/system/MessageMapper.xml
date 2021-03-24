@@ -46,7 +46,7 @@
                 FROM
                     acceptance_teacher
                 WHERE
-                        acceptance_teacher.TEAM_ID IN ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = 'XT' ))
+                        acceptance_teacher.TEAM_ID IN ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = #{stage} ))
     </select>
     <select id="getSecretaryUserId" resultType="java.lang.Integer">
         SELECT
@@ -60,7 +60,7 @@
                 FROM
                     acceptance_team
                 WHERE
-                        acceptance_team.TEAM_ID = ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = 'XT' )
+                        acceptance_team.TEAM_ID IN ( SELECT plea.ACCEPTANCE_TEAM_ID FROM plea WHERE plea.STAGE = #{stage} )
             )
     </select>
     <select id="getUserIdByStuId" resultType="java.lang.Integer">
