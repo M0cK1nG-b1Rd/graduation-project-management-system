@@ -103,4 +103,14 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public Integer getTaskTeaUserId(Integer taskId) {
         return this.baseMapper.getTaskTeaUserId(taskId);
     }
+
+    @Override
+    public Integer countPleaIsRelease(String stage) {
+        return this.baseMapper.countPleaIsRelease(stage);
+    }
+
+    @Override
+    public List<Integer> getOfficeUserId() {
+        return this.baseMapper.getOfficeUserId();
+    }
 }

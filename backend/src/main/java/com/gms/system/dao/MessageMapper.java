@@ -50,4 +50,9 @@ public interface MessageMapper extends BaseMapper<Message> {
     Integer getTaskStuUserId(Integer taskId);
 
     Integer getTaskTeaUserId(Integer taskId);
+
+    Integer countPleaIsRelease(String stage);
+
+    List<Integer> getOfficeUserId();
+
 }

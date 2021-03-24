@@ -43,18 +43,20 @@ public class CreatNewMessage {
     }
 
     public void creatNewPleaTwo(String stage) {
-        List<Integer> userList = messageService.getStudentUserId(stage);
-        userList.addAll(messageService.getTeacherUserId(stage));
-        userList.addAll(messageService.getSecretaryUserId(stage));
-        List<Message> messages = new ArrayList<>();
-        Integer fromId = GmsUtil.getCurrentUser().getUserId();
-        for (Integer i : userList) {
-            Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
-                    .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t</p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
-                    .setMessageId(FileStorageUtil.getDocId());
-            messages.add(message);
+        if(messageService.countPleaIsRelease(stage)>0) {
+            List<Integer> userList = messageService.getStudentUserId(stage);
+            userList.addAll(messageService.getTeacherUserId(stage));
+            userList.addAll(messageService.getSecretaryUserId(stage));
+            List<Message> messages = new ArrayList<>();
+            Integer fromId = GmsUtil.getCurrentUser().getUserId();
+            for (Integer i : userList) {
+                Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                        .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t</p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                        .setMessageId(FileStorageUtil.getDocId());
+                messages.add(message);
+            }
+            creatNewMessage2(messages);
         }
-        creatNewMessage2(messages);
     }
 
     public void creatNewStudentAppliedSubject(Integer studentId) {
@@ -196,6 +198,43 @@ public class CreatNewMessage {
         Integer fromId = GmsUtil.getCurrentUser().getUserId();
         Message message = new Message().setTitle("阶段任务通知").setFromId(fromId).setCreatTime(new Date()).setToId(userId).setType("WCK")
                 .setDetail("<p><strong>同学您好：</strong></p><p>\t</p><p>\t\t您的阶段任务提交已经被老师批复，请及时前往相关页面进行查看。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterGiveSubject() {
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        List<Integer> userIds= messageService.getOfficeUserId();
+        List<Message> messages = new ArrayList<>();
+        for(int i:userIds){
+            Message message = new Message().setTitle("出题审核通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                    .setDetail("<p><strong>教务处老师好：</strong></p><p>\t</p><p>\t\t有老师提交了自己的毕业设计课题，请及时前往相关页面进行审核。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                    .setMessageId(FileStorageUtil.getDocId());
+            messages.add(message);
+        }
+        creatNewMessage2(messages);
+    }
+
+    public void afterAddReport(Integer id) {
+        Report report = messageService.getMessageReport(id);
+        String stage = report.getStage();
+        if(stage.equals("KT")){
+            stage="开题";
+        }else {
+            stage="中期";
+        }
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle(stage+"报告提交通知").setFromId(fromId).setCreatTime(new Date()).setToId(report.getUserId()).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p>\t</p><p>\t\t您有学生提交了"+stage+"报告，请及时前往相关页面进行打分。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterAddReportJT(Integer id) {
+        Report report = messageService.getMessageReport(id);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("结题答辩申请通知").setFromId(fromId).setCreatTime(new Date()).setToId(report.getUserId()).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p>\t</p><p>\t\t您有学生提交结题答辩申请，请及时前往相关页面进行批复。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
                 .setMessageId(FileStorageUtil.getDocId());
         creatNewMessage(message);
     }
