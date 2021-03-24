@@ -93,7 +93,6 @@ public class AppliedSubjectController {
             appliedSubject.setApplyTime(new Date());
             String docId = FileStorageUtil.getDocId();
             appliedSubject.setDocId(docId);
-            appliedSubjectService.addAppliedSubject(appliedSubject);
 
             //更新课题信息，且人数已满则驳回申请
             int stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
@@ -105,6 +104,10 @@ public class AppliedSubjectController {
                 subject.setChosen(subject.getChosen() + 1);
                 subjectService.updateChosen(subject);
             }
+
+            appliedSubjectService.addAppliedSubject(appliedSubject);
+
+
 
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
