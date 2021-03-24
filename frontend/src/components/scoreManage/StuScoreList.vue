@@ -20,7 +20,7 @@
       <!--      表格区-->
       <el-row>
         <el-table
-          :data="subjectlist"
+          :data="studentList"
           size="medium "
           :default-sort = "{prop: 'date', order: 'descending'}"
           style="width: 100%; font-size: 15px">
@@ -31,7 +31,6 @@
             label="学生名字"
             width="170">
           </el-table-column>
-          <!--          申请日期-->
           <el-table-column
             sortable
             :show-overflow-tooltip="true"
@@ -42,36 +41,21 @@
           <!--        课题类型-->
           <el-table-column
             :show-overflow-tooltip="true"
-            prop="type"
+            prop="zone"
             label="课题类型"
             width="200"
-            :filters="[{ text: '科学探索与技术创新', value: 1 }, { text: '生命关怀与社会认知', value: 2 }, { text: '哲学智慧与创新思维', value: 3 }]"
+            :filters="[{ text: '科学探索与技术创新', value: 'KXTS' }, { text: '生命关怀与社会认知', value: 'SMGH' }, { text: '哲学智慧与创新思维', value: 'ZXZH' }]"
             :filter-method="filterType"
             filter-placement="bottom-end">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.type==1" type="info">类型一</el-tag>
-              <el-tag v-if="scope.row.type==2" type="success">类型二</el-tag>
-              <el-tag v-if="scope.row.type==3" type="primary">类型三</el-tag>
-            </template>
-          </el-table-column>
-          <!--         课题状态-->
-          <el-table-column
-            :show-overflow-tooltip="true"
-            prop="status"
-            width="120"
-            :filters="[{ text: '开题阶段', value: 1 }, { text: '中期阶段', value: 2 }, { text: '结题阶段', value: 3 }]"
-            :filter-method="filterStatus"
-            filter-placement="bottom-end"
-            label="学生状态">
-            <template slot-scope="scope">
-              <el-tag type="success" v-if=" scope.row.status == '1'">开题阶段</el-tag>
-              <el-tag type="warning" v-if=" scope.row.status == '2'">中期阶段</el-tag>
-              <el-tag type="danger" v-if=" scope.row.status == '3'">结题阶段</el-tag>
+              <el-tag v-if="scope.row.zone=='KXTS'" type="primary">科学探索与技术创新</el-tag>
+              <el-tag v-if="scope.row.zone=='SMGH'" type="success">生命关怀与社会认知</el-tag>
+              <el-tag v-if="scope.row.zone=='ZXTS'" type="danger">哲学智慧与创新思维</el-tag>
             </template>
           </el-table-column>
           <!--          总成绩-->
           <el-table-column
-            prop="subName"
+            prop="endScore"
             label="总成绩"
             width="100">
           </el-table-column>
@@ -120,7 +104,7 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.startPleaScore"
+                    :percent="currentScoreInfo.startPleaScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -128,14 +112,14 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.startMaterialScore"
+                    :percent="currentScoreInfo.startMaterialScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
                   <div>总分</div>
                   <a-progress
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.startScore"
+                    :percent="currentScoreInfo.startScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -165,7 +149,7 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.middlePleaScore"
+                    :percent="currentScoreInfo.middlePleaScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -173,14 +157,14 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.middleMaterialScore"
+                    :percent="currentScoreInfo.middleMaterialScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
                   <div>总分</div>
                   <a-progress
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.middleScore"
+                    :percent="currentScoreInfo.middleScore"
                     status="active"
                     :format="percent => `${percent} `"
                   />
@@ -213,7 +197,7 @@
                   <div>总分</div>
                   <a-progress
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.procedureScore"
+                    :percent="currentScoreInfo.procedureScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -244,7 +228,7 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.endPleaScore"
+                    :percent="currentScoreInfo.endPleaScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -252,14 +236,14 @@
                   <a-progress
                     style="margin-bottom: 10px"
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.endMaterialScore"
+                    :percent="currentScoreInfo.endMaterialScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
                   <div>总分</div>
                   <a-progress
                     :stroke-color="{from: '#108ee9',to: '#87d068',}"
-                    :percent="score.endScore"
+                    :percent="currentScoreInfo.endScore"
                     status="active"
                     :format="percent => `${percent} 分`"
                   />
@@ -293,7 +277,7 @@
                   <a-progress style="margin-left: 10%"
                               strokeWidth="15"
                               :stroke-color="{from: '#a548f6',to: '#f098fa',}"
-                              :percent="score.totalScore"
+                              :percent="currentScoreInfo.totalScore"
                               status="active"
                               :format="percent => `${percent} 分`"
                   />
@@ -302,7 +286,7 @@
                 <el-col :span="13" style="margin-left: 20%" >
                   <el-col :span="8">
                     <a-progress
-                      style="display: flex; justify-content: center"
+                      style="display: flex; justify-content: center; padding-top: 25%"
                       type="circle"
                       :stroke-color="{
                       '0%': '#8566f6',
@@ -374,22 +358,22 @@ export default {
         size: 10, // 页面大小
         type: '' // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
       },
-      subjectlist: [],
+      studentList: [],
       total: 0,
       // 查看详情对话框可见性
       viewPageVisible: false
     }
   },
   created() {
-    this.getSubjectList()
+    this.getStudentList()
   },
   methods: {
-    async getSubjectList() {
-      const { data: res } = await this.$http.get('http://localhost:9528/subject/teacher/my', { params: this.queryInfo })
+    async getStudentList() {
+      const { data: res } = await this.$http.get('http://localhost:9528/statistics/teacher/allScore', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题列表失败')
       }
-      this.subjectlist = res.data
+      this.studentList = res.data.records
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -409,11 +393,10 @@ export default {
     filterStatus(value, row) {
       return row.status === value
     },
-    // 查看课题详情
+    // 查看成绩详情
     viewStuScore(row) {
       this.viewPageVisible = true
-      this.currentSubjectInfo = row
-      console.log(this.currentSubjectInfo)
+      this.currentScoreInfo = row
     }
   }
 }

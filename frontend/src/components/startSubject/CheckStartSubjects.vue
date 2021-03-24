@@ -230,7 +230,7 @@
         <el-col>
           <div class="block">
             <el-slider
-              v-model="feedback.fileScore"
+              v-model="feedback.score"
               show-input>
             </el-slider>
           </div>
@@ -238,8 +238,8 @@
         <el-col>
           <el-form-item label="审核意见">
             <el-radio-group v-model="feedback.status">
-              <el-radio label="'YTG'">通过审核</el-radio>
-              <el-radio label="'WTG'">驳回申请</el-radio>
+              <el-radio label="YTG">通过审核</el-radio>
+              <el-radio label="WTG">驳回申请</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -294,7 +294,7 @@ export default {
       total: 0,
       feedback: {
         comment: '',
-        fileScore: 0,
+        score: 0,
         stage: 'KT',
         id: 0
       },

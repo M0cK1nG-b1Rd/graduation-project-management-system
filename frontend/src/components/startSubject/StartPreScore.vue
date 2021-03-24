@@ -373,7 +373,7 @@ export default {
     async feedBackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/pleaResult', this.feedBack)
-      if (res.meta.code !== 200) this.$message.error('提交答辩成绩失败！')
+      if (res.meta.code !== 200) this.$message.error(res.meta.message)
       else this.$message.success('提交答辩成绩成功！')
     },
     // 查看课题详情
