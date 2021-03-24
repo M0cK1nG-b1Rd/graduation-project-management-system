@@ -249,18 +249,9 @@
 <!--            <el-form-item label="反馈内容">-->
 <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
 <!--            </el-form-item>-->
-            <div class="fankui">报告反馈</div>
+            <div class="fankui">导师反馈</div>
             <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
               <div class="ql-editor" v-html="feedBack.teacherComment" ></div>
-            </div>
-          </el-col>
-          <el-col :span="22" class="feedback">
-            <!--            <el-form-item label="反馈内容">-->
-            <!--              <el-input readonly="readonly" type="textarea" v-model="currentSubjectInfo.description"></el-input>-->
-            <!--            </el-form-item>-->
-            <div class="fankui">答辩反馈</div>
-            <div class="ql-container ql-snow" style="margin-left: 20px; margin-top: 20px">
-              <div class="ql-editor" v-html="feedBack.secretatryComment"></div>
             </div>
           </el-col>
         </el-row>
@@ -346,6 +337,7 @@ export default {
       if (res.meta.code !== 200) {
         this.$message.error('获取反馈失败')
       } else {
+        // this
         this.feedBack = res.data.records[0]
       }
     },
@@ -389,6 +381,7 @@ export default {
     },
     // 查看反馈结果
     viewFeedback(row) {
+      this.getSubjectInfo()
       this.feedBack.teacherComment = row.comment
       this.drawer = true
     }
