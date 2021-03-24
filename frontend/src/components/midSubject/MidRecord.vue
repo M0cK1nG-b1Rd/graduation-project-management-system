@@ -296,41 +296,45 @@ export default {
       drawer: false
     }
   },
-  created() {
-    this.getReportList()
-    this.getScore()
-    this.getSubjectInfo()
-    this.getFeedBackInfo()
+  async created() {
+    await this.getReportList()
+    await this.getScore()
+    await this.getSubjectInfo()
+    await this.getFeedBackInfo()
   },
   methods: {
     async getReportList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report', { params: this.queryInfo })
       if (res.meta.code !== 200) {
         return this.$message.error('获取开题报告列表失败')
+      } else {
+        this.subjectlist = res.data.records
       }
-      this.subjectlist = res.data.records
     },
     async getSubjectInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/subject/student/my')
       if (res.meta.code !== 200) {
         return this.$message.error('获取课题信息失败')
+      } else {
+        this.currentSubjectInfo = res.data
+        this.subjectDocId = res.data.docId
       }
-      this.currentSubjectInfo = res.data
     },
     async getFeedBackInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取反馈失败')
+        this.$message.error('获取反馈失败')
+      } else {
+        this.feedBack = res.data.records[0]
       }
-      this.feedBack = res.data.records[0]
     },
     async getScore() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/score/mid')
       if (res.meta.code !== 200) {
-        return this.$message.error('获取反馈失败')
+        this.$message.error('获取成绩失败')
+      } else {
+        this.score = res.data
       }
-      this.score = res.data
-      this.feedBack.secretatryComment = res.data.defenseFeedback
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -355,7 +359,7 @@ export default {
       this.getSubjectInfo()
       this.viewPageVisible = true
     },
-    // 查看课题详情
+    // 查看中期详情
     viewReport(row) {
       this.viewReportVisible = true
       this.currentReportInfo = row

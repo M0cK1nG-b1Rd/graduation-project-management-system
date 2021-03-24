@@ -73,7 +73,7 @@
                 <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
               </el-tooltip>
               <!--              查看开题阶段内容-->
-              <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
+              <el-tooltip class="item" effect="dark" content="查看结题阶段内容" placement="top" :enterable="false">
                 <el-button type="danger" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
               </el-tooltip>
               <!-- 给学生反馈信息-->
@@ -232,10 +232,10 @@
           </div>
         </el-col>
         <el-col>
-          <el-form-item label="开题结果">
+          <el-form-item label="结题结果">
             <el-radio-group v-model="feedBack.status">
-              <el-radio label="2">通过审核</el-radio>
-              <el-radio label="3">未通过</el-radio>
+              <el-radio label="YTG">通过审核</el-radio>
+              <el-radio label="WTG">未通过</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
