@@ -166,8 +166,6 @@ export default {
     return {
       taskSubmitRecords: [],
       queryInfo: {
-        page: 1, // 当前页数
-        size: 5 // 页面大小
       },
       submitDetailVisible: false,
       currentTaskSubmitInfo: []

@@ -49,7 +49,10 @@ public class PleaResultController {
                     Code.C200.getDesc(),
                     "新建答辩安排成功"));
         } catch (GmsException e){
-            throw e;
+            return new GmsResponse().addCodeMessage(new Meta(
+                    Code.C500.getCode(),
+                    Code.C500.getDesc(),
+                    e.getMessage()));
         } catch (Exception e) {
             String message = "新建失败";
             log.error(message, e);

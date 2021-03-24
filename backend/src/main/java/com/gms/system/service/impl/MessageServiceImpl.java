@@ -35,7 +35,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     }
 
     @Override
-    public Integer getSecretaryUserId(String stage) {
+    public List<Integer> getSecretaryUserId(String stage) {
         return this.baseMapper.getSecretaryUserId(stage);
     }
 
@@ -102,5 +102,15 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     public Integer getTaskTeaUserId(Integer taskId) {
         return this.baseMapper.getTaskTeaUserId(taskId);
+    }
+
+    @Override
+    public Integer countPleaIsRelease(String stage) {
+        return this.baseMapper.countPleaIsRelease(stage);
+    }
+
+    @Override
+    public List<Integer> getOfficeUserId() {
+        return this.baseMapper.getOfficeUserId();
     }
 }

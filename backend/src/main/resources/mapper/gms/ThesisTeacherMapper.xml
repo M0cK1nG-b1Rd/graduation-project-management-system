@@ -81,12 +81,10 @@
             s.REQUIREMENT,
             s.DESCRIPTION,
             s.ZONE,
-            s.POSE_TIME,
-            m.MAJOR_NAME
+            s.POSE_TIME
         FROM
             `subject` s
                 JOIN applied_subject a ON ( a.SUB_ID = s.SUB_ID )
-                JOIN major m ON ( m.MAJOR_ID = s.MAJOR_ID )
         WHERE
             s.`STATUS` = 'YTG'
             AND a.`STATUS` = 'YTG'

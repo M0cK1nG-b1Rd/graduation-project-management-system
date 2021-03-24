@@ -3,7 +3,7 @@
     <!--    面包屑导航区域-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>开题管理</el-breadcrumb-item>
+      <el-breadcrumb-item>结题管理</el-breadcrumb-item>
       <el-breadcrumb-item>答辩评分</el-breadcrumb-item>
     </el-breadcrumb>
     <!--      题目信息展示区-->
@@ -74,15 +74,11 @@
                 </el-col>
               </el-row>
               <el-divider></el-divider>
-              <!--        答辩信息附件下载区-->
-              <el-row type="flex" align="center">
-                <el-col :span="4" class="item_label">附件下载：</el-col>
-              </el-row>
               <!--         回形针区     -->
               <el-col>
                 <a-divider style="height: 1px; background-color: #e8e8e8"><i class="el-icon-s-claim"></i></a-divider>
               </el-col>
-              <div class="card_header">开题答辩成绩登记</div>
+              <div class="card_header">结题答辩成绩登记</div>
               <el-row type="flex" justify="center">
                 <!--  表格卡片-->
                 <!--      表格区-->
@@ -121,12 +117,8 @@
                         <el-tooltip class="item" effect="dark" content="查看课题详细内容" placement="top" :enterable="false">
                           <el-button type="primary" icon="el-icon-view" circle size="mini" @click="viewSubject(scope.row)"></el-button>
                         </el-tooltip>
-                        <!--              查看开题阶段内容-->
-                        <el-tooltip class="item" effect="dark" content="查看开题阶段内容" placement="top" :enterable="false">
-                          <el-button type="success" icon="el-icon-s-flag" circle size="mini" @click="viewReport(scope.row)"></el-button>
-                        </el-tooltip>
                         <!--              编辑反馈结果-->
-                        <el-tooltip class="item" effect="dark" content="编辑开题成绩" placement="top" :enterable="false">
+                        <el-tooltip class="item" effect="dark" content="编辑结题成绩" placement="top" :enterable="false">
                           <el-button type="danger" icon="el-icon-edit" circle size="mini" @click="editFeedback(scope.row)"></el-button>
                         </el-tooltip>
                       </template>
@@ -142,13 +134,17 @@
     <el-dialog
       :visible.sync="viewPageVisible"
       width="60%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">课题详情</el-row>
+      <el-divider></el-divider>
       <el-form ref="subject" :model="currentSubjectInfo" label-width="80px">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="24">
             <el-form-item label="课题名称">
               <el-tag type="primary"  effect="plain" v-model="currentSubjectInfo.subName">{{currentSubjectInfo.subName}}</el-tag>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8">
             <el-form-item label="题目类型">
               <el-tag type="success"  effect="plain" v-if=" currentSubjectInfo.zone == 'KXTS'">科学探索与技术创新</el-tag>
@@ -165,12 +161,16 @@
         <el-row>
           <el-col :span="20">
             <el-form-item label="课题内容">
-              <el-input type="textarea" v-model="currentSubjectInfo.description"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.description"></div>
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="20">
             <el-form-item label="课题要求">
-              <el-input type="textarea" v-model="currentSubjectInfo.requirement"></el-input>
+              <div class="ql-container ql-snow">
+                <div class="ql-editor" v-html="currentSubjectInfo.requirement"></div>
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -179,50 +179,9 @@
         <el-button type="primary" @click="viewPageVisible = false">退出查看</el-button>
       </span>
     </el-dialog>
-    <!--    查看开题详情对话框  注意下载附件-->
-    <el-dialog
-      :visible.sync="viewReportVisible"
-      width="60%">
-      <el-form ref="subject" :model="currentReportInfo" label-width="80px">
-        <el-row>
-          <el-col :span="7">
-            <el-form-item label="提交人">
-              <el-input v-model="currentReportInfo.studentName"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="提交时间">
-              <el-row>
-                <el-input v-model="currentReportInfo.poseTime"></el-input>
-              </el-row>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="20">
-            <el-form-item label="研究意义">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.meaning"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="调研结果">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.result"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="20">
-            <el-form-item label="研究计划">
-              <el-input readonly="readonly" type="textarea" v-model="currentReportInfo.plan"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="viewReportVisible = false">退出查看</el-button>
-      </span>
-    </el-dialog>
     <!--    给学生反馈信息抽屉-->
     <el-dialog
-      title="开题信息反馈及评分"
+      title="结题信息反馈及评分"
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
@@ -252,7 +211,7 @@
                   </div>
                 </el-col>
                 <el-col>
-                  <el-form-item label="开题结果">
+                  <el-form-item label="结题结果">
                     <el-radio-group v-model="feedBack.isPassed">
                       <el-radio label="true">通过审核</el-radio>
                       <el-radio label="false">不通过</el-radio>
@@ -312,7 +271,7 @@ export default {
         pleaId: 0,
         score: 0,
         feedback: '',
-        isPassed: true,
+        isPassed: '',
         stage: 'JT'
       },
       viewPageVisible: false,
@@ -347,7 +306,7 @@ export default {
     async getReportInfo(row) {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/report/user', { params: { userId: row.userId, stage: 'JT' } })
       if (res.meta.code !== 200) {
-        this.$message.error('获取开题报告信息失败')
+        this.$message.error('获取结题报告信息失败')
       }
       this.currentReportInfo = res.data[0] // 与后端对接
     },
@@ -355,8 +314,11 @@ export default {
     async feedBackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.post('http://127.0.0.1:9528/pleaResult', this.feedBack)
-      if (res.meta.code !== 200) this.$message.error('提交答辩成绩失败！')
-      else this.$message.success('提交答辩成绩成功！')
+      if (res.meta.code !== 200) {
+        this.$message.error(res.meta.message)
+      } else {
+        this.$message.success('提交答辩成绩成功！')
+      }
     },
     // 查看课题详情
     viewSubject(row) {
@@ -365,7 +327,7 @@ export default {
       this.currentSubjectInfo = row
       // console.log(this.currentSubjectInfo)
     },
-    // 查看学生开题报告详情
+    // 查看学生结题报告详情
     viewReport(row) {
       this.getReportInfo(row)
       this.viewReportVisible = true
@@ -374,7 +336,6 @@ export default {
     },
     // 编辑反馈表单
     editFeedback(row) {
-      console.log(row)
       this.feedBack.userId = row.userId
       this.drawer = true
     },

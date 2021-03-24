@@ -20,7 +20,7 @@ public interface MessageService extends IService<Message> {
 
     List<Integer> getTeacherUserId(String stage);
 
-    Integer getSecretaryUserId(String stage);
+    List<Integer> getSecretaryUserId(String stage);
 
     Integer getUserIdByStuId(Integer studentId);
 
@@ -47,4 +47,9 @@ public interface MessageService extends IService<Message> {
     Integer getTaskStuUserId(Integer taskId);
 
     Integer getTaskTeaUserId(Integer taskId);
+
+    Integer countPleaIsRelease(String stage);
+
+    List<Integer> getOfficeUserId();
+
 }

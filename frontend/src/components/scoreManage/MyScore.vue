@@ -264,7 +264,7 @@ export default {
     async getMyScoreInfo() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/statistics/student/allScore')
       if (res.meta.code !== 200) {
-        this.$message.error('成绩查询失败!')
+        this.$message.error(res.meta.message)
       } else {
         this.score = res.data
       }
