@@ -224,7 +224,7 @@ export default {
   methods: {
     // 获取学生提交信息
     async getSubmitInfo() {
-      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task/result', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/stage/task/handin', { params: this.queryInfo })
       if (res.meta.code === 200) {
         this.totalPageNum = res.data.total
         this.submitInfo = res.data.records

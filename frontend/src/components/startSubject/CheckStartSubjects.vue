@@ -198,6 +198,11 @@
               </div>
             </el-form-item>
           </el-col>
+          <el-col :span="20">
+            <el-form-item label="相关附件">
+              <Downloader :doc-id="docId"></Downloader>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -206,7 +211,6 @@
     </el-dialog>
     <!--    给学生反馈信息抽屉-->
     <el-drawer
-      title="开题信息反馈及评分"
       :visible.sync="drawer"
       size="50%">
       <el-row class="drawer-bg">
@@ -215,8 +219,9 @@
       <el-row>
         <el-col style="padding: 40px">
         <el-card class="feedBackCard">
+        <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold">开题信息反馈及评分</el-row>
+          <div style="height: 10px"></div>
         <el-row>
-          <el-col :span="10" class="item_label"><span class="card_header">反馈信息表</span></el-col>
           <el-col :span="24" style="margin-bottom: 10px">
             <div class="ql-container ql-snow">
               <div class="notice_content ql-editor"
@@ -226,11 +231,11 @@
             </div>
           </el-col>
         </el-row>
-          <el-divider></el-divider>
+          <el-divider>开题报告评分</el-divider>
         <el-col>
           <div class="block">
             <el-slider
-              v-model="feedback.fileScore"
+              v-model="feedback.score"
               show-input>
             </el-slider>
           </div>
@@ -238,18 +243,17 @@
         <el-col>
           <el-form-item label="审核意见">
             <el-radio-group v-model="feedback.status">
-              <el-radio label="'YTG'">通过审核</el-radio>
-              <el-radio label="'WTG'">驳回申请</el-radio>
+              <el-radio label="YTG">通过审核</el-radio>
+              <el-radio label="WTG">驳回申请</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         </el-card>
         </el-col>
       </el-row>
-        <el-form-item>
-          <el-button type="success" @click="feedBackSubmit">立即提交</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
+        <el-row type="flex" justify="center">
+          <el-button type="success" icon="el-icon-upload" @click="feedBackSubmit">立即提交</el-button>
+        </el-row>
       </el-form>
       </el-row>
     </el-drawer>
@@ -274,12 +278,14 @@
 </template>
 
 <script>
+import Downloader from '@/plugins/upload-download/Downloader'
 import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
 export default {
   name: 'checkSubjects',
-  components: { quillEditor },
+  components: { quillEditor, Downloader },
   data() {
     return {
+      docId: '',
       // 查看详情的课题信息
       currentSubjectInfo: {},
       // （符合要求）课题总数
@@ -294,7 +300,7 @@ export default {
       total: 0,
       feedback: {
         comment: '',
-        fileScore: 0,
+        score: 0,
         stage: 'KT',
         id: 0
       },
@@ -333,8 +339,12 @@ export default {
     async feedBackSubmit() {
       this.drawer = false
       const { data: res } = await this.$http.put('http://127.0.0.1:9528/report', this.feedback)
-      if (res.meta.code !== 200) this.$message.error(res.meta.message)
-      else this.$message.success(res.meta.message)
+      if (res.meta.code !== 200) {
+        this.$message.error(res.meta.message)
+      } else {
+        this.$message.success(res.meta.message)
+        await this.getReportList()
+      }
     },
     // 当页面大小变化时触发
     handleSizeChange(newSize) {
@@ -364,6 +374,7 @@ export default {
     viewReport(row) {
       this.viewReportVisible = true
       this.currentSubjectInfo = row
+      this.docId = row.docId
     },
     // 编辑反馈表单
     editFeedback(row) {
