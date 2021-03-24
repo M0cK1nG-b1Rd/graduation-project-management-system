@@ -181,7 +181,6 @@ export default {
     // 跳到选题申请页面
     chooseSubject(index) {
       this.currentSubjectInfo = this.allSubjectInfo[index]
-      console.log(this.currentSubjectInfo)
       this.$router.push({ name: 'chooseSubjectApplication', params: this.currentSubjectInfo })
     },
     // 当页面大小变化时触发

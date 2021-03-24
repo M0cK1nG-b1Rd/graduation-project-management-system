@@ -358,7 +358,7 @@ export default {
     },
     // 筛选课题类型
     filterType(value, row) {
-      return row.type === value
+      return row.zone === value
     },
     // 筛选课题状态
     filterStatus(value, row) {
