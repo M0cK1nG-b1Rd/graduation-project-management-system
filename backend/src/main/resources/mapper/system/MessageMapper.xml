@@ -207,4 +207,10 @@
             plea.IS_RELEASE = '1'
           AND plea.STAGE = #{stage}
     </select>
+    <select id="getOfficeUserId" resultType="java.lang.Integer">
+        SELECT
+            teaching_office.USER_ID
+        FROM
+            teaching_office
+    </select>
 </mapper>

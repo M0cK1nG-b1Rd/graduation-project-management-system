@@ -108,4 +108,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     public Integer countPleaIsRelease(String stage) {
         return this.baseMapper.countPleaIsRelease(stage);
     }
+
+    @Override
+    public List<Integer> getOfficeUserId() {
+        return this.baseMapper.getOfficeUserId();
+    }
 }

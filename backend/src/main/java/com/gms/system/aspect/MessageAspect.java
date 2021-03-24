@@ -131,4 +131,23 @@ public class MessageAspect {
     public void afterGiveStageTaskScore(StageTaskResult result) {
         new CreatNewMessage().afterGiveStageTaskScore(result.getTaskId());
     }
+
+    /**
+     * 教师出题后通知教办审核
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.SubjectController.giveSubject(com.gms.gms.domain.Subject))")
+    public void afterGiveSubject() {
+        new CreatNewMessage().afterGiveSubject();
+    }
+
+    /**
+     * 学生提交开题，中期报告和结题答辩申请通知
+     */
+    @AfterReturning(value = "execution(* com.gms.gms.controller.ReportController.addReport(com.gms.gms.domain.Report)) && args(report)", argNames = "report")
+    public void afterAddReport(Report report) {
+        if("JT".equals(report.getStage())){
+            new CreatNewMessage().afterAddReportJT(report.getId());
+        }else if("KT".equals(report.getStage())||"ZQ".equals(report.getStage()))
+            new CreatNewMessage().afterAddReport(report.getId());
+    }
 }

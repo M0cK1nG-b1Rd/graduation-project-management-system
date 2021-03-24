@@ -201,4 +201,41 @@ public class CreatNewMessage {
                 .setMessageId(FileStorageUtil.getDocId());
         creatNewMessage(message);
     }
+
+    public void afterGiveSubject() {
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        List<Integer> userIds= messageService.getOfficeUserId();
+        List<Message> messages = new ArrayList<>();
+        for(int i:userIds){
+            Message message = new Message().setTitle("出题审核通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                    .setDetail("<p><strong>教务处老师好：</strong></p><p>\t</p><p>\t\t有老师提交了自己的毕业设计课题，请及时前往相关页面进行审核。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                    .setMessageId(FileStorageUtil.getDocId());
+            messages.add(message);
+        }
+        creatNewMessage2(messages);
+    }
+
+    public void afterAddReport(Integer id) {
+        Report report = messageService.getMessageReport(id);
+        String stage = report.getStage();
+        if(stage.equals("KT")){
+            stage="开题";
+        }else {
+            stage="中期";
+        }
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle(stage+"报告提交通知").setFromId(fromId).setCreatTime(new Date()).setToId(report.getUserId()).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p>\t</p><p>\t\t您有学生提交了"+stage+"报告，请及时前往相关页面进行打分。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
+
+    public void afterAddReportJT(Integer id) {
+        Report report = messageService.getMessageReport(id);
+        Integer fromId = GmsUtil.getCurrentUser().getUserId();
+        Message message = new Message().setTitle("结题答辩申请通知").setFromId(fromId).setCreatTime(new Date()).setToId(report.getUserId()).setType("WCK")
+                .setDetail("<p><strong>尊敬的老师：</strong></p><p>\t</p><p>\t\t您有学生提交结题答辩申请，请及时前往相关页面进行批复。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                .setMessageId(FileStorageUtil.getDocId());
+        creatNewMessage(message);
+    }
 }

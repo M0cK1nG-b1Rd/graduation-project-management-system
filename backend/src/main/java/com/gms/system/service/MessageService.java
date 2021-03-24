@@ -49,4 +49,7 @@ public interface MessageService extends IService<Message> {
     Integer getTaskTeaUserId(Integer taskId);
 
     Integer countPleaIsRelease(String stage);
+
+    List<Integer> getOfficeUserId();
+
 }
