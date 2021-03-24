@@ -251,6 +251,7 @@ export default {
       } else {
         this.$message.success('答辩申请提交成功！')
         this.docId = res.data
+        await this.$http.post('http://127.0.0.1:9528/thesis', { docId: this.docId })
       }
     }
   }

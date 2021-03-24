@@ -24,19 +24,20 @@
             <el-table-column
               :show-overflow-tooltip="true"
               prop="thesisId"
-              label="待评审学生Id(匿名)"
-              width="200">
+              label="学生Id(匿名)"
+              width="120">
             </el-table-column>
             <!--          课题名称-->
             <el-table-column
+              :show-overflow-tooltip="true"
               prop="subject.subName"
               label="课题名称"
-              width="200">
+              width="250">
             </el-table-column>e
-            <!--         评审状态-->
+            <!--         课题领域-->
             <el-table-column
               :show-overflow-tooltip="true"
-              prop="subject"
+              prop="subject.zone"
               width="180"
               :filters="[{ text: '科学探索与技术创新', value: 'KXTS' }, { text: '生命关怀与社会认知', value: 'SMGH' }, { text: '哲学智慧与创新思维', value: 'ZXZH' }]"
               :filter-method="filterStatus"
@@ -51,29 +52,29 @@
             <!--          操作-->
             <el-table-column
               :show-overflow-tooltip="true"
-              width="200"
+              width="120"
               label="操作">
               <template slot-scope="scope">
                 <!--              下载论文附件-->
                 <el-tooltip class="item" effect="dark" content="下载论文附件" placement="top" :enterable="false">
-                  <el-button type="primary" icon="el-icon-paperclip" circle size="medium" @click="getPaperList(scope.row)"></el-button>
+                  <el-button type="primary" icon="el-icon-paperclip" circle size="mini" @click="downloadPaper(scope.row)"></el-button>
                 </el-tooltip>
                 <!-- 给学生反馈信息-->
                 <el-tooltip class="item" effect="dark" content="给学生反馈信息" placement="top" :enterable="false">
-                  <el-button type="success" icon="el-icon-chat-line-square" circle size="medium" @click="editFeedback(scope.row)"></el-button>
+                  <el-button type="success" icon="el-icon-chat-line-square" circle size="mini" @click="editFeedback(scope.row)"></el-button>
                 </el-tooltip>
               </template>
             </el-table-column>
           </el-table>
         </el-row>
         <!--      分页区-->
-        <el-row>
+        <el-row type="flex" justify="center" style="margin-top: 10px">
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryInfo.page"
             :page-sizes="[5, 10, 20]"
-            :page-size="100"
+            :page-size="queryInfo.size"
             layout="total, sizes, prev, pager, next, jumper"
             :total="totalPageNum">
           </el-pagination>
@@ -104,49 +105,49 @@
                 <el-col>
                   <el-form-item label="开题结果">
                     <el-radio-group v-model="feedBack.status">
-                      <el-radio label="2">通过审核</el-radio>
-                      <el-radio label="3">未通过</el-radio>
+                      <el-radio label="YTG">通过审核</el-radio>
+                      <el-radio label="WTG">不通过</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
               </el-card>
             </el-col>
           </el-row>
-          <el-form-item>
+          <el-row type="flex" justify="center">
             <el-popconfirm
               @confirm="feedBackSubmit"
               title="成绩仅允许提交一次，确认提交吗？">
             <el-button style="margin-right: 20px" slot="reference" type="success">立即提交</el-button>
             </el-popconfirm>
-            <el-button>取消</el-button>
-          </el-form-item>
+          </el-row>
         </el-form>
       </el-row>
     </el-dialog>
-    <!--      符文本编辑器对话框-->
-    <!--<el-dialog-->
-      <!--title="请输入反馈信息"-->
-      <!--:visible.sync="quillEditorVisible"-->
-      <!--:before-close="resetQuillEditorContent"-->
-      <!--width="75%">-->
-      <!--<quill-editor ref="quillEditor"-->
-                    <!--:init-content="feedBack.comment">-->
-      <!--</quill-editor>-->
-      <!--<span slot="footer" class="dialog-footer">-->
-          <!--<el-button @click="resetQuillEditorContent">清 空</el-button>-->
-          <!--<el-button type="primary" @click="submitQuillEditorContent">确 定</el-button>-->
-        <!--</span>-->
-    <!--</el-dialog>-->
+<!--    下载论文对话框-->
+    <!--    查看答辩申请及毕业论文-->
+    <el-dialog
+      :visible.sync="viewReportVisible"
+      width="50%">
+      <el-row type="flex" justify="center" style="font-size: 20px; font-weight: bold; margin-bottom: 20px">毕业论文下载</el-row>
+      <el-divider>毕业论文</el-divider>
+      <el-row type="flex" justify="center">
+        <Downloader :doc-id="docId"></Downloader>
+      </el-row>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="viewReportVisible = false">退出查看</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-// import quillEditor from '@/plugins/quill-editor/VueQuillEditor'
+import Downloader from '@/plugins/upload-download/Downloader'
 export default {
   name: 'CrossJudgeList',
-  // components: { quillEditor },
+  components: { Downloader },
   data() {
     return {
+      viewReportVisible: false,
       // （符合要求）课题总数
       totalPageNum: 0,
       // 获取报告列表
@@ -166,9 +167,8 @@ export default {
         id: 0
       },
       // 反馈抽屉可见性
-      drawer: false
-      // 富文本编辑器可见性
-      // quillEditorVisible: false
+      drawer: false,
+      docId: ''
     }
   },
   created() {
@@ -177,9 +177,15 @@ export default {
   methods: {
     async getPaperList() {
       const { data: res } = await this.$http.get('http://127.0.0.1:9528/thesisGroup/teacher')
-      if (res.meta.code !== 200) this.$message.error('获取评审列表失败')
-      else this.$message.success('获取评审信息成功！')
-      this.paperlist = res.data
+      if (res.meta.code !== 200) {
+        this.$message.error('获取评审列表失败')
+      } else {
+        this.paperlist = res.data
+      }
+    },
+    downloadPaper(row) {
+      this.viewReportVisible = true
+      this.docId = row.docId
     },
     // 提交表单
     async feedBackSubmit() {

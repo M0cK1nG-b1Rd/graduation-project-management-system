@@ -54,7 +54,7 @@
     <!--    对话框2-->
     <el-dialog
       fullscreen="true"
-      title="提示"
+      title="交叉评审安排"
       :visible.sync="dialogVisible2"
       width="30%"
     >
@@ -213,7 +213,7 @@ export default {
 }
 /*课题卡片*/
 .card {
-  width: 310px;
+  width: 280px;
   height: 240px;
   margin: 8px;
   border-radius: 20px;
