@@ -88,7 +88,7 @@
       <!--      评分区-->
         <el-col :span="6">
           <el-card style="margin-left: 10px">
-            <div class="card_header">我的开题成绩</div>
+            <div class="card_header">我的结题成绩</div>
             <div>答辩表现</div>
             <a-progress
               style="margin-bottom: 10px"

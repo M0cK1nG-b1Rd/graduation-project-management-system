@@ -227,10 +227,10 @@
                   </div>
                 </el-col>
                 <el-col>
-                  <el-form-item label="开题结果">
+                  <el-form-item label="中期结果">
                     <el-radio-group v-model="feedback.status">
-                      <el-radio label="2">通过审核</el-radio>
-                      <el-radio label="3">未通过</el-radio>
+                      <el-radio label="YTG">通过审核</el-radio>
+                      <el-radio label="WTG">未通过</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
