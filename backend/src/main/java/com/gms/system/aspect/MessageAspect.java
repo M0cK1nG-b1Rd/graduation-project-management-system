@@ -29,7 +29,7 @@ public class MessageAspect {
         new CreatNewMessage().creatNewPleaTwo(jsonObject.getString("stage"));
     }
 
-    @AfterReturning(value = "execution(* com.gms.gms.controller.PleaController.deletePleaRelease(java.lang.String)) && args(stage)", argNames = "stage")
+    @Before(value = "execution(* com.gms.gms.controller.PleaController.deletePleaRelease(java.lang.String)) && args(stage)", argNames = "stage")
     public void afterUpdatePleaReleaseFalse(String stage) {
         new CreatNewMessage().creatNewPleaTwo(stage);
     }

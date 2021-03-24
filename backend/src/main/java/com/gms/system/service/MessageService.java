@@ -47,4 +47,6 @@ public interface MessageService extends IService<Message> {
     Integer getTaskStuUserId(Integer taskId);
 
     Integer getTaskTeaUserId(Integer taskId);
+
+    Integer countPleaIsRelease(String stage);
 }

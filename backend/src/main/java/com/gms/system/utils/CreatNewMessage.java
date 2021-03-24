@@ -43,18 +43,20 @@ public class CreatNewMessage {
     }
 
     public void creatNewPleaTwo(String stage) {
-        List<Integer> userList = messageService.getStudentUserId(stage);
-        userList.addAll(messageService.getTeacherUserId(stage));
-        userList.addAll(messageService.getSecretaryUserId(stage));
-        List<Message> messages = new ArrayList<>();
-        Integer fromId = GmsUtil.getCurrentUser().getUserId();
-        for (Integer i : userList) {
-            Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
-                    .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t</p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
-                    .setMessageId(FileStorageUtil.getDocId());
-            messages.add(message);
+        if(messageService.countPleaIsRelease(stage)>0) {
+            List<Integer> userList = messageService.getStudentUserId(stage);
+            userList.addAll(messageService.getTeacherUserId(stage));
+            userList.addAll(messageService.getSecretaryUserId(stage));
+            List<Message> messages = new ArrayList<>();
+            Integer fromId = GmsUtil.getCurrentUser().getUserId();
+            for (Integer i : userList) {
+                Message message = new Message().setTitle("答辩安排通知").setFromId(fromId).setCreatTime(new Date()).setToId(i).setType("WCK")
+                        .setDetail("<p><strong>尊敬的用户：</strong></p><p>\t</p><p>\t\t您之前的答辩安排已经取消，请等待之后的最新通知。</p><p>\t</p><p class=\"ql-align-right\"><strong>系统管理员</strong></p>")
+                        .setMessageId(FileStorageUtil.getDocId());
+                messages.add(message);
+            }
+            creatNewMessage2(messages);
         }
-        creatNewMessage2(messages);
     }
 
     public void creatNewStudentAppliedSubject(Integer studentId) {
