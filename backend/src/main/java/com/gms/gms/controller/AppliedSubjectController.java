@@ -135,6 +135,7 @@ public class AppliedSubjectController {
                 }
             }
             appliedSubject.setAuditTime(new Date());
+            appliedSubject.setAuditBy(AccountUtil.getCurrentTeacher().getTeacherId());
             appliedSubjectService.auditAppliedSubject(appliedSubject);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
