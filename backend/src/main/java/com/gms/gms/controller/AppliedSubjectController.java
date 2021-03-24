@@ -94,6 +94,18 @@ public class AppliedSubjectController {
             String docId = FileStorageUtil.getDocId();
             appliedSubject.setDocId(docId);
             appliedSubjectService.addAppliedSubject(appliedSubject);
+
+            //更新课题信息，且人数已满则驳回申请
+            int stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
+            Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
+            Integer capacity = subject.getCapacity();
+            if (stuCount + 1 > capacity) {
+                throw new GmsException("该课题人数已满！");
+            } else {
+                subject.setChosen(subject.getChosen() + 1);
+                subjectService.updateChosen(subject);
+            }
+
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -122,17 +134,17 @@ public class AppliedSubjectController {
                 throw new GmsException("该学生已经有通过课题，请驳回该申请");
             }
 
-            if (appliedSubject.getStatus().equals("YTG")) {
-                //更新课题信息，且人数已满则驳回申请
-                int stuCount = appliedSubjectService.getTotalStudentsInSubject(appliedSubject.getSubId()).size();
+            if (appliedSubject.getStatus().equals("WTG")) {
+                //更新课题信息
                 Subject subject = subjectService.getBySubId(appliedSubject.getSubId());
-                Integer capacity = subject.getCapacity();
-                if (stuCount + 1 > capacity) {
-                    throw new GmsException("该课题人数已满！");
-                } else {
-                    subject.setChosen(subject.getChosen() + 1);
-                    subjectService.updateChosen(subject);
+                AppliedSubject dbRecord = appliedSubjectService.getById(appliedSubject.getId());
+                if (dbRecord.getStatus().equals("YTG") || dbRecord.getStatus().equals("WTG")){
+                    throw new GmsException("您已经进行过审核，不能重复进行审核！");
                 }
+
+                subject.setChosen(subject.getChosen() - 1);
+                subjectService.updateChosen(subject);
+
             }
             appliedSubject.setAuditTime(new Date());
             appliedSubject.setAuditBy(AccountUtil.getCurrentTeacher().getTeacherId());
