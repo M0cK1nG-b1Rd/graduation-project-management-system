@@ -45,6 +45,8 @@ public class StatisticsController {
     WeightService weightService;
     @Autowired
     ThesisService thesisService;
+    @Autowired
+    AccountService accountService;
 
 
     @GetMapping("score/start")
@@ -299,6 +301,11 @@ public class StatisticsController {
             } else if (finalScore < 90) {
                 score.setRank("优秀");
             }
+
+            List<Integer> stuIds = accountService.getAllStudentIds();
+            // TODO: 2021/3/24 获取统计信息
+            TotalScoreStatistics statistics =  totalScoreService.getScoreStatistics(stuId,stuIds);
+
 
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),

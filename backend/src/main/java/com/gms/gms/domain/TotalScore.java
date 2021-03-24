@@ -20,4 +20,6 @@ public class TotalScore {
     private Float procedureScore;
     private Float totalScore;
     private String rank;
+
+    private TotalScoreStatistics statistics;
 }

@@ -66,7 +66,6 @@ public class StageTaskResultServiceImpl extends ServiceImpl<StageTaskResultMappe
     @Override
     public IPage<StageTaskResult> getGeneralStageTaskResult(StageTaskResult result) throws GmsException {
         Integer teacherId = AccountUtil.getCurrentTeacher().getTeacherId();
-
         Integer inPage = result.getPage();
         Integer inSize = result.getSize();
         Page<StageTaskResult> page = new Page<>(inPage==null?1:inPage,inSize==null?Integer.MAX_VALUE:inSize);

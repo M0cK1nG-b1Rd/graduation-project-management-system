@@ -261,4 +261,7 @@
         FROM
             stu_group
     </select>
+    <select id="getAllStudentIds" resultType="java.lang.Integer">
+        SELECT STU_ID FROM student
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.gms.gms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gms.common.domain.GmsResponse;
@@ -130,5 +131,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, User> impleme
         }
         this.baseMapper.deleteTeacherTeam(stage);
 
+    }
+
+    @Override
+    public List<Integer> getAllStudentIds() {
+return this.baseMapper.getAllStudentIds();
     }
 }
