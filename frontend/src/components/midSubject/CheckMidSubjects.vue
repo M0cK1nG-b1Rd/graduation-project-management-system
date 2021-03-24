@@ -284,11 +284,8 @@ export default {
       totalPageNum: 0,
       // 获取报告列表
       queryInfo: {
-        status: '', // 需要查询的通知记录状态（1-待审核，2-已通过，3-未通过）, 不发送则返回所有类型
-        keyWord: '', // 关键词
         page: 1, // 当前页号
         size: 10, // 页面大小
-        type: '', // 通知类型（1-学业通知， 2-答辩安排， 3-工作安排）
         stage: 'ZQ'
       },
       reportlist: [], // 开题报告列表信息
