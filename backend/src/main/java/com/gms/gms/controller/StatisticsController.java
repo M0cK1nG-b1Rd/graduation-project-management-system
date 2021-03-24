@@ -291,8 +291,7 @@ public class StatisticsController {
             Float finalScore = score.getTotalScore();
             if (finalScore == null) {
                 score.setRank("总成绩暂未出分！");
-            }
-            if (finalScore < 60) {
+            } else if (finalScore < 60) {
                 score.setRank("不及格");
             } else if (finalScore < 70) {
                 score.setRank("一般");
@@ -302,11 +301,10 @@ public class StatisticsController {
                 score.setRank("优秀");
             }
 
+
             List<Integer> stuIds = accountService.getAllStudentIds();
-            // TODO: 2021/3/24 获取统计信息
-            TotalScoreStatistics statistics =  totalScoreService.getScoreStatistics(stuId,stuIds);
-
-
+            TotalScoreStatistics statistics = totalScoreService.getStatistics(stuId, stuIds);
+            score.setStatistics(statistics);
             return new GmsResponse().addCodeMessage(new Meta(
                     Code.C200.getCode(),
                     Code.C200.getDesc(),
@@ -334,6 +332,7 @@ public class StatisticsController {
 
             List<TotalScore> scoreList = scores.getRecords();
             for (TotalScore score : scoreList) {
+                score.setStatistics(totalScoreService.getStatistics(score.getStuId(), stuIds));
                 Float finalScore = score.getTotalScore();
                 if (finalScore == null) {
                     score.setRank("总成绩暂未出分！");

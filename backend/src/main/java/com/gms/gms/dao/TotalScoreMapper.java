@@ -20,5 +20,24 @@ public interface TotalScoreMapper extends BaseMapper<TotalScore> {
 
     Page<TotalScore> getAllScoreAsTeacher(Page<Teacher> teacherPage, @Param("stuIds") List<Integer> stuIds);
 
-    TotalScoreStatistics getScoreStatistics(Integer currStuId,@Param("stuIds") List<Integer> stuIds);
+    Integer getStartGreaterThan(Integer currStuId, @Param("stuIds") List<Integer> stuIds);
+
+    Integer getMidGreaterThan(Integer currStuId, @Param("stuIds") List<Integer> stuIds);
+
+    Integer getFinGreaterThan(Integer currStuId, @Param("stuIds") List<Integer> stuIds);
+
+    Integer getStageTaskGreaterThan(Integer currStuId, @Param("stuIds") List<Integer> stuIds);
+
+    Integer getTotalGreaterThan(Integer currStuId, @Param("stuIds") List<Integer> stuIds);
+
+    Integer getStartPublished(@Param("stuIds") List<Integer> stuIds);
+
+    Integer getMidPublished(@Param("stuIds") List<Integer> stuIds);
+
+    Integer getFinPublished(@Param("stuIds") List<Integer> stuIds);
+
+    Integer getStageTaskPublished(@Param("stuIds") List<Integer> stuIds);
+
+    Integer getTotalPublished(@Param("stuIds") List<Integer> stuIds);
+
 }
