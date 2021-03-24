@@ -45,11 +45,10 @@
         SELECT DISTINCT m.*
         FROM role_stage_perms rsp
                  JOIN user_role ur ON (rsp.ROLE_ID = ur.ROLE_ID)
-                 JOIN user_stage us
-                      ON (rsp.STAGE_ID = us.STAGE_ID OR rsp.STAGE_ID IN (SELECT STAGE_ID FROM system_stage))
-                 JOIN user u ON (u.USER_ID = ur.USER_ID)
-                 JOIN menu m ON (rsp.PERMS = m.PERMS)
-        WHERE USERNAME = #{username}
+                 JOIN USER u ON (u.USER_ID = ur.USER_ID)
+                 JOIN menu m ON(m.PERMS=rsp.PERMS)
+        WHERE u.USERNAME = #{username}
+          AND rsp.STAGE_ID IN (SELECT STAGE_ID FROM system_stage WHERE IS_CURRENT = 1)
     </select>
 
 
