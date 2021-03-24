@@ -100,6 +100,7 @@ public class UserManager {
         all_menus.forEach(menu -> {
             VueRouter<Menu> route = new VueRouter<>();
             route.setId(menu.getMenuId().toString());
+            route.setIcon(menu.getIcon());
             route.setParentId(menu.getParentId().toString());
             route.setPath(menu.getPath());
             route.setIcon(menu.getIcon());
@@ -135,7 +136,7 @@ public class UserManager {
         // 缓存用户角色
         cacheService.saveRoles(user.getUsername());
         // 缓存用户全部权限
-        // TODO: 2021/3/24 检查 
+        // TODO: 2021/3/24 检查
         cacheService.savePermissions(user.getUsername());
         // 缓存用户当前权限
         cacheService.savePermissionsWithStage(user.getUsername());

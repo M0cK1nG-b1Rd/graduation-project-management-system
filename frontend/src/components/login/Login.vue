@@ -7,7 +7,7 @@
       <div class="login_box">
         <!--      登陆表框头像Logo区域-->
         <div class="avatar_box">
-          <img src="../../assets/imgs/new_logo.png" alt="">
+          <img src="../../assets/imgs/new_new_logo.jpg" alt="">
         </div>
         <!--        登陆表单系统名称-->
         <div class="login_title">
