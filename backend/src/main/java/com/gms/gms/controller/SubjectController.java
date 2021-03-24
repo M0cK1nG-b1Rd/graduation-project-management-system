@@ -19,6 +19,8 @@ import com.gms.gms.service.impl.SubjectServiceImpl;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +81,7 @@ public class SubjectController {
      *通过userid返回当前学生的课题信息
      *userId:学生用户id
      */
+    // TODO: 2021/3/24  增加权限校验
     @GetMapping("/userId")
     public GmsResponse getStudentPassedSubjectById(Integer userId) throws GmsException {
         try {
@@ -94,6 +97,7 @@ public class SubjectController {
     //学生查看选题信息，包括详情
     //passed是指教师通过的课题而不是学生通过的课题
     //筛选 搜索关键字、课题领域、老师名字
+    @RequiresPermissions("select:view")
     @GetMapping
     public GmsResponse getPassedSubject(Subject subject) throws GmsException{
         try {
@@ -111,7 +115,7 @@ public class SubjectController {
     }
 
     //教研办审核用
-    @GetMapping("all")
+    @GetMapping(" apply:office")
     public GmsResponse getAllSubject(Subject subject) throws GmsException{
         try {
             IPage<Subject> applyList = subjectService.getAllSubject(subject);
@@ -129,6 +133,7 @@ public class SubjectController {
 
 
     //教师出题
+    @RequiresPermissions("apply:teacher")
     @PostMapping
     public GmsResponse giveSubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -157,6 +162,7 @@ public class SubjectController {
     }
 
     //教师课题被驳回后修改课题
+    @RequiresPermissions("apply:teacher")
     @PostMapping("modify")
     public GmsResponse modifySubject(@RequestBody Subject subject) throws GmsException {
         try {
@@ -177,6 +183,7 @@ public class SubjectController {
     }
 
     //教研办审核教师课题
+    @RequiresPermissions("apply:office")
     @PutMapping("audit")
     public GmsResponse auditSubject(@RequestBody Subject opinion) throws GmsException {
         try {
@@ -195,34 +202,34 @@ public class SubjectController {
         }
     }
 
-    @DeleteMapping()
-    public GmsResponse deleteSubject(String subId) throws GmsException {
-        try {
-            subjectService.deleteSubject(subId);
-            return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "删除课题成功"));
-        } catch (Exception e) {
-            String message = "删除课题失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @DeleteMapping
+//    public GmsResponse deleteSubject(String subId) throws GmsException {
+//        try {
+//            subjectService.deleteSubject(subId);
+//            return new GmsResponse().addCodeMessage(new Meta(
+//                    Code.C200.getCode(),
+//                    Code.C200.getDesc(),
+//                    "删除课题成功"));
+//        } catch (Exception e) {
+//            String message = "删除课题失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 
-    @GetMapping("track/{subId}")
-    public GmsResponse trackSubject(@PathVariable String subId) throws GmsException {
-        try {
-            List<Subject> subjectList = subjectService.trackSubject(subId);
-            return new GmsResponse().addCodeMessage(new Meta(
-                            Code.C200.getCode(),
-                            Code.C200.getDesc(),
-                            "查询成功"),
-                    subjectList);
-        } catch (Exception e) {
-            String message = "查询失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//    @GetMapping("track/{subId}")
+//    public GmsResponse trackSubject(@PathVariable String subId) throws GmsException {
+//        try {
+//            List<Subject> subjectList = subjectService.trackSubject(subId);
+//            return new GmsResponse().addCodeMessage(new Meta(
+//                            Code.C200.getCode(),
+//                            Code.C200.getDesc(),
+//                            "查询成功"),
+//                    subjectList);
+//        } catch (Exception e) {
+//            String message = "查询失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 }

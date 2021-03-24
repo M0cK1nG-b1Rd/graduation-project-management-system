@@ -10,6 +10,7 @@ import com.gms.gms.domain.SystemStage;
 import com.gms.gms.service.SystemStageService;
 import com.gms.system.domain.Menu;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.validation.annotation.Validated;
@@ -33,6 +34,7 @@ public class SystemStageController {
     SystemStageService systemStageService;
 
 
+    @RequiresPermissions("sys:stage")
     @GetMapping()
     public GmsResponse getSystemStage() throws GmsException {
         try {
@@ -49,12 +51,13 @@ public class SystemStageController {
                     "查询成功"),
                     map);
         } catch (Exception e) {
-            String message = "新建失败";
+            String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
         }
     }
 
+    @RequiresPermissions("sys:stage")
     @PutMapping
     public GmsResponse updateSystemStage(@RequestBody SystemStage currStage) throws GmsException {
         try {
@@ -70,6 +73,7 @@ public class SystemStageController {
         }
     }
 
+    @RequiresPermissions("sys:stage")
     @PutMapping("activate")
     public GmsResponse updateSystemStage(@RequestBody List<Integer> currStageIds) throws GmsException {
         try {

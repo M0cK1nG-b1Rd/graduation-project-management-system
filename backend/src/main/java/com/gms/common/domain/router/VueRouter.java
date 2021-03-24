@@ -29,7 +29,7 @@ public class VueRouter<T> implements Serializable {
 
     private String component;
 
-//    private String icon;
+    private String icon;
 
     private String redirect;
 

@@ -12,6 +12,7 @@ import com.gms.gms.service.StageTaskService;
 import com.gms.gms.utils.AccountUtil;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jetbrains.annotations.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ public class StageTaskController {
     @Autowired
     StageTaskService stageTaskService;
 
+    @RequiresPermissions("process:manage")
     @PostMapping
     public GmsResponse giveStageTask(@RequestBody StageTask task) throws GmsException {
         try {
@@ -74,21 +76,21 @@ public class StageTaskController {
         }
     }
 
-    // TODO: 2021/3/18 测试 
-    @PutMapping
-    public GmsResponse modifyStageTask(@RequestBody StageTask task) throws GmsException {
-        try {
-            stageTaskService.modifyStageTask(task);
-            return new GmsResponse().addCodeMessage(new Meta(
-                    Code.C200.getCode(),
-                    Code.C200.getDesc(),
-                    "修改阶段任务成功"));
-        } catch (Exception e) {
-            String message = "修改阶段任务失败";
-            log.error(message, e);
-            throw new GmsException(message);
-        }
-    }
+//
+//    @PutMapping
+//    public GmsResponse modifyStageTask(@RequestBody StageTask task) throws GmsException {
+//        try {
+//            stageTaskService.modifyStageTask(task);
+//            return new GmsResponse().addCodeMessage(new Meta(
+//                    Code.C200.getCode(),
+//                    Code.C200.getDesc(),
+//                    "修改阶段任务成功"));
+//        } catch (Exception e) {
+//            String message = "修改阶段任务失败";
+//            log.error(message, e);
+//            throw new GmsException(message);
+//        }
+//    }
 }
 
 

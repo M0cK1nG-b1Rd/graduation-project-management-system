@@ -53,4 +53,6 @@ public class Menu implements Serializable {
 
     private Double orderNum;
 
+
+    private String icon;
 }
