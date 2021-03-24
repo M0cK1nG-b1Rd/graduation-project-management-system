@@ -15,6 +15,7 @@ import com.gms.gms.service.ThesisService;
 import com.gms.gms.service.ThesisTeacherService;
 import com.gms.gms.utils.AccountUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class ThesisTeacherController {
     /**
      * 一键自动分组，无需传参，生成后需要删除后方能重新分组
      */
-    @PostMapping()
+    @PostMapping
     public GmsResponse groupTeacherAuto() throws GmsException {
         try {
             if (thesisTeacherService.count() > 0) {

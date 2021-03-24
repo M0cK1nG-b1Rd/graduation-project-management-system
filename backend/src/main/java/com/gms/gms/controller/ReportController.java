@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 @RequestMapping("report")
 public class ReportController {
 
+    // TODO: 2021/3/24   从这往上配完权限
     @Autowired
     ReportService reportService;
 

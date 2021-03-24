@@ -103,6 +103,7 @@ public class UserManager {
             route.setIcon(menu.getIcon());
             route.setParentId(menu.getParentId().toString());
             route.setPath(menu.getPath());
+            route.setIcon(menu.getIcon());
             route.setComponent(menu.getComponent());
             route.setName(menu.getMenuName());
 
