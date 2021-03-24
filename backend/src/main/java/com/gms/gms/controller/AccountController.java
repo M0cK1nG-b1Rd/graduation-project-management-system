@@ -10,6 +10,7 @@ import com.gms.gms.domain.*;
 import com.gms.gms.service.AccountService;
 import com.gms.gms.service.ClassroomService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;

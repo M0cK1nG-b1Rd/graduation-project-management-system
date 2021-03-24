@@ -11,6 +11,7 @@ import com.gms.gms.domain.FileStorage;
 import com.gms.gms.service.AnnouncementService;
 import com.gms.gms.utils.FileStorageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -60,7 +61,6 @@ public class AnnouncementController {
             throw new GmsException(message);
         }
     }*/
-
     @PostMapping
     public GmsResponse addAnnouncement(@RequestBody Announcement announcement) throws GmsException {
         try {

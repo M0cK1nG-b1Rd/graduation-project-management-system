@@ -25,7 +25,7 @@
         <!--          一级菜单-->
         <el-submenu v-for="item in menuList"
                     :index="item.path"
-                    :disabled="item.disable"
+                    :disabled="JSON.parse(item.disable)"
                     :key="item.id">
           <!--            一级菜单的模板区-->
           <template slot="title">
@@ -37,7 +37,7 @@
           <!--            二级菜单-->
           <el-menu-item :index="subItem.path"
                         @click="saveNavState(subItem.path)"
-                        :disabled="subItem.disable"
+                        :disabled="JSON.parse(subItem.disable)"
                         v-for="subItem in item.children"
                         :key="subItem.id">
             <template slot="title">
@@ -76,15 +76,10 @@ export default {
     },
     // 获取所有的菜单
     async getMeunList() {
-      // TODO 后期需要将admin换为当前用户的用户名
-      // TODO 后端返回的response中没有meta字段
-      // const { data: res } = await this.$http.get('http://127.0.0.1:9528/menu/admin')
-      const { data: res } = await this.$http.get('/mock/menu_list_success.json')
-      // console.log(res)
+      const { data: res } = await this.$http.get('http://127.0.0.1:9528/menu')
+      // const { data: res } = await this.$http.get('/mock/menu_list_success.json')
       if (res.meta.code !== 200) return this.$message.error(res.meta.msg)
       this.menuList = res.data
-      // this.menuList = res
-      // console.log(this.menuList)
     },
     // 保存菜单的激活状态，以便实现路由跳转后选中菜单的高亮
     saveNavState(activePath) {
