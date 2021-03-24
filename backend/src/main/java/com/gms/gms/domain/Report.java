@@ -113,5 +113,6 @@ public class Report implements Serializable {
     private List<FileStorage> fileStorage;
 
     //搜索用数据
+    @TableField(exist = false)
     private Integer userId;
 }
