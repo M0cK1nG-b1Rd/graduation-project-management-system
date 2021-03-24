@@ -52,14 +52,12 @@ public class MenuController extends BaseController {
     }
 
     @GetMapping
-    @RequiresPermissions("menu:view")
     public Map<String, Object> menuList(Menu menu) {
         return this.menuService.findMenus(menu);
     }
 
     @Log("新增菜单/按钮")
     @PostMapping
-    @RequiresPermissions("menu:add")
     public GmsResponse addMenu(@RequestBody @Valid Menu menu) throws GmsException {
         try {
             this.menuService.createMenu(menu);

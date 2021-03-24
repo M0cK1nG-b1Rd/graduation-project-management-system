@@ -47,20 +47,48 @@ public class StatisticsController {
     ThesisService thesisService;
 
 
-    // TODO: 2021/3/23 返回总分
     @GetMapping("score/start")
     public GmsResponse getStartScore() throws GmsException {
         try {
             Weight weight = weightService.getWeight();
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
+
             Report applyList = reportService.getStartReport(stuId);
+            Integer fileScore;
+            String fileFeedback;
+            if (applyList == null) {
+                //前端要求，用于判断渲染
+                fileScore = -1;
+                fileFeedback = "暂无反馈！";
+            } else {
+                fileScore = applyList.getScore();
+                fileFeedback = applyList.getComment();
+            }
+
+
             PleaResult result = pleaResultService.getStartPleaResult(stuId);
-            Integer fileScore = applyList.getScore();
-            String fileFeedback = applyList.getComment();
-            Integer defenseScore = result.getScore();
-            String defenseFeedback = result.getFeedback();
+            Integer defenseScore;
+            String defenseFeedback;
+
+            if (result == null) {
+                //前端要求，用于判断渲染
+                defenseScore = -1;
+                defenseFeedback = "暂无反馈！";
+            } else {
+                defenseScore = result.getScore();
+                defenseFeedback = result.getFeedback();
+            }
+
+            Double startScore;
+            if (fileScore == -1 || defenseScore == -1) {
+                startScore = -1D;
+            } else {
+                startScore = (weight.getStartMaterial() * fileScore + weight.getStartPlea() * defenseScore) / 100;
+            }
+
+
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double startScore = (weight.getStartMaterial() * fileScore + weight.getStartPlea() * defenseScore)/100;
+
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
@@ -97,13 +125,42 @@ public class StatisticsController {
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
 
             Report applyList = reportService.getMidReport(stuId);
+
+            Integer fileScore;
+            String fileFeedback;
+            if (applyList == null) {
+                //前端要求，用于判断渲染
+                fileScore = -1;
+                fileFeedback = "暂无反馈！";
+            } else {
+                fileScore = applyList.getScore();
+                fileFeedback = applyList.getComment();
+            }
+
+
             PleaResult result = pleaResultService.getMidPleaResult(stuId);
-            Integer fileScore = applyList.getScore();
-            String fileFeedback = applyList.getComment();
-            Integer defenseScore = result.getScore();
-            String defenseFeedback = result.getFeedback();
+
+            Integer defenseScore;
+            String defenseFeedback;
+
+            if (result == null) {
+                //前端要求，用于判断渲染
+                defenseScore = -1;
+                defenseFeedback = "暂无反馈！";
+            } else {
+                defenseScore = result.getScore();
+                defenseFeedback = result.getFeedback();
+            }
+
+            Double midScore;
+            if (fileScore == -1 || defenseScore == -1) {
+                midScore = -1D;
+            } else {
+                midScore = (weight.getMiddleMaterial() * fileScore + weight.getMiddlePlea() * defenseScore) / 100;
+            }
+
+
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double midScore = (weight.getMiddleMaterial() * fileScore + weight.getMiddlePlea() * defenseScore)/100;
             map.put("fileScore", fileScore);
             map.put("fileFeedback", fileFeedback);
             map.put("defenseScore", defenseScore);
@@ -125,7 +182,7 @@ public class StatisticsController {
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message));
-        }  catch (Exception e) {
+        } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);
@@ -138,12 +195,38 @@ public class StatisticsController {
             Weight weight = weightService.getWeight();
             Integer stuId = AccountUtil.getCurrentStudent().getStuId();
             Thesis thesis = thesisService.getMyThesis(stuId);
+
+            Integer thesisScore;
+            if (thesis == null) {
+                //前端要求，用于判断渲染
+                thesisScore = -1;
+            } else {
+                thesisScore = thesis.getScore();
+            }
+
+
             PleaResult result = pleaResultService.getFinResult(stuId);
-            Integer thesisScore = thesis.getScore();
-            Integer defenseScore = result.getScore();
-            String defenseFeedback = result.getFeedback();
+
+            Integer defenseScore;
+            String defenseFeedback;
+
+            if (result == null) {
+                //前端要求，用于判断渲染
+                defenseScore = -1;
+                defenseFeedback = "暂无反馈！";
+            } else {
+                defenseScore = result.getScore();
+                defenseFeedback = result.getFeedback();
+            }
+
+            Double finScore;
+            if (thesisScore == -1 || defenseScore == -1) {
+                finScore = -1D;
+            } else {
+                finScore = (weight.getEndMaterial() * thesisScore + weight.getEndPlea() * defenseScore) / 100;
+            }
+
             LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-            Double finScore = (weight.getEndMaterial() * thesisScore + weight.getEndPlea() * defenseScore)/100;
             map.put("thesisScore", thesisScore);
             map.put("defenseScore", defenseScore);
             map.put("defenseFeedback", defenseFeedback);
@@ -164,7 +247,7 @@ public class StatisticsController {
                     Code.C500.getCode(),
                     Code.C500.getDesc(),
                     message));
-        }  catch (Exception e) {
+        } catch (Exception e) {
             String message = "查询失败";
             log.error(message, e);
             throw new GmsException(message);

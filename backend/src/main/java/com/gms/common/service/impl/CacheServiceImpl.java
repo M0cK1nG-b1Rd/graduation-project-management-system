@@ -123,7 +123,7 @@ public class CacheServiceImpl implements CacheService {
     public void savePermissionsWithStage(String username) throws Exception {
         List<Menu> permissionList = this.menuService.findUserPermissionsWithStage(username);
         if (!permissionList.isEmpty()) {
-            this.deletePermissions(username);
+            this.deletePermissionsWithStage(username);
             redisService.set(GmsConstant.USER_CURR_PERMISSION_CACHE_PREFIX + username, mapper.writeValueAsString(permissionList));
         }
     }

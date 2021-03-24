@@ -72,15 +72,17 @@ public class TreeUtil {
         if (routes == null) {
             return null;
         }
-        List<VueRouter<T>> topRoutes = new ArrayList<>();
-        VueRouter<T> router = new VueRouter<>();
-        router.setName("系统主页");
-        router.setPath("/home");
-        router.setComponent("HomePageView");
-//        router.setIcon("home");
-        router.setDisable("false");
-        router.setChildren(null);
-        topRoutes.add(router);
+        ArrayList<VueRouter<T>> topRoutes = new ArrayList<>();
+
+//        List<VueRouter<T>> topRoutes = new ArrayList<>();
+//        VueRouter<T> router = new VueRouter<>();
+//        router.setName("系统主页");
+//        router.setPath("/home");
+//        router.setComponent("HomePageView");
+////        router.setIcon("home");
+//        router.setDisable("false");
+//        router.setChildren(null);
+//        topRoutes.add(router);
 
         routes.forEach(route -> {
             String parentId = route.getParentId();
@@ -103,22 +105,25 @@ public class TreeUtil {
         });
 
         ArrayList<VueRouter<T>> list = new ArrayList<>();
-        VueRouter<T> root = new VueRouter<>();
-        root.setName("主页");
-        root.setComponent("MenuView");
-//        root.setIcon("none");
-        root.setDisable("false");
-        root.setPath("/");
-        root.setRedirect("/home");
-        root.setChildren(topRoutes);
-        list.add(root);
+//        VueRouter<T> root = new VueRouter<>();
+//        root.setName("主页");
+//        root.setComponent("MenuView");
+////        root.setIcon("none");
+//        root.setDisable("false");
+//        root.setPath("/");
+//        root.setRedirect("/home");
+//        root.setChildren(topRoutes);
+//
+//        list.add(root);
+//
+//        root = new VueRouter<>();
+//        root.setName("404");
+//        root.setComponent("error/404");
+//        root.setPath("*");
+//
+//        list.add(root);
 
-        root = new VueRouter<>();
-        root.setName("404");
-        root.setComponent("error/404");
-        root.setPath("*");
-        list.add(root);
-
-        return list;
+//        return list;
+        return  topRoutes;
     }
 }
