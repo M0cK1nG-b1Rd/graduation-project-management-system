@@ -11,7 +11,9 @@
         </div>
         <!--        登陆表单系统名称-->
         <div class="login_title">
-          快乐毕设管理系统
+          <el-row type="flex" justify="center">
+            毕业设计过程管理及质量监督系统
+          </el-row>
         </div>
         <!--      登陆表单区域-->
         <el-form label-width="0px" class="login_form"
@@ -166,10 +168,8 @@ img {
 }
 /*登录表单上方系统名称*/
 .login_title{
-  position: absolute;
-  left: 25%;
-  top: 22%;
-  font-size: 28px;
+  margin-top: 60px;
+  font-size: 25px;
   font-weight: bold;
   font-family: Microsoft YaHei;
   text-shadow: 1px 1px 0 #E4FFFF;

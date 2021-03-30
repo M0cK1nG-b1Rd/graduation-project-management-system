@@ -5,7 +5,7 @@
 <!--      logo-->
       <img src="../../assets/imgs/new_logo.png" alt="" class="sider_logo" @click="gotoHompage">
 <!--      系统名-->
-      <span class="sider_title" v-if="!isCollapsed">快乐毕设系统</span>
+      <span class="sider_title" v-if="!isCollapsed">毕业设计过程管理及质量监督系统</span>
 <!--      收起、关闭菜单图标-->
       <div id="toggle_icon">
         <i :class="isCollapsed ? 'el-icon-s-unfold' : 'el-icon-s-fold'" @click="toggleCollapse"></i>
@@ -132,7 +132,8 @@ export default {
 .sider_title {
   margin-left: 10px;
   color: #FFFFFF;
-  font-size: 20px;
+  text-align: center;
+  font-size: 15px;
   font-weight: bold;
   font-family: Microsoft YaHei;
   text-shadow: 0 0 2px #000000;

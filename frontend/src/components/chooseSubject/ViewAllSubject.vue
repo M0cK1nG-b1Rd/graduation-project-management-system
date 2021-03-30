@@ -73,7 +73,7 @@
             <!--            课题简介-->
             <el-row>
               课题简介：
-              <el-col class="subject_breif">{{item.description}}</el-col>
+              <el-col class="subject_breif" v-html="item.description"></el-col>
             </el-row>
             <!--            卡片底部-->
             <el-row type="flex" align="middle" justify="space-between">
